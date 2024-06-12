@@ -73,20 +73,23 @@ const InnerBag = ({bagData, items, session}) => {
       },
     });
   
+
     useEffect(() => {
       if (isDragging) {
         setIsDragging(true);
       }
     }, [isDragging]);
   
-    preview(drop(ref));
+     drag(drop(ref));
    
+    
       
     return (
       <Stack
         direction="row"
         alignItems="flex-start"
-        ref={ref}>
+        ref={ref}
+       >
         <Stack width="100%" direction="row" alignItems="flex-start">
         <IconButton sx={{marginTop: "5px", cursor: "move"}} ref={drag}>
           <DragIndicatorIcon sx={{fontSize: "15px"}}/>
