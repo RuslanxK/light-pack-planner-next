@@ -25,6 +25,7 @@ import axios from 'axios';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Nav = ({bags, session, user}) => {
 
@@ -33,6 +34,7 @@ const router = useRouter()
 const path = usePathname()
 
 const [mode, setMode] = useState(user.mode);
+const [isOpenMenu, setOpenMenu] = useState(false)
 
 
 
@@ -122,7 +124,7 @@ const navigateToBag = (bag) => {
       <div className='nav-mobile'>
 
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
-      <MenuIcon />
+      <IconButton onClick={() => setMenuOpen(!isOpenMenu)}>{ isOpenMenu ? <MenuIcon /> :  <CloseIcon /> }</IconButton>
           
       </div>
 
