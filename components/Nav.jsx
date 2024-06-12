@@ -124,7 +124,7 @@ const navigateToBag = (bag) => {
       <div className='nav-mobile'>
 
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
-      <IconButton onClick={() => setMenuOpen(!isOpenMenu)}>{ isOpenMenu ? <MenuIcon /> :  <CloseIcon /> }</IconButton>
+      <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? <CloseIcon /> : <MenuIcon />  }</IconButton>
           
       </div>
 
