@@ -54,6 +54,8 @@ const Home = async () => {
   const data = await getData(session)
   const bags = await getBags(session)
 
+  const test = 1
+
   return (
  
    <Fragment>
