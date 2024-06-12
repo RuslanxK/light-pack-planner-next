@@ -116,7 +116,7 @@ const Trips = ({trips, bags, session}) => {
     <Container sx={{display: theme.flexBox}} maxWidth={false} disableGutters>
       
 
-    <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.trips.width} pb={5} pt={5} minHeight="100vh">
+    <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.trips.width} pb={5}  minHeight="100vh">
 
       <div className="main-info">
 
