@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, Box, Container, IconButton, Badge, Button} from '@mui/material'
+import { Stack, Typography, Box, Container, IconButton, Badge, Button, Tooltip} from '@mui/material'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
@@ -104,10 +104,10 @@ const Share = ({bagData, user, session}) => {
       
        <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center } boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"}  pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
         <Stack display="flex" direction="row" justifyContent={theme.between} alignItems="center" width="100%">
-        <Typography component="h2" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
-        <Typography>By {user.username}</Typography>
+        <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
+        <Typography fontWeight="600" component="span" variant='span'>By {user.username}</Typography>
         <Badge badgeContent={bagData.bag.likes || "0"} color="primary">
-        <IconButton onClick={toggleLike}> {liked ? <ThumbUpAltIcon /> : <ThumbUpOffAltOutlinedIcon />} </IconButton>
+         <IconButton onClick={toggleLike}> {liked ?  <Tooltip title="Unlike"><ThumbUpAltIcon sx={{fontSize: "20px"}}/></Tooltip> : <Tooltip title="Like"><ThumbUpOffAltOutlinedIcon sx={{fontSize: "20px"}} /></Tooltip> } </IconButton>
         </Badge>
         </Stack>
         </Stack>

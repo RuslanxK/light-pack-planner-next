@@ -227,26 +227,30 @@ const InnerBag = ({bagData, items, session}) => {
 
     <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} pb={3}>
 
-
-
         <div className="main-info">
-       <Stack display={theme.flexBox} flexWrap="wrap" flexDirection={theme.row} alignItems={theme.center} justifyContent={theme.between} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
 
-        <Stack display="flex" direction="row" alignItems="center">
+       <Stack display={theme.flexBox} width="100%" flexWrap="wrap" flexDirection={theme.row} alignItems={theme.between} justifyContent={theme.between} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+
+        <Stack display="flex" direction="row" justifyContent={theme.between} width="100%">
+
+        <Stack direction="row" alignItems="center">
         <IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0", marginRight: "5px"}} onClick={() => router.push(`/trips?id=${bagData.bag.tripId}`)}><ArrowBackIcon sx={{fontSize: "20px"}}/></IconButton>
-
         <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
-        <Tooltip title="Edit"><IconButton onClick={openPopup}><EditLocationOutlinedIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
-        <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
+        
         <Stack display="flex" direction="row">
         <Button size='small' sx={{paddingLeft: "15px", paddingRight: "15px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share Bag</Button>
         <Badge color="secondary" badgeContent={bagData.bag.likes || "0" }>
-        <IconButton><ThumbUpIcon sx={{fontSize: "20px"}}/></IconButton>
+        <Tooltip title="Total likes"><IconButton><ThumbUpIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
         </Badge>
-       
-        
         </Stack>
+
+        <Stack direction="row">
+        <Tooltip title="Edit"><IconButton onClick={openPopup}><EditLocationOutlinedIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
+        <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
+        </Stack>
+        </Stack>
+      
     
         </Stack>
         <Typography component="p" variant="p">
