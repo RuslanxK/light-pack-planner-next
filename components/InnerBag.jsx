@@ -21,9 +21,9 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { HTML5toTouch } from 'rdndmb-html5-to-touch'
-import ShareIcon from '@mui/icons-material/Share';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import SendIcon from '@mui/icons-material/Send';
 
 const InnerBag = ({bagData, items, session}) => {
 
@@ -239,7 +239,7 @@ const InnerBag = ({bagData, items, session}) => {
         </Stack>
         
         <Stack display="flex" direction="row">
-        <Button size='small' sx={{paddingLeft: "15px", paddingRight: "15px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share Bag</Button>
+        <Button size='small' sx={{paddingLeft: "10px", paddingRight: "10px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share <SendIcon sx={{fontSize: "15px", marginLeft: "5px"}} /></Button>
         <Badge color="secondary" badgeContent={bagData.bag.likes || "0" }>
         <Tooltip title="Total likes"><IconButton><ThumbUpIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
         </Badge>
