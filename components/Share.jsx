@@ -92,7 +92,7 @@ const Share = ({bagData, user, session}) => {
 
   return (
 
-    <Container maxWidth={false} sx={{minHeight: "100vh", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "75%"}}>
+    <Container maxWidth={false} sx={{minHeight: "100vh", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
      <Stack margin="0 auto" width="100%" mt={3} pb={3} direction="row" justifyContent="space-between" alignItems="center">
     <img src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} onClick={() => router.push('/')} alt='Light Pack - Planner' width={110} height={70}/>
     {session?.user?.id ? null : <Button disableElevation variant="contained" color="primary" onClick={() => window.open('/register', '_blank')}> Join Now </Button> }

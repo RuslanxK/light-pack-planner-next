@@ -229,9 +229,9 @@ const InnerBag = ({bagData, items, session}) => {
 
         <div className="main-info">
 
-       <Stack display={theme.flexBox} width="100%" flexWrap="wrap" flexDirection={theme.row} alignItems={theme.between} justifyContent={theme.between} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+       <Stack display={theme.flexBox} width="100%" flexDirection={theme.row} alignItems={theme.between} justifyContent={theme.between} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
 
-        <Stack display="flex" direction="row" justifyContent={theme.between} width="100%">
+        <Stack display="flex" direction="row" justifyContent={theme.between} width="100%" flexWrap="wrap">
 
         <Stack direction="row" alignItems="center">
         <IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0", marginRight: "5px"}} onClick={() => router.push(`/trips?id=${bagData.bag.tripId}`)}><ArrowBackIcon sx={{fontSize: "20px"}}/></IconButton>
