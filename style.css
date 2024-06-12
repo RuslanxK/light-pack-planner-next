@@ -1,0 +1,286 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: "Poppins", sans-serif !important;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.login-text {
+  margin-bottom: 20px;
+  font-weight: 600;
+  width: 100%;
+  line-height: 1;
+}
+
+
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+#google_translate_element div {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border-radius: 4px;
+  border-color: white !important;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-size: 12px;
+  width: 160px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-button,
+.login-button-regular {
+  padding: 13.5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  border-radius: 5px;
+  border: 1px solid #dadada;
+  background-color: white;
+}
+
+.login-button:hover {
+  border: 1px solid black;
+}
+
+.login-button-regular {
+  background-color: #00ac1c;
+  color: white;
+  border: #00ac1c;
+  padding: 15px;
+}
+
+.login-button-regular:hover {
+  background-color: #08ca28;
+}
+
+.premium {
+  margin-right: 25px;
+  margin-left: 25px;
+  margin-top: 10px;
+  padding: 9px;
+  border-radius: 3px;
+  font-size: 12px;
+  background-color: rgb(133, 133, 133);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.premium:hover {
+  background-color: rgb(104, 104, 104);
+}
+
+.logout {
+  background: none;
+  border: none;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.logout:hover {
+  color: gray;
+  cursor: pointer;
+}
+
+.main-info {
+  padding-left: 45px;
+  padding-bottom: 30px;
+}
+
+.boxes {
+  padding-left: 45px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 290px);
+  gap: 30px;
+}
+
+#boxes {
+  justify-content: center;
+  padding-left: 0px;
+}
+
+.latestBag {
+  padding-top: 60px;
+}
+
+.menu-mobile {
+  display: none;
+}
+
+#logo-mobile-login {
+  display: none;
+}
+
+.login-img {
+  display: block;
+  width: 50vw;
+  height: 100vh;
+}
+
+.login-content {
+  width: 50vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-bar-icon-mobile {
+  display: none;
+}
+
+.recent-desktop {
+  display: block;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+.recent-mobile {
+  display: none;
+  -webkit-animation: fadeOut 1s;
+  animation: fadeOut 1s;
+  right: 0;
+}
+
+.categories {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.container {
+  width: 500px;
+}
+
+::-webkit-file-upload-button {
+  background: rgb(182, 182, 182);
+  color: white;
+  border: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 18px;
+  padding-right: 18px;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  #logo-mobile-login {
+    display: block;
+  }
+
+  .login-text {
+    color: white;
+    font-size: 27px;
+  }
+
+  .login-img {
+    display: none;
+    width: 0vw;
+  }
+
+  .login-content {
+    width: 100vw;
+    background-image: url("./public/hiking.png");
+    background-size: cover;
+    background-position: center;
+    align-items: flex-end;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .recent-mobile {
+    position: absolute;
+    right: 0;
+    display: block;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+
+  .recent-desktop {
+    display: none;
+    -webkit-animation: fadeOut 1s;
+    animation: fadeOut 1s;
+  }
+
+  .main-info,
+  .boxes {
+    padding: 25px;
+  }
+
+  .latestBag {
+    padding-top: 20px;
+    padding-left: 25px;
+  }
+
+  .menu-mobile {
+    display: block;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .boxes {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .scroll-div {
+    overflow-x: scroll;
+    display: flex;
+    justify-content: space-between;
+    align-items: space-between;
+  }
+
+  .scroll-div input,
+  .scroll-div select {
+    width: auto;
+  }
+
+  .side-bar-icon-mobile {
+    display: block;
+  }
+}
