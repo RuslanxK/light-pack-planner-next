@@ -215,8 +215,22 @@
 }
 
 
+.loading {
+
+   margin-right: 210px;
+}
+
+
 
 @media only screen and (max-width: 768px) {
+
+
+  .loading {
+
+    margin-right: 0px;
+  }
+
+   
   #logo-mobile-login {
     display: block;
   }
