@@ -8,7 +8,7 @@ import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { styled } from "@mui/material/styles";
-import { useState, useTransition } from 'react';
+import { Fragment, useState, useTransition } from 'react';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import HikingOutlinedIcon from "@mui/icons-material/HikingOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
@@ -32,7 +32,6 @@ const router = useRouter()
 const path = usePathname()
 
 const [mode, setMode] = useState(user.mode);
-const [isTransitionStarted, startTransition] = useTransition();
 
 
 
@@ -44,7 +43,7 @@ const toggleTheme = async () => {
   const obj = {mode: newMode}
   try {
          await axios.put(`/api/user/${session?.user.id}`, obj)
-         startTransition(router.refresh)
+         router.refresh()
        }
          catch(err) {
            console.log(err)
@@ -116,6 +115,15 @@ const navigateToBag = (bag) => {
 
     <>
     {!disableNavBar.includes(path) && (
+   
+    <Fragment>
+
+      <div className='nav-mobile'>
+
+      <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70}/>
+          
+      </div>
+
     <div className="nav" style={{background: theme.palette.mode === "dark" ? "#171717" : null}}>
     <Stack  width={theme.nav.width} display={theme.flexBox}  height={theme.nav.height}> 
     <Stack position={theme.nav.fixed} justifyContent="space-between" height={theme.nav.height} borderRight={theme.palette.mode === "dark" ? `2px solid ${theme.main.darkColor}` : "1px solid #F2F2F2"} width={theme.nav.width}>
@@ -203,6 +211,8 @@ const navigateToBag = (bag) => {
     
     </Stack>
     </div>
+
+    </Fragment>
         
       )}
       </>

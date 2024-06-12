@@ -79,10 +79,10 @@ export default async function RootLayout({ children }) {
          <body className={poppins.className} suppressHydrationWarning={true}>
           <AppRouterCacheProvider>
             <Paper sx={{borderRadius: "0px"}}>
-            <Stack display="flex" flexDirection="row">
+            <div className="main-container">
             <Nav session={session} bags={bags} user={user} />
            {children}
-           </Stack>
+           </div>
            </Paper>
           </AppRouterCacheProvider>
           </body>

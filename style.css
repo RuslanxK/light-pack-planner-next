@@ -15,6 +15,16 @@
   line-height: 1;
 }
 
+.main-container {
+
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-mobile {
+
+   display: none;
+}
 
 
 @-webkit-keyframes fadeIn {
@@ -204,6 +214,8 @@
   border-radius: 5px;
 }
 
+
+
 @media only screen and (max-width: 768px) {
   #logo-mobile-login {
     display: block;
@@ -230,6 +242,25 @@
   .nav {
     display: none;
   }
+
+  .main-container {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-mobile {
+
+  display: block;
+  padding: 25px;
+}
+
+
+.nav-mobile img {
+
+    width: 90px;
+    height: 60px;
+}
 
   .recent-mobile {
     position: absolute;
