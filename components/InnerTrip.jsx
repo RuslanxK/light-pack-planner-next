@@ -169,25 +169,24 @@ const countryNameArr = countriesArr?.map((x) => x.common)
 
     <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth}  minHeight="100vh">
 
-    <Stack alignItems="flex-start" m={2}><IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0"}} onClick={() => router.push('/')}><ArrowBackIcon /></IconButton></Stack>
-
-
         <div className="main-info">
         <Stack>
-        <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} mr={6} pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+        <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+
+        <IconButton sx={{ marginRight: "5px", backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0"}} onClick={() => router.push('/')}><ArrowBackIcon /></IconButton>
         <Typography component="h2"variant='span' fontWeight="600" mr={1}>{tripData?.trip?.name}</Typography>
           <Tooltip title="Edit"><IconButton onClick={openPopup}><EditLocationOutlinedIcon sx={{cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
           <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
-        <Typography component="p" variant="p" sx={{marginRight: "45px"}}> {tripData?.trip?.about} </Typography>
+        <Typography component="p" variant="p"> {tripData?.trip?.about} </Typography>
 
        <Stack mt={3}>
-       <Stack direction="row" flexWrap="wrap"  borderRadius={theme.radius} width="fit-content" alignItems="center">
+       <Stack direction="row" borderRadius={theme.radius} width="fit-content" alignItems="center" justifyContent="center">
        <IconButton sx={{marginRight: "2px"}}><SportsScoreOutlinedIcon sx={{fontSize: "22px"}} /></IconButton> {tripData?.trip?.distance} km <IconButton sx={{marginRight: "2px", marginLeft: "2px"}}><MoreTimeIcon sx={{fontSize: "22px"}} /></IconButton> {calculateDaysLeft(tripData.trip) <= 0 ? (
        <Typography variant="span" sx={{ color: theme.black, fontWeight: "bold" }}>Traveled </Typography> ) : ( <Typography variant='span' sx={{ color: theme.green, fontWeight: "bold" }}> Starts in {calculateDaysLeft(tripData.trip)} {calculateDaysLeft(tripData.trip) > 0 ? 'day' : 'days'} </Typography>)}
        <IconButton sx={{marginRight: "2px", marginLeft: "2px"}}><WbSunnyOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {calculateDuration()} {calculateDuration() === 1 ? 'day' : 'days'}
        </Stack>
-       <Typography component="h2" variant="h6" mb={0.3} mt={2}>My Bags</Typography>
+       <Typography component="h2" variant="h6" mb={0.3} mt={4}>My Bags</Typography>
        <Typography component="p" variant="p" >Lorem ipsum dolor sit amet</Typography>
       </Stack>
         </Stack>

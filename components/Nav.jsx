@@ -24,6 +24,7 @@ import TranslateComponent from "../components/TranslateComponent"
 import axios from 'axios';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Nav = ({bags, session, user}) => {
 
@@ -121,6 +122,7 @@ const navigateToBag = (bag) => {
       <div className='nav-mobile'>
 
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
+      <MenuIcon />
           
       </div>
 

@@ -136,6 +136,8 @@
 
 .main-info {
   padding-left: 45px;
+  margin-top: 45px;
+  padding-right: 45px;
   padding-bottom: 30px;
 }
 
@@ -267,6 +269,9 @@
 
   display: block;
   padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 
