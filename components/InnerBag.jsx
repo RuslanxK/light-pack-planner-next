@@ -230,7 +230,7 @@ const InnerBag = ({bagData, items, session}) => {
 
 
         <div className="main-info">
-       <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center} justifyContent={theme.between} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+       <Stack display={theme.flexBox} flexWrap="wrap" flexDirection={theme.row} alignItems={theme.center} justifyContent={theme.between} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
 
         <Stack display="flex" direction="row">
         <IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0", marginRight: "5px"}} onClick={() => router.push(`/trips?id=${bagData.bag.tripId}`)}><ArrowBackIcon /></IconButton>
@@ -253,7 +253,7 @@ const InnerBag = ({bagData, items, session}) => {
           {bagData?.bag?.description}
         </Typography>
 
-        <Stack display={theme.flexBox} direction="row" justifyContent={theme.center} alignItems="center" mt={3} width="fit-content" borderRadius={theme.radius}>
+        <Stack display={theme.flexBox} flexWrap="wrap" direction="row" justifyContent={theme.center} alignItems="center" mt={3} width="fit-content" borderRadius={theme.radius}>
     
         <IconButton sx={{marginRight: "2px"}}><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
 

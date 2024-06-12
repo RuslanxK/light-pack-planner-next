@@ -171,7 +171,7 @@ const countryNameArr = countriesArr?.map((x) => x.common)
 
         <div className="main-info">
         <Stack>
-        <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+        <Stack display={theme.flexBox} flexDirection={theme.row} flexWrap="wrap" alignItems={theme.center} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
 
         <IconButton sx={{ marginRight: "5px", backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0"}} onClick={() => router.push('/')}><ArrowBackIcon /></IconButton>
         <Typography component="h2"variant='span' fontWeight="600" mr={1}>{tripData?.trip?.name}</Typography>
