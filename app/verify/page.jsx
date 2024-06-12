@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
-import VerifiedPage from '../../components/verifiedPage'
-
+import VerifiedPage from "../../components/VerifiedPage"
 
 
 const getUser = async (id) => {
