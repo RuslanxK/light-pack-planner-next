@@ -150,7 +150,7 @@ const Trips = ({trips, bags, session}) => {
     <Typography component="h3" variant="span" fontWeight="500" sx={{color: theme.green, textDecoration: "underline", cursor: "pointer", "&:hover": {color: "#32cd32"}}} onClick={navigateToLatestBag}>{ trips?.latestBag?.name.length > 6 ? `${trips?.latestBag?.name.substring(0, 6)}...` : trips?.latestBag?.name} </Typography>
     </Stack>
    
-        <Typography component="p" variant="p" mb={2} textAlign="center"> Streamline Your Gear, Simplify Your Adventure. </Typography>
+        <Typography component="p" variant="p" mb={4} textAlign="center"> Streamline Your Gear, Simplify Your Adventure. </Typography>
 
         <div id='boxes' className="boxes">
 
