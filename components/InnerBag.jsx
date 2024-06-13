@@ -275,8 +275,6 @@ const InnerBag = ({bagData, items, session}) => {
         <Stack justifyContent="center" alignItems="center" mr={5}>
         <IconButton><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
         </Stack>
-
-        <Button size='small' sx={{paddingLeft: "10px", paddingRight: "10px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share Bag <OpenInNewIcon sx={{fontSize: "17px", marginLeft: "5px"}} /></Button>
         
          </Stack> 
          
