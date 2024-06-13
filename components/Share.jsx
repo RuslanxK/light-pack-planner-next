@@ -116,16 +116,28 @@ const Share = ({bagData, user, session}) => {
           {bagData?.bag?.description}
         </Typography>
 
-        <Stack display={theme.flexBox} direction="row" justifyContent={theme.center} alignItems="center" mt={3} width="fit-content" borderRadius={theme.radius}>
-    
-        <IconButton sx={{marginRight: "2px"}}><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
 
-        { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {user?.weightOption} </Typography>  }
-        <IconButton sx={{marginRight: "2px", marginLeft: "2px"}} ><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
 
-        <Typography variant="span" component="span"> { bagData?.worn ? "worn " + bagData?.worn?.toFixed(1) + "  " + user?.weightOption : '0.0 ' + user?.weightOption}</Typography>
-        <IconButton sx={{marginRight: "2px", marginLeft: "2px"}} ><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
-         </Stack> 
+        <div className='innerBagData'>
+  
+        <Stack justifyContent="center" alignItems="center">
+        <IconButton><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
+        { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
+        </Stack>
+        
+        <Stack justifyContent="center" alignItems="center" pl={4} pr={4} >
+        <IconButton><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
+        
+        <Typography variant="span" component="span"> { bagData?.worn ? bagData?.worn?.toFixed(1) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
+        </Stack>
+
+        <Stack justifyContent="center" alignItems="center">
+        <IconButton><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
+        </Stack>
+        
+         </div> 
+
+
    
 
     { itemsTotal ?  <Stack mb={2}>

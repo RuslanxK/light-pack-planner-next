@@ -45,16 +45,13 @@ const SharedItem = (props) => {
       };
 
 
-      // to add:  shared by "name"  + likes
-
-
   return (
 
     
     <div className="scroll-div" sx={{ overflowX: "scroll"}}>
     
       
-      <Stack width="100%" mb={0.5}e flexDirection="row" justifyContent={theme.between} alignItems={theme.center} onMouseOver={() => setItemHover(true)}  onMouseLeave={() => setItemHover(false)}>
+      <Stack mb={0.5}e flexDirection="row" justifyContent={theme.between} alignItems={theme.center} onMouseOver={() => setItemHover(true)}  onMouseLeave={() => setItemHover(false)}>
       <TextField size='small' variant='standard' placeholder='name' name='name' sx={{ marginTop: "16px", width: '50%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0"}} value={props.itemData.name} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{style: {fontSize: 12}}}/>
       <TextField size='small' variant='standard' placeholder='note' name='description' sx={{ marginTop: "16px", width: '100%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0"}} value={props.itemData.description} InputLabelProps={{ style : {fontSize: 12}}} inputProps={{style: {fontSize: 12}}} InputProps={{disableUnderline: true}} />
       <TextField size='small' variant='standard' type='number' name='price' label="$ price" step="any" sx={{width: '10%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0"}} value={props.itemData.price} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{ min: 1, max: 99, style: {fontSize: 12} }} />
