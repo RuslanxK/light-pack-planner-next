@@ -25,6 +25,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 const InnerBag = ({bagData, items, session}) => {
 
@@ -244,10 +245,7 @@ const InnerBag = ({bagData, items, session}) => {
         <Tooltip title="Total likes"><IconButton><FavoriteIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
         </Badge>
         </Stack>
-        
-        <Stack display="flex" direction="row">
-        <Button size='small' sx={{paddingLeft: "10px", paddingRight: "10px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share <SendIcon sx={{fontSize: "15px", marginLeft: "5px"}} /></Button>
-        </Stack>
+       
 
         <Stack direction="row">
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
@@ -261,8 +259,9 @@ const InnerBag = ({bagData, items, session}) => {
           {bagData?.bag?.description}
         </Typography>
 
-        <Stack display={theme.flexBox} flexWrap="wrap" direction="row" justifyContent={theme.center} alignItems="center" mt={3} width="fit-content" borderRadius={theme.radius}>
+        <Stack display={theme.flexBox} flexWrap="wrap" direction="row" justifyContent={theme.between} alignItems="center" mt={3} width="100%" borderRadius={theme.radius}>
     
+        <Stack direction="row" alignItems="center">
         <IconButton sx={{marginRight: "2px"}}><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
 
         { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
@@ -270,7 +269,12 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Typography variant="span" component="span"> { bagData?.worn ? "worn " + bagData?.worn?.toFixed(1) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
         <IconButton sx={{marginRight: "2px", marginLeft: "2px"}} ><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
+        </Stack>
+        <Stack>
+        <Button size='small' sx={{paddingLeft: "10px", paddingRight: "10px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share Bag <OpenInNewIcon sx={{fontSize: "17px", marginLeft: "5px"}} /></Button>
+        </Stack>
          </Stack> 
+         
       </div>
 
     { itemsTotal ?  <Stack>

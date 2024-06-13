@@ -234,15 +234,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 
 @media only screen and (max-width: 768px) {
 
-
-
-  span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anchorOriginTopRightRectangular.MuiBadge-overlapRectangular.MuiBadge-colorSecondary.mui-17re4hh-MuiBadge-badge {
-    transform: scale(0.65);
-    margin-right: -5px;
-    margin-top: -5px;
-  }
   
-
 
   .categories {
     margin-left: 20px;
