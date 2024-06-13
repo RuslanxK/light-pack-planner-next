@@ -245,12 +245,9 @@ const InnerBag = ({bagData, items, session}) => {
         </Badge>
         </Stack>
         
-        {/* <Stack display="flex" direction="row">
+        <Stack display="flex" direction="row">
         <Button size='small' sx={{paddingLeft: "10px", paddingRight: "10px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share <SendIcon sx={{fontSize: "15px", marginLeft: "5px"}} /></Button>
-        <Badge color="secondary" badgeContent={bagData.bag.likes || "0" }>
-        <Tooltip title="Total likes"><IconButton><ThumbUpIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
-        </Badge>
-        </Stack> */}
+        </Stack>
 
         <Stack direction="row">
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
