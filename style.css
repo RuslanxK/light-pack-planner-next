@@ -246,6 +246,10 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 
 @media only screen and (max-width: 768px) {
 
+  .category-drag, .item-drag {
+
+      display: none;
+  }
 
   .share-link-desktop {
 

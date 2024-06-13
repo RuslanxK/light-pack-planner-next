@@ -91,9 +91,9 @@ const InnerBag = ({bagData, items, session}) => {
         ref={ref}
        >
         <Stack width="100%" direction="row" alignItems="flex-start">
-        <IconButton sx={{marginTop: "5px", cursor: "move"}} ref={drag}>
+        <div className='category-drag'><IconButton sx={{marginTop: "5px", cursor: "move"}} ref={drag}>
           <DragIndicatorIcon sx={{fontSize: "15px"}}/>
-        </IconButton> 
+        </IconButton> </div>
         <Category key={category._id} categoryData={category} items={bagData?.items} session={session} />
         </Stack>
         </Stack>
