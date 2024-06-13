@@ -16,7 +16,6 @@ import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import { PieChart, pieArcLabelClasses} from "@mui/x-charts/PieChart";
 import SideItem from '../components/SideItem'
 import FlipCameraIosOutlinedIcon from '@mui/icons-material/FlipCameraIosOutlined';
-import EditLocationOutlinedIcon from '@mui/icons-material/EditLocationOutlined';
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
@@ -25,6 +24,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const InnerBag = ({bagData, items, session}) => {
 
@@ -240,6 +240,9 @@ const InnerBag = ({bagData, items, session}) => {
         <Stack direction="row" alignItems="center">
         <IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0", marginRight: "5px"}} onClick={() => router.push(`/trips?id=${bagData.bag.tripId}`)}><ArrowBackIcon sx={{fontSize: "20px"}}/></IconButton>
         <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
+        <Badge color="secondary" badgeContent={bagData.bag.likes || "0" }>
+        <Tooltip title="Total likes"><IconButton><FavoriteIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
+        </Badge>
         </Stack>
         
         {/* <Stack display="flex" direction="row">
