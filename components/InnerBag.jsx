@@ -339,7 +339,7 @@ const InnerBag = ({bagData, items, session}) => {
      <Stack pt={2} display={theme.flexBox} alignItems={theme.left} position={theme.nav.fixed} height={theme.nav.height} width="185px" sx={{backgroundColor: theme.green, borderTopLeftRadius: "25px"}}>
      <Typography component="h3" variant="span" textAlign="center" color="white">Recent Items</Typography>
      <Typography component="span" variant="span" textAlign="center" mb={3} color={theme.main.lightGray}>added to your plans</Typography>
-     <Stack sx={{overflowY: "scroll"}} height="85.5vh" pl={3}>
+     <Stack sx={{overflowY: "scroll"}} height="65vh" pl={3}>
      {allBagsItems}
      </Stack>
      </Stack>
