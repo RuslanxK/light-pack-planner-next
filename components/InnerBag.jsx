@@ -21,8 +21,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { HTML5toTouch } from 'rdndmb-html5-to-touch'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -227,8 +225,7 @@ const InnerBag = ({bagData, items, session}) => {
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
     { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", left: "15px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
-    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "60px", left: "15px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
-    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "105px", left: "15px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
+    <div className="share-icon-mobile"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "60px", left: "15px", backgroundColor: theme.palette.primary.dark, color: "white", "&:hover": {backgroundColor: theme.palette.info.main}}}><OpenInNewIcon sx={{fontSize: "20px"}}/></IconButton></div>
 
 
     <Box display="flex" flexDirection="row" width={theme.fullWidth} minHeight="100vh"height="100%">
@@ -252,7 +249,7 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Stack direction="row">
 
-        <Tooltip title="Share Bag"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><OpenInNewIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
+       <div class="share-link-desktop"> <Tooltip title="Share Bag"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><OpenInNewIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip> </div>
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>

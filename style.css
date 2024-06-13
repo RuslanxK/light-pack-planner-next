@@ -187,7 +187,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
   align-items: center;
 }
 
-.side-bar-icon-mobile {
+.side-bar-icon-mobile, .share-icon-mobile {
   display: none;
 }
 
@@ -247,6 +247,10 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 @media only screen and (max-width: 768px) {
 
 
+  .share-link-desktop {
+
+      display: none
+  }
 
   .innerBagData {
 
@@ -367,7 +371,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
      width: auto;
   }
 
-  .side-bar-icon-mobile {
+  .side-bar-icon-mobile, .share-icon-mobile {
     display: block;
   }
 }
