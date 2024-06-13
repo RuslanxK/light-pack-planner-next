@@ -261,7 +261,7 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Stack display={theme.flexBox} flexWrap="wrap" direction="row" justifyContent={theme.between} alignItems="center" mt={3} width="100%" borderRadius={theme.radius}>
     
-        <Stack direction="row" alignItems="center" flexWrap="wrap">
+        <Stack direction="row" alignItems="center" flexWrap="wrap" justifyContent="center">
         <IconButton sx={{marginRight: "2px"}}><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
 
         { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
