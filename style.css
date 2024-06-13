@@ -233,14 +233,12 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 
 .innerBagData  {
 
-  /* display={theme.flexBox} flexWrap="wrap" direction="row" alignItems="center" mt={3} width="100%" */
   display: flex;
-  flex-wrap: wrap;
   direction: row;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 20px;
   
 }
 
@@ -248,13 +246,6 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 
 @media only screen and (max-width: 768px) {
 
-
-
-  span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anchorOriginTopRightRectangular.MuiBadge-overlapRectangular.MuiBadge-colorSecondary.mui-17re4hh-MuiBadge-badge {
-    transform: scale(0.55) !important;
-    margin-right: -4px !important;
-    margin-top: -3px !important;
-  }
 
 
   .innerBagData {
