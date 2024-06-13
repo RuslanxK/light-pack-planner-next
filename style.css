@@ -313,7 +313,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 }
 
 
-.nav-mobile img {
+.nav-mobile img, #share-logo {
 
     width: 90px;
     height: 60px;
