@@ -231,8 +231,28 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 }
 
 
+.innerBagData  {
+
+  /* display={theme.flexBox} flexWrap="wrap" direction="row" alignItems="center" mt={3} width="100%" */
+  display: flex;
+  flex-wrap: wrap;
+  direction: row;
+  align-items: center;
+  width: 100%;
+  margin-top: 15px;
+  
+}
+
+
 
 @media only screen and (max-width: 768px) {
+
+
+  .innerBagData {
+
+     justify-content: center;
+  }
+
 
   
   .categories {

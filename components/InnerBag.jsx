@@ -249,7 +249,7 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Stack direction="row">
 
-        <div><Button size='small' sx={{paddingLeft: "10px", paddingRight: "10px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share Bag <OpenInNewIcon sx={{fontSize: "17px", marginLeft: "5px"}} /></Button></div>
+        <Tooltip title="Share Bag"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><OpenInNewIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
@@ -261,7 +261,7 @@ const InnerBag = ({bagData, items, session}) => {
           {bagData?.bag?.description}
         </Typography>
 
-        <Stack display={theme.flexBox} flexWrap="wrap" direction="row" alignItems="center" mt={3} width="100%">
+        <div className='innerBagData'>
   
         <Stack justifyContent="center" alignItems="center" mr={4}>
         <IconButton><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
@@ -278,7 +278,7 @@ const InnerBag = ({bagData, items, session}) => {
         <IconButton><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
         </Stack>
         
-         </Stack> 
+         </div> 
          
       </div>
 
