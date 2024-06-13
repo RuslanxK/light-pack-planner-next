@@ -259,20 +259,25 @@ const InnerBag = ({bagData, items, session}) => {
           {bagData?.bag?.description}
         </Typography>
 
-        <Stack display={theme.flexBox} flexWrap="wrap" direction="row" justifyContent={theme.between} alignItems="center" mt={3} width="100%" borderRadius={theme.radius}>
-    
-        <Stack direction="row" alignItems="center" flexWrap="wrap" justifyContent="center">
-        <IconButton sx={{marginRight: "2px"}}><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
-
+        <Stack display={theme.flexBox} flexWrap="wrap" direction="row" alignItems="center" mt={3} width="100%">
+  
+        <Stack justifyContent="center" alignItems="center" mr={5}>
+        <IconButton><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
         { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
-        <IconButton sx={{marginRight: "2px", marginLeft: "2px"}} ><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
-
+        </Stack>
+        
+        <Stack justifyContent="center" alignItems="center" mr={5}>
+        <IconButton><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
+        
         <Typography variant="span" component="span"> { bagData?.worn ? "worn " + bagData?.worn?.toFixed(1) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
-        <IconButton sx={{marginRight: "2px", marginLeft: "2px"}} ><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
         </Stack>
-        <Stack>
+
+        <Stack justifyContent="center" alignItems="center" mr={5}>
+        <IconButton><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
+        </Stack>
+
         <Button size='small' sx={{paddingLeft: "10px", paddingRight: "10px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share Bag <OpenInNewIcon sx={{fontSize: "17px", marginLeft: "5px"}} /></Button>
-        </Stack>
+        
          </Stack> 
          
       </div>
