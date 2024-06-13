@@ -237,7 +237,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
   direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: fit-content;
+  width: 100%;
   margin-top: 20px;
   
 }
