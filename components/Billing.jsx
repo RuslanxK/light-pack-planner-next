@@ -54,17 +54,19 @@ const Billing = () => {
 
      <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} minHeight="100vh">
 
-     <Stack alignItems="flex-start" m={2}><IconButton onClick={() => router.push('/')}><ArrowBackIcon /></IconButton></Stack>
-
      <div className="main-info">
 
-
+     <Stack direction="row" alignItems="center">
+     <IconButton sx={{marginRight: "5px"}} onClick={() => router.push('/')}><ArrowBackIcon /></IconButton>
     <Typography component="h2" variant="h6" mb={0.5}>
       Payment method
     </Typography>
+    </Stack>
+
     <Typography component="p" variant="p" mb={4} color="gray">
        update your billing details and address
     </Typography>
+
 
      <Divider light width="1100px" />
 

@@ -82,7 +82,6 @@ const Articles = ({articles, session}) => {
     
 <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.trips.width} minHeight="100vh" pb={5}>
 
-<Stack alignItems="flex-start" m={2}><IconButton onClick={() => router.push('/')}><ArrowBackIcon /></IconButton></Stack>
 
       
 <div className="main-info">
@@ -101,9 +100,12 @@ const Articles = ({articles, session}) => {
 
 </Stack> </form> : null }
 
+<Stack direction="row" alignItems="center">
+<IconButton sx={{marginRight: "5px"}} onClick={() => router.push('/')}><ArrowBackIcon /></IconButton>
 <Typography component="h1" fontWeight="600" variant='span' fontSize="20px" mb={0.5}> 
  Explore the Wilderness: Expert Tips, Stories, and Gear Recommendations Inside!
 </Typography>
+</Stack>
 <Typography component="p" variant="p" mb={2.5}>
  Embark on a journey with our backpacking blog, where seasoned adventurers share their tales of triumph, survival, and discovery. <br /> From remote mountain peaks to dense forests, find inspiration for your next expedition.
 </Typography>

@@ -80,14 +80,16 @@ const Settings = ({session, user}) => {
 
      <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} minHeight="100vh">
 
-     <Stack alignItems="flex-start" m={2}><IconButton onClick={() => router.push('/')}><ArrowBackIcon /></IconButton></Stack>
 
 
      <div className="main-info">
 
-    <Typography component="h2" variant="h6" mb={0.5}>
+     <Stack direction="row" alignItems="center">
+     <IconButton sx={{marginRight: "5px"}} onClick={() => router.push('/')}><ArrowBackIcon /></IconButton>
+     <Typography component="h2" variant="h6" mb={0.5}>
       Settings
     </Typography>
+    </Stack>
     <Typography component="p" variant="p" mb={4} color="gray">
        Update your details here.
     </Typography>

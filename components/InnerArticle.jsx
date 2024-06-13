@@ -18,7 +18,7 @@ const InnerArticle = ({articleData}) => {
 
         <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.trips.width} pb={7} minHeight="100vh">
 
-        <img src={`${process.env.NEXT_PUBLIC_ARTICLE_URL}/${articleData.imageKey}`} height="500px" style={{objectFit: "cover"}} alt='article' />
+        <img src={`${process.env.NEXT_PUBLIC_ARTICLE_URL}/${articleData.imageKey}`} height="350px" style={{objectFit: "cover"}} alt='article' />
 
         <div className="main-info">
 

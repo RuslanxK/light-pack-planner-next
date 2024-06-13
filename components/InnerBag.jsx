@@ -290,7 +290,7 @@ const InnerBag = ({bagData, items, session}) => {
            highlightScope: { faded: 'global', highlighted: 'item' },
            arcLabel: getArcLabel,
            innerRadius: 35,
-           outerRadius: 110,
+           outerRadius: 100,
            paddingAngle: 5,
            cornerRadius: 5,
            startAngle: -180,
