@@ -248,6 +248,8 @@ const InnerBag = ({bagData, items, session}) => {
        
 
         <Stack direction="row">
+
+        <div><Button size='small' sx={{paddingLeft: "10px", paddingRight: "10px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share Bag <OpenInNewIcon sx={{fontSize: "17px", marginLeft: "5px"}} /></Button></div>
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
@@ -261,18 +263,18 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Stack display={theme.flexBox} flexWrap="wrap" direction="row" alignItems="center" mt={3} width="100%">
   
-        <Stack justifyContent="center" alignItems="center" mr={5}>
+        <Stack justifyContent="center" alignItems="center" mr={4}>
         <IconButton><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
         { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
         </Stack>
         
-        <Stack justifyContent="center" alignItems="center" mr={5}>
+        <Stack justifyContent="center" alignItems="center" mr={4}>
         <IconButton><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
         
-        <Typography variant="span" component="span"> { bagData?.worn ? "worn " + bagData?.worn?.toFixed(1) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
+        <Typography variant="span" component="span"> { bagData?.worn ? bagData?.worn?.toFixed(1) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
         </Stack>
 
-        <Stack justifyContent="center" alignItems="center" mr={5}>
+        <Stack justifyContent="center" alignItems="center" mr={4}>
         <IconButton><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
         </Stack>
         
