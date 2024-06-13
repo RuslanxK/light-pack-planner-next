@@ -263,18 +263,18 @@ const InnerBag = ({bagData, items, session}) => {
 
         <div className='innerBagData'>
   
-        <Stack justifyContent="center" alignItems="center" mr={4}>
+        <Stack justifyContent="center" alignItems="center" pl={3} pr={3}>
         <IconButton><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
         { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
         </Stack>
         
-        <Stack justifyContent="center" alignItems="center" mr={4}>
+        <Stack justifyContent="center" alignItems="center" pl={3} pr={3} >
         <IconButton><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
         
         <Typography variant="span" component="span"> { bagData?.worn ? bagData?.worn?.toFixed(1) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
         </Stack>
 
-        <Stack justifyContent="center" alignItems="center" mr={4}>
+        <Stack justifyContent="center" alignItems="center"  pl={3} pr={3}>
         <IconButton><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
         </Stack>
         

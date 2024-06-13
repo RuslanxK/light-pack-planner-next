@@ -238,6 +238,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
   flex-wrap: wrap;
   direction: row;
   align-items: center;
+  justify-content: flex-start;
   width: 100%;
   margin-top: 15px;
   
@@ -258,7 +259,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 
   .innerBagData {
 
-     justify-content: center;
+     justify-content: space-between;
   }
 
 
