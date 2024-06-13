@@ -24,6 +24,7 @@ import { HTML5toTouch } from 'rdndmb-html5-to-touch'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import SendIcon from '@mui/icons-material/Send';
+import EditIcon from '@mui/icons-material/Edit';
 
 const InnerBag = ({bagData, items, session}) => {
 
@@ -241,15 +242,15 @@ const InnerBag = ({bagData, items, session}) => {
         <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
         </Stack>
         
-        <Stack display="flex" direction="row">
+        {/* <Stack display="flex" direction="row">
         <Button size='small' sx={{paddingLeft: "10px", paddingRight: "10px"}} disableElevation onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share <SendIcon sx={{fontSize: "15px", marginLeft: "5px"}} /></Button>
         <Badge color="secondary" badgeContent={bagData.bag.likes || "0" }>
         <Tooltip title="Total likes"><IconButton><ThumbUpIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
         </Badge>
-        </Stack>
+        </Stack> */}
 
         <Stack direction="row">
-        <Tooltip title="Edit"><IconButton onClick={openPopup}><EditLocationOutlinedIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
+        <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
         </Stack>
@@ -339,7 +340,7 @@ const InnerBag = ({bagData, items, session}) => {
      <Stack pt={2} display={theme.flexBox} alignItems={theme.left} position={theme.nav.fixed} height={theme.nav.height} width="185px" sx={{backgroundColor: theme.green, borderTopLeftRadius: "25px"}}>
      <Typography component="h3" variant="span" textAlign="center" color="white">Recent Items</Typography>
      <Typography component="span" variant="span" textAlign="center" mb={3} color={theme.main.lightGray}>added to your plans</Typography>
-     <Stack sx={{overflowY: "scroll"}} height="65vh" pl={3}>
+     <Stack sx={{overflowY: "scroll"}} height="70vh" pl={3}>
      {allBagsItems}
      </Stack>
      </Stack>
