@@ -141,7 +141,7 @@ const Share = ({bagData, user, session}) => {
 
    
 
-    { itemsTotal ?  <Stack mb={2}>
+    { itemsTotal ?  <Stack>
       <PieChart margin={{ top: 0, left:0, right:0, bottom: 0}} 
        series={[{
            data: categoryPieChartData,
@@ -154,13 +154,13 @@ const Share = ({bagData, user, session}) => {
            cornerRadius: 5,
            startAngle: -180,
            endAngle: 180,
-           cx: 180,
+           cx: 150,
            cy: 150,
          },
        ]}
        sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
     
-       height={300}
+       height={335}
        slotProps={{ legend: { hidden: true } }}
        tooltip={{ trigger: 'item' }} 
        
