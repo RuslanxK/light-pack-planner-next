@@ -245,6 +245,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 .share-main-div {
 
     width: 75%;
+   
 }
 
 
@@ -254,7 +255,9 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 
   .share-main-div {
 
-    width: 100%;
+    width: 90%;
+   
+    
 }
 
   .category-drag, .item-drag {
