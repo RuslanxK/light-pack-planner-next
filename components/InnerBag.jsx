@@ -290,12 +290,12 @@ const InnerBag = ({bagData, items, session}) => {
            highlightScope: { faded: 'global', highlighted: 'item' },
            arcLabel: getArcLabel,
            innerRadius: 35,
-           outerRadius: 100,
+           outerRadius: 110,
            paddingAngle: 5,
            cornerRadius: 5,
            startAngle: -180,
            endAngle: 180,
-           cx: 150,
+           cx: 180,
            cy: 150,
          },
        ]}
@@ -303,7 +303,7 @@ const InnerBag = ({bagData, items, session}) => {
     
        height={335}
        tooltip={{}}
-       slotProps={{ legend: { direction: "column", position: { vertical: "top", horizontal: "right" }}}}
+       slotProps={{ legend: { direction: "column", position: { vertical: "top", horizontal: "center" }}}}
        
        />
 
