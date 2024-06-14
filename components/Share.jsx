@@ -154,7 +154,7 @@ const Share = ({bagData, user, session}) => {
            cornerRadius: 5,
            startAngle: -180,
            endAngle: 180,
-           cx: 160,
+           cx: 180,
            cy: 150,
          },
        ]}
