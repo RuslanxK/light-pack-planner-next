@@ -150,7 +150,7 @@ const InnerBag = ({bagData, items, session}) => {
         return {
           id: category._id,
           value: categoryWeight?.totalWeight || 0 ,
-          label: category?.name?.length > 6 ? `${categoryWeight?.totalWeight?.toFixed(2) || 0.00} ${session?.user?.weightOption} - ${category?.name?.substring(0, 6)}...` : `${categoryWeight?.totalWeight?.toFixed(2) || 0.00} ${session?.user?.weightOption} - ${category?.name}`
+          label: category?.name?.length > 10 ? `${category?.name?.substring(0, 10)}...` : `${categoryWeight?.totalWeight?.toFixed(2) || 0.00} ${session?.user?.weightOption} - ${category?.name}`
         };
       })
     ;
@@ -283,29 +283,28 @@ const InnerBag = ({bagData, items, session}) => {
       </div>
 
     { itemsTotal ?  <Stack>
-      <PieChart margin={{ top: 0, left:0, right:0, bottom: 0}} 
-       series={[{
-           data: categoryPieChartData,
-           faded: {innerRadius: 30, additionalRadius: -15, color: 'gray'},
-           highlightScope: { faded: 'global', highlighted: 'item' },
-           arcLabel: getArcLabel,
-           innerRadius: 35,
-           outerRadius: 110,
-           paddingAngle: 5,
-           cornerRadius: 5,
-           startAngle: -180,
-           endAngle: 180,
-           cx: 180,
-           cy: 150,
-         },
-       ]}
-       sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
-    
-       height={335}
-       tooltip={{}}
-       slotProps={{ legend: { direction: "column", position: { vertical: "top", horizontal: "center" }}}}
-       
-       />
+      <PieChart 
+    margin={{ top: 0, left:0, right:0, bottom: 0}} 
+    series={[{
+      data: categoryPieChartData,
+      faded: {innerRadius: 30, additionalRadius: -15, color: 'gray'},
+      highlightScope: { faded: 'global', highlighted: 'item' },
+      arcLabel: getArcLabel,
+      innerRadius: 35,
+      outerRadius: 110,
+      paddingAngle: 5,
+      cornerRadius: 5,
+      startAngle: -180,
+      endAngle: 180,
+      cx: 180,
+      cy: 150,
+      showLegend: false
+    }]}
+    sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
+    height={335}
+    slotProps={{ legend: { hidden: true } }}
+    tooltip={{ trigger: 'item' }} 
+  />
 
       </Stack> : null }
 
