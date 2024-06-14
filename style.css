@@ -348,7 +348,6 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
     display: block;
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s;
-    z-index: 9999;
   }
 
   .recent-desktop {

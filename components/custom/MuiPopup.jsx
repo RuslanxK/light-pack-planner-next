@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const MuiPopup = ({isOpen, onClose, children}) => {
   return (
-    <Dialog open={isOpen} onClose={onClose} fullWidth TransitionComponent={Transition} keepMounted sx={{zIndex: 999999}}>
+    <Dialog open={isOpen} onClose={onClose} fullWidth TransitionComponent={Transition} keepMounted>
       <DialogContent>
         {children}
       </DialogContent>
