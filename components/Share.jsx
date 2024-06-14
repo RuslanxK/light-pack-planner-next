@@ -76,7 +76,7 @@ const Share = ({bagData, user, session}) => {
         return {
           id: category._id,
           value: categoryWeight?.totalWeight || 0 ,
-          label: category?.name?.length > 6 ? `${categoryWeight?.totalWeight?.toFixed(2) || 0.00}  - ${category?.name?.substring(0, 6)}...` : `${categoryWeight?.totalWeight?.toFixed(2) || 0.00} - ${category?.name}`
+          label: category?.name?.length > 10 ? `${category?.name?.substring(0, 10)}...` : `${categoryWeight?.totalWeight?.toFixed(2) || 0.00} - ${category?.name}`
         };
       })
     ;
@@ -161,8 +161,8 @@ const Share = ({bagData, user, session}) => {
        sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
     
        height={300}
-       tooltip={{}}
-       slotProps={{ legend: { direction: "column", position: { vertical: "top", horizontal: "center" }}}}
+       slotProps={{ legend: { hidden: true } }}
+       tooltip={{ trigger: 'item' }} 
        
        />
 
