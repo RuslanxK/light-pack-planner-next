@@ -94,15 +94,18 @@ const Share = ({bagData, user, session}) => {
 
     <Container maxWidth={false} sx={{minHeight: "100vh", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}} disableGutters>
     <div className='share-main-div'>
-     <Stack margin="0 auto" width="100%" mt={3} pb={3} direction="row" justifyContent="space-between" alignItems="center">
+  
+    <Box display="flex" flexDirection="row" width={"100%"} minHeight="100vh" height="100%">
+    <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} pb={5}>
+ 
+
+    <div className="main-info-share">
+
+    <Stack margin="0 auto" width="100%" mt={3} pb={3} direction="row" justifyContent="space-between" alignItems="center">
      <img id='share-logo' src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} onClick={() => router.push('/')} alt='Light Pack - Planner' width={110} height={70}/>
      <Typography fontWeight="600" component="span" variant='span'>By {user.username}</Typography>
     {session?.user?.id ? null : <Button disableElevation variant="contained" color="primary" onClick={() => window.open('/register', '_blank')}> Join Now </Button> }
     </Stack> 
-  
-    <Box display="flex" flexDirection="row" width={"100%"} minHeight="100vh" height="100%">
-    <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} pb={5}>
-
       
        <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center } boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"}  pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
         <Stack display="flex" direction="row" justifyContent={theme.between} alignItems="center" width="100%">
@@ -138,7 +141,8 @@ const Share = ({bagData, user, session}) => {
         
          </div> 
 
-
+     
+     </div>
    
 
     { itemsTotal ?  <Stack>
