@@ -15,9 +15,12 @@ import Divider from '@mui/material/Divider';
 import {useDrag, useDrop } from "react-dnd";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import FolderDeleteOutlinedIcon from '@mui/icons-material/FolderDeleteOutlined';
-import {useSortable} from "@dnd-kit/sortable"
+import { DndContext, closestCenter, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors} from '@dnd-kit/core';
+import {SortableContext, arrayMove, verticalListSortingStrategy, useSortable} from "@dnd-kit/sortable"
+
 import { CSS } from "@dnd-kit/utilities";
 
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 const Category = (props) => {
 
@@ -33,12 +36,45 @@ const Category = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
 
 
+
+  useEffect(() => {
+    setItemsData(props.items || []);
+  }, [props.items]);
+
+
+  const mouseSensor = useSensor(MouseSensor, {
+    // Require the mouse to move by 10 pixels before activating
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    // Press delay of 250ms, with tolerance of 5px of movement
+    activationConstraint: {
+      delay: 250,
+      tolerance: 5,
+    },
+  });
+
+
+  const keyboardSensor = useSensor(KeyboardSensor);
+
+
+  const sensors = useSensors(
+    mouseSensor,
+    touchSensor,
+    keyboardSensor
+  );
+
+
+
+
   const {attributes, listeners, setNodeRef, transform, transition} = useSortable({id: props.categoryData.order})
 
   const style = {
 
       transition,
-      transform: CSS.Transform.toString(transform)
+      transform: CSS.Translate.toString(transform)
   }
 
 
@@ -65,21 +101,52 @@ const Category = (props) => {
 
 
 
-  const moveItems = (fromIndex, toIndex) => {
-    
-    const categoryItems = itemsData.filter(item => item.categoryId === props.categoryData._id);
-    const movedItem = categoryItems.splice(fromIndex, 1)[0];
-    categoryItems.splice(toIndex, 0, movedItem);
 
-    const reorderedItems = categoryItems.map((item, index) => ({
+
+  const moveItem = async (fromIndex, toIndex) => {
+
+    try {
+    
+    const updatedItems = [...itemsOfCategory];
+    const movedItem = updatedItems[fromIndex];
+
+    updatedItems.splice(fromIndex, 1);
+    updatedItems.splice(toIndex, 0,  movedItem);
+
+    const reorderedItems = updatedItems.map((item, index) => ({
       ...item,
-      order: index,
+      order: index + 1
     }));
 
-  
-    setItemsData(reorderedItems);
-    saveItemsOrder(reorderedItems);
-    
+    setItemsData(reorderedItems); 
+
+    await saveItemsOrder(reorderedItems);
+
+  } 
+
+  catch (error) {
+    console.error('Failed to move item:', error);
+  }
+
+  };
+
+
+
+  const onDragEnd = (event) => {
+
+    console.log(event);
+    const { active, over } = event;
+
+    if (active.id === over.id) {
+      return;
+    }
+
+    const fromIndex = itemsData.findIndex(item => item.order === active.id);
+    const toIndex = itemsData.findIndex(item => item.order === over.id);
+
+    if (fromIndex !== -1 && toIndex !== -1) {
+      moveItem(fromIndex, toIndex);
+    }
   };
 
 
@@ -91,10 +158,12 @@ const saveItemsOrder = async (updatedItems) => {
   const arr = {items: updatedItems}
 
     await axios.put('/items', arr);
+    console.log("updated")
   } catch (error) {
     console.error('Failed to save items order:', error);
   }
 };
+
 
 
   const addItem =  async () => {
@@ -109,6 +178,8 @@ const saveItemsOrder = async (updatedItems) => {
           console.log(error)
      }
     }
+
+
 
     const openPopup = () => {
        setRemovePopupOpen(true)
@@ -151,14 +222,18 @@ const saveItemsOrder = async (updatedItems) => {
 
 
   return (
-    <Stack width={theme.category.width}  display={theme.flexBox} mb={1} justifyContent={theme.center} backgroundColor={ theme.palette.mode === "dark" ? '#171717' : "#f5f5f5" } ref={setNodeRef} {...attributes} {...listeners} style={style} boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"} sx={{cursor: "grabbing"}} borderRadius="7px">
+    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.5}  backgroundColor={ theme.palette.mode === "dark" ? '#171717' : "#f5f5f5" } ref={setNodeRef} {...attributes} {...listeners} style={style} boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"} borderRadius="7px">
+
+  
+      <Stack display={theme.flexBox} direction="row" pt={0.8} pb={0.3}>
+
+
+      <Stack display="flex" direction="row" alignItems="center" justifyContent="center" width="100%" >
+      <IconButton sx={{cursor: "grabbing"}} >
+          <DragIndicatorIcon sx={{fontSize: "15px"}}/>
+        </IconButton> 
  
-      <Stack display={theme.flexBox} direction="row" justifyContent={theme.between} alignItems={theme.center} pt={0.8} pb={0.3}>
-
-
-      <Stack display="flex" direction="row" alignItems="center" justifyContent="flex-start" width="100%" >
-     { isShowingEdit ? <EditIcon sx={{fontSize: "12px", color: "gray", marginBottom: "5px", marginLeft: "5px"}}/> : null}
-      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "10px"}} value={updatedCategory.name} 
+      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "5px"}} value={updatedCategory.name} 
       inputProps={{maxLength: 94, style: {fontSize: 13 }}} InputProps={{ disableUnderline: true }} onChange={handleChange} onBlur={saveCategoryName} />
       </Stack>
   
@@ -172,21 +247,30 @@ const saveItemsOrder = async (updatedItems) => {
 
        </Stack>
 
+
+       <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd} sensors={sensors}>
+
       {showItems && (
         <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pb={1} width="100%" height={theme.auto}>
 
-        <Divider sx={{marginBottom: "5px"}}/>
+        <Divider sx={{marginBottom: "5px"}} />
 
-       
-          {itemsOfCategory.map((item, index) => (
+        <SortableContext items={itemsData.map(item => item.order)} strategy={verticalListSortingStrategy}>
+          {itemsOfCategory.sort((a, b) => a.order - b.order).map((item, index) => (
                 <Item key={item._id} itemData={item} session={props.session} />
                 ))}
+
+        </SortableContext>
     
+
+       
 
         <Typography variant="span" component="span" pt={1.5} pb={0.5} pl={0.5} fontSize="12px" display={theme.flexBox} width="145px" flexDirection="row"
            sx={{cursor: 'pointer',marginLeft: "7px", '&:hover': { textDecoration: 'underline', color: theme.green}}} onClick={addItem}>Add new item <PlusOneIcon sx={{ fontSize: "13px", marginLeft: "3px"}}/></Typography>
         </Stack>
       )}
+
+     </DndContext>
 
 
 

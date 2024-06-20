@@ -53,15 +53,7 @@ const InnerBag = ({bagData, items, session}) => {
   });
 
 
-  const keyboardSensor = useSensor(KeyboardSensor, {
-    // Press delay of 250ms, with tolerance of 5px of movement
-    activationConstraint: {
-      delay: 250,
-      tolerance: 5,
-    },
-  });
-
-
+  const keyboardSensor = useSensor(KeyboardSensor);
 
   const sensors = useSensors(
     mouseSensor,
