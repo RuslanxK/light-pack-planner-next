@@ -15,6 +15,8 @@ import Divider from '@mui/material/Divider';
 import {useDrag, useDrop } from "react-dnd";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import FolderDeleteOutlinedIcon from '@mui/icons-material/FolderDeleteOutlined';
+import {useSortable} from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities";
 
 
 const Category = (props) => {
@@ -31,70 +33,18 @@ const Category = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
 
 
+  const {attributes, listeners, setNodeRef, transform, transition} = useSortable({id: props.categoryData.order})
+
+  const style = {
+
+      transition,
+      transform: CSS.Transform.toString(transform)
+  }
 
 
   const itemsOfCategory = itemsData?.filter((item) => item.categoryId === props.categoryData._id);
 
   const itemsSelected = itemsOfCategory?.some((item) => item.selected === true);
-
-  const type = "Item";
-
-  useEffect(() => {
-    setItemsData(props.items || []);
-  }, [props.items, selectedItems]);
-
-
-
-  const DraggableItem = ({ item, index, moveItems, setIsDragging }) => {
-
-    const ref = useRef(null);
-  
-    const [, drop] = useDrop({
-      accept: type,
-      hover(item) {
-        if (item.index !== index) {
-          moveItems(item.index, index);
-          item.index = index;
-
-        }
-      },
-    });
-
-  
-    const [{ isDragging }, drag] = useDrag({
-      type,
-      item: { index },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-      end: () => {
-        setIsDragging(false);
-      },
-    });
-
-
-    useEffect(() => {
-      if (isDragging) {
-        setIsDragging(true);
-      }
-    }, [isDragging]);
-    
-  
-    drag(drop(ref));
-
-   
-      
-    return (
-      <Stack
-       width="100%"
-       ref={ref}>
-        <Stack>
-        <Item key={item._id} itemData={item} session={props.session} drag={drag} />
-        </Stack>
-      </Stack>
-    );
-  }
-
 
 
 
@@ -201,14 +151,14 @@ const saveItemsOrder = async (updatedItems) => {
 
 
   return (
-    <Stack width={theme.category.width}  display={theme.flexBox} mb={0.5} justifyContent={theme.center} borderBottom="1px solid gray" onClick={() => console.log(selectedItems)}>
+    <Stack width={theme.category.width}  display={theme.flexBox} mb={1} justifyContent={theme.center} backgroundColor={ theme.palette.mode === "dark" ? '#171717' : "#f5f5f5" } ref={setNodeRef} {...attributes} {...listeners} style={style} boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"} sx={{cursor: "grabbing"}} borderRadius="7px">
  
       <Stack display={theme.flexBox} direction="row" justifyContent={theme.between} alignItems={theme.center} pt={0.8} pb={0.3}>
 
 
       <Stack display="flex" direction="row" alignItems="center" justifyContent="flex-start" width="100%" >
      { isShowingEdit ? <EditIcon sx={{fontSize: "12px", color: "gray", marginBottom: "5px", marginLeft: "5px"}}/> : null}
-      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "3px"}} value={updatedCategory.name} 
+      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "10px"}} value={updatedCategory.name} 
       inputProps={{maxLength: 94, style: {fontSize: 13 }}} InputProps={{ disableUnderline: true }} onChange={handleChange} onBlur={saveCategoryName} />
       </Stack>
   
@@ -228,13 +178,13 @@ const saveItemsOrder = async (updatedItems) => {
         <Divider sx={{marginBottom: "5px"}}/>
 
        
-          {itemsOfCategory.sort((a, b) => a.order - b.order).map((item, index) => (
-                 <Stack width="100%" key={item._id} sx={{ backgroundColor: isDragging ? "rgba(0, 172, 28, 0.2);" : null, boxShadow: isDragging ? "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px" : null , borderRadius: "7px", marginBottom: isDragging ? "10px" : null}}><DraggableItem  item={item} index={index} moveItems={moveItems} isDragging={isDragging} setIsDragging={setIsDragging}  /></Stack>
+          {itemsOfCategory.map((item, index) => (
+                <Item key={item._id} itemData={item} session={props.session} />
                 ))}
     
 
         <Typography variant="span" component="span" pt={1.5} pb={0.5} pl={0.5} fontSize="12px" display={theme.flexBox} width="145px" flexDirection="row"
-           sx={{cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: theme.green}}} onClick={addItem}>Add new item <PlusOneIcon sx={{ fontSize: "13px", marginLeft: "3px"}}/></Typography>
+           sx={{cursor: 'pointer',marginLeft: "7px", '&:hover': { textDecoration: 'underline', color: theme.green}}} onClick={addItem}>Add new item <PlusOneIcon sx={{ fontSize: "13px", marginLeft: "3px"}}/></Typography>
         </Stack>
       )}
 

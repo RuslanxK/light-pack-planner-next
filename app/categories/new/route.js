@@ -10,7 +10,7 @@ export const POST = async (req, res) => {
 
     const existingCategoriesCount = await category.countDocuments({ bagId });
 
-    const order = existingCategoriesCount;
+    const order = existingCategoriesCount + 1;
 
     const Category = new category({ creator: userId, name, bagId, tripId, order });
     await Category.save();

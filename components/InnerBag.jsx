@@ -20,10 +20,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { HTML5toTouch } from 'rdndmb-html5-to-touch'
+import { DndContext, closestCenter, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors} from '@dnd-kit/core';
+import {SortableContext, arrayMove, verticalListSortingStrategy} from "@dnd-kit/sortable"
 
 
 
@@ -37,98 +36,38 @@ const InnerBag = ({bagData, items, session}) => {
   const [editedBag, setEditedBag] = useState({tripId: bagData?.bag?.tripId, name: bagData?.bag?.name, goal: bagData?.bag?.goal, description: bagData?.bag?.description})
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
-  const [isDragging, setIsDragging] = useState(false);
+
+
+  const mouseSensor = useSensor(MouseSensor, {
+    // Require the mouse to move by 10 pixels before activating
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    // Press delay of 250ms, with tolerance of 5px of movement
+    activationConstraint: {
+      delay: 250,
+      tolerance: 5,
+    },
+  });
+
+
+  const keyboardSensor = useSensor(KeyboardSensor, {
+    // Press delay of 250ms, with tolerance of 5px of movement
+    activationConstraint: {
+      delay: 250,
+      tolerance: 5,
+    },
+  });
 
 
 
-  const type = "Category";
-
-  useEffect(() => {
-    setCategoriesData(bagData?.categories || []);
-  }, [bagData]);
-
-
-
-  const DraggableCategory = ({ category, index, moveCategory, setIsDragging }) => {
-
-    const ref = useRef(null);
-  
-    const [, drop] = useDrop({
-      accept: type,
-      hover(item) {
-        if (item.index !== index) {
-          moveCategory(item.index, index);
-          item.index = index;
-
-        }
-      },
-    });
-
-  
-    const [{ isDragging }, drag, preview] = useDrag({
-      type,
-      item: { index, category },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-      end: () => {
-        setIsDragging(false);
-      },
-    });
-  
-    useEffect(() => {
-      if (isDragging) {
-        setIsDragging(true);
-      }
-    }, [isDragging]);
-  
-    preview(drop(ref));
-   
-      
-    return (
-      <Stack
-        direction="row"
-        alignItems="flex-start"
-        ref={ref}>
-        <Stack width="100%" direction="row" alignItems="flex-start">
-        <IconButton sx={{marginTop: "5px", cursor: "move"}} ref={drag}>
-          <DragIndicatorIcon sx={{fontSize: "15px"}}/>
-        </IconButton> 
-        <Category key={category._id} categoryData={category} items={bagData?.items} session={session} />
-        </Stack>
-        </Stack>
-      
-    );
-  }
-
-  
-  const moveCategory = (fromIndex, toIndex) => {
-   
-    const updatedCategories = [...categoriesData];
-    const [movedCategory] = updatedCategories.splice(fromIndex, 1);
-    updatedCategories.splice(toIndex, 0, movedCategory);
-
-    const reorderedCategories = updatedCategories.map((category, index) => ({
-      ...category,
-      order: index
-    }));
-
-    setCategoriesData(reorderedCategories);
-    saveCategoriesOrder(reorderedCategories);
-};
-
-
-
-  const saveCategoriesOrder = async (updatedCategories) => {
-    try {
-
-    const arr = {categories: updatedCategories}
-
-      await axios.put('/categories', arr);
-    } catch (error) {
-      console.error('Failed to save categories order:', error);
-    }
-  };
+  const sensors = useSensors(
+    mouseSensor,
+    touchSensor,
+    keyboardSensor
+  );
 
 
   const handleChange = (event) => {
@@ -136,7 +75,12 @@ const InnerBag = ({bagData, items, session}) => {
     setEditedBag({ ...editedBag, [name]: value });
   };
 
-  
+
+
+  useEffect(() => {
+    setCategoriesData(bagData?.categories || []);
+  }, [bagData]);
+
   
   const allBagsItems = items.map((item) => { return <SideItem key={item._id} itemData={item} color="white" categoryData={bagData?.categories} update={() => router.refresh()}  /> }) 
 
@@ -220,6 +164,64 @@ const InnerBag = ({bagData, items, session}) => {
   }
 
 
+
+
+  const moveCategory = async (fromIndex, toIndex) => {
+    try {
+      const updatedCategories = [...categoriesData];
+      const movedCategory = updatedCategories[fromIndex];
+  
+      // Remove the moved category from the original position
+      updatedCategories.splice(fromIndex, 1);
+  
+      // Insert the moved category into the new position
+      updatedCategories.splice(toIndex, 0, movedCategory);
+  
+      // Update the order property to start from 1
+      const reorderedCategories = updatedCategories.map((category, index) => ({
+        ...category,
+        order: index + 1 // Start indexing from 1
+      }));
+  
+      setCategoriesData(reorderedCategories); // Update state with reordered categories
+  
+      // Send reordered categories to backend to save the order
+      await saveCategoriesOrder(reorderedCategories);
+    } catch (error) {
+      console.error('Failed to move category:', error);
+    }
+  };
+
+
+  
+  const onDragEnd = (event) => {
+    console.log(event);
+    const { active, over } = event;
+
+    if (active.id === over.id) {
+      return;
+    }
+
+    const fromIndex = categoriesData.findIndex(category => category.order === active.id);
+    const toIndex = categoriesData.findIndex(category => category.order === over.id);
+
+    if (fromIndex !== -1 && toIndex !== -1) {
+      moveCategory(fromIndex, toIndex);
+    }
+  };
+
+
+
+  const saveCategoriesOrder = async (updatedCategories) => {
+    try {
+      const arr = { categories: updatedCategories };
+      await axios.put('/categories', arr);
+      console.log("Updated categories order successfully");
+    } catch (error) {
+      console.error('Failed to save categories order:', error);
+      throw new Error('Failed to save categories order');
+    }
+  };
 
 
   return (
@@ -317,11 +319,16 @@ const InnerBag = ({bagData, items, session}) => {
     </Stack>
 
 
-    <DndProvider backend={HTML5Backend} options={HTML5toTouch}>
+    <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd} sensors={sensors}>
+
+      <SortableContext items={categoriesData.map(category => category.order)} strategy={verticalListSortingStrategy}>
+
     {categoriesData.sort((a, b) => a.order - b.order).map((category, index) => (
-                 <Stack key={category._id} sx={{ backgroundColor: isDragging ? "rgba(0, 172, 28, 0.2);" : null, boxShadow: isDragging ? "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px" : null , borderRadius: "7px", marginBottom: isDragging ? "10px" : null}}><DraggableCategory  category={category} index={index} moveCategory={moveCategory} isDragging={isDragging} setIsDragging={setIsDragging}  /></Stack>
+                 <Category key={category._id} categoryData={category} items={bagData?.items} session={session} />
                 ))}
-    </DndProvider>
+
+</SortableContext>
+    </DndContext>
 
   
     </div>
