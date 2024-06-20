@@ -1,7 +1,7 @@
 import { Stack, Typography, IconButton, Button, TextField, Tooltip} from "@mui/material";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import { useState, useTransition, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
@@ -10,13 +10,11 @@ import axios from "axios";
 import React from "react";
 import MuiPopup from "./custom/MuiPopup";
 import CloseIcon from "@mui/icons-material/Close";
-import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
-import {useDrag, useDrop } from "react-dnd";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import FolderDeleteOutlinedIcon from '@mui/icons-material/FolderDeleteOutlined';
-import { DndContext, closestCenter, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors, closestCorners} from '@dnd-kit/core';
-import {SortableContext, arrayMove, verticalListSortingStrategy, useSortable} from "@dnd-kit/sortable"
+import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors, closestCorners} from '@dnd-kit/core';
+import {SortableContext, verticalListSortingStrategy, useSortable} from "@dnd-kit/sortable"
 
 import { CSS } from "@dnd-kit/utilities";
 
@@ -30,10 +28,19 @@ const Category = (props) => {
   const [showItems, setShowItems] = useState(true);
   const [removePopupOpen ,setRemovePopupOpen] = useState(false)
   const [updatedCategory, setUpdatedCategory] = useState({name: props?.categoryData?.name})
-  const [isShowingEdit, setIsShowingEdit] = useState(false)
-  const [isDragging, setIsDragging] = useState(false);
   const [itemsData, setItemsData] = useState(props.items || []);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [checkedItems, setCheckedItems] = useState([]);
+
+
+  const handleUpdateChecked = (id, checked) => {
+    setCheckedItems(prevItems => {
+      if (checked) {
+        return [...prevItems, { id, checked }];
+      } else {
+        return prevItems.filter(item => item.id !== id);
+      }
+    });
+  };
 
 
 
@@ -43,13 +50,13 @@ const Category = (props) => {
 
 
   const mouseSensor = useSensor(MouseSensor, {
-    // Require the mouse to move by 10 pixels before activating
+   
     activationConstraint: {
       distance: 10,
     },
   });
   const touchSensor = useSensor(TouchSensor, {
-    // Press delay of 250ms, with tolerance of 5px of movement
+    
     activationConstraint: {
       delay: 250,
       tolerance: 5,
@@ -80,24 +87,20 @@ const Category = (props) => {
 
   const itemsOfCategory = itemsData?.filter((item) => item.categoryId === props.categoryData._id);
 
-  const itemsSelected = itemsOfCategory?.some((item) => item.selected === true);
-
 
 
   const removeItems = async () => {
-    
-    const itemsToDelete = itemsOfCategory.filter(item => item.selected === true);
-  
     try {
-      itemsToDelete.forEach(async item => {
-        await axios.delete(`/items/${item._id}/${props.session.user.id}`);
-      });
+      for (const item of checkedItems) {
+        await axios.delete(`/items/${item.id}/${props.session.user.id}`);
+      }
       router.refresh();
+      setCheckedItems([]); 
+      
     } catch (error) {
       console.error('Failed to delete items:', error);
     }
   };
-
 
 
 
@@ -138,18 +141,15 @@ const Category = (props) => {
   const onDragEnd = (event) => {
     const { active, over } = event;
   
-    if (!over) {
-      return;
-    }
+    if (!over) return;
   
-    const fromIndex = itemsData.findIndex(item => item.order === active.id);
-    const toIndex = itemsData.findIndex(item => item.order === over.id);
+    const fromIndex = itemsOfCategory.findIndex(item => item.order === active.id);
+    const toIndex = itemsOfCategory.findIndex(item => item.order === over.id);
   
     if (fromIndex !== -1 && toIndex !== -1) {
       moveItem(fromIndex, toIndex);
     }
   };
-
 
 
 
@@ -234,14 +234,14 @@ const saveItemsOrder = async (updatedItems) => {
           <DragIndicatorIcon sx={{fontSize: "15px"}}/>
         </IconButton> 
  
-      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "5px"}} value={updatedCategory.name} 
+      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "5px"}} value={updatedCategory.name} onClick={() => console.log(checkedItems)}
       inputProps={{maxLength: 94, style: {fontSize: 13 }}} InputProps={{ disableUnderline: true }} onChange={handleChange} onBlur={saveCategoryName} />
       </Stack>
   
       
   
       <Stack display={theme.flexBox} direction="row"  mr={1}>
-    { itemsSelected ? <Tooltip title="Delete items"><IconButton onClick={removeItems}><DeleteOutlinedIcon sx={{ fontSize: "18px", '&:hover':{color: "red"}}} /> </IconButton> </Tooltip> : null }
+    { checkedItems.length ? <Tooltip title="Delete items"><IconButton onClick={removeItems}><DeleteOutlinedIcon sx={{ fontSize: "18px", '&:hover':{color: "red"}}} /> </IconButton> </Tooltip> : null }
      <Tooltip title="Delete category"><IconButton onClick={openPopup}><FolderDeleteOutlinedIcon sx={{ fontSize: "18px", '&:hover':{color: "red"}}} /> </IconButton> </Tooltip>
       <IconButton onClick={() => setShowItems(!showItems)}>{showItems ? <ExpandLessOutlinedIcon sx={{fontSize: "18px"}} /> : <ExpandMoreOutlinedIcon sx={{fontSize: "18px"}} />}</IconButton>
        </Stack>
@@ -256,9 +256,9 @@ const saveItemsOrder = async (updatedItems) => {
 
         <Divider sx={{marginBottom: "5px"}} />
 
-        <SortableContext items={itemsData.map(item => item.order)} strategy={verticalListSortingStrategy}>
+        <SortableContext items={itemsOfCategory.map(item => item.order)} strategy={verticalListSortingStrategy}>
           {itemsOfCategory.sort((a, b) => a.order - b.order).map((item, index) => (
-                <Item key={item._id} itemData={item} session={props.session} />
+                <Item key={item._id} itemData={item} session={props.session}  onUpdateChecked={handleUpdateChecked} />
                 ))}
 
         </SortableContext>

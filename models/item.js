@@ -18,7 +18,7 @@ const itemSchema = new Schema({
     productImageKey: { type: String, default: null },
     order: {type: Number, default: null},
     price: {type: Number, default: 0.00},
-    selected: {type: Boolean, default: false}
+   
    
 
 }, { timestamps: true })
