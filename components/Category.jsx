@@ -15,7 +15,7 @@ import Divider from '@mui/material/Divider';
 import {useDrag, useDrop } from "react-dnd";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import FolderDeleteOutlinedIcon from '@mui/icons-material/FolderDeleteOutlined';
-import { DndContext, closestCenter, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors} from '@dnd-kit/core';
+import { DndContext, closestCenter, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors, closestCorners} from '@dnd-kit/core';
 import {SortableContext, arrayMove, verticalListSortingStrategy, useSortable} from "@dnd-kit/sortable"
 
 import { CSS } from "@dnd-kit/utilities";
@@ -107,13 +107,16 @@ const Category = (props) => {
 
     try {
     
-    const updatedItems = [...itemsOfCategory];
-    const movedItem = updatedItems[fromIndex];
+    const updatedItems = [...itemsData];
 
-    updatedItems.splice(fromIndex, 1);
-    updatedItems.splice(toIndex, 0,  movedItem);
+    const itemsOfCategory = updatedItems.filter((item) => item.categoryId === props.categoryData._id);
 
-    const reorderedItems = updatedItems.map((item, index) => ({
+    const movedItem = itemsOfCategory[fromIndex];
+
+    itemsOfCategory.splice(fromIndex, 1);
+    itemsOfCategory.splice(toIndex, 0,  movedItem);
+
+    const reorderedItems = itemsOfCategory.map((item, index) => ({
       ...item,
       order: index + 1
     }));
@@ -133,17 +136,15 @@ const Category = (props) => {
 
 
   const onDragEnd = (event) => {
-
-    console.log(event);
     const { active, over } = event;
-
-    if (active.id === over.id) {
+  
+    if (!over) {
       return;
     }
-
+  
     const fromIndex = itemsData.findIndex(item => item.order === active.id);
     const toIndex = itemsData.findIndex(item => item.order === over.id);
-
+  
     if (fromIndex !== -1 && toIndex !== -1) {
       moveItem(fromIndex, toIndex);
     }
@@ -248,7 +249,7 @@ const saveItemsOrder = async (updatedItems) => {
        </Stack>
 
 
-       <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd} sensors={sensors}>
+       <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors}>
 
       {showItems && (
         <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pb={1} width="100%" height={theme.auto}>

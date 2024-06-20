@@ -21,7 +21,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { DndContext, closestCenter, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors} from '@dnd-kit/core';
+import { DndContext, closestCenter, closestCorners,  KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors} from '@dnd-kit/core';
 import {SortableContext, arrayMove, verticalListSortingStrategy} from "@dnd-kit/sortable"
 
 
@@ -311,7 +311,7 @@ const InnerBag = ({bagData, items, session}) => {
     </Stack>
 
 
-    <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd} sensors={sensors}>
+    <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors}>
 
       <SortableContext items={categoriesData.map(category => category.order)} strategy={verticalListSortingStrategy}>
 
