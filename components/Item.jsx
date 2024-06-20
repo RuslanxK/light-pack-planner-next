@@ -211,7 +211,7 @@ const Item = (props) => {
     
     <div className="scroll-div" sx={{ overflowX: "scroll"}}>
         
-      <Stack width="100%" mb={0.5}e flexDirection="row" justifyContent={theme.between} alignItems={theme.center} onMouseOver={() => setItemHover(true)}  onMouseLeave={() => setItemHover(false)}>
+      <Stack mb={0.5}e flexDirection="row" justifyContent={theme.between} alignItems={theme.center} onMouseOver={() => setItemHover(true)}  onMouseLeave={() => setItemHover(false)}>
       <IconButton ref={props.drag} sx={{marginTop: "5px", cursor: "move"}}>
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>
         </IconButton> 
