@@ -211,10 +211,10 @@ const Item = (props) => {
     
     <div className="scroll-div" sx={{ overflowX: "scroll"}}>
         
-      <Stack  mb={0.5}e flexDirection="row" justifyContent={theme.between} alignItems={theme.center} onMouseOver={() => setItemHover(true)}  onMouseLeave={() => setItemHover(false)}>
-       <div className='item-drag'><IconButton ref={props.drag} sx={{marginTop: "5px", cursor: "move"}}>
+      <Stack width="100%" mb={0.5}e flexDirection="row" justifyContent={theme.between} alignItems={theme.center} onMouseOver={() => setItemHover(true)}  onMouseLeave={() => setItemHover(false)}>
+      <IconButton ref={props.drag} sx={{marginTop: "5px", cursor: "move"}}>
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>
-        </IconButton> </div>
+        </IconButton> 
         <Checkbox size="small" name='selected' sx={{marginTop: "5px", transform: "scale(0.8)"}} onChange={updateChecked} checked={itemData.selected} /> 
       <TextField size='small' variant='standard' placeholder='name' name='name' sx={{ marginTop: "16px", width: '50%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0"}} value={itemData.name} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{style: {fontSize: 12}}} onChange={handleChange} onBlur={saveItemData}/>
       <TextField size='small' variant='standard' placeholder='note' name='description' sx={{ marginTop: "16px", width: '100%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0"}} value={itemData.description} InputLabelProps={{ style : {fontSize: 12}}} inputProps={{style: {fontSize: 12}}} InputProps={{disableUnderline: true}} onChange={handleChange} onBlur={saveItemData} />

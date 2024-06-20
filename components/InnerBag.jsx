@@ -16,14 +16,14 @@ import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import { PieChart, pieArcLabelClasses} from "@mui/x-charts/PieChart";
 import SideItem from '../components/SideItem'
 import FlipCameraIosOutlinedIcon from '@mui/icons-material/FlipCameraIosOutlined';
+import EditLocationOutlinedIcon from '@mui/icons-material/EditLocationOutlined';
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { HTML5toTouch } from 'rdndmb-html5-to-touch'
+import ShareIcon from '@mui/icons-material/Share';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import EditIcon from '@mui/icons-material/Edit';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 const InnerBag = ({bagData, items, session}) => {
 
@@ -73,27 +73,24 @@ const InnerBag = ({bagData, items, session}) => {
       },
     });
   
-
     useEffect(() => {
       if (isDragging) {
         setIsDragging(true);
       }
     }, [isDragging]);
   
-     drag(drop(ref));
+    preview(drop(ref));
    
-    
       
     return (
       <Stack
         direction="row"
         alignItems="flex-start"
-        ref={ref}
-       >
+        ref={ref}>
         <Stack width="100%" direction="row" alignItems="flex-start">
-        <div className='category-drag'><IconButton sx={{marginTop: "5px", cursor: "move"}} ref={drag}>
+        <IconButton sx={{marginTop: "5px", cursor: "move"}} ref={drag}>
           <DragIndicatorIcon sx={{fontSize: "15px"}}/>
-        </IconButton> </div>
+        </IconButton> 
         <Category key={category._id} categoryData={category} items={bagData?.items} session={session} />
         </Stack>
         </Stack>
@@ -150,7 +147,7 @@ const InnerBag = ({bagData, items, session}) => {
         return {
           id: category._id,
           value: categoryWeight?.totalWeight || 0 ,
-          label: category?.name?.length > 10 ? `${category?.name?.substring(0, 10)}...` : `${categoryWeight?.totalWeight?.toFixed(2) || 0.00} ${session?.user?.weightOption} - ${category?.name}`
+          label: category?.name?.length > 6 ? `${categoryWeight?.totalWeight?.toFixed(2) || 0.00} ${session?.user?.weightOption} - ${category?.name?.substring(0, 6)}...` : `${categoryWeight?.totalWeight?.toFixed(2) || 0.00} ${session?.user?.weightOption} - ${category?.name}`
         };
       })
     ;
@@ -224,87 +221,73 @@ const InnerBag = ({bagData, items, session}) => {
   return (
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
-    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", left: "15px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
-    <div className="share-icon-mobile"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", right: "15px", backgroundColor: theme.palette.primary.dark, color: "white", "&:hover": {backgroundColor: theme.palette.info.main}}}><OpenInNewIcon sx={{fontSize: "20px"}}/></IconButton></div>
-
+    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "55px", height: "55px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", left: "15px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon /> }</IconButton></div> : null }
 
     <Box display="flex" flexDirection="row" width={theme.fullWidth} minHeight="100vh"height="100%">
 
     <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} pb={3}>
 
+       <Stack alignItems="flex-start" m={2}><IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0"}} onClick={() => router.push(`/trips?id=${bagData.bag.tripId}`)}><ArrowBackIcon /></IconButton></Stack>
+
+
         <div className="main-info">
 
-       <Stack display={theme.flexBox} width="100%" flexDirection={theme.row} alignItems={theme.between} justifyContent={theme.between} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
-
-        <Stack display="flex" direction="row" justifyContent={theme.between} width="100%" flexWrap="wrap">
-
-        <Stack direction="row" alignItems="center">
-        <IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0", marginRight: "5px"}} onClick={() => router.push(`/trips?id=${bagData.bag.tripId}`)}><ArrowBackIcon sx={{fontSize: "20px"}}/></IconButton>
-        <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
-        <Badge color="secondary" badgeContent={bagData.bag.likes || "0" } sx={{zIndex: 0}}>
-        <Tooltip title="Total likes"><IconButton><FavoriteIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
+       <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center} justifyContent={theme.between} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} mr={6} pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+        <Stack display="flex" direction="row">
+        <Typography component="h2" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
+        <Tooltip title="Edit"><IconButton onClick={openPopup}><EditLocationOutlinedIcon sx={{cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
+        <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
+        </Stack>
+        <Stack display="flex" direction="row">
+        <Button disableElevation  onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}>Share Bag <ShareIcon sx={{fontSize: "18px", marginLeft: "5px"}}/> </Button>
+        <Badge color="secondary" badgeContent={bagData.bag.likes || "0" } sx={{marginLeft: "10px", marginRight: "10px"}}>
+        <IconButton><ThumbUpIcon /></IconButton>
         </Badge>
-        </Stack>
        
-
-        <Stack direction="row">
-
-       <div class="share-link-desktop"> <Tooltip title="Share Bag"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><OpenInNewIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip> </div>
-        <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
-        <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
+        
         </Stack>
-        </Stack>
-      
     
         </Stack>
-        <Typography component="p" variant="p">
+        <Typography component="p" variant="p" sx={{marginRight: "45px"}}>
           {bagData?.bag?.description}
         </Typography>
 
-        <div className='innerBagData'>
-  
-        <Stack justifyContent="center" alignItems="center">
-        <IconButton><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
-        { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
-        </Stack>
-        
-        <Stack justifyContent="center" alignItems="center" pl={4} pr={4} >
-        <IconButton><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
-        
-        <Typography variant="span" component="span"> { bagData?.worn ? bagData?.worn?.toFixed(1) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
-        </Stack>
+        <Stack display={theme.flexBox} direction="row" justifyContent={theme.center} alignItems="center" mt={3} width="fit-content" borderRadius={theme.radius}>
+    
+        <IconButton sx={{marginRight: "2px"}}><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
 
-        <Stack justifyContent="center" alignItems="center">
-        <IconButton><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
-        </Stack>
-        
-         </div> 
-         
+        { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
+        <IconButton sx={{marginRight: "2px", marginLeft: "2px"}} ><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
+
+        <Typography variant="span" component="span"> { bagData?.worn ? "worn " + bagData?.worn?.toFixed(1) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
+        <IconButton sx={{marginRight: "2px", marginLeft: "2px"}} ><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
+         </Stack> 
       </div>
 
     { itemsTotal ?  <Stack>
-      <PieChart 
-    margin={{ top: 0, left:0, right:0, bottom: 0}} 
-    series={[{
-      data: categoryPieChartData,
-      faded: {innerRadius: 30, additionalRadius: -15, color: 'gray'},
-      highlightScope: { faded: 'global', highlighted: 'item' },
-      arcLabel: getArcLabel,
-      innerRadius: 35,
-      outerRadius: 110,
-      paddingAngle: 5,
-      cornerRadius: 5,
-      startAngle: -180,
-      endAngle: 180,
-      cx: 180,
-      cy: 150,
-      showLegend: false
-    }]}
-    sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
-    height={335}
-    slotProps={{ legend: { hidden: true } }}
-    tooltip={{ trigger: 'item' }} 
-  />
+      <PieChart margin={{ top: 0, left:0, right:0, bottom: 0}} 
+       series={[{
+           data: categoryPieChartData,
+           faded: {innerRadius: 30, additionalRadius: -15, color: 'gray'},
+           highlightScope: { faded: 'global', highlighted: 'item' },
+           arcLabel: getArcLabel,
+           innerRadius: 35,
+           outerRadius: 110,
+           paddingAngle: 5,
+           cornerRadius: 5,
+           startAngle: -180,
+           endAngle: 180,
+           cx: 180,
+           cy: 150,
+         },
+       ]}
+       sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
+    
+       height={335}
+       tooltip={{}}
+       slotProps={{ legend: { direction: "column", position: { vertical: "top", horizontal: "center" }}}}
+       
+       />
 
       </Stack> : null }
 
@@ -345,10 +328,10 @@ const InnerBag = ({bagData, items, session}) => {
      
      <div className="recent-mobile">
      <Stack width="185px" height={theme.nav.height}>
-     <Stack pt={2} display={theme.flexBox} alignItems={theme.left} position={theme.nav.fixed} height={theme.nav.height} width="185px" sx={{backgroundColor: theme.green, borderTopLeftRadius: "25px"}}>
+     <Stack pt={2} display={theme.flexBox} alignItems={theme.left} position={theme.nav.fixed} height={theme.nav.height} width="185px"  sx={{backgroundColor: theme.green}}>
      <Typography component="h3" variant="span" textAlign="center" color="white">Recent Items</Typography>
      <Typography component="span" variant="span" textAlign="center" mb={3} color={theme.main.lightGray}>added to your plans</Typography>
-     <Stack sx={{overflowY: "scroll"}} height="70vh" pl={3}>
+     <Stack sx={{overflowY: "scroll"}} height="85.5vh" pl={3}>
      {allBagsItems}
      </Stack>
      </Stack>
