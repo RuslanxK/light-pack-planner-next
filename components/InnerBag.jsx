@@ -36,7 +36,25 @@ const InnerBag = ({bagData, items, session}) => {
   const [editedBag, setEditedBag] = useState({tripId: bagData?.bag?.tripId, name: bagData?.bag?.name, goal: bagData?.bag?.goal, description: bagData?.bag?.description})
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
+  const [isScrolling, setIsScrolling] = useState(false);
 
+
+
+  useEffect(() => {
+    const handleTouchStart = () => setIsScrolling(true);
+    const handleTouchEnd = () => setIsScrolling(false);
+
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
+
+
+  
 
   const mouseSensor = useSensor(MouseSensor, {
     // Require the mouse to move by 10 pixels before activating
@@ -296,7 +314,7 @@ const InnerBag = ({bagData, items, session}) => {
     sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
     height={335}
     slotProps={{ legend: { hidden: true } }}
-    tooltip={{ trigger: 'item' }} 
+    tooltip={isScrolling ? { trigger: 'none' } : { trigger: 'item' }} 
   />
 
       </Stack> : null }
