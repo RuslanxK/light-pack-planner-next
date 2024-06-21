@@ -287,7 +287,7 @@ const InnerBag = ({bagData, items, session}) => {
       highlightScope: { faded: 'global', highlighted: 'item' },
       arcLabel: getArcLabel,
       innerRadius: 35,
-      outerRadius: 160,
+      outerRadius: 120,
       paddingAngle: 2,
       cornerRadius: 2,
       startAngle: -180,
@@ -299,9 +299,8 @@ const InnerBag = ({bagData, items, session}) => {
       
     }]}
     
-    sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 17, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
+    sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
     height={300}
-    width={500}
     slotProps={{ legend: { hidden: true } }}
     tooltip={{ hidden: true }}
     
