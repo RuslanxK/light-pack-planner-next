@@ -35,29 +35,27 @@ const InnerBag = ({bagData, items, session}) => {
   const [editedBag, setEditedBag] = useState({tripId: bagData?.bag?.tripId, name: bagData?.bag?.name, goal: bagData?.bag?.goal, description: bagData?.bag?.description})
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
-  const [isScrolling, setIsScrolling] = useState(false);
+  const [tooltipVisible, setTooltipVisible] = useState(true);
 
 
   useEffect(() => {
-    let scrollingTimeout;
-
-    const handleTouchStart = () => {
-      setIsScrolling(true);
-      if (scrollingTimeout) clearTimeout(scrollingTimeout);
+    const handleScroll = () => {
+      setTooltipVisible(false);
     };
 
     const handleTouchEnd = () => {
-      scrollingTimeout = setTimeout(() => setIsScrolling(false), 100); // Delay to handle scroll stop
+      setTooltipVisible(true);
     };
 
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
+
 
 
 
@@ -320,7 +318,9 @@ const InnerBag = ({bagData, items, session}) => {
     sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
     height={335}
     slotProps={{ legend: { hidden: true } }}
-    tooltip={isScrolling ? { trigger: 'none' } : { trigger: 'item' }} 
+    tooltip={{ trigger: tooltipVisible ? 'item' : 'none' }}
+    onMouseEnter={() => setTooltipVisible(true)}
+    onTouchStart={() => setTooltipVisible(true)}
   />
 
       </Stack> : null }
