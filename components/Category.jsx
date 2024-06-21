@@ -1,7 +1,7 @@
 import { Stack, Typography, IconButton, Button, TextField, Tooltip} from "@mui/material";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
@@ -13,7 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Divider from '@mui/material/Divider';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import FolderDeleteOutlinedIcon from '@mui/icons-material/FolderDeleteOutlined';
-import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors, closestCorners, sortableKeyboardCoordinates} from '@dnd-kit/core';
+import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors, closestCorners} from '@dnd-kit/core';
 import {SortableContext, verticalListSortingStrategy, useSortable} from "@dnd-kit/sortable"
 
 import { CSS } from "@dnd-kit/utilities";

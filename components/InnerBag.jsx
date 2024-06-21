@@ -5,7 +5,7 @@ import Category from '../components/Category'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useTransition, useState, useEffect, useRef } from 'react';
+import { useState, useEffect} from 'react';
 import { useTheme } from '@emotion/react';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MuiPopup from './custom/MuiPopup';
@@ -20,9 +20,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { DndContext, closestCenter, closestCorners,  KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors} from '@dnd-kit/core';
-import {SortableContext, arrayMove, verticalListSortingStrategy} from "@dnd-kit/sortable"
+import { DndContext, closestCorners, MouseSensor, TouchSensor, useSensor, useSensors} from '@dnd-kit/core';
+import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable"
 
 
 
@@ -54,7 +53,7 @@ const InnerBag = ({bagData, items, session}) => {
   }, []);
 
 
-  
+
 
   const mouseSensor = useSensor(MouseSensor, {
     // Require the mouse to move by 10 pixels before activating

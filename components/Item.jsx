@@ -2,11 +2,10 @@
 
 import { Stack, TextField, Select, MenuItem, IconButton, Typography, Button, Tooltip, Checkbox} from '@mui/material'
 import LinkIcon from '@mui/icons-material/Link';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useTheme } from '@emotion/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import MuiPopup from './custom/MuiPopup';
