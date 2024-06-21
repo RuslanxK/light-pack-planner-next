@@ -221,7 +221,7 @@ const saveItemsOrder = async (updatedItems) => {
 
 
   return (
-    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.5}  backgroundColor={ theme.palette.mode === "dark" ? '#171717' : "#f5f5f5" } ref={setNodeRef} style={style} boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"} borderRadius="7px">
+    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.3}  backgroundColor={ theme.palette.mode === "dark" ? '#171717' : "#f5f5f5" } ref={setNodeRef} style={style} boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"} borderRadius="7px">
 
   
       <Stack display={theme.flexBox} direction="row" pt={0.8} pb={0.3}>
@@ -250,9 +250,9 @@ const saveItemsOrder = async (updatedItems) => {
        <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors}>
 
       {showItems && (
-        <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pb={1} width="100%" height={theme.auto}>
+        <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pb={0.5} borderTop="1px solid #C0C0C0" width="100%" height={theme.auto}>
 
-        <Divider sx={{marginBottom: "5px"}} />
+        
 
         <SortableContext items={itemsOfCategory.map(item => item.order)} strategy={verticalListSortingStrategy}>
           {itemsOfCategory.sort((a, b) => a.order - b.order).map((item, index) => (

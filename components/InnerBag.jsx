@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge } from '@mui/material'
+import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge, TableContainer, Table, Paper, TableHead, TableRow, TableCell, TableBody, Divider  } from '@mui/material'
 import Category from '../components/Category'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import axios from 'axios';
@@ -19,11 +19,11 @@ import FlipCameraIosOutlinedIcon from '@mui/icons-material/FlipCameraIosOutlined
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { DndContext, closestCorners, MouseSensor, TouchSensor, useSensor, useSensors} from '@dnd-kit/core';
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable"
-
-
+import ShareIcon from '@mui/icons-material/Share';
+import BackpackOutlinedIcon from '@mui/icons-material/BackpackOutlined';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 
 const InnerBag = ({bagData, items, session}) => {
 
@@ -37,6 +37,7 @@ const InnerBag = ({bagData, items, session}) => {
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
 
 
+  
 
   const mouseSensor = useSensor(MouseSensor, {
     // Require the mouse to move by 10 pixels before activating
@@ -66,6 +67,7 @@ const InnerBag = ({bagData, items, session}) => {
   };
 
 
+  
 
   useEffect(() => {
     setCategoriesData(bagData?.categories || []);
@@ -80,12 +82,12 @@ const InnerBag = ({bagData, items, session}) => {
   const categoryPieChartData = bagData?.categories?.map((category) => {  
   const categoryWeight = categoryWeightsArr?.categoriesTotalWeight?.find((item) => item.categoryId === category._id)
 
-  
 
         return {
           id: category._id,
           value: categoryWeight?.totalWeight || 0 ,
-          label: category?.name?.length > 10 ? `${category?.name?.substring(0, 10)}...` : `${category?.name}`
+          label: category?.name,
+          color: category.color
         };
       })
     ;
@@ -93,12 +95,30 @@ const InnerBag = ({bagData, items, session}) => {
   const TOTAL = categoryWeightsArr?.categoriesTotalWeight?.map((category) => category.totalWeight).reduce((a, b) => a + b, 0) 
   const getArcLabel = (params) => {
     const percent = params.value / TOTAL;
-    return `${(percent * 100).toFixed(0)}%`;
+    return `${(percent * 100).toFixed(1)}%`;
+  };
+
+
+
+  const categoryTableData = categoryPieChartData.map((category) => ({
+    id: category.id,
+    value: category.value,
+    label: category.label,
+    color: category.color
+    
+  }));
+
+
+  const getRandomColor = () => {
+    const h = Math.floor(Math.random() * 360);
+    const s = 100; // Saturation: 100%
+    const l = 50; // Lightness: 50%
+    return `hsl(${h}, ${s}%, ${l}%)`;
   };
 
 
   const addCategory = async () => {
-    const newCategory = {userId: session?.user?.id, bagId: bagData?.bag?._id, tripId: bagData?.bag?.tripId, name: 'new category' };
+    const newCategory = {userId: session?.user?.id, bagId: bagData?.bag?._id, tripId: bagData?.bag?.tripId, name: 'new category', color: getRandomColor() };
     try {
       const res = await axios.post('/categories/new', newCategory);
       router.refresh();
@@ -213,12 +233,15 @@ const InnerBag = ({bagData, items, session}) => {
     }
   };
 
+  
+
+
 
   return (
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
     { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", left: "15px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
-    <div className="share-icon-mobile"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", right: "15px", backgroundColor: theme.palette.primary.dark, color: "white", "&:hover": {backgroundColor: theme.palette.info.main}}}><OpenInNewIcon sx={{fontSize: "20px"}}/></IconButton></div>
+    <div className="share-icon-mobile"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", right: "15px", backgroundColor: theme.palette.primary.dark, color: "white", "&:hover": {backgroundColor: theme.palette.info.main}}}><ShareIcon sx={{fontSize: "20px"}}/></IconButton></div>
 
 
     <Box display="flex" flexDirection="row" width={theme.fullWidth} minHeight="100vh"height="100%">
@@ -242,7 +265,7 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Stack direction="row">
 
-       <div class="share-link-desktop"> <Tooltip title="Share Bag"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><OpenInNewIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip> </div>
+       <div class="share-link-desktop"> <Tooltip title="Share Bag"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip> </div>
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
@@ -254,28 +277,8 @@ const InnerBag = ({bagData, items, session}) => {
           {bagData?.bag?.description}
         </Typography>
 
-        <div className='innerBagData'>
-  
-        <Stack justifyContent="center" alignItems="center">
-        <IconButton><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
-        { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
-        </Stack>
-        
-        <Stack justifyContent="center" alignItems="center" pl={4} pr={4} >
-        <IconButton><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
-        
-        <Typography variant="span" component="span"> { bagData?.worn ? bagData?.worn?.toFixed(1) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
-        </Stack>
 
-        <Stack justifyContent="center" alignItems="center">
-        <IconButton><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
-        </Stack>
-        
-         </div> 
-         
-      </div>
-
-    { itemsTotal ?  <Stack>
+        { itemsTotal ?  <Stack direction="row" alignItems="center" justifyContent="center" mb={5} mt={5}>
       <PieChart 
     margin={{ top: 0, left:0, right:0, bottom: 0}} 
     series={[{
@@ -284,23 +287,112 @@ const InnerBag = ({bagData, items, session}) => {
       highlightScope: { faded: 'global', highlighted: 'item' },
       arcLabel: getArcLabel,
       innerRadius: 35,
-      outerRadius: 110,
-      paddingAngle: 5,
-      cornerRadius: 5,
+      outerRadius: 160,
+      paddingAngle: 2,
+      cornerRadius: 2,
       startAngle: -180,
       endAngle: 180,
       cx: 180,
       cy: 150,
-      showLegend: false
+      colorAccessor: (datum) => datum.color,
+      
+      
     }]}
-    sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
-    height={335}
+    
+    sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 17, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
+    height={300}
+    width={500}
     slotProps={{ legend: { hidden: true } }}
-    tooltip={{ trigger: 'item' }}
+    tooltip={{ hidden: true }}
+    
    
   />
 
+<TableContainer>
+  <Table size="small">
+    <TableHead>
+      <TableRow>
+        <TableCell>Category</TableCell>
+        <TableCell align="right">Weight</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {categoryTableData.map((row) => (
+        <TableRow key={row.id}>
+          <TableCell component="th" scope="row">
+            <Stack direction="row" alignItems="center">
+              <Stack backgroundColor={row.color} width="15px" height="15px" mr={1} sx={{ borderRadius: '50%' }}></Stack>
+              {row.label}
+            </Stack>
+          </TableCell>
+          <TableCell align="right">{row.value.toFixed(2)} {session?.user?.weightOption}</TableCell>
+        </TableRow>
+      ))}
+
+       <TableRow>
+        <TableCell colSpan={2} style={{ height: '20px' }} />
+      </TableRow>
+
+       <TableRow>
+       <TableCell component="th" scope="row">
+       <Stack direction="row" alignItems="center">
+        <BackpackOutlinedIcon sx={{fontSize: "18px", marginRight: "4px"}}/> Total
+        </Stack>
+
+       </TableCell>
+
+       <TableCell component="th" scope="row" align='right'>
+
+       { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(2)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(2)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
+
+        </TableCell>
+       </TableRow>
+
+       <TableRow>
+       <TableCell component="th" scope="row">
+       <Stack direction="row" alignItems="center">
+       <NordicWalkingIcon sx={{fontSize: "18px", marginRight: "4px"}}/> Worn
+        </Stack>
+
+       </TableCell>
+
+       <TableCell component="th" scope="row" align='right'>
+
+       <Typography variant="span" component="span"> { bagData?.worn ? bagData?.worn?.toFixed(2) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
+
+        </TableCell>
+       </TableRow>
+
+       <TableRow>
+       <TableCell component="th" scope="row">
+       <Stack direction="row" alignItems="center">
+       <InventoryOutlinedIcon sx={{fontSize: "18px", marginRight: "4px"}}/> Items
+        </Stack>
+
+       </TableCell>
+
+       <TableCell component="th" scope="row" align='right'>
+
+       {itemsTotal}
+
+        </TableCell>
+       </TableRow>
+
+    </TableBody>
+  </Table>
+
+  
+</TableContainer>
+
+
+
       </Stack> : null }
+  
+         
+      </div>
+
+   
+
 
 
     <div className="categories">

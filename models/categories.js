@@ -10,6 +10,7 @@ const categorySchema = new Schema({
     bagId: String,
     name: { type: String, trim: true },
     order: {type: Number, default: null},
+    color: String
    
 })
 
