@@ -13,7 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Divider from '@mui/material/Divider';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import FolderDeleteOutlinedIcon from '@mui/icons-material/FolderDeleteOutlined';
-import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors, closestCorners} from '@dnd-kit/core';
+import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors, closestCorners, sortableKeyboardCoordinates} from '@dnd-kit/core';
 import {SortableContext, verticalListSortingStrategy, useSortable} from "@dnd-kit/sortable"
 
 import { CSS } from "@dnd-kit/utilities";
@@ -64,24 +64,22 @@ const Category = (props) => {
   });
 
 
-  const keyboardSensor = useSensor(KeyboardSensor);
-
 
   const sensors = useSensors(
     mouseSensor,
     touchSensor,
-    keyboardSensor
   );
 
 
 
 
-  const {attributes, listeners, setNodeRef, transform, transition} = useSortable({id: props.categoryData.order})
+  const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({id: props.categoryData.order})
 
   const style = {
 
       transition,
-      transform: CSS.Translate.toString(transform)
+      transform: CSS.Translate.toString(transform),
+      opacity: isDragging ? 0.5 : 1,
   }
 
 

@@ -53,12 +53,10 @@ const InnerBag = ({bagData, items, session}) => {
   });
 
 
-  const keyboardSensor = useSensor(KeyboardSensor);
-
   const sensors = useSensors(
     mouseSensor,
     touchSensor,
-    keyboardSensor
+    
   );
 
 

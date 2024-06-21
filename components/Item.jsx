@@ -35,12 +35,14 @@ const Item = (props) => {
     const router = useRouter();
 
 
-    const {attributes, listeners, setNodeRef, transform, transition} = useSortable({id: props.itemData.order})
+    const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({id: props.itemData.order})
 
     const style = {
 
       transition,
-      transform: CSS.Translate.toString(transform)
+      transform: CSS.Translate.toString(transform),
+      opacity: isDragging ? 0.5 : 1,
+
   }
 
 
