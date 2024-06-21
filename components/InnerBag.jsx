@@ -278,7 +278,7 @@ const InnerBag = ({bagData, items, session}) => {
         </Typography>
 
 
-        { itemsTotal ?  <Stack direction="row" alignItems="center" justifyContent="center" mb={5} mt={5}>
+        { itemsTotal ?  <div className='pieChart-table'>
       <PieChart 
     margin={{ top: 0, left:0, right:0, bottom: 0}} 
     series={[{
@@ -386,7 +386,7 @@ const InnerBag = ({bagData, items, session}) => {
 
 
 
-      </Stack> : null }
+      </div> : null }
   
          
       </div>
