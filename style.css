@@ -254,8 +254,29 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 }
 
 
+.join-mobile {
+
+    display: none;
+}
+
+.join-desktop {
+
+   display: block;
+}
+
+
 @media only screen and (max-width: 768px) {
 
+
+   .join-mobile {
+
+      display: block;
+   }
+
+  .join-desktop {
+
+      display: none;
+  }
 
 
   .share-main-div {

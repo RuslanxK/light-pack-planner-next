@@ -104,6 +104,7 @@ const Share = ({bagData, user, session}) => {
     <Stack margin="0 auto" width="100%" mt={3} pb={3} direction="row" justifyContent="space-between" alignItems="center">
      <img id='share-logo' src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} onClick={() => router.push('/')} alt='Light Pack - Planner' width={110} height={70}/>
      <Typography fontWeight="600" component="span" variant='span'>By {user.username}</Typography>
+     {session?.user?.id ? null : <div className='join-desktop'><Button disableElevation  variant="contained" color="primary" onClick={() => window.open('/register', '_blank')}> Join Now </Button></div> }
     </Stack> 
       
        <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center } boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"}  pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
@@ -181,7 +182,7 @@ const Share = ({bagData, user, session}) => {
     </div>
 
 
-    {session?.user?.id ? null : <Button disableElevation sx={{borderRadius: "0px", position: "fixed", bottom: "0px", width: "100%"}} variant="contained" color="primary" onClick={() => window.open('/register', '_blank')}> Join Now </Button> }
+    {session?.user?.id ? null : <div className='join-mobile'><Button disableElevation sx={{borderRadius: "0px", position: "fixed", bottom: "0px", width: "100%"}} variant="contained" color="primary" onClick={() => window.open('/register', '_blank')}> Join Now </Button></div> }
 
     </Stack>
    
