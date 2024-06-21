@@ -208,11 +208,11 @@ const Item = (props) => {
   return (
 
     
-    <div className="scroll-div" sx={{ overflowX: "scroll"}}  ref={setNodeRef} {...attributes} {...listeners} style={style}>
+    <div className="scroll-div" sx={{ overflowX: "scroll"}}  ref={setNodeRef} style={style}>
         
       <Stack mb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.center} onMouseOver={() => setItemHover(true)}  backgroundColor={ theme.palette.mode === "dark" ? '#2e2d2d' : "#dbdbdb" } onMouseLeave={() => setItemHover(false)} >
 
-      <IconButton sx={{cursor: "grabbing"}} >
+      <IconButton {...attributes} {...listeners} sx={{cursor: "grabbing"}} >
           <DragIndicatorIcon sx={{fontSize: "13px"}}/>
         </IconButton> 
      

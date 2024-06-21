@@ -221,14 +221,14 @@ const saveItemsOrder = async (updatedItems) => {
 
 
   return (
-    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.5}  backgroundColor={ theme.palette.mode === "dark" ? '#171717' : "#f5f5f5" } ref={setNodeRef} {...attributes} {...listeners} style={style} boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"} borderRadius="7px">
+    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.5}  backgroundColor={ theme.palette.mode === "dark" ? '#171717' : "#f5f5f5" } ref={setNodeRef} style={style} boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"} borderRadius="7px">
 
   
       <Stack display={theme.flexBox} direction="row" pt={0.8} pb={0.3}>
 
 
       <Stack display="flex" direction="row" alignItems="center" justifyContent="center" width="100%" >
-      <IconButton sx={{cursor: "grabbing"}} >
+      <IconButton {...attributes} {...listeners} sx={{cursor: "grabbing"}} >
           <DragIndicatorIcon sx={{fontSize: "15px"}}/>
         </IconButton> 
  
