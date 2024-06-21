@@ -38,10 +38,17 @@ const InnerBag = ({bagData, items, session}) => {
   const [isScrolling, setIsScrolling] = useState(false);
 
 
-
   useEffect(() => {
-    const handleTouchStart = () => setIsScrolling(true);
-    const handleTouchEnd = () => setIsScrolling(false);
+    let scrollingTimeout;
+
+    const handleTouchStart = () => {
+      setIsScrolling(true);
+      if (scrollingTimeout) clearTimeout(scrollingTimeout);
+    };
+
+    const handleTouchEnd = () => {
+      scrollingTimeout = setTimeout(() => setIsScrolling(false), 100); // Delay to handle scroll stop
+    };
 
     window.addEventListener('touchstart', handleTouchStart);
     window.addEventListener('touchend', handleTouchEnd);
