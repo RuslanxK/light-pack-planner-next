@@ -1,4 +1,4 @@
-import { Stack, IconButton, TextField} from "@mui/material";
+import { Stack, IconButton, TextField, Typography} from "@mui/material";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import { useState } from "react";
@@ -20,9 +20,6 @@ const ShareCategory = (props) => {
   const itemsOfCategory = props.items?.filter((item) => item.categoryId === props.categoryData._id);
 
 
-
-
-
   return (
     <Stack width={theme.category.width}  display={theme.flexBox} mb={0.5} justifyContent={theme.center} borderBottom={ showItems ? null : "1px solid gray"}>
  
@@ -30,8 +27,8 @@ const ShareCategory = (props) => {
 
       <Stack display="flex" direction="row" alignItems="center" justifyContent="flex-start" width="100%" >
 
-      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "3px"}} value={props.categoryData.name} 
-      inputProps={{maxLength: 94, style: {fontSize: 13 }}} InputProps={{ disableUnderline: true }} />
+      <Typography variant="span" component="span" fontSize="13px">{props.categoryData.name}</Typography>
+
       </Stack>
   
       

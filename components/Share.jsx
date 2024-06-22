@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, Box, Container, IconButton, Badge, Button, Tooltip} from '@mui/material'
+import { Stack, Typography, Box, Container, IconButton, Badge, Button, Tooltip, TableContainer, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
@@ -9,8 +9,11 @@ import DataSaverOffOutlinedIcon from "@mui/icons-material/DataSaverOffOutlined";
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import { PieChart, pieArcLabelClasses} from "@mui/x-charts/PieChart";
 import ShareCategory from '../components/ShareCategory'
-import ThumbUpOffAltOutlinedIcon from '@mui/icons-material/ThumbUpOffAltOutlined';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import BackpackOutlinedIcon from '@mui/icons-material/BackpackOutlined';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+
 import axios from 'axios';
 
 
@@ -76,7 +79,8 @@ const Share = ({bagData, user, session}) => {
         return {
           id: category._id,
           value: categoryWeight?.totalWeight || 0 ,
-          label: category?.name?.length > 10 ? `${category?.name?.substring(0, 10)}...` : `${categoryWeight?.totalWeight?.toFixed(2) || 0.00} - ${category?.name}`
+          label: category?.name,
+          color: category.color
         };
       })
     ;
@@ -86,6 +90,15 @@ const Share = ({bagData, user, session}) => {
     const percent = params.value / TOTAL;
     return `${(percent * 100).toFixed(0)}%`;
   };
+
+
+  const categoryTableData = categoryPieChartData.map((category) => ({
+    id: category.id,
+    value: category.value,
+    label: category.label,
+    color: category.color
+    
+  }));
 
 
 
@@ -111,7 +124,7 @@ const Share = ({bagData, user, session}) => {
         <Stack display="flex" direction="row" justifyContent={theme.between} alignItems="center" width="100%">
         <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
         <Badge badgeContent={bagData.bag.likes || "0"} color="primary">
-         <IconButton onClick={toggleLike}> {liked ?  <Tooltip title="Unlike"><ThumbUpAltIcon sx={{fontSize: "20px"}}/></Tooltip> : <Tooltip title="Like"><ThumbUpOffAltOutlinedIcon sx={{fontSize: "20px"}} /></Tooltip> } </IconButton>
+         <IconButton onClick={toggleLike}> {liked ?  <Tooltip title="Unlike"><FavoriteIcon sx={{fontSize: "20px"}}/></Tooltip> : <Tooltip title="Like"><FavoriteBorderIcon sx={{fontSize: "20px"}} /></Tooltip> } </IconButton>
         </Badge>
         </Stack>
         </Stack>
@@ -119,59 +132,117 @@ const Share = ({bagData, user, session}) => {
         <Typography component="p" variant="p">
           {bagData?.bag?.description}
         </Typography>
-
-
-
-        <div className='innerBagData'>
-  
-        <Stack justifyContent="center" alignItems="center">
-        <IconButton><MonitorWeightOutlinedIcon sx={{fontSize: "22px"}}/> </IconButton>
-        { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(1)} / {bagData?.bag?.goal} {user?.weightOption} </Typography>  }
-        </Stack>
-        
-        <Stack justifyContent="center" alignItems="center" pl={4} pr={4} >
-        <IconButton><NordicWalkingIcon sx={{fontSize: "22px"}}/></IconButton>
-        
-        <Typography variant="span" component="span"> { bagData?.worn ? bagData?.worn?.toFixed(1) + "  " + user?.weightOption : '0.0 ' + user?.weightOption}</Typography>
-        </Stack>
-
-        <Stack justifyContent="center" alignItems="center">
-        <IconButton><DataSaverOffOutlinedIcon sx={{fontSize: "22px"}}/></IconButton> {itemsTotal} items 
-        </Stack>
-        
-         </div> 
-
-     
      </div>
    
 
-    { itemsTotal ?  <Stack>
-      <PieChart margin={{ top: 0, left:0, right:0, bottom: 0}} 
-       series={[{
-           data: categoryPieChartData,
-           faded: {innerRadius: 30, additionalRadius: -15, color: 'gray'},
-           highlightScope: { faded: 'global', highlighted: 'item' },
-           arcLabel: getArcLabel,
-           innerRadius: 35,
-           outerRadius: 110,
-           paddingAngle: 5,
-           cornerRadius: 5,
-           startAngle: -180,
-           endAngle: 180,
-           cx: 180,
-           cy: 150,
-         },
-       ]}
-       sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
+     { itemsTotal ?  <div className='pieChart-table'>
+      <PieChart 
+    margin={{ top: 0, left:0, right:0, bottom: 0}} 
+    series={[{
+      data: categoryPieChartData,
+      faded: {innerRadius: 30, additionalRadius: -15, color: 'gray'},
+      highlightScope: { faded: 'global', highlighted: 'item' },
+      arcLabel: getArcLabel,
+      innerRadius: 35,
+      outerRadius: 120,
+      paddingAngle: 2,
+      cornerRadius: 2,
+      startAngle: -180,
+      endAngle: 180,
+      cx: 150,
+      cy: 150,
+      colorAccessor: (datum) => datum.color,
+      
+      
+    }]}
     
-       height={335}
-       slotProps={{ legend: { hidden: true } }}
-       tooltip={{ trigger: 'item' }} 
-       
-       />
+    sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
+    height={300}
+    slotProps={{ legend: { hidden: true } }}
+    tooltip={{ hidden: true }}
+    
+   
+  />
 
-      </Stack> : null }
+<TableContainer>
+  <Table size="small">
+    <TableHead>
+      <TableRow>
+        <TableCell>Category</TableCell>
+        <TableCell align="right">Weight</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {categoryTableData.map((row) => (
+        <TableRow key={row.id}>
+          <TableCell component="th" scope="row">
+            <Stack direction="row" alignItems="center">
+              <Stack backgroundColor={row.color} width="15px" height="15px" mr={1} sx={{ borderRadius: '50%' }}></Stack>
+              {row.label}
+            </Stack>
+          </TableCell>
+          <TableCell align="right">{row.value.toFixed(2)} {session?.user?.weightOption}</TableCell>
+        </TableRow>
+      ))}
 
+       <TableRow>
+        <TableCell colSpan={2} style={{ height: '20px' }} />
+      </TableRow>
+
+       <TableRow>
+       <TableCell component="th" scope="row">
+       <Stack direction="row" alignItems="center">
+        <BackpackOutlinedIcon sx={{fontSize: "18px", marginRight: "4px"}}/> Total
+        </Stack>
+
+       </TableCell>
+
+       <TableCell component="th" scope="row" align='right'>
+
+       { bagData?.totalBagWeight > bagData?.bag?.goal ?  <Typography variant="span" component="span" sx={{ fontWeight: "bold", color: "red" }}>{bagData?.totalBagWeight?.toFixed(2)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography> :  <Typography variant="span" component="span" sx={{ color: bagData?.totalBagWeight > 0.00 ? theme.green : null }}> {bagData?.totalBagWeight?.toFixed(2)} / {bagData?.bag?.goal} {session?.user?.weightOption} </Typography>  }
+
+        </TableCell>
+       </TableRow>
+
+       <TableRow>
+       <TableCell component="th" scope="row">
+       <Stack direction="row" alignItems="center">
+       <NordicWalkingIcon sx={{fontSize: "18px", marginRight: "4px"}}/> Worn
+        </Stack>
+
+       </TableCell>
+
+       <TableCell component="th" scope="row" align='right'>
+
+       <Typography variant="span" component="span"> { bagData?.worn ? bagData?.worn?.toFixed(2) + "  " + session?.user?.weightOption : '0.0 ' + session?.user?.weightOption}</Typography>
+
+        </TableCell>
+       </TableRow>
+
+       <TableRow>
+       <TableCell component="th" scope="row">
+       <Stack direction="row" alignItems="center">
+       <InventoryOutlinedIcon sx={{fontSize: "18px", marginRight: "4px"}}/> Items
+        </Stack>
+
+       </TableCell>
+
+       <TableCell component="th" scope="row" align='right'>
+
+       {itemsTotal}
+
+        </TableCell>
+       </TableRow>
+
+    </TableBody>
+  </Table>
+
+  
+</TableContainer>
+
+
+
+      </div> : null }
 
     <div className="categories">
 

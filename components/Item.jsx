@@ -24,7 +24,6 @@ const Item = (props) => {
   const [popupOpen, setPopupOpen] = useState(false)
   const [picPopupOpen, setPicPopupOpen] = useState(false)
   const [removePopupOpen ,setRemovePopupOpen] = useState(false)
-  const [itemHover, setItemHover] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showEditIcon, setShowEditIcon] = useState(false)
   const [itemData, setItem] = useState({ userId: props.itemData.creator, _id: props.itemData._id, tripId: props.itemData.tripId, bagId: props.itemData.bagId, categoryId: props.itemData.categoryId, name: props.itemData.name, selected: props.itemData.selected,
@@ -210,7 +209,7 @@ const Item = (props) => {
     
     <div className="scroll-div" sx={{ overflowX: "scroll"}}  ref={setNodeRef} style={style}>
         
-      <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end} onMouseOver={() => setItemHover(true)}  backgroundColor={ theme.palette.mode === "dark" ? '#363434' : "#dbdbdb" } onMouseLeave={() => setItemHover(false)} >
+      <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end}  backgroundColor={ theme.palette.mode === "dark" ? '#363434' : "#dbdbdb" } >
 
       <IconButton {...attributes} {...listeners} sx={{cursor: "grabbing"}} >
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>
@@ -237,7 +236,7 @@ const Item = (props) => {
                 <ImageOutlinedIcon sx={{ fontSize: "15px", color: itemData.image || itemData.productImageKey ? theme.green : null, '&:hover': { color: theme.green } }} />
               </IconButton>
             </Tooltip>
-            <Tooltip title="I wear it">
+            <Tooltip title={itemData.worn ? "I wear it" : null }>
               <IconButton onClick={updateAsWorn}>
                 <NordicWalkingIcon sx={{ fontSize: "14px", color: itemData.worn ? theme.green : null, '&:hover': { color: theme.green } }} />
               </IconButton>
@@ -341,10 +340,10 @@ const Item = (props) => {
         src={itemData.image ? URL.createObjectURL(itemData.image) : `${process.env.NEXT_PUBLIC_PROFILE_URL}/${itemData.productImageKey}`}
       />
 
-    { showEditIcon ? <ChangeCircleOutlinedIcon sx={{position: "absolute", fontSize: 100, color: theme.palette.text.secondary }} /> : null }
+    { showEditIcon ? <ChangeCircleOutlinedIcon sx={{position: "absolute", fontSize: 50, color: theme.palette.text.secondary }} /> : null }
     </>
   ) : (
-    <AddPhotoAlternateOutlinedIcon sx={{ fontSize: 100, color: theme.palette.text.secondary }} />
+    <AddPhotoAlternateOutlinedIcon sx={{ fontSize: 50, color: theme.palette.text.secondary }} />
   )}
 
   <input
