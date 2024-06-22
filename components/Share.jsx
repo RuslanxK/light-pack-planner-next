@@ -133,8 +133,9 @@ const Share = ({bagData, user, session}) => {
         <Typography component="p" variant="p">
           {bagData?.bag?.description}
         </Typography>
-     </div>
+     
    
+
 
      { itemsTotal ?  <div className='pieChart-table'>
       <PieChart 
@@ -257,6 +258,8 @@ const Share = ({bagData, user, session}) => {
    
 
     {session?.user?.id ? null : <div className='join-mobile'><Button disableElevation sx={{borderRadius: "0px", position: "fixed", bottom: "0px", width: "100%"}} variant="contained" color="primary" onClick={() => window.open('/register', '_blank')}> Join Now </Button></div> }
+    </div>
+
     </div>
 
     </Stack>
