@@ -105,10 +105,12 @@ const Share = ({bagData, user, session}) => {
 
   return (
 
-    <Container maxWidth={false} sx={{minHeight: "100vh", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}} disableGutters>
+    <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
   
     <Box display="flex" flexDirection="row" width={"100%"} minHeight="100vh" height="100%">
-    <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} pb={5}>
+
+
+    <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} pb={3}>
  
 
     <div className="main-info">
@@ -243,16 +245,19 @@ const Share = ({bagData, user, session}) => {
 
       </div> : null }
 
+
+      <div />
+
     <div className="categories">
 
     {bagData.categories.sort((a, b) => a.order - b.order).map((category, index) => (
                  <ShareCategory key={category._id} categoryData={category} items={bagData?.items} weightOption={user.weightOption}  />
                 ))}
     
-    </div>
-
+   
 
     {session?.user?.id ? null : <div className='join-mobile'><Button disableElevation sx={{borderRadius: "0px", position: "fixed", bottom: "0px", width: "100%"}} variant="contained" color="primary" onClick={() => window.open('/register', '_blank')}> Join Now </Button></div> }
+    </div>
 
     </Stack>
    
