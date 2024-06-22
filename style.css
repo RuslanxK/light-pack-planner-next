@@ -286,6 +286,9 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
   .pieChart-table {
 
     flex-direction: column;
+    width: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
   
 }
 
