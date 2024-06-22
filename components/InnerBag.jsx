@@ -408,7 +408,7 @@ const InnerBag = ({bagData, items, session}) => {
 
 
     <div className="categories">
-    <Stack border="1px dashed gray" borderRadius={theme.radius} display={theme.flexBox} justifyContent={theme.center} alignItems={theme.center}
+    <Stack border="1px dashed gray" display={theme.flexBox} justifyContent={theme.center} alignItems={theme.center}
       width={theme.category.width} height={theme.category.height} mb={1} sx={{cursor: "pointer"}} onClick={addCategory}>
      <Tooltip title="Add category"><IconButton><AddOutlinedIcon sx={{fontSize: "20px", color: "gray" }}/></IconButton></Tooltip>
     </Stack>

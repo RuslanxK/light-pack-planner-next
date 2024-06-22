@@ -210,10 +210,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
   right: 0;
 }
 
-.categories {
-  margin-left: 10px;
-  margin-right: 10px;
-}
+
 
 .container {
   width: 500px;
@@ -319,11 +316,7 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
   }
 
 
-  
-  .categories {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
+
 
 
   .loading {
