@@ -271,8 +271,10 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    width: 900px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 

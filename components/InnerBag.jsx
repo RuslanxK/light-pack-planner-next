@@ -10,8 +10,6 @@ import { useTheme } from '@emotion/react';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MuiPopup from './custom/MuiPopup';
 import CloseIcon from "@mui/icons-material/Close";
-import MonitorWeightOutlinedIcon from "@mui/icons-material/MonitorWeightOutlined";
-import DataSaverOffOutlinedIcon from "@mui/icons-material/DataSaverOffOutlined";
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import { PieChart, pieArcLabelClasses} from "@mui/x-charts/PieChart";
 import SideItem from '../components/SideItem'
@@ -24,6 +22,8 @@ import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable"
 import ShareIcon from '@mui/icons-material/Share';
 import BackpackOutlinedIcon from '@mui/icons-material/BackpackOutlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 
 const InnerBag = ({bagData, items, session}) => {
 
@@ -36,6 +36,7 @@ const InnerBag = ({bagData, items, session}) => {
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
 
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   
 
@@ -109,16 +110,26 @@ const InnerBag = ({bagData, items, session}) => {
   }));
 
 
-  const getRandomColor = () => {
-    const h = Math.floor(Math.random() * 360);
-    const s = 100; // Saturation: 100%
-    const l = 50; // Lightness: 50%
-    return `hsl(${h}, ${s}%, ${l}%)`;
-  };
+  function getRandomDarkColor() {
+    let color;
+    const existingColors = categoriesData.map(category => category.color);
+
+    do {
+      color = '#';
+      for (let i = 0; i < 3; i++) {
+        const part = Math.floor(Math.random() * 256 * 0.6); 
+        color += ('0' + part.toString(16)).slice(-2);
+      }
+    } while (existingColors.includes(color));
+
+    return color;
+  }
+
+
 
 
   const addCategory = async () => {
-    const newCategory = {userId: session?.user?.id, bagId: bagData?.bag?._id, tripId: bagData?.bag?.tripId, name: 'new category', color: getRandomColor() };
+    const newCategory = {userId: session?.user?.id, bagId: bagData?.bag?._id, tripId: bagData?.bag?.tripId, name: 'new category', color: getRandomDarkColor() };
     try {
       const res = await axios.post('/categories/new', newCategory);
       router.refresh();
@@ -273,6 +284,8 @@ const InnerBag = ({bagData, items, session}) => {
       
     
         </Stack>
+
+
         <Typography component="p" variant="p">
           {bagData?.bag?.description}
         </Typography>
@@ -292,7 +305,7 @@ const InnerBag = ({bagData, items, session}) => {
       cornerRadius: 2,
       startAngle: -180,
       endAngle: 180,
-      cx: 150,
+      cx: 120,
       cy: 150,
       colorAccessor: (datum) => datum.color,
       
