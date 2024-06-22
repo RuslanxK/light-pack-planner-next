@@ -21,13 +21,13 @@ const ShareCategory = (props) => {
 
 
   return (
-    <Stack width={theme.category.width}  display={theme.flexBox} mb={0.5} justifyContent={theme.center} borderBottom={ showItems ? null : "1px solid gray"}>
+    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.3}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f5f5f5" } boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"} borderRadius="7px">
  
       <Stack display={theme.flexBox} direction="row" justifyContent={theme.between} alignItems={theme.center} pt={0.8} pb={0.3}>
 
       <Stack display="flex" direction="row" alignItems="center" justifyContent="flex-start" width="100%" >
 
-      <Typography variant="span" component="span" fontSize="13px">{props.categoryData.name}</Typography>
+      <Typography variant="span" component="span" fontSize="13px" sx={{width: "100%", paddingLeft: "10px"}}>{props.categoryData.name}</Typography>
 
       </Stack>
   
