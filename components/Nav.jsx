@@ -26,7 +26,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 
 const Nav = ({bags, session, user}) => {
 
@@ -176,7 +176,7 @@ const navigateToBag = (bag) => {
             <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
              Explore Bags
             </Typography>
-            <TravelExploreIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
+            <StarOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
           
       
