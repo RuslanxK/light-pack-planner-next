@@ -106,7 +106,7 @@ const Articles = ({articles, session}) => {
  Explore the Wilderness: Expert Tips, Stories, and Gear Recommendations Inside!
 </Typography>
 </Stack>
-<Typography component="p" variant="p" mb={2.5}>
+<Typography component="p" variant="p" mb={2.5} mt={1}>
  Embark on a journey with our backpacking blog, where seasoned adventurers share their tales of triumph, survival, and discovery. <br /> From remote mountain peaks to dense forests, find inspiration for your next expedition.
 </Typography>
 

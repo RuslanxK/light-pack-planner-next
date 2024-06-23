@@ -1,10 +1,28 @@
 import ExploreBags from "../../components/ExploreBags"
 import { Fragment } from "react"
 
-const page = () => {
+
+
+const getBags = async () => {
+
+  const res = await fetch(`${process.env.API_URL}/bags/explore`, { cache: 'no-store'});
+  if (!res.ok) {
+    throw new Error("Failed to fetch bags");
+  }
+     return res.json();
+}
+
+
+
+
+
+const page = async () => {
+
+  const exploreBags = await getBags()
+
   return (
     <Fragment>
-        <ExploreBags />
+        <ExploreBags exploreBags={exploreBags} />
     </Fragment>
   )
 }
