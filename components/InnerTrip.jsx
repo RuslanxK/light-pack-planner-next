@@ -200,6 +200,7 @@ const countryNameArr = countriesArr?.map((x) => x.common)
      
      <Stack border="2px dashed gray" alignItems={theme.center} display={theme.flexBox} justifyContent={theme.center} width={theme.bags.width} height={theme.bags.height} borderRadius={theme.radius} sx={{cursor: "pointer"}} onClick={openAddPopup}>
       <Tooltip title="Add bag"><IconButton><AddOutlinedIcon sx={{fontSize: "25px", color: "gray" }}/></IconButton></Tooltip>
+      { tripData?.bags.length ? null : <Typography>Add your first bag</Typography>}
      </Stack>
       {bags}
      </div>

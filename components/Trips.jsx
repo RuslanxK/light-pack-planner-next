@@ -140,6 +140,7 @@ const Trips = ({trips, bags, session}) => {
     <div className="boxes">
     <Stack border="2px dashed gray" display={theme.flexBox} justifyContent={theme.center} alignItems={theme.center} height={theme.trips.height}  borderRadius={theme.radius} sx={{cursor: "pointer"}} onClick={openPopup}>
       <Tooltip title="Add trip"><IconButton><AddLocationAltOutlinedIcon sx={{fontSize: "25px", color: "gray" }}/></IconButton></Tooltip>
+      { trips.tripsWithPictures.length ? null : <Typography>Add your first trip</Typography>}
     </Stack>
     { tripData}
     </div>
