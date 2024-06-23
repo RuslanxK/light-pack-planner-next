@@ -1,4 +1,3 @@
-import { Type } from "@aws-sdk/client-s3";
 import { models, Schema, model } from "mongoose"
 import mongoose from "mongoose";
 
