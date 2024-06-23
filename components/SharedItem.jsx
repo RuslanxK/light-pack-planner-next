@@ -40,7 +40,7 @@ const SharedItem = (props) => {
     <div className="scroll-div" sx={{ overflowX: "scroll"}}>
     
       
-      <Stack  mb={0.5} pb={0.5} pl={1} pr={1} flexDirection="row" justifyContent={theme.between} alignItems={theme.end}  backgroundColor={ theme.palette.mode === "dark" ? '#363434' : "#dbdbdb" }>
+      <Stack  mb={0.5} pb={0.5} pl={1} pr={1} flexDirection="row" justifyContent={theme.between} alignItems={theme.end}>
 
       {props.itemData.productImageKey ? <img src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`} onClick={() => setPicPopupOpen(true)} style={{marginRight: "10px"}} width="50px" height="50px" alt='item'/> : null }
 
@@ -107,9 +107,7 @@ const SharedItem = (props) => {
       style={{ width: "100%", maxHeight: "80vh", objectFit: "contain" }}
     />
   </DialogContent>
-  <DialogActions>
-    {/* Optionally add actions */}
-  </DialogActions>
+ 
 </Dialog>
 ) : null}
 
