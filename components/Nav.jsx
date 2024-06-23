@@ -8,7 +8,7 @@ import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { styled } from "@mui/material/styles";
-import { Fragment, useState, useTransition } from 'react';
+import { Fragment, useState} from 'react';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import HikingOutlinedIcon from "@mui/icons-material/HikingOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
@@ -26,6 +26,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 
 const Nav = ({bags, session, user}) => {
 
@@ -166,8 +167,21 @@ const navigateToBag = (bag) => {
             </Typography>
             <PublicOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
+          
       
         </Accordion>
+
+        <Accordion>
+          <AccordionSummary aria-controls="panel3d-content" id="panel3d-header" onClick={() => router.push("/explore")}>
+            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+             Explore Bags
+            </Typography>
+            <TravelExploreIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
+          </AccordionSummary>
+          
+      
+        </Accordion>
+
 
         <Accordion>
           <AccordionSummary aria-controls="panel3d-content" id="panel3d-header" onClick={() => router.push("/billing")}>
