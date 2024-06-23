@@ -60,9 +60,9 @@ export const PUT = async (req, { params }) => {
       return new NextResponse("Bag not found", { status: 404 });
     }
 
-    const { tripId, name, goal, description } = await req.json();
+    const updateData = await req.json();
 
-    Object.assign(Bag, { tripId, name, goal, description });
+    Object.assign(Bag, updateData);
 
     await Bag.save();
     return new NextResponse("Bag is Updated Successfully", { status: 200 });

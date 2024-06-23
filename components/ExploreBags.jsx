@@ -2,7 +2,7 @@
 
 
 import React from 'react'
-import {  Container, Typography, Stack, IconButton, Badge, Tooltip } from '@mui/material'
+import {  Container, Typography, Stack, IconButton, Badge, Tooltip, Alert } from '@mui/material'
 import { useTheme } from '@emotion/react';
 import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -50,7 +50,7 @@ const ExploreBags = ({exploreBags}) => {
     </div>
     
         
-         {bags}
+         {bags.length === 0 ?   <Alert severity="warning" sx={{margin: "0 auto"}}>There are no shared bags yet.</Alert> : bags} 
       
         </Stack>
           

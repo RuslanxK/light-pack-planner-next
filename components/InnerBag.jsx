@@ -135,6 +135,22 @@ const InnerBag = ({bagData, items, session}) => {
   };
 
 
+
+  const handleSwitchChange = async (e) => {
+
+    const obj = {exploreBags: e.target.checked}
+    try {
+           await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, obj)
+           router.refresh()
+         }
+           catch(err) {
+             console.log(err)
+         }
+  };
+  
+
+
+
   const openPopup = () => {
       setPopupOpen(true)
   }
@@ -147,6 +163,7 @@ const InnerBag = ({bagData, items, session}) => {
   const openRemovePopup = () => {
     setDeletePopupOpen(true)
 }
+
 
 
   const updateBag = async (e) => {
@@ -272,7 +289,7 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Stack direction="row">
 
-        <Tooltip title="Show my bag in Explore bags area"><Switch checked={bagData.bag.exploreBags}/></Tooltip>
+        <Tooltip title="Show my bag in Explore bags area"><Switch onChange={handleSwitchChange} checked={bagData.bag.exploreBags}/></Tooltip>
        <div class="share-link-desktop"> <Tooltip title="Share Bag Link"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip> </div>
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>

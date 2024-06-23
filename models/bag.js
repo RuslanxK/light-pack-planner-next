@@ -15,7 +15,7 @@ const bagSchema = new Schema({
     capacity: { type: String, trim: true },
     passed: { type: Boolean, default: false },
     likes: { type: Number, default: 0 },
-    exploreBags: {type: Boolean, default: true}
+    exploreBags: {type: Boolean, default: false}
   
    
   },

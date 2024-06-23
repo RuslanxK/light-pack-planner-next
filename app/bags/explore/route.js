@@ -8,7 +8,7 @@ export const GET = async (req) => {
      try {
 
            await connectToDB()
-           const bags = await bag.find({})
+           const bags = await bag.find({exploreBags: true})
            return new NextResponse(JSON.stringify(bags), {status: 200})
      }
 
