@@ -39,7 +39,7 @@ const Item = (props) => {
 
       transition,
       transform: CSS.Translate.toString(transform),
-      opacity: isDragging ? 0.5 : 1,
+      opacity: isDragging ? 0.9 : 1,
 
   }
 
@@ -209,7 +209,7 @@ const Item = (props) => {
     
     <div className="scroll-div" sx={{ overflowX: "scroll"}}  ref={setNodeRef} style={style}>
         
-      <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end} backgroundColor={isDragging ? "gray" : null}>
+      <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end}  boxShadow={isDragging ? "rgba(0, 0, 0, 0.15) 0px 2px 8px;" : null}>
 
       <IconButton {...attributes} {...listeners} sx={{cursor: "grabbing"}} >
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>

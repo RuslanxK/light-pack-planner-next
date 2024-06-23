@@ -129,7 +129,7 @@ const navigateToBag = (bag) => {
           
       </div>
 
-    <div className="nav" style={{background: theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"}}>
+    <div className="nav" style={{background: theme.palette.mode === "dark" ? "#171717" : "white"}}>
     <Stack  width={theme.nav.width} display={theme.flexBox}  height={theme.nav.height}> 
     <Stack position={theme.nav.fixed} justifyContent="space-between" height={theme.nav.height} borderRight={theme.palette.mode === "dark" ? `2px solid ${theme.main.darkColor}` : "1px solid #F2F2F2"} width={theme.nav.width}>
     <Stack>

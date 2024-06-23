@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge, TableContainer, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material'
+import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch} from '@mui/material'
 import Category from '../components/Category'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import axios from 'axios';
@@ -272,7 +272,8 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Stack direction="row">
 
-       <div class="share-link-desktop"> <Tooltip title="Share Bag"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip> </div>
+        <Tooltip title="Show my bag in Explore bags area"><Switch checked={bagData.bag.exploreBags}/></Tooltip>
+       <div class="share-link-desktop"> <Tooltip title="Share Bag Link"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip> </div>
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>

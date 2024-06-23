@@ -2,10 +2,11 @@
 
 
 import React from 'react'
-import {  Container, Typography, Stack, IconButton } from '@mui/material'
+import {  Container, Typography, Stack, IconButton, Badge, Tooltip } from '@mui/material'
 import { useTheme } from '@emotion/react';
 import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const ExploreBags = ({exploreBags}) => {
 
@@ -15,7 +16,13 @@ const ExploreBags = ({exploreBags}) => {
 
   const bags = exploreBags.map((bag, index) => {
 
-        return <Stack border="1px solid gray" p={2} m={1} index={index}>{bag.name}</Stack>
+        return <Stack onClick={() => window.open(`/share?id=${bag._id}`)} sx={{cursor: "pointer"}} boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;" backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : "#FAFAFA"} display="flex" direction="row" alignItems="center" justifyContent="space-between" p={2} m={1} index={index}>
+          <Typography>{bag.name}</Typography>
+          <Badge color="secondary" badgeContent={bag.likes || "0" } sx={{zIndex: 0}}>
+        <Tooltip title="Total likes"><IconButton><FavoriteIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
+        </Badge>
+          
+          </Stack>
   })
 
 
