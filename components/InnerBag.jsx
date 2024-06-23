@@ -22,7 +22,6 @@ import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable"
 import ShareIcon from '@mui/icons-material/Share';
 import BackpackOutlinedIcon from '@mui/icons-material/BackpackOutlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 const InnerBag = ({bagData, items, session}) => {
@@ -36,9 +35,6 @@ const InnerBag = ({bagData, items, session}) => {
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
 
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  
 
   const mouseSensor = useSensor(MouseSensor, {
     // Require the mouse to move by 10 pixels before activating
@@ -261,7 +257,7 @@ const InnerBag = ({bagData, items, session}) => {
 
         <div className="main-info">
 
-       <Stack display={theme.flexBox} width="100%" flexDirection={theme.row} alignItems={theme.between} justifyContent={theme.between} boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+       <Stack display={theme.flexBox} width="100%" flexDirection={theme.row} alignItems={theme.between} justifyContent={theme.between}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
 
         <Stack display="flex" direction="row" justifyContent={theme.between} width="100%" flexWrap="wrap">
 

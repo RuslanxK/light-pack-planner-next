@@ -1,8 +1,10 @@
-import { Stack, IconButton, TextField, Typography} from "@mui/material";
+"use client"
+
+
+import { Stack, IconButton, Typography} from "@mui/material";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import { useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
 import { useTheme } from '@emotion/react';
 import React from "react";
 import Divider from '@mui/material/Divider';
@@ -12,16 +14,22 @@ import SharedItem from "./SharedItem"
 const ShareCategory = (props) => {
 
   const theme = useTheme()
-  const router = useRouter();
 
   const [showItems, setShowItems] = useState(true);
+  const [itemsData, setItemsData] = useState(props.items || []);
 
 
-  const itemsOfCategory = props.items?.filter((item) => item.categoryId === props.categoryData._id);
+  useEffect(() => {
+    setItemsData(props.items || []);
+  }, [props.items]);
+
+
+
+  const itemsOfCategory = itemsData?.filter((item) => item.categoryId === props.categoryData._id);
 
 
   return (
-    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.3}>
+    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.3} backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f5f5f5" }>
  
       <Stack display={theme.flexBox} direction="row" justifyContent={theme.between} alignItems={theme.center} pt={0.8} pb={0.3}>
 

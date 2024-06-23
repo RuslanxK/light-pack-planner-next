@@ -209,7 +209,7 @@ const Item = (props) => {
     
     <div className="scroll-div" sx={{ overflowX: "scroll"}}  ref={setNodeRef} style={style}>
         
-      <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end} backgroundColor={ theme.palette.mode === "dark" ? '#363434' : "#dbdbdb" } >
+      <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end} backgroundColor={isDragging ? "gray" : null}>
 
       <IconButton {...attributes} {...listeners} sx={{cursor: "grabbing"}} >
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>

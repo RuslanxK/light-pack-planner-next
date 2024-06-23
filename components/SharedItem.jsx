@@ -1,10 +1,9 @@
 "use client"
 
-import { Stack, TextField, Select, MenuItem, IconButton, Typography, Tooltip, Link, Dialog, DialogActions, DialogContent, DialogTitle} from '@mui/material'
+import { Stack, TextField, Select, MenuItem, IconButton, Typography, Tooltip, Link, Dialog, DialogContent, DialogTitle} from '@mui/material'
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import { useTheme } from '@emotion/react';
 import React, { useState } from 'react';
-import MuiPopup from './custom/MuiPopup';
 import CloseIcon from "@mui/icons-material/Close";
 
 const SharedItem = (props) => {

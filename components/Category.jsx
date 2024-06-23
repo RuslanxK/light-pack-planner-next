@@ -1,3 +1,5 @@
+"use client"
+
 import { Stack, Typography, IconButton, Button, TextField, Tooltip} from "@mui/material";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
@@ -221,7 +223,7 @@ const saveItemsOrder = async (updatedItems) => {
 
 
   return (
-    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.3}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f5f5f5" } ref={setNodeRef} style={style} boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"}>
+    <Stack width={theme.category.width}  display={theme.flexBox} mb={1}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f5f5f5" } ref={setNodeRef} style={style} boxShadow={"rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;"}>
 
   
       <Stack display={theme.flexBox} direction="row" pt={0.8} pb={0.3}>
@@ -232,7 +234,7 @@ const saveItemsOrder = async (updatedItems) => {
           <DragIndicatorIcon sx={{fontSize: "15px"}}/>
         </IconButton> 
  
-      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "5px"}} value={updatedCategory.name} onClick={() => console.log(checkedItems)}
+      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "5px"}} value={updatedCategory.name}
       inputProps={{maxLength: 94, style: {fontSize: 13 }}} InputProps={{ disableUnderline: true }} onChange={handleChange} onBlur={saveCategoryName} />
       </Stack>
   
@@ -250,7 +252,7 @@ const saveItemsOrder = async (updatedItems) => {
        <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors}>
 
       {showItems && (
-        <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pb={0.5} borderTop="1px solid #C0C0C0" width="100%" height={theme.auto}>
+        <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pt={0.5} pb={1} borderTop="1px solid gray" width="100%" height={theme.auto}>
 
         
 

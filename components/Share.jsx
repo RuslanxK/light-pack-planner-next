@@ -4,8 +4,6 @@ import { Stack, Typography, Box, Container, IconButton, Badge, Button, Tooltip, 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
-import MonitorWeightOutlinedIcon from "@mui/icons-material/MonitorWeightOutlined";
-import DataSaverOffOutlinedIcon from "@mui/icons-material/DataSaverOffOutlined";
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import { PieChart, pieArcLabelClasses} from "@mui/x-charts/PieChart";
 import ShareCategory from '../components/ShareCategory'
@@ -121,7 +119,7 @@ const Share = ({bagData, user, session}) => {
      {session?.user?.id ? null : <div className='join-desktop'><Button disableElevation  variant="contained" color="primary" onClick={() => window.open('/register', '_blank')}> Join Now </Button></div> }
     </Stack> 
       
-       <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center } boxShadow={'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;'}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"}  pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+       <Stack display={theme.flexBox} flexDirection={theme.row} alignItems={theme.center }  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"}  pl={2} pr={2} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
         <Stack display="flex" direction="row" justifyContent={theme.between} alignItems="center" width="100%">
         <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
         <Badge badgeContent={bagData.bag.likes || "0"} color="primary">
