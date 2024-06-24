@@ -226,9 +226,9 @@ const ExploreBags = ({ exploreBags }) => {
                 </TableHead>
                 <TableBody>
                   {filteredBags.map(bag => (
-                    <TableRow key={bag.id}>
+                    <TableRow key={bag._id}>
                       <TableCell>
-                        <Link href={`/bags/${bag.id}`} passHref>
+                        <Link href={`/share?id=${bag._id}`} target="_blank">
                           {bag.name}
                         </Link>
                       </TableCell>
