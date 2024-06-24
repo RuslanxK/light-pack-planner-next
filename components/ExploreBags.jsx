@@ -24,6 +24,8 @@ import {
 import { useTheme } from '@emotion/react';
 import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 
 const ExploreBags = ({ exploreBags }) => {
   const theme = useTheme();
@@ -35,6 +37,10 @@ const ExploreBags = ({ exploreBags }) => {
   const [weightFilter, setWeightFilter] = useState('');
   const [weightUnitFilter, setWeightUnitFilter] = useState('');
   const [weightOptions, setWeightOptions] = useState([]);
+  
+
+  const isMobile = useMediaQuery("only screen and (max-width : 768px)");
+
 
   const handleSliderChange = (filterSetter) => (e, newValue) => {
     filterSetter(newValue);
@@ -113,13 +119,13 @@ const ExploreBags = ({ exploreBags }) => {
         </div>
 
         <Stack pl={5} pr={5}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} backgroundColor={theme.main.darkColor} p={1} pl={1.5} pr={1.5}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap" mb={2} backgroundColor={theme.main.darkColor} p={1} pl={1.5} pr={1.5}>
             <TextField
               label="Search by Name or Owner"
               variant="outlined"
               size='small'
               InputLabelProps={{ style: { fontSize: 14 } }}
-              sx={{ width: "30%" }}
+              sx={{ width: isMobile ? "100%" : "30%" }}
               value={searchFilter}
               onChange={(e) => setSearchFilter(e.target.value)}
             />
