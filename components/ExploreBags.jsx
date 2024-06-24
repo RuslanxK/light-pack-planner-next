@@ -116,10 +116,9 @@ const ExploreBags = ({ exploreBags }) => {
           <Typography component="p" variant="p" mb={2.5} mt={1}>
             Discover the top-rated bags crafted for every journey. <br /> Whether you're conquering remote mountain peaks or exploring dense forests, find the perfect companion for your next adventure.
           </Typography>
-        </div>
 
-        <Stack pl={5} pr={5}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap" mb={2} backgroundColor={theme.main.darkColor} p={1} pl={1.5} pr={1.5} >
+          <Stack>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap" mb={2} backgroundColor={theme.main.darkColor} p={1} pl={2} pr={2} >
             <TextField
               label="Search by Name or Owner"
               variant="outlined"
@@ -208,7 +207,7 @@ const ExploreBags = ({ exploreBags }) => {
         </Stack>
 
         {filteredBags.length === 0 && (
-          <Stack pl={5} pr={5}>
+          <Stack>
             <Alert severity="info">
               <strong>No bags found.</strong>
               <p>Try adjusting the filters or search criteria.</p>
@@ -217,7 +216,7 @@ const ExploreBags = ({ exploreBags }) => {
         )}
 
         {filteredBags.length > 0 && (
-          <Stack pl={5} pr={5}>
+          <Stack>
             <TableContainer>
               <Table>
                 <TableHead>
@@ -250,6 +249,9 @@ const ExploreBags = ({ exploreBags }) => {
             </TableContainer>
           </Stack>
         )}
+        </div>
+
+
       </Stack>
     </Container>
   );
