@@ -2,35 +2,17 @@
 
 
 import React from 'react'
-import {  Container, Typography, Stack, IconButton, Badge, Tooltip, Alert } from '@mui/material'
+import {  Container, Typography, Stack, IconButton, Badge,  Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Link} from '@mui/material'
 import { useTheme } from '@emotion/react';
 import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import Image from 'next/image'
 
 
 const ExploreBags = ({exploreBags}) => {
 
   const theme = useTheme()
   const router = useRouter();
-
-
-  const bags = exploreBags.map((bag, index) => {
-
-        return <Stack onClick={() => window.open(`/share?id=${bag._id}`)} sx={{cursor: "pointer"}} boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;" backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : "#FAFAFA"} display="flex" direction="row" alignItems="center" justifyContent="space-between" p={2} m={1} index={index}>
-
-          <Image src="/backpack.png" width={25} height={25} alt='bag' style={{marginBottom: "10px"}} />
-          <Typography>{bag.name}</Typography>
-          <Typography>By {bag.userDetails.username}</Typography>
-          
-
-          <Badge color="secondary" badgeContent={bag.likes || "0" } sx={{zIndex: 0}}>
-        <Tooltip title="Total likes"><IconButton><FavoriteIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
-        </Badge>
-          
-          </Stack>
-  })
 
 
   return (
@@ -59,7 +41,66 @@ const ExploreBags = ({exploreBags}) => {
 
          <Stack pl={5} pr={5}>
         
-         {bags.length === 0 ?   <Alert severity="warning" sx={{margin: "0 auto"}}>There are no shared bags yet.</Alert> : bags} 
+         {exploreBags.length === 0 ? (
+  <Alert severity="warning" sx={{ margin: "0 auto" }}>
+    There are no shared bags yet.
+  </Alert>
+) : (
+  <TableContainer>
+    <Table
+      size="small"
+      sx={{
+        minWidth: 650,
+        boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px;",
+        background: theme.palette.mode === "dark" ? theme.main.darkColor : "#FAFAFA"
+      }}
+      aria-label="simple table"
+    >
+      <TableHead sx={{ background: theme.palette.mode === "dark" ? "#171717" : "#F2F2F2" }}>
+        <TableRow>
+          <TableCell>Name</TableCell>
+          <TableCell align="left">Owner</TableCell>
+          <TableCell align="center">Categories</TableCell>
+          <TableCell align="center">Items</TableCell>
+          <TableCell align="center">Worn</TableCell>
+          <TableCell align="center">Total Weight</TableCell>
+          <TableCell align="right">Likes</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {exploreBags.map((row) => (
+          <TableRow
+            key={row._id}
+            sx={{
+              '&:last-child td, &:last-child th': { border: 0 },
+              '&:hover': {
+                backgroundColor: theme.palette.mode === 'dark' ? '#6e6d6d' : "#e6e3e3",
+                cursor: 'pointer'
+              }
+            }}
+          >
+            <TableCell component="th" scope="row">
+            <Link href={`/share?id=${row._id}`} target="_blank" rel="noopener noreferrer" underline="none">{row.name}</Link>
+            </TableCell>
+            <TableCell align="left">{row.userDetails.username}</TableCell>
+            <TableCell align="center">{row.totalCategories}</TableCell>
+            <TableCell align="center">{row.totalItems}</TableCell>
+            <TableCell align="center">{row.totalWorn.toFixed(2)} {row.userDetails.weightOption}</TableCell>
+            <TableCell align="center">{row.totalBagWeight.toFixed(2)} / {row.goal} {row.userDetails.weightOption}</TableCell>
+            <TableCell align="right">
+              <Badge color="success" badgeContent={row.likes || "0"} sx={{ zIndex: 0 }}>
+                <IconButton>
+                  <FavoriteIcon sx={{ fontSize: "20px" }} />
+                </IconButton>
+              </Badge>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  </TableContainer>
+)}
+
       
          </Stack>
 

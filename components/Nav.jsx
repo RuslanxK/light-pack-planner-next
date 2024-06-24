@@ -13,7 +13,6 @@ import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import HikingOutlinedIcon from "@mui/icons-material/HikingOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PaymentIcon from '@mui/icons-material/Payment';
 import { signOut } from "next-auth/react"
 import { Tooltip } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -178,19 +177,6 @@ const navigateToBag = (bag) => {
             </Typography>
             <StarOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
-          
-      
-        </Accordion>
-
-
-        <Accordion>
-          <AccordionSummary aria-controls="panel3d-content" id="panel3d-header" onClick={() => router.push("/billing")}>
-            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
-              Billing
-            </Typography>
-            <PaymentIcon sx={{fontSize: "20px", color: "#4a4a4a"}}/>
-          </AccordionSummary>
-      
         </Accordion>
 
         <Accordion onClick={() => router.push('/settings')}>
@@ -202,7 +188,6 @@ const navigateToBag = (bag) => {
           </AccordionSummary>
         </Accordion>
 
-        <button className='premium'>Planner Premium</button>
 
         {session && session?.user ? (
   <Stack display={theme.flexBox} pb={1} mt={1} alignItems={theme.center}>

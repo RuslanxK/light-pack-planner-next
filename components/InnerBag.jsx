@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch} from '@mui/material'
+import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch, Link} from '@mui/material'
 import Category from '../components/Category'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import axios from 'axios';
@@ -265,7 +265,7 @@ const InnerBag = ({bagData, items, session}) => {
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
     { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", left: "15px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
-    <div className="share-icon-mobile"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", right: "15px", backgroundColor: theme.palette.primary.dark, color: "white", "&:hover": {backgroundColor: theme.palette.info.main}}}><ShareIcon sx={{fontSize: "20px"}}/></IconButton></div>
+    <Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none"><div className="share-icon-mobile"><IconButton sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "100%", position: "fixed", bottom: "15px", right: "15px", backgroundColor: theme.palette.primary.dark, color: "white", "&:hover": {backgroundColor: theme.palette.info.main}}}><ShareIcon sx={{fontSize: "20px"}}/></IconButton></div></Link>
 
 
     <Box display="flex" flexDirection="row" width={theme.fullWidth} minHeight="100vh"height="100%">
@@ -281,7 +281,7 @@ const InnerBag = ({bagData, items, session}) => {
         <Stack direction="row" alignItems="center">
         <IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0", marginRight: "5px"}} onClick={() => router.push(`/trips?id=${bagData.bag.tripId}`)}><ArrowBackIcon sx={{fontSize: "20px"}}/></IconButton>
         <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
-        <Badge color="secondary" badgeContent={bagData.bag.likes || "0" } sx={{zIndex: 0}}>
+        <Badge color="success" badgeContent={bagData.bag.likes || "0" } sx={{zIndex: 0}}>
         <Tooltip title="Total likes"><IconButton><FavoriteIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
         </Badge>
         </Stack>
@@ -290,7 +290,7 @@ const InnerBag = ({bagData, items, session}) => {
         <Stack direction="row">
 
         <Tooltip title="Show my bag in Explore bags area"><Switch onChange={handleSwitchChange} checked={bagData.bag.exploreBags}/></Tooltip>
-       <div class="share-link-desktop"> <Tooltip title="Share Bag Link"><IconButton onClick={() => window.open(`/share?id=${bagData.bag._id}`, '_blank')}><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip> </div>
+        <Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none"><div class="share-link-desktop"> <Tooltip title="Share Bag Link"><IconButton><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip> </div></Link>
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
