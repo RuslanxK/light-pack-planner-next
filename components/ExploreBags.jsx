@@ -119,18 +119,18 @@ const ExploreBags = ({ exploreBags }) => {
         </div>
 
         <Stack pl={5} pr={5}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap" mb={2} backgroundColor={theme.main.darkColor} p={1} pl={1.5} pr={1.5}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap" mb={2} backgroundColor={theme.main.darkColor} p={1} pl={1.5} pr={1.5} >
             <TextField
               label="Search by Name or Owner"
               variant="outlined"
               size='small'
               InputLabelProps={{ style: { fontSize: 14 } }}
-              sx={{ width: isMobile ? "100%" : "30%" }}
+              sx={{ width: isMobile ? "100%" : "30%", marginBottom: isMobile ? "10px" : null }}
               value={searchFilter}
               onChange={(e) => setSearchFilter(e.target.value)}
             />
 
-            <FormControl variant="outlined" size="small" sx={{ width: "8%" }}>
+            <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "8%", marginBottom: isMobile ? "10px" : null }}>
               <InputLabel sx={{ fontSize: "14px" }}>Likes</InputLabel>
               <Select
                 label="Likes"
@@ -146,7 +146,7 @@ const ExploreBags = ({ exploreBags }) => {
             </FormControl>
 
 
-            <FormControl variant="outlined" size="small" sx={{ width: "10%" }}>
+            <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "10%", marginBottom: isMobile ? "10px" : null}}>
               <InputLabel sx={{ fontSize: "14px" }}>Weight Unit</InputLabel>
               <Select
                 label="Weight Unit"
@@ -163,7 +163,7 @@ const ExploreBags = ({ exploreBags }) => {
             </FormControl>
 
             
-            <FormControl variant="outlined" size="small" sx={{ width: "12%" }}>
+            <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "12%", marginBottom: isMobile ? "10px" : null }}>
               <InputLabel sx={{ fontSize: "14px" }}>Total Weight</InputLabel>
               <Select
                 label="Total Bag Weight"
@@ -177,7 +177,7 @@ const ExploreBags = ({ exploreBags }) => {
               </Select>
             </FormControl>
 
-            <Stack direction="column" justifyContent="center" alignItems="center" width="10%">
+            <Stack direction="column" justifyContent="center" alignItems="center" width={ isMobile ? "100%" : "10%"}>
               <Typography variant="span" fontSize="12px" fontWeight={500} textAlign="center">
                 Categories: {categoryRange[0]} - {categoryRange[1]}
               </Typography>
@@ -191,7 +191,7 @@ const ExploreBags = ({ exploreBags }) => {
               />
             </Stack>
 
-            <Stack direction="column" justifyContent="center" alignItems="center" width="10%">
+            <Stack direction="column" justifyContent="center" alignItems="center" width={ isMobile ? "100%" : "10%"} >
               <Typography variant="span" fontSize="12px" fontWeight={500} textAlign="center">
                 Items: {itemRange[0]} - {itemRange[1]}
               </Typography>
