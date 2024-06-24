@@ -422,8 +422,7 @@ const InnerBag = ({bagData, items, session}) => {
 
 
     <div className="categories">
-    <Stack border="1px dashed gray" display={theme.flexBox} direction="row" justifyContent={theme.center} alignItems={theme.center}
-      width={theme.category.width} height={theme.category.height} mb={1} sx={{cursor: "pointer"}} onClick={addCategory}>
+    <Stack border="1px dashed gray" display={theme.flexBox} direction="row" justifyContent={theme.center} alignItems={theme.center} height={theme.category.height} mb={1} sx={{cursor: "pointer"}} onClick={addCategory}>
      <Tooltip title="Add category"><IconButton><AddOutlinedIcon sx={{fontSize: "20px", color: "gray" }}/></IconButton></Tooltip>
      { categoriesData.length ? null : <Typography>Add your first category</Typography>}
 

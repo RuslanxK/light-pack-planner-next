@@ -26,6 +26,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 
 const Nav = ({bags, session, user}) => {
 
@@ -185,6 +186,15 @@ const navigateToBag = (bag) => {
               Settings 
             </Typography>
             <SettingsOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
+          </AccordionSummary>
+        </Accordion>
+
+        <Accordion onClick={() => router.push('/changelog')}>
+          <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
+            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+              Change log 
+            </Typography>
+            <NotificationImportantIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
         </Accordion>
 
