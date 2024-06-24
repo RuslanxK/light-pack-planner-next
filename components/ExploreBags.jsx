@@ -118,7 +118,7 @@ const ExploreBags = ({ exploreBags }) => {
           </Typography>
 
           <Stack>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap" mb={2} backgroundColor={theme.main.darkColor} p={2} >
+          <Stack direction="row" justifyContent="space-between" alignItems="center" flexWrap="wrap" mt={1} backgroundColor={theme.main.darkColor} p={2} >
             <TextField
               label="Search by Name or Owner"
               variant="outlined"
