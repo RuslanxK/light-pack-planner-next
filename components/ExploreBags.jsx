@@ -65,6 +65,11 @@ const ExploreBags = ({ exploreBags }) => {
       }
     };
     populateWeightOptions();
+
+    // Reset weight filter if weight unit is set to All
+    if (weightUnitFilter === '') {
+      setWeightFilter('');
+    }
   }, [weightUnitFilter]);
 
   const handleSliderChange = (filterSetter) => (e, newValue) => {
@@ -131,12 +136,26 @@ const ExploreBags = ({ exploreBags }) => {
                 variant="outlined"
                 size='small'
                 InputLabelProps={{ style: { fontSize: 14 } }}
-                sx={{ width: isMobile ? "100%" : "20%", marginBottom: isMobile ? "10px" : null }}
+                sx={{ width: isMobile ? "100%" : "35%", marginBottom: isMobile ? "10px" : null }}
                 value={searchFilter}
                 onChange={(e) => setSearchFilter(e.target.value)}
               />
 
-              <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "6.5%", marginBottom: isMobile ? "10px" : null }}>
+                <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "25%" }}>
+                <InputLabel sx={{ fontSize: "14px" }}>Country</InputLabel>
+                <Select
+                  label="Trip Name"
+                  value={selectedTripName}
+                  onChange={handleSelectChange(setSelectedTripName)}
+                >
+                  <MenuItem sx={{ fontSize: "14px" }} value="">All</MenuItem>
+                  {tripNames.map(tripName => (
+                    <MenuItem sx={{ fontSize: "14px" }} key={tripName} value={tripName}>{tripName}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "8%", marginBottom: isMobile ? "10px" : null }}>
                 <InputLabel sx={{ fontSize: "14px" }}>Likes</InputLabel>
                 <Select
                   label="Likes"
@@ -151,126 +170,104 @@ const ExploreBags = ({ exploreBags }) => {
                 </Select>
               </FormControl>
 
-              <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "10.5%", marginBottom: isMobile ? "10px" : null }}>
+              <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "12%", marginBottom: isMobile ? "10px" : null }}>
                 <InputLabel sx={{ fontSize: "14px" }}>Weight Unit</InputLabel>
                 <Select
                   label="Weight Unit"
                   value={weightUnitFilter}
-                  sx={{ fontSize: "14px" }}
                   onChange={handleSelectChange(setWeightUnitFilter)}
                 >
                   <MenuItem sx={{ fontSize: "14px" }} value="">All</MenuItem>
-                  <MenuItem sx={{ fontSize: "14px" }} value="kg">kg</MenuItem>
-                  <MenuItem sx={{ fontSize: "14px" }} value="lb">lb</MenuItem>
-                  <MenuItem sx={{ fontSize: "14px" }} value="g">g</MenuItem>
-                  <MenuItem sx={{ fontSize: "14px" }} value="oz">oz</MenuItem>
+                  <MenuItem sx={{ fontSize: "14px" }} value="kg">Kilograms</MenuItem>
+                  <MenuItem sx={{ fontSize: "14px" }} value="lb">Pounds</MenuItem>
+                  <MenuItem sx={{ fontSize: "14px" }} value="g">Grams</MenuItem>
+                  <MenuItem sx={{ fontSize: "14px" }} value="oz">Ounces</MenuItem>
                 </Select>
               </FormControl>
 
-              <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "11%", marginBottom: isMobile ? "10px" : null }}>
+              <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "12%", marginBottom: isMobile ? "10px" : null }}>
                 <InputLabel sx={{ fontSize: "14px" }}>Total Weight</InputLabel>
                 <Select
-                  label="Total Bag Weight"
+                  label="Total Weight"
                   value={weightFilter}
                   disabled={!weightUnitFilter}
-                  sx={{ fontSize: "14px" }}
                   onChange={handleSelectChange(setWeightFilter)}
                 >
                   {weightOptions.map(option => (
-                    <MenuItem key={option} sx={{ fontSize: "14px" }} value={option}>{option}</MenuItem>
+                    <MenuItem sx={{ fontSize: "14px" }} key={option} value={option}>{option}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
-
-              <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "10.5%", marginBottom: isMobile ? "10px" : null }}>
-                <InputLabel sx={{ fontSize: "14px" }}>Destination</InputLabel>
-                <Select
-                  label="Destination"
-                  value={selectedTripName}
-                  sx={{ fontSize: "14px" }}
-                  onChange={(e) => setSelectedTripName(e.target.value)}
-                >
-                  <MenuItem sx={{ fontSize: "14px" }} value="">All</MenuItem>
-                  {tripNames.map(tripName => (
-                    <MenuItem key={tripName} sx={{ fontSize: "14px" }} value={tripName}>{tripName}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <Stack direction="column" justifyContent="center" alignItems="center" width={ isMobile ? "100%" : "13.5%"}>
-                <Typography variant="span" fontSize="12px" fontWeight={500} textAlign="center">
-                  Categories: {categoryRange[0]} - {categoryRange[1]}
+            </Stack>
+            <Stack direction={isMobile ? "column" : "row"} justifyContent="space-between" alignItems="center" mt={2} mb={3} backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#F2F2F2"}  >
+              <Stack sx={{ width: isMobile ? "100%" : "50%", marginBottom: isMobile ? "15px" : null }} p={2}>
+                <Typography id="non-linear-slider" component="label" sx={{ fontSize: "14px" }}>
+                  Number of Categories
                 </Typography>
                 <Slider
                   value={categoryRange}
+                  onChange={handleSliderChange(setCategoryRange)}
+                  valueLabelDisplay="auto"
                   min={0}
                   max={100}
-                  step={1}
-                  valueLabelDisplay="auto"
-                  onChange={handleSliderChange(setCategoryRange)}
+                
                 />
               </Stack>
 
-              <Stack direction="column" justifyContent="center" alignItems="center" width={ isMobile ? "100%" : "13.5%"} >
-                <Typography variant="span" fontSize="12px" fontWeight={500} textAlign="center">
-                  Items: {itemRange[0]} - {itemRange[1]}
+              <Stack sx={{ width: isMobile ? "100%" : "50%", marginBottom: isMobile ? "15px" : null }} p={2}>
+                <Typography id="non-linear-slider" component="label" sx={{ fontSize: "14px" }}>
+                  Number of Items
                 </Typography>
                 <Slider
                   value={itemRange}
+                  onChange={handleSliderChange(setItemRange)}
+                  valueLabelDisplay="auto"
                   min={0}
                   max={200}
-                  step={1}
-                  valueLabelDisplay="auto"
-                  onChange={handleSliderChange(setItemRange)}
+                  
                 />
               </Stack>
+
             </Stack>
           </Stack>
 
-          {filteredBags.length === 0 && (
-            <Stack>
-              <Alert severity="info">
-                <strong>No bags found.</strong>
-                <p>Try adjusting the filters or search criteria.</p>
-              </Alert>
-            </Stack>
-          )}
-
-          {filteredBags.length > 0 && (
-            <Stack>
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Owner</TableCell>
-                      <TableCell>Destination</TableCell>
-                      <TableCell>Categories</TableCell>
-                      <TableCell>Items</TableCell>
-                      <TableCell>Likes</TableCell>
-                      <TableCell>Weight</TableCell>
+          {filteredBags.length === 0 ? (
+            <Alert severity="info" sx={{ mt: 2 }}>No bags found matching the filters.</Alert>
+          ) : (
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ fontSize: "13px" }}>Name</TableCell>
+                    <TableCell sx={{ fontSize: "13px" }}>Owner</TableCell>
+                    <TableCell sx={{ fontSize: "13px" }}>Country</TableCell>
+                    <TableCell sx={{ fontSize: "13px" }}>Categories</TableCell>
+                    <TableCell sx={{ fontSize: "13px" }}>Items</TableCell>
+                    <TableCell sx={{ fontSize: "13px" }}>Likes</TableCell>
+                    <TableCell sx={{ fontSize: "13px" }}>Total Weight {weightUnitFilter}</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {filteredBags.map((bag) => (
+                    <TableRow key={bag._id}>
+                      <TableCell sx={{ fontSize: "13px" }}>
+                        <Link href={`/bag/${bag._id}`} underline="hover">
+                          {bag.name}
+                        </Link>
+                      </TableCell>
+                      <TableCell sx={{ fontSize: "13px" }}>{bag.userDetails.username}</TableCell>
+                      <TableCell sx={{ fontSize: "13px" }}>{bag.tripName}</TableCell>
+                      <TableCell sx={{ fontSize: "13px" }}>{bag.totalCategories}</TableCell>
+                      <TableCell sx={{ fontSize: "13px" }}>{bag.totalItems}</TableCell>
+                      <TableCell sx={{ fontSize: "13px" }}>{bag.likes}</TableCell>
+                      <TableCell sx={{ fontSize: "13px" }}>
+                        {bag.totalBagWeight.toFixed(2)} / {bag.goal} {bag.userDetails.weightOption}
+                      </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {filteredBags.map(bag => (
-                      <TableRow key={bag._id}>
-                        <TableCell>
-                          <Link href={`/share?id=${bag._id}`} target="_blank">
-                            {bag.name}
-                          </Link>
-                        </TableCell>
-                        <TableCell>{bag.userDetails?.username}</TableCell>
-                        <TableCell>{bag.tripName}</TableCell>
-                        <TableCell>{bag.totalCategories}</TableCell>
-                        <TableCell>{bag.totalItems}</TableCell>
-                        <TableCell>{bag.likes}</TableCell>
-                        <TableCell>{`${bag.totalBagWeight.toFixed(2)} / ${bag.goal} ${bag?.userDetails?.weightOption}`}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Stack>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           )}
         </div>
       </Stack>
