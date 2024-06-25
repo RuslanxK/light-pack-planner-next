@@ -200,7 +200,7 @@ const ExploreBags = ({ exploreBags }) => {
               </FormControl>
             </Stack>
             <Stack direction={isMobile ? "column" : "row"} justifyContent="space-between" alignItems="center" mt={1} mb={2} backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#F2F2F2"} pl={2} pr={2}>
-              <Stack sx={{ width: isMobile ? "100%" : "50%"}} p={2}>
+              <Stack sx={{ width: isMobile ? "100%" : "50%"}} pl={2} pr={2} pb={1} pt={1}>
                 <Typography id="non-linear-slider" component="label" sx={{ fontSize: "14px" }}>
                   Number of Categories
                 </Typography>
@@ -214,7 +214,7 @@ const ExploreBags = ({ exploreBags }) => {
                 />
               </Stack>
 
-              <Stack sx={{ width: isMobile ? "100%" : "50%" }} pl={2} pr={2}>
+              <Stack sx={{ width: isMobile ? "100%" : "50%" }} pl={2} pr={2} pb={1} pt={1}>
                 <Typography id="non-linear-slider" component="label" sx={{ fontSize: "14px" }}>
                   Number of Items
                 </Typography>
