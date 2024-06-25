@@ -193,7 +193,7 @@ span.MuiBadge-badge {
   align-items: center;
 }
 
-.side-bar-icon-mobile, .share-icon-mobile {
+.side-bar-icon-mobile {
   display: none;
 }
 
@@ -313,10 +313,7 @@ span.MuiBadge-badge {
       display: none;
   }
 
-  .share-link-desktop {
-
-      display: none
-  }
+  
 
   .innerBagData {
 
