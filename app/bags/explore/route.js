@@ -3,42 +3,29 @@ import { connectToDB } from "../../../utils/database";
 import { NextResponse } from "next/server";
 import category from '../../../models/categories';
 import item from '../../../models/item';
+import trip from '../../../models/trip'; // Import the trip model
+import user from '../../../models/user'; // Import the user model
 
 const { calculateTotalWeight } = require("../../../BL/totalBagKg");
-const { calculateCategoryTotalWeight } = require("../../../BL/totalCategoryKg");
 const { calculateWornItemsTotalWeight } = require("../../../BL/totalWorn");
 
 export const GET = async (req) => {
   try {
     await connectToDB();
 
-    const bagsWithUserNames = await bag.aggregate([
-      { $match: { exploreBags: true } },
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'creator',
-          foreignField: '_id',
-          as: 'userDetails'
-        }
-      },
-      { $unwind: '$userDetails' },
-      {
-        $project: {
-          _id: 1,
-          name: 1,
-          description: 1,
-          creator: 1,
-          exploreBags: 1,
-          goal: 1,
-          passed: 1,
-          likes: 1,
-          'userDetails.username': 1,
-          'userDetails.weightOption' : 1
-        }
-      }
-    ]);
+    // Fetch bags with user details
+    const bagsWithUserNames = await bag.find({ exploreBags: true }).lean();
 
+    // Fetch all trip details
+    const allTrips = await trip.find({}).lean();
+    const tripMap = new Map(allTrips.map(trip => [trip._id.toString(), trip.name]));
+
+    // Fetch all user details
+    const userIds = bagsWithUserNames.map(bag => bag.creator);
+    const users = await user.find({ _id: { $in: userIds } }).lean();
+    const userMap = new Map(users.map(user => [user._id.toString(), { username: user.username, weightOption: user.weightOption }]));
+
+    // Fetch additional details and combine results
     const bagsWithTotals = await Promise.all(bagsWithUserNames.map(async (bag) => {
       const totalWorn = await calculateWornItemsTotalWeight(bag._id);
       const totalWeightResult = await calculateTotalWeight(bag._id);
@@ -46,17 +33,26 @@ export const GET = async (req) => {
       const categoriesOfTheBag = await category.countDocuments({ bagId: bag._id, creator: bag.creator });
       const itemsOfTheBag = await item.countDocuments({ bagId: bag._id, creator: bag.creator });
 
+      // Find the trip name for the current bag
+      const tripName = tripMap.get(bag.tripId?.toString()) || null;
+
+      // Find the user details for the current bag
+      const userDetails = userMap.get(bag.creator.toString()) || {};
+
       return {
         ...bag,
         totalBagWeight: totalWeightResult.totalWeight,
         totalWorn: totalWorn.totalWeight,
         totalCategories: categoriesOfTheBag,
-        totalItems: itemsOfTheBag
+        totalItems: itemsOfTheBag,
+        tripName, // Include the trip name
+        userDetails // Include user details
       };
     }));
 
     return new NextResponse(JSON.stringify(bagsWithTotals), { status: 200 });
   } catch (error) {
+    console.error(error); // Debugging log to see the error message
     return new NextResponse("Failed to fetch bags", { status: 500 });
   }
 }
