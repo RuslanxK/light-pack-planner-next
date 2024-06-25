@@ -141,7 +141,7 @@ const ExploreBags = ({ exploreBags }) => {
                 onChange={(e) => setSearchFilter(e.target.value)}
               />
 
-                <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "25%" }}>
+                <FormControl variant="outlined" size="small" sx={{ width: isMobile ? "100%" : "25%", marginBottom: isMobile ? "10px" : null }}>
                 <InputLabel sx={{ fontSize: "14px" }}>Country</InputLabel>
                 <Select
                   label="Trip Name"
@@ -199,8 +199,8 @@ const ExploreBags = ({ exploreBags }) => {
                 </Select>
               </FormControl>
             </Stack>
-            <Stack direction={isMobile ? "column" : "row"} justifyContent="space-between" alignItems="center" mt={2} mb={3} backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#F2F2F2"}  >
-              <Stack sx={{ width: isMobile ? "100%" : "50%", marginBottom: isMobile ? "15px" : null }} p={2}>
+            <Stack direction={isMobile ? "column" : "row"} justifyContent="space-between" alignItems="center" mt={1} mb={2} backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#F2F2F2"} pl={2} pr={2}>
+              <Stack sx={{ width: isMobile ? "100%" : "50%", marginBottom: isMobile ? "10px" : null }} p={2}>
                 <Typography id="non-linear-slider" component="label" sx={{ fontSize: "14px" }}>
                   Number of Categories
                 </Typography>
