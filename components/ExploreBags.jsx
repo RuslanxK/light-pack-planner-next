@@ -25,7 +25,6 @@ import { useTheme } from '@emotion/react';
 import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import axios from 'axios';
 
 const ExploreBags = ({ exploreBags }) => {
   const theme = useTheme();
@@ -54,13 +53,13 @@ const ExploreBags = ({ exploreBags }) => {
     // Populate weightOptions based on selected weightUnitFilter
     const populateWeightOptions = () => {
       if (weightUnitFilter === 'kg') {
-        setWeightOptions(['0-5', '5-10', '10-15', '15+']);
+        setWeightOptions(['All', '0-5', '5-10', '10-15', '15+']);
       } else if (weightUnitFilter === 'lb') {
-        setWeightOptions(['0-10', '10-20', '20-30', '30+']);
+        setWeightOptions(['All', '0-10', '10-20', '20-30', '30+']);
       } else if (weightUnitFilter === 'g') {
-        setWeightOptions(['0-5000', '5000-10000', '10000-15000', '15000+']);
+        setWeightOptions(['All', '0-5000', '5000-10000', '10000-15000', '15000+']);
       } else if (weightUnitFilter === 'oz') {
-        setWeightOptions(['0-175', '175-350', '350-525', '525+']);
+        setWeightOptions(['All', '0-175', '175-350', '350-525', '525+']);
       } else {
         setWeightOptions([]);
       }
@@ -88,7 +87,7 @@ const ExploreBags = ({ exploreBags }) => {
       (likesFilter === '100-1000' && bag.likes > 100 && bag.likes <= 1000) ||
       (likesFilter === '1000+' && bag.likes > 1000)
     ) &&
-    (weightFilter === '' ||
+    (weightFilter === '' || weightFilter === 'All' || // Adjusted condition for "All"
       (weightFilter === '0-5' && bag.totalBagWeight >= 0 && bag.totalBagWeight <= 5 && weightUnitFilter === 'kg') ||
       (weightFilter === '5-10' && bag.totalBagWeight > 5 && bag.totalBagWeight <= 10 && weightUnitFilter === 'kg') ||
       (weightFilter === '10-15' && bag.totalBagWeight > 10 && bag.totalBagWeight <= 15 && weightUnitFilter === 'kg') ||
@@ -173,6 +172,7 @@ const ExploreBags = ({ exploreBags }) => {
                 <Select
                   label="Total Bag Weight"
                   value={weightFilter}
+                  disabled={!weightUnitFilter}
                   sx={{ fontSize: "14px" }}
                   onChange={handleSelectChange(setWeightFilter)}
                 >
