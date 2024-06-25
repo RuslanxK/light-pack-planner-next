@@ -34,6 +34,7 @@ const InnerBag = ({bagData, items, session}) => {
   const [editedBag, setEditedBag] = useState({tripId: bagData?.bag?.tripId, name: bagData?.bag?.name, goal: bagData?.bag?.goal, description: bagData?.bag?.description})
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
+  const [confirmPopupOpen, setConfirmPopupOpen] = useState(false)
 
 
   const mouseSensor = useSensor(MouseSensor, {
@@ -135,18 +136,38 @@ const InnerBag = ({bagData, items, session}) => {
   };
 
 
-
   const handleSwitchChange = async (e) => {
 
-    const obj = {exploreBags: e.target.checked}
-    try {
-           await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, obj)
-           router.refresh()
-         }
-           catch(err) {
-             console.log(err)
-         }
+    if(e.target.checked === true) {
+
+      setConfirmPopupOpen(true); 
+    }
+
+    else {
+
+      try {
+        await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: false });
+        setConfirmPopupOpen(false)
+        router.refresh()
+      } catch (error) {
+        console.log(error);
+      }
+    }
+   
   };
+
+
+  
+  const confirmSwitchChange = async () => {
+    try {
+      await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: true });
+      setConfirmPopupOpen(false)
+      router.refresh()
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   
 
 
@@ -158,6 +179,7 @@ const InnerBag = ({bagData, items, session}) => {
   const closePopup = () => {
     setPopupOpen(false);
     setDeletePopupOpen(false)
+    setConfirmPopupOpen(false);
   };
 
   const openRemovePopup = () => {
@@ -288,8 +310,8 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Stack direction="row">
 
-        <Tooltip title="Show my bag in Explore bags area"><Switch onChange={handleSwitchChange} checked={bagData.bag.exploreBags}/></Tooltip>
-        <Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none"> <Tooltip title="Share Bag Link"><IconButton><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip></Link>
+        <Tooltip title={bagData.bag.exploreBags ? "Remove this bag from 'Explore Bags'" : "Share this bag in 'Explore Bags'"}><Switch onChange={handleSwitchChange} checked={bagData.bag.exploreBags}/></Tooltip>
+        <Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none"> <Tooltip title="Share Link"><IconButton><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip></Link>
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
@@ -507,6 +529,33 @@ const InnerBag = ({bagData, items, session}) => {
 <Button sx={{marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeBag} disableElevation>Delete</Button>
 </Stack>
 </MuiPopup> : null }
+
+
+{confirmPopupOpen ? (
+  <MuiPopup isOpen={confirmPopupOpen} onClose={closePopup}>
+    <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
+      <Stack width="90%">
+        <Typography variant='span' component="h2" mb={1.5}>Notice</Typography>
+        <Typography variant="body1" component="span">
+          You are about to publish <b style={{ color: theme.green }}>{bagData.bag.name}</b> to the "Explore Bags".
+          Please note that confirming this action will make your bag details visible to everyone and allow them to react to it.
+        </Typography>
+      </Stack>
+      <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+      <Button
+        sx={{ marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.green }}
+        variant="contained"
+        onClick={confirmSwitchChange}
+        disableElevation
+      >
+        Publish
+      </Button>
+    </Stack>
+  </MuiPopup>
+) : null}
+
+
+
     </Box>
     </Container>
   )
