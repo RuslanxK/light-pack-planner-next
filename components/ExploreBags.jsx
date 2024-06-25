@@ -214,7 +214,7 @@ const ExploreBags = ({ exploreBags }) => {
                 />
               </Stack>
 
-              <Stack sx={{ width: isMobile ? "100%" : "50%" }} p={2}>
+              <Stack sx={{ width: isMobile ? "100%" : "50%" }} pl={2} pr={2}>
                 <Typography id="non-linear-slider" component="label" sx={{ fontSize: "14px" }}>
                   Number of Items
                 </Typography>
@@ -251,7 +251,7 @@ const ExploreBags = ({ exploreBags }) => {
                   {filteredBags.map((bag) => (
                     <TableRow key={bag._id}>
                       <TableCell sx={{ fontSize: "13px" }}>
-                        <Link href={`/share?=id=${bag._id}`} underline="hover" target="_blank">
+                        <Link href={`/share?id=${bag._id}`} underline="hover" target="_blank">
                           {bag.name}
                         </Link>
                       </TableCell>
