@@ -65,7 +65,7 @@ const SharedItem = (props) => {
       
 
 
-      <Stack display={theme.flexBox} flexDirection="row">
+      <Stack display={theme.flexBox} flexDirection="row" backgroundColor="red" width="5%">
           
             <Tooltip title={ props.itemData.worn ? "I wear it" : null }>
               <IconButton>
