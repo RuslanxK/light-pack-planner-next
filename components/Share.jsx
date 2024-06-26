@@ -200,7 +200,7 @@ const Share = ({ bagData, user, session }) => {
           width={"100%"}
           pb={3}
         >
-          <div className="main-info">
+          <div className="main-info-shared">
             <Stack
               margin="0 auto"
               width="100%"
