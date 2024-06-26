@@ -377,7 +377,7 @@ const Share = ({ bagData, user, session }) => {
                   onChange={handleWeightUnitChange}
                   displayEmpty
                   size="small"
-                  sx={{fontSize: "14px", outline: "none", marginRight: "7px",  '& .MuiOutlinedInput-input': {p: 0.5}}}
+                  sx={{ paddingLeft: "10px", fontSize: "14px", outline: "none", marginRight: "7px",  '& .MuiOutlinedInput-input': {p: 0.4}}}
                  
                 >
                   <MenuItem sx={{fontSize: "14px"}} value="kg">kg</MenuItem>
