@@ -286,7 +286,7 @@ const InnerBag = ({bagData, items, session}) => {
   return (
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
-    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "0%", position: "fixed", bottom: "0px", left: "0px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
+    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "40px", height: "40px", zIndex: "99", borderRadius: "0px", borderTopRightRadius: "30%", position: "fixed", bottom: "0px", left: "0px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
 
 
     <Box display="flex" flexDirection="row" width={theme.fullWidth} minHeight="100vh"height="100%">
