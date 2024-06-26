@@ -192,7 +192,7 @@ const navigateToBag = (bag) => {
         <Accordion onClick={() => router.push('/changelog')}>
           <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
             <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
-              Change log 
+              Changelog 
             </Typography>
             <NotificationImportantIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
