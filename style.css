@@ -290,13 +290,21 @@ span.MuiBadge-badge {
 
 .item-div {
 
-  margin-bottom: 5px;
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
   width: 100%;
+  align-items: flex-end;
+  
 }
 
+
+.scroll-div {
+  overflow-x: scroll;
+  display: flex;
+  justify-content: space-between;
+  align-items: space-between;    
+
+}
 
 
 @media only screen and (max-width: 768px) {
@@ -435,18 +443,8 @@ span.MuiBadge-badge {
     align-items: stretch;
   }
 
-  .scroll-div {
-    overflow-x: scroll;
-    display: flex;
-    justify-content: space-between;
-    align-items: space-between;    
-    width: 100%;
-  }
-
-  .item-div {
-
-      width: auto;
-  }
+ 
+  
 
   .scroll-div input,
   .scroll-div select {
