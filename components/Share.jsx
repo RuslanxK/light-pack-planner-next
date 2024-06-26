@@ -232,7 +232,7 @@ const Share = ({ bagData, user, session }) => {
                     color="primary"
                     onClick={() => window.open("/register", "_blank")}
                   >
-                    Join Now{" "}
+                     Create Your FREE bag
                   </Button>
                 </div>
               )}
@@ -473,8 +473,7 @@ const Share = ({ bagData, user, session }) => {
                   color="primary"
                   onClick={() => window.open("/register", "_blank")}
                 >
-                  {" "}
-                  Join Now{" "}
+                  Create Your FREE bag
                 </Button>
               </div>
             )}
