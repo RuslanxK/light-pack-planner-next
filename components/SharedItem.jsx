@@ -41,7 +41,7 @@ const SharedItem = (props) => {
       
       <div className='item-div'>
 
-      {props.itemData.productImageKey ? <img src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`} onClick={() => setPicPopupOpen(true)} style={{marginRight: "10px"}} width="50px" height="50px" alt='item'/> : null }
+      {props.itemData.productImageKey ? <img src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`} onClick={() => setPicPopupOpen(true)} style={{marginRight: "10px", objectFit: "cover"}} width="50px" height="50px" alt='item'/> : null }
 
       {props.itemData.link ? (
           <Link href={props.itemData.link} target="_blank" rel="noopener" underline="none" sx={{ width: '50%', borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0", fontSize: 12, color: theme.palette.info.main }}>

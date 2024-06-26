@@ -291,12 +291,8 @@ span.MuiBadge-badge {
 .item-div {
 
   margin-bottom: 5px;
-  padding-bottom: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: flex-end;
   width: 100%;
 }
@@ -448,7 +444,7 @@ span.MuiBadge-badge {
 
   .item-div {
 
-      width: 1500px;
+      width: auto;
   }
 
   .scroll-div input,
