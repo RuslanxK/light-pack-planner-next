@@ -230,7 +230,7 @@ const Item = (props) => {
       </Select>
  
 
-      <Stack display={theme.flexBox} flexDirection="row" justifyContent="space-between" alignItems="space-between" backgroundColor="red">
+      <Stack display={theme.flexBox} flexDirection="row" justifyContent="space-between" alignItems="space-between">
 
             <Tooltip title="Picture">
               <IconButton onClick={() => setPicPopupOpen(true)}>
