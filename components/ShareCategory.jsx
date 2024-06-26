@@ -49,13 +49,13 @@ const ShareCategory = (props) => {
        </Stack>
 
       {showItems && (
-        <Stack  pb={1} width="100%" height={theme.auto}>
+        <Stack>
 
         <Divider sx={{marginBottom: "5px"}}/>
 
        
           {itemsOfCategory.sort((a, b) => a.order - b.order).map((item, index) => (
-                 <Stack width="100%" key={item._id} ><SharedItem key={item._id} itemData={item} weightOption={props.weightOption} /></Stack>
+                <SharedItem key={item._id} itemData={item} weightOption={props.weightOption} />
                 ))}
     
 
