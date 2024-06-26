@@ -70,10 +70,6 @@ const SharedItem = (props) => {
                 <NordicWalkingIcon sx={{ fontSize: "14px", color: props.itemData.worn ? theme.green : null, '&:hover': { color: theme.green } }} />
               </IconButton>
             </Tooltip>
-           
-      
-            
-        
             </Stack>
     
 
