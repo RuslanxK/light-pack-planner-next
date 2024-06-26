@@ -349,7 +349,7 @@ const InnerBag = ({bagData, items, session}) => {
       cornerRadius: 2,
       startAngle: -180,
       endAngle: 180,
-      cx: 180,
+      cx: 160,
       cy: 150,
       colorAccessor: (datum) => datum.color,
       

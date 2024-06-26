@@ -308,7 +308,7 @@ const Share = ({ bagData, user, session }) => {
                       cornerRadius: 2,
                       startAngle: -180,
                       endAngle: 180,
-                      cx: 180,
+                      cx: 160,
                       cy: 150,
                       colorAccessor: (datum) => datum.color,
                     },
@@ -467,7 +467,7 @@ const Share = ({ bagData, user, session }) => {
                     borderRadius: "0px",
                     position: "fixed",
                     bottom: "0px",
-                    margin: "0 auto",
+                    left: "0",
                     width: "100%",
                   }}
                   variant="contained"
