@@ -288,27 +288,12 @@ span.MuiBadge-badge {
 }
 
 
-.item-div {
-
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: flex-end;
- 
-  
-}
 
 
 
 
 @media only screen and (max-width: 768px) {
 
-
-  .item-div {
-
-    width: auto;
-    
-  }
 
 
   .pieChart-table {
@@ -443,8 +428,15 @@ span.MuiBadge-badge {
     align-items: stretch;
   }
 
- 
-  
+  .scroll-div {
+    overflow-x: scroll;
+    display: flex;
+    justify-content: space-between;
+    align-items: space-between;
+    width: 100%;
+   
+    
+  }
 
   .scroll-div input,
   .scroll-div select {

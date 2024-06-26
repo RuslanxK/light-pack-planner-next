@@ -39,7 +39,8 @@ const SharedItem = (props) => {
     <div className="scroll-div">
     
       
-      <div className='item-div'>
+    <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end} >
+
 
       {props.itemData.productImageKey ? <img src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`} onClick={() => setPicPopupOpen(true)} style={{marginRight: "10px", objectFit: "cover"}} width="50px" height="50px" alt='item'/> : null }
 
@@ -72,11 +73,8 @@ const SharedItem = (props) => {
            
       
             
-          </div>
-          
-    
-      
-
+        
+            </Stack>
     
 
 {picPopupOpen ? (
