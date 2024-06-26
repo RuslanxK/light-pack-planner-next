@@ -64,12 +64,12 @@ const SharedItem = (props) => {
        <MenuItem sx={{fontSize: "12px"}} value="high">High priority</MenuItem>
       </Select>
       
-{/*           
+          
             <Tooltip title={ props.itemData.worn ? "I wear it" : null }>
               <IconButton>
                 <NordicWalkingIcon sx={{ fontSize: "14px", color: props.itemData.worn ? theme.green : null, '&:hover': { color: theme.green } }} />
               </IconButton>
-            </Tooltip> */}
+            </Tooltip>
             </Stack>
     
 
