@@ -35,7 +35,7 @@ const ShareCategory = (props) => {
 
       <Stack display="flex" direction="row" alignItems="center" justifyContent="flex-start" width="100%" >
 
-      <Typography variant="span" component="span" fontSize="13px" sx={{width: "100%", paddingLeft: "10px"}}>{props.categoryData.name}</Typography>
+      <Typography variant="span" component="span" fontSize="13px" sx={{width: "100%"}}>{props.categoryData.name}</Typography>
 
       </Stack>
   
