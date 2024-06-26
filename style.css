@@ -288,10 +288,19 @@ span.MuiBadge-badge {
 }
 
 
-.scroll-div {
+.item-div {
 
-  background-color: red;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
 }
+
 
 
 @media only screen and (max-width: 768px) {
@@ -437,6 +446,11 @@ span.MuiBadge-badge {
     align-items: space-between;
     background-color: red;
     
+  }
+
+  .item-div {
+
+      width: auto;
   }
 
   .scroll-div input,
