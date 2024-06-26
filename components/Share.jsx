@@ -291,7 +291,7 @@ const Share = ({ bagData, user, session }) => {
             {itemsTotal ? (
               <div className="pieChart-table">
                 <PieChart
-                  margin={{ top: 0, left: 15, right: 0, bottom: 0 }}
+                  margin={{ top: 0, left: 5, right: 0, bottom: 0 }}
                   series={[
                     {
                       data: categoryPieChartData,
