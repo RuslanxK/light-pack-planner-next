@@ -222,7 +222,7 @@ const Share = ({ bagData, user, session }) => {
                 height={70}
               />
               <Typography fontWeight="600" component="span" variant="span">
-                By {user.username}
+                Shared by {user.username}
               </Typography>
               {session?.user?.id ? null : (
                 <div className="join-desktop">
@@ -377,7 +377,7 @@ const Share = ({ bagData, user, session }) => {
                   onChange={handleWeightUnitChange}
                   displayEmpty
                   size="small"
-                  sx={{fontSize: "14px", marginRight: "7px"}}
+                  sx={{fontSize: "14px", outline: "none", marginRight: "7px",  '& .MuiOutlinedInput-input': {p: 0.5}}}
                  
                 >
                   <MenuItem sx={{fontSize: "14px"}} value="kg">kg</MenuItem>
