@@ -294,15 +294,11 @@ span.MuiBadge-badge {
   flex-direction: row;
   width: 100%;
   align-items: flex-end;
-  justify-content: space-between;
+ 
   
 }
 
 
-.scroll-div {
-  overflow-x: scroll;
-
-}
 
 
 @media only screen and (max-width: 768px) {
