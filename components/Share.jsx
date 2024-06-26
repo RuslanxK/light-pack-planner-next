@@ -356,8 +356,7 @@ const Share = ({ bagData, user, session }) => {
                               row.value,
                               user.weightOption,
                               weightUnit
-                            ).toFixed(2)}{" "}
-                            {weightUnit}
+                            ).toFixed(2)} {weightUnit}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -367,7 +366,7 @@ const Share = ({ bagData, user, session }) => {
                           <Stack direction="row" alignItems="center">
                             <BackpackOutlinedIcon
                               sx={{ fontSize: "18px", marginRight: "4px" }}
-                            />{" "}
+                            />
                             Total
                           </Stack>
                         </TableCell>
@@ -378,7 +377,7 @@ const Share = ({ bagData, user, session }) => {
                   onChange={handleWeightUnitChange}
                   displayEmpty
                   size="small"
-                  sx={{fontSize: "14px", marginRight: "12px"}}
+                  sx={{fontSize: "14px", marginRight: "7px"}}
                  
                 >
                   <MenuItem sx={{fontSize: "14px"}} value="kg">kg</MenuItem>
