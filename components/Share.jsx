@@ -385,12 +385,7 @@ const Share = ({ bagData, user, session }) => {
                         <TableCell align="right">
                           <Typography variant="span" component="span">
                         
-                            {convertWeight(
-                              TOTAL,
-                              user.weightOption,
-                              weightUnit
-                            ).toFixed(2)}{" "}
-                            {weightUnit}
+                            <span style={{color: bagData?.totalBagWeight > bagData?.bag?.goal ? 'red' : theme.green}}>{convertWeight(TOTAL, user.weightOption, weightUnit).toFixed(2)} {weightUnit}</span>
                           </Typography>
                           {bagData?.bag?.goal && (
                             <Typography variant="span" component="span">

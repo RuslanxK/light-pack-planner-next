@@ -79,6 +79,7 @@ const Item = (props) => {
 
   
     const handleChange = async (event) => {
+
       let { name, value } = event.target;
       setItem({ ...itemData, [name]: value });
     

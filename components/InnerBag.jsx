@@ -37,6 +37,8 @@ const InnerBag = ({bagData, items, session}) => {
   const [confirmPopupOpen, setConfirmPopupOpen] = useState(false)
 
 
+
+
   const mouseSensor = useSensor(MouseSensor, {
     // Require the mouse to move by 10 pixels before activating
     activationConstraint: {
@@ -137,6 +139,13 @@ const InnerBag = ({bagData, items, session}) => {
 
 
   const handleSwitchChange = async (e) => {
+
+    if(bagData?.totalBagWeight === 0) {
+
+       return alert("You must add categories and items to publish")
+       
+    }
+    
 
     if(e.target.checked === true) {
 
@@ -360,7 +369,7 @@ const InnerBag = ({bagData, items, session}) => {
     <TableHead>
       <TableRow>
         <TableCell>Category</TableCell>
-        <TableCell align="right">Weight</TableCell>
+        <TableCell align="right">Weight ({session.user.weightOption})</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>

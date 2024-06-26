@@ -17,6 +17,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers-pro";
 import TextField from "@mui/material/TextField";
 import dayjs from "dayjs";
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
 import { useState, useEffect, useTransition} from 'react';
 
 
@@ -156,9 +158,24 @@ const Trips = ({trips, bags, session}) => {
         <div id='boxes' className="boxes">
 
         <LatestBagStack>
+
           <Typography component="h4" variant='span' fontWeight="300">Total weight</Typography>
+
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
           <MonitorWeightOutlinedIcon sx={{fontSize: "30px", color: theme.green}}/>
-          <Typography component="h3" variant='span'  fontWeight="600" sx={{color: trips?.latestBagTotalWeight > trips?.latestBag?.goal ? "red" : null}}>{trips?.latestBagTotalWeight ? trips?.latestBagTotalWeight.toFixed(2) : 0.00 } / {trips?.latestBag?.goal || 0.00 } {session?.user?.weightOption}</Typography>
+
+         { trips?.latestBagTotalWeight > trips?.latestBag?.goal ? <Stack direction="row">
+          <BlockOutlinedIcon sx={{marginRight: "5px", color: "red"}}/>
+          <Typography fontWeight="600" color="red">Failed</Typography>
+          </Stack> : <Stack direction="row">
+          <CheckCircleOutlineOutlinedIcon sx={{marginRight: "5px", color: theme.green }} />
+          <Typography fontWeight="600" color={theme.green}>Passed</Typography>
+          </Stack> }
+
+
+          </Stack>
+
+          <Typography component="h3" variant='span'  fontWeight="600" sx={{color: trips?.latestBagTotalWeight > trips?.latestBag?.goal ? "red" : theme.green}}>{trips?.latestBagTotalWeight ? trips?.latestBagTotalWeight.toFixed(2) : 0.00 } / {trips?.latestBag?.goal || 0.00 } {session?.user?.weightOption}</Typography>
         </LatestBagStack>
 
         <LatestBagStack>
