@@ -422,6 +422,7 @@ span.MuiBadge-badge {
     display: flex;
     justify-content: space-between;
     align-items: space-between;
+    width: 100%;
   }
 
   .scroll-div input,
