@@ -337,7 +337,7 @@ const InnerBag = ({bagData, items, session}) => {
 
         { itemsTotal ?  <div className='pieChart-table'>
       <PieChart 
-    margin={{ top: 0, left:0, right:0, bottom: 0}} 
+    margin={{ top: 0, left: 65, right:0, bottom: 0}} 
     series={[{
       data: categoryPieChartData,
       faded: {innerRadius: 30, additionalRadius: -15, color: 'gray'},
@@ -349,14 +349,14 @@ const InnerBag = ({bagData, items, session}) => {
       cornerRadius: 2,
       startAngle: -180,
       endAngle: 180,
-      cx: 160,
+      cx: 150,
       cy: 150,
       colorAccessor: (datum) => datum.color,
       
       
     }]}
     
-    sx={{[`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
+    sx={{ [`& .${pieArcLabelClasses.root}`]: { fill: 'white', fontSize: 14, fontWeight: "300"}, visibility: itemsTotal ? "visible" :  "hidden"}}
     height={300}
     slotProps={{ legend: { hidden: true } }}
     tooltip={{ hidden: true }}
