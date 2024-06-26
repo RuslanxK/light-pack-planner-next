@@ -186,7 +186,7 @@ const Share = ({ bagData, user, session }) => {
   };
 
   return (
-    <Container sx={{ display: "flex" }} disableGutters>
+    <Container sx={{ display: "flex" }} maxWidth={false} disableGutters>
       <Box
         display="flex"
         flexDirection="row"
