@@ -228,9 +228,9 @@ const Item = (props) => {
        <MenuItem sx={{fontSize: "12px"}} value="medium">Med priority</MenuItem>
        <MenuItem sx={{fontSize: "12px"}} value="high">High priority</MenuItem>
       </Select>
+ 
 
-
-      <Stack display={theme.flexBox} flexDirection="row">
+      <Stack display={theme.flexBox} flexDirection="row" justifyContent="space-between" alignItems="space-between" backgroundColor="red">
 
             <Tooltip title="Picture">
               <IconButton onClick={() => setPicPopupOpen(true)}>
