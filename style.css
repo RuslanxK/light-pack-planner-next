@@ -427,17 +427,21 @@ span.MuiBadge-badge {
     align-items: stretch;
   }
 
-  .scroll-div {
+  .scroll-div, .scroll-div-share {
     overflow-x: scroll;
     display: flex;
     justify-content: space-between;
     align-items: space-between;
-    width: 400px;
    
     
   }
 
-  .scroll-div input,
+  .scroll-div-share {
+
+      width: 375px;
+  }
+
+  .scroll-div input, .scroll-div-share input, .scroll-div-share select,
   .scroll-div select {
     
      width: auto;

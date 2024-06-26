@@ -36,7 +36,7 @@ const SharedItem = (props) => {
   return (
 
     
-    <div className="scroll-div">
+    <div className="scroll-div-share">
     
       
     <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end}>
