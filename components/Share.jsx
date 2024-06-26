@@ -332,7 +332,19 @@ const Share = ({ bagData, user, session }) => {
                       <TableRow>
                         <TableCell>Category</TableCell>
                         <TableCell align="right">
-                          Weight ({weightUnit})
+                          Weight   <Select
+                  value={weightUnit}
+                  onChange={handleWeightUnitChange}
+                  displayEmpty
+                  size="small"
+                  sx={{ paddingLeft: "10px", marginLeft: "3px", fontSize: "14px", outline: "none",  '& .MuiOutlinedInput-input': {p: 0.4}}}
+                 
+                >
+                  <MenuItem sx={{fontSize: "14px"}} value="kg">kg</MenuItem>
+                  <MenuItem sx={{fontSize: "14px"}} value="lb">lb</MenuItem>
+                  <MenuItem sx={{fontSize: "14px"}} value="g">g</MenuItem>
+                  <MenuItem sx={{fontSize: "14px"}} value="oz">oz</MenuItem>
+                   </Select>
                         </TableCell>
                       </TableRow>
                     </TableHead>
@@ -372,19 +384,7 @@ const Share = ({ bagData, user, session }) => {
                         </TableCell>
                         <TableCell align="right">
                           <Typography variant="span" component="span">
-                          <Select
-                  value={weightUnit}
-                  onChange={handleWeightUnitChange}
-                  displayEmpty
-                  size="small"
-                  sx={{ paddingLeft: "10px", fontSize: "14px", outline: "none", marginRight: "7px",  '& .MuiOutlinedInput-input': {p: 0.4}}}
-                 
-                >
-                  <MenuItem sx={{fontSize: "14px"}} value="kg">kg</MenuItem>
-                  <MenuItem sx={{fontSize: "14px"}} value="lb">lb</MenuItem>
-                  <MenuItem sx={{fontSize: "14px"}} value="g">g</MenuItem>
-                  <MenuItem sx={{fontSize: "14px"}} value="oz">oz</MenuItem>
-                   </Select>
+                        
                             {convertWeight(
                               TOTAL,
                               user.weightOption,
@@ -441,6 +441,7 @@ const Share = ({ bagData, user, session }) => {
                         </TableCell>
                         <TableCell align="right">{itemsTotal}</TableCell>
                       </TableRow>
+                      
                     </TableBody>
                   </Table>
                 </TableContainer>
