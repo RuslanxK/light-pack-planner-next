@@ -29,7 +29,7 @@ const ShareCategory = (props) => {
 
 
   return (
-    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.3} backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#f5f5f5" }>
+    <Stack width={theme.category.width}  display={theme.flexBox} mb={1.3} borderBottom={ showItems ? null : "1px solid gray"}>
  
       <Stack display={theme.flexBox} direction="row" justifyContent={theme.between} alignItems={theme.center} pt={0.8} pb={0.3}>
 
@@ -49,7 +49,7 @@ const ShareCategory = (props) => {
        </Stack>
 
       {showItems && (
-        <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pb={1} width="100%" height={theme.auto}>
+        <Stack  pb={1} width="100%" height={theme.auto}>
 
         <Divider sx={{marginBottom: "5px"}}/>
 

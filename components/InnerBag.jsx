@@ -376,9 +376,7 @@ const InnerBag = ({bagData, items, session}) => {
         </TableRow>
       ))}
 
-       <TableRow>
-        <TableCell colSpan={2} style={{ height: '20px' }} />
-      </TableRow>
+  
 
        <TableRow>
        <TableCell component="th" scope="row">
