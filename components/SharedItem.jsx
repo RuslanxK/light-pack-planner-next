@@ -63,10 +63,6 @@ const SharedItem = (props) => {
        <MenuItem sx={{fontSize: "12px"}} value="high">High priority</MenuItem>
       </Select>
       
-
-
-      <Stack display={theme.flexBox} flexDirection="row" backgroundColor="red" width="5%">
-          
             <Tooltip title={ props.itemData.worn ? "I wear it" : null }>
               <IconButton>
                 <NordicWalkingIcon sx={{ fontSize: "14px", color: props.itemData.worn ? theme.green : null, '&:hover': { color: theme.green } }} />
@@ -75,7 +71,7 @@ const SharedItem = (props) => {
       
             
           </Stack>
-          </Stack>
+          
     
       
 

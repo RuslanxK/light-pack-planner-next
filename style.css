@@ -288,6 +288,11 @@ span.MuiBadge-badge {
 }
 
 
+.scroll-div {
+
+  background-color: red;
+}
+
 
 @media only screen and (max-width: 768px) {
 
@@ -430,13 +435,14 @@ span.MuiBadge-badge {
     display: flex;
     justify-content: space-between;
     align-items: space-between;
+    background-color: red;
     
   }
 
   .scroll-div input,
   .scroll-div select {
     
-     width: fit-content;
+     width: auto;
   }
 
   .side-bar-icon-mobile, .share-icon-mobile {
