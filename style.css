@@ -430,13 +430,13 @@ span.MuiBadge-badge {
     display: flex;
     justify-content: space-between;
     align-items: space-between;
-    width: 100%;
+    
   }
 
   .scroll-div input,
   .scroll-div select {
     
-     width: auto;
+     width: fit-content;
   }
 
   .side-bar-icon-mobile, .share-icon-mobile {
