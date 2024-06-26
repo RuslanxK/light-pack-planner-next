@@ -294,6 +294,7 @@ span.MuiBadge-badge {
   flex-direction: row;
   width: 100%;
   align-items: flex-end;
+  justify-content: space-between;
   
 }
 
