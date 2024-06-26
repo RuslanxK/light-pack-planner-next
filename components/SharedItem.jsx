@@ -36,10 +36,10 @@ const SharedItem = (props) => {
   return (
 
     
-    <div className="scroll-div" sx={{ overflowX: "scroll"}}>
+    <div className="scroll-div">
     
       
-      <Stack  mb={0.5} pb={0.5} pl={1} pr={1} flexDirection="row" justifyContent={theme.between} alignItems={theme.end}>
+      <Stack  mb={0.5} pb={0.5} pl={1} pr={1} flexDirection="row" alignItems={theme.end}>
 
       {props.itemData.productImageKey ? <img src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`} onClick={() => setPicPopupOpen(true)} style={{marginRight: "10px"}} width="50px" height="50px" alt='item'/> : null }
 
