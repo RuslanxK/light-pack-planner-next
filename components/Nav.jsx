@@ -27,6 +27,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 const Nav = ({bags, session, user}) => {
 
@@ -151,7 +153,7 @@ const navigateToBag = (bag) => {
         >
           <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
             <Typography fontSize="14px" variant='span' width={theme.fullWidth} sx={{ display: theme.flexBox, justifyContent: theme.between, "&:hover": { color: theme.green }, }} >
-              Recent Bags 
+              <Stack direction="row">Recent Bags { expanded === "panel2" ? <ArrowDropUpIcon sx={{marginLeft: "3px"}}/> : <ArrowDropDownIcon sx={{marginLeft: "3px"}}/> }</Stack>
             </Typography>
             <HikingOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
