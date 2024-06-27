@@ -140,8 +140,11 @@ const Trips = ({trips, bags, session}) => {
         />
         </Stack> : null }
         </div>
+
+      
+        { trips.tripsWithPictures.length ? null :  <Alert severity="info" sx={{mt: 2}}>Get started with your first trip!</Alert>}
         </div>
-       
+        
         <div className="boxes">
           <Stack border="2px dashed gray" display={theme.flexBox} justifyContent={theme.center} alignItems={theme.center} height={theme.trips.height} borderRadius={theme.radius} sx={{cursor: "pointer"}} onClick={openPopup}>
             <Tooltip title="Add trip"><IconButton><AddLocationAltOutlinedIcon sx={{fontSize: "25px", color: "gray" }}/></IconButton></Tooltip>
@@ -149,9 +152,6 @@ const Trips = ({trips, bags, session}) => {
           {filteredTrips}
         </div>
 
-        <div className="boxes">
-        { trips.tripsWithPictures.length ? null :  <Alert severity="info" sx={{mt: 2}}>Get started with your first trip!</Alert>}
-        </div>
 
         { bags?.length >= 1 ? (
           <div className="latestBag">

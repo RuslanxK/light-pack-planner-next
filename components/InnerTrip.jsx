@@ -191,6 +191,8 @@ const InnerTrip = ({ tripData, trips, session }) => {
           
             </Stack>
           </Stack>
+
+          {tripData?.bags.length ? null : <Alert severity="info">Get started with your first bag!</Alert>}
         </div>
 
         
@@ -201,10 +203,6 @@ const InnerTrip = ({ tripData, trips, session }) => {
             <Tooltip title="Add bag"><IconButton><AddOutlinedIcon sx={{ fontSize: "25px", color: "gray" }} /></IconButton></Tooltip>
           </Stack>
           {bags}
-        </div>
-
-        <div className="boxes">
-        {tripData?.bags.length ? null : <Alert severity="info" sx={{mt: 2}}>Get started with your first bag!</Alert>}
         </div>
 
         {isAddPopupOpen ? <MuiPopup isOpen={isAddPopupOpen} onClose={closePopup} >
