@@ -13,8 +13,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers-pro";
-import dayjs from "dayjs";
-
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({});
@@ -44,16 +43,12 @@ const Register = () => {
     setSuccess("");
   };
 
-
   const handleDateChange = (date, fieldName) => {
-
-  
     setRegisterData((prevData) => ({
       ...prevData,
       [fieldName]: date,
     }));
   };
-
 
   const register = async (e) => {
     e.preventDefault();
@@ -136,102 +131,93 @@ const Register = () => {
         <Stack
           display={theme.flexBox}
           width="100%"
-          sx={{maxWidth: "800px"}}
+          sx={{ maxWidth: "800px" }}
           p={12}
         >
-
-
           <form onSubmit={register}>
+            <Stack
+              display={theme.flexBox}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="stretch"
+              mb={2}
+              width="100%"
+            >
+              <Stack direction="column" alignItems="flex-start">
+                <Typography component="h1" variant="h4" fontWeight="bold" mb={0.5}>
+                  Register
+                </Typography>
+                <Typography component="span" variant="body1" color="gray">
+                  Welcome! Create your free account.
+                </Typography>
+              </Stack>
+            </Stack>
 
-          <Stack
-  display={theme.flexBox}
-  direction="row"
-  justifyContent="space-between"
-  alignItems="stretch"
-  mb={2}
-  width="100%"
->
-  <Stack direction="column" alignItems="flex-start">
-    <Typography component="h1" variant="h4" fontWeight="bold" mb={0.5}>
-      Register
-    </Typography>
-    <Typography component="span" variant="body1" color="gray">
-      Welcome! Create your free account.
-    </Typography>
-  </Stack>
-  
+            <Stack display="flex" direction="column" alignItems="center" width="33%" mb={3}>
+              <Button
+                onMouseEnter={() => setIsHover(true)}
+                onMouseLeave={() => setIsHover(false)}
+                component="label"
+                role={undefined}
+                variant="outlined"
+                sx={{
+                  width: "100%",
+                  height: "120px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "12px",
+                  backgroundColor: "#f5f5f5",
+                  border: "2px dashed #c4c4c4",
+                  transition: "background-color 0.3s, border-color 0.3s",
+                  '&:hover': {
+                    backgroundColor: "#e0e0e0",
+                    borderColor: "#a4a4a4",
+                  },
+                }}
+              >
+                {registerData.image ? (
+                  <Fragment>
+                    <img
+                      width="100%"
+                      height="100%"
+                      style={{ objectFit: "contain" }}
+                      src={URL.createObjectURL(registerData.image)}
+                    />
+                    {isHover ? (
+                      <EditIcon
+                        sx={{
+                          position: "absolute",
+                          fill: "rgba(255, 255, 255, 0.7)",
+                          fontSize: "2.5rem",
+                        }}
+                      />
+                    ) : null}
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <AddPhotoAlternateIcon sx={{ fontSize: "2.5em", color: "#9e9e9e" }} />
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      sx={{ color: "#9e9e9e" }}
+                    >
+                      Upload Photo
+                    </Typography>
+                  </Fragment>
+                )}
 
-</Stack>
+                <input
+                  type="file"
+                  name="image"
+                  style={{ display: "none" }}
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleFileChange}
+                />
+              </Button>
+            </Stack>
 
-
-<Stack display="flex" direction="column" alignItems="center" width="33%" mb={3}>
-   
-
-   <Button
-     onMouseEnter={() => setIsHover(true)}
-     onMouseLeave={() => setIsHover(false)}
-     component="label"
-     role={undefined}
-     variant="outlined"
-     sx={{
-       width: "100%",
-       height: "150px",
-       display: "flex",
-       alignItems: "center",
-       justifyContent: "center",
-       borderRadius: "12px",
-       backgroundColor: "#f5f5f5",
-       border: "2px dashed #c4c4c4",
-       transition: "background-color 0.3s, border-color 0.3s",
-       '&:hover': {
-         backgroundColor: "#e0e0e0",
-         borderColor: "#a4a4a4",
-       },
-     }}
-   >
-     {registerData.image ? (
-       <Fragment>
-         <img
-           width="100%"
-           height="100%"
-           style={{ objectFit: "contain" }}
-           src={URL.createObjectURL(registerData.image)}
-         />
-         {isHover ? (
-           <EditIcon
-             sx={{
-               position: "absolute",
-               fill: "rgba(255, 255, 255, 0.7)",
-               fontSize: "2.5rem",
-             }}
-           />
-         ) : null}
-       </Fragment>
-     ) : (
-       <Fragment>
-         <AddPhotoAlternateIcon sx={{ fontSize: "4rem", color: "#9e9e9e" }} />
-         <Typography
-           component="span"
-           variant="body2"
-           sx={{ color: "#9e9e9e", marginTop: "10px" }}
-         >
-           Upload Photo
-         </Typography>
-       </Fragment>
-     )}
-
-     <input
-       type="file"
-       name="image"
-       style={{ display: "none" }}
-       accept="image/jpeg,image/png,image/webp"
-       onChange={handleFileChange}
-     />
-   </Button>
- </Stack>
-
-
-            <Grid container spacing={2.5}>
+            <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
                   required
@@ -255,7 +241,7 @@ const Register = () => {
                   InputProps={{ style: { border: "2px" } }}
                 />
               </Grid>
-              <Grid item xs={6} >
+              <Grid item xs={6}>
                 <TextField
                   required
                   inputProps={{ minLength: 10 }}
@@ -280,8 +266,7 @@ const Register = () => {
                 />
               </Grid>
 
-              
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="weight-unit-label"
@@ -305,28 +290,28 @@ const Register = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={3}>
-  <FormControl fullWidth>
-    <InputLabel
-      id="distance-unit-label"
-      sx={{ zIndex: 1, backgroundColor: "white" }}
-    >
-      Distance Unit
-    </InputLabel>
-    <Select
-      labelId="distance-unit-label"
-      id="distance-unit"
-      name="distance"
-      value={registerData.distance || ""}
-      onChange={handleChange}
-      sx={{ zIndex: 0 }}
-    >
-      <MenuItem value="km">km</MenuItem>
-      <MenuItem value="miles">miles</MenuItem>
-    </Select>
-  </FormControl>
-</Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
+                <FormControl fullWidth>
+                  <InputLabel
+                    id="distance-unit-label"
+                    sx={{ zIndex: 1, backgroundColor: "white" }}
+                  >
+                    Distance Unit
+                  </InputLabel>
+                  <Select
+                    labelId="distance-unit-label"
+                    id="distance-unit"
+                    name="distance"
+                    value={registerData.distance || ""}
+                    onChange={handleChange}
+                    sx={{ zIndex: 0 }}
+                  >
+                    <MenuItem value="km">km</MenuItem>
+                    <MenuItem value="miles">miles</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="gender-label"
@@ -350,21 +335,33 @@ const Register = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={3}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                name="birthdate"
-                onChange={(date) => handleDateChange(date, "birthdate")}
-                value={registerData.birthdate || null}
-               
-              />
-            </LocalizationProvider>
+              <Grid item xs={4}>
+                <FormControl fullWidth>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+  <DemoContainer components={['DatePicker']} sx={{ m: 0, p: 0 }}>
+    <DatePicker
+      label="Birthdate"
+      name="birthdate"
+      onChange={(date) => handleDateChange(date, "birthdate")}
+      value={registerData.birthdate || null}
+      renderInput={(params) => (
+        <TextField 
+          {...params} 
+          fullWidth 
+          sx={{ m: 0, p: 0, '& .MuiInputLabel-root': { zIndex: 1 } }} 
+        />
+      )}
+    />
+  </DemoContainer>
+</LocalizationProvider>
+                </FormControl>
               </Grid>
-              <Grid item xs={6}>
+
+              <Grid item xs={4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="activity-level-label"
-                    sx={{ zIndex: 1, backgroundColor: "white", padding: "5px" }}
+                    sx={{ zIndex: 1, backgroundColor: "white"}}
                   >
                     Activity Level
                   </InputLabel>
@@ -383,8 +380,8 @@ const Register = () => {
                   </Select>
                 </FormControl>
               </Grid>
-           
-              <Grid item xs={6}>
+
+              <Grid item xs={4}>
                 <TextField
                   optional
                   type="text"
@@ -416,7 +413,6 @@ const Register = () => {
               variant="span"
               width="100%"
               color="gray"
-            
             >
               Already have an account?
               <Typography
@@ -425,15 +421,12 @@ const Register = () => {
                 variant="span"
                 color="#2d7fb5"
                 ml={0.5}
-                sx={{cursor: "pointer"}}
-               
-                
+                sx={{ cursor: "pointer" }}
               >
                 Sign in
               </Typography>
             </Typography>
 
-            
             {error ? <Stack mt={2}><Alert severity="error">{error}</Alert></Stack> : null}
             {success ? <Stack mt={2}><Alert severity="success">{success}</Alert></Stack> : null}
           </form>
