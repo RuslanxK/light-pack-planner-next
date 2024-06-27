@@ -288,12 +288,22 @@ span.MuiBadge-badge {
 }
 
 
+.search-content {
+
+    display: flex;
+
+}
 
 
 
 @media only screen and (max-width: 768px) {
 
 
+  .search-content {
+
+    display: block;
+    
+}
 
   .pieChart-table {
 
