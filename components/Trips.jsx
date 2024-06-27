@@ -110,7 +110,7 @@ const Trips = ({trips, bags, session}) => {
         <div className="main-info">
 
           <div className='search-content'>
-          <Stack width="100%">
+          <Stack width="100%" mb={1}>
           <Typography component="h2" fontWeight="600" variant='span' fontSize="20px" mb={0.5}> 
             Welcome, {session?.user?.name?.split(' ')[0] || session?.user?.username?.split(' ')[0] }
           </Typography>
@@ -134,7 +134,7 @@ const Trips = ({trips, bags, session}) => {
           InputLabelProps={{ style : {fontSize: 14}}} 
           InputProps={{disableUnderline: true}} 
           inputProps={{style: {fontSize: 14}}}
-          sx={{fontSize: "14px"}}
+          sx={{fontSize: "14px", maxWidth: "700px"}}
           margin="normal"
           onChange={(e) => setSearchInput(e.target.value)}
         />
