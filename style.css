@@ -294,14 +294,57 @@ span.MuiBadge-badge {
 
 }
 
+.share-icon-desktop {
+
+   display: block;
+}
+
+.share-icon-mobile {
+
+    display: none;
+}
+
+.switch-icon-mobile {
+
+    display: none;
+}
+
+.switch-icon-desktop {
+
+  display: block;
+}
+
 
 
 @media only screen and (max-width: 768px) {
 
 
+  .switch-icon-mobile {
+
+    display:block;
+}
+
+.switch-icon-desktop {
+
+  display: none;
+}
+   
+
+
+  .share-icon-desktop {
+
+     display: none;
+  }
+
+  .share-icon-mobile {
+
+     display: block;
+  }
+
+
   .categories {
 
-      margin-bottom: 25px;
+      margin-bottom: 15px;
   }
 
   .search-content {

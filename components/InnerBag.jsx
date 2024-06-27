@@ -295,10 +295,10 @@ const InnerBag = ({bagData, items, session}) => {
   return (
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
-    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "33%", height: "40px", zIndex: "99", borderRadius: "0px", position: "fixed", bottom: "0px", left: "0px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
-    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "33%", height: "40px", zIndex: "99", borderRadius: "0px", position: "fixed", bottom: "0px", left: "33.3%", backgroundColor: theme.palette.primary.dark, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
-    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "33%", height: "40px", zIndex: "99", borderRadius: "0px", position: "fixed", bottom: "0px", left: "66.6%", backgroundColor: theme.palette.primary.dark, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
 
+    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "33.33%", height: "40px", zIndex: "99", borderRadius: "0px", position: "fixed", bottom: "0px", left: "0px", backgroundColor: theme.green, color: "white", "&:hover": {backgroundColor: "#32CD32"}}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
+     <div className="share-icon-mobile"><Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none"> <IconButton sx={{ width: "33.33%", height: "40px", zIndex: "99", borderRadius: "0px", position: "fixed", bottom: "0px", left: "33.3%", backgroundColor: theme.palette.primary.dark, color: "white", "&:hover": {backgroundColor: theme.palette.info.dark}}}>{showSideBarMobile === true ? <CloseIcon /> : <ShareIcon sx={{fontSize: "20px"}}/> }</IconButton></Link></div> 
+     <div className="switch-icon-mobile"><IconButton sx={{ width: "33.33%", height: "40px", zIndex: "99", borderRadius: "0px", position: "fixed", bottom: "0px", left: "66.6%", backgroundColor: theme.palette.secondary.main, color: "white", "&:hover": {backgroundColor: theme.palette.secondary.dark}}}> <Switch onChange={handleSwitchChange} checked={bagData.bag.exploreBags}/> </IconButton></div> 
 
     <Box display="flex" flexDirection="row" width={theme.fullWidth} minHeight="100vh"height="100%">
 
@@ -321,8 +321,8 @@ const InnerBag = ({bagData, items, session}) => {
 
         <Stack direction="row">
 
-        <Tooltip title={bagData.bag.exploreBags ? "Remove this bag from 'Explore Bags'" : "Share this bag in 'Explore Bags'"}><Switch onChange={handleSwitchChange} checked={bagData.bag.exploreBags}/></Tooltip>
-        <Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none"> <Tooltip title="Share Link"><IconButton><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip></Link>
+        <div className="switch-icon-desktop"><Tooltip title={bagData.bag.exploreBags ? "Remove this bag from 'Explore Bags'" : "Share this bag in 'Explore Bags'"}><Switch onChange={handleSwitchChange} checked={bagData.bag.exploreBags}/></Tooltip></div>
+        <div className="share-icon-desktop"><Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none"> <Tooltip title="Share Link"><IconButton><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip></Link></div>
         <Tooltip title="Edit"><IconButton onClick={openPopup}><EditIcon sx={{fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange }}}  /></IconButton> </Tooltip>
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
