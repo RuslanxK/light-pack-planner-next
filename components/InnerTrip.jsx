@@ -174,7 +174,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
               
 
               <Typography component="h3" variant="h6" mb={0.3} mt={4}>My Bags</Typography>
-              <Typography component="p" variant="p" mb={2}>Lorem ipsum dolor sit amet</Typography>
+              <Typography component="p" variant="p" mb={3}>Lorem ipsum dolor sit amet</Typography>
            
          {  tripData.bags.length ? <TextField
             label="Search Bags"
@@ -184,7 +184,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
             InputLabelProps={{ style: { fontSize: 14 } }}
             InputProps={{ disableUnderline: true }}
             inputProps={{ style: { fontSize: 14 } }}
-            sx={{ fontSize: "14px", maxWidth: "700px", margin: "0 auto"}}
+            sx={{ fontSize: "14px", maxWidth: "700px", margin: "0 auto", marginBottom: "10px"}}
             margin="normal"
             onChange={(e) => setSearchInput(e.target.value)}
           /> : null  }
