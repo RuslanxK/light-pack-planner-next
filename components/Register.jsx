@@ -1,34 +1,29 @@
-"use client"
+"use client";
 
-import {Fragment} from "react"
-import { Stack, TextField, Typography, Button } from '@mui/material'
-import { useTheme } from '@emotion/react';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import CircularProgress from '@mui/material/CircularProgress';
-import Alert from '@mui/material/Alert';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-import EditIcon from '@mui/icons-material/Edit';
-
+import { Fragment } from "react";
+import { Stack, TextField, Typography, Button, Select, MenuItem, InputLabel, FormControl, Grid } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import EditIcon from "@mui/icons-material/Edit";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 const Register = () => {
+  const [registerData, setRegisterData] = useState({});
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isHover, setIsHover] = useState(false);
 
-  const [registerData, setRegisterData] = useState({})
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [isHover, setIsHover] = useState(false)
-
-  const theme = useTheme()
+  const theme = useTheme();
   const router = useRouter();
-  
 
-  
   const handleFileChange = (event) => {
     const { name } = event.target;
     const selectedFile = event.target.files[0];
-
 
     if (selectedFile) {
       setRegisterData({ ...registerData, [name]: selectedFile });
@@ -44,10 +39,8 @@ const Register = () => {
     setSuccess("");
   };
 
-
-
-  const register =  async (e) => {
-    e.preventDefault()
+  const register = async (e) => {
+    e.preventDefault();
 
     if (!registerData.image || !(registerData.image instanceof File)) {
       setError("Profile picture is required.");
@@ -56,107 +49,376 @@ const Register = () => {
 
     if (registerData.image && registerData.image.size > 2 * 1024 * 1024) {
       setError("File size exceeds the maximum limit of 2 MB.");
-      return; 
+      return;
     }
 
     try {
+      setIsLoading(true);
 
-      setIsLoading(true)
+      const data = await axios.post("/api/register", registerData);
 
-      const data = await axios.post('/api/register', registerData)
-
-
-      const awsUrl = data.data.signedUrl
+      const awsUrl = data.data.signedUrl;
 
       await fetch(awsUrl, {
         method: "PUT",
         body: registerData.image,
         headers: {
-  
-           "Content-Type": registerData.image.type
-        }
-    })
+          "Content-Type": registerData.image.type,
+        },
+      });
 
-      const sendTo = {email: registerData.email, id: data.data.User._id}
-      
-      await axios.post("/api/emailVerify", sendTo )
-      setSuccess("Account created successfully. Please check your email to verify your account.");
-      setIsLoading(false)
-   
-         
-  }
-   catch (error) {
+      const sendTo = { email: registerData.email, id: data.data.User._id };
 
-     console.log(error)
+      await axios.post("/api/emailVerify", sendTo);
+      setSuccess(
+        "Account created successfully. Please check your email to verify your account."
+      );
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
 
-      setIsLoading(false)
-      setError(error?.response?.data)
-   }
-  }
-
-  
+      setIsLoading(false);
+      setError(error?.response?.data);
+    }
+  };
 
   return (
-    <Stack display={theme.flexBox} direction="row" justifyContent={theme.end} sx={{overflowY: "hidden"}}>
-      
+    <Stack
+      display={theme.flexBox}
+      direction="row"
+      justifyContent={theme.end}
+      sx={{ overflowY: "hidden" }}
+    >
       <div className="login-img">
-        <img id="hiking-image" src="/hiking-2.jpg" alt="hiking" width="100%" style={{objectFit: "cover", height:"100vh" }} /> 
-        <img id="logo" onClick={() => router.push('/login')} src="/logo.png" alt="logo" width="110px" height="70" style={{ position: "absolute", top: "16px", left: '35px' }}/> 
+        <img
+          id="hiking-image"
+          src="/hiking-2.jpg"
+          alt="hiking"
+          width="100%"
+          style={{ objectFit: "cover", height: "100vh" }}
+        />
+        <img
+          id="logo"
+          onClick={() => router.push("/login")}
+          src="/logo.png"
+          alt="logo"
+          width="110px"
+          height="70"
+          style={{ position: "absolute", top: "16px", left: "35px" }}
+        />
       </div>
 
+      <div className="login-content">
+        <img
+          id="logo-mobile-login"
+          src="/logo.png"
+          alt="logo"
+          width="90px"
+          height="58"
+          style={{ position: "absolute", top: "25px", left: "25px" }}
+        />
+        <Stack
+          display={theme.flexBox}
+          width="100%"
+          p={10}
+        >
 
-    <div className="login-content">
-    <img id="logo-mobile-login" src="/logo.png" alt="logo" width="90px" height="58" style={{ position: "absolute", top: "25px", left: '25px' }}/> 
-    <Stack display={theme.flexBox} justifyContent={theme.center} alignItems="stretch" width="450px">
-    <h1 className='login-text'>Register</h1>
-    <Typography component="span" variant="span" width="100%" color="gray" mb={1} onClick={() => console.log(registerData)}>
-          Welcome! Create your free account
+
+          <form onSubmit={register}>
+
+          <Stack
+  display={theme.flexBox}
+  direction="row"
+  justifyContent="space-between"
+  alignItems="flex-end"
+  mb={3}
+  width="100%"
+>
+  <Stack direction="column" alignItems="flex-start" width="50%">
+    <Typography component="h1" variant="h4" fontWeight="bold" mb={1}>
+      Register
     </Typography>
-    <form onSubmit={register} style={{display: "flex", marginBottom: "15px", flexDirection: "column", justifyContent: "center", alignItems: "stretch", borderRadius:"10px"}}>
-
-
-    <Typography component="span" variant="span" width="100%" fontWeight="bold" mb={2}>
-       Upload a profile photo
+    <Typography component="span" variant="body1" color="gray">
+      Welcome! Create your free account.
     </Typography>
+  </Stack>
+  
 
-   <Stack display="flex" direction="row" alignItems="center">
-
-
-    <Button onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}
-      component="label"
-      disableElevation
-      role={undefined}
-      variant="outlined"
-      sx={{ width:"auto", borderRadius: "100px", marginBottom: "5px", padding: registerData.image ? "0px" : "20px", borderStyle: registerData.image ? "none" : "dashed", borderWidth: "2px", '&:hover': { backgroundColor: 'white', borderStyle: registerData.image ? "none" : "dashed", borderWidth: "2px"}}}
-     >
-      
-      { registerData.image ?  <Fragment> <img width="80px" height="80px" style={{borderRadius: "100px", objectFit: "cover"}} src={URL.createObjectURL(registerData.image)} /> { isHover ? <EditIcon sx={{position: "absolute", fill: "white"}} /> : null } </Fragment> : <PersonAddAlt1Icon sx={{fontSize: "40px"}}/>}
-
-      <input type="file" name='image' style={{width: "0px"}} accept="image/jpeg,image/png,image/webp" onChange={handleFileChange} />
-
-    </Button>  
-     
-      </Stack>
+</Stack>
 
 
-    <TextField required type="text" label="Username" name='username' onChange={handleChange} sx={{marginBottom: "12px", marginTop: "20px", borderRadius: "7px"}} />
-    <TextField required type="email" label="Email" name="email" onChange={handleChange} sx={{marginBottom: "12px", borderRadius: "7px"}} InputProps={{ style: { border: "2px" } }} />
-    <TextField required inputProps={{minLength : 10}} type="password" label="Password" name='password' onChange={handleChange} sx={{marginBottom: "12px", borderRadius: "7px"}} />
-    <TextField required inputProps={{minLength : 10}} type="password" label="Repeat password" name='repeatedPassword' onChange={handleChange} sx={{marginBottom: "20px", borderRadius: "7px"}} />
-    <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Create Account   { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</button>
-    <Typography component="span" variant="span" width="100%" color="gray" mb={2}>Already have an account? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Sign in</Typography></Typography>
+<Stack display="flex" direction="column" alignItems="center" width="30%" mb={3}>
+   
 
-    { error ?  <Alert severity="error">{error}</Alert> : null }
-    {success ?  <Alert severity="success">{success}</Alert>: null }
+   <Button
+     onMouseEnter={() => setIsHover(true)}
+     onMouseLeave={() => setIsHover(false)}
+     component="label"
+     role={undefined}
+     variant="outlined"
+     sx={{
+       width: "100%",
+       height: "150px",
+       display: "flex",
+       alignItems: "center",
+       justifyContent: "center",
+       borderRadius: "12px",
+       backgroundColor: "#f5f5f5",
+       border: "2px dashed #c4c4c4",
+       transition: "background-color 0.3s, border-color 0.3s",
+       '&:hover': {
+         backgroundColor: "#e0e0e0",
+         borderColor: "#a4a4a4",
+       },
+     }}
+   >
+     {registerData.image ? (
+       <Fragment>
+         <img
+           width="100%"
+           height="100%"
+           style={{ objectFit: "contain" }}
+           src={URL.createObjectURL(registerData.image)}
+         />
+         {isHover ? (
+           <EditIcon
+             sx={{
+               position: "absolute",
+               fill: "rgba(255, 255, 255, 0.7)",
+               fontSize: "2.5rem",
+             }}
+           />
+         ) : null}
+       </Fragment>
+     ) : (
+       <Fragment>
+         <AddPhotoAlternateIcon sx={{ fontSize: "4rem", color: "#9e9e9e" }} />
+         <Typography
+           component="span"
+           variant="body2"
+           sx={{ color: "#9e9e9e", marginTop: "10px" }}
+         >
+           Upload Photo
+         </Typography>
+       </Fragment>
+     )}
+
+     <input
+       type="file"
+       name="image"
+       style={{ display: "none" }}
+       accept="image/jpeg,image/png,image/webp"
+       onChange={handleFileChange}
+     />
+   </Button>
+ </Stack>
 
 
-    </form>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  type="text"
+                  label="Username"
+                  name="username"
+                  onChange={handleChange}
+                  fullWidth
+                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  type="email"
+                  label="Email"
+                  name="email"
+                  onChange={handleChange}
+                  fullWidth
+                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                  InputProps={{ style: { border: "2px" } }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  inputProps={{ minLength: 10 }}
+                  type="password"
+                  label="Password"
+                  name="password"
+                  onChange={handleChange}
+                  fullWidth
+                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  inputProps={{ minLength: 10 }}
+                  type="password"
+                  label="Repeat password"
+                  name="repeatedPassword"
+                  onChange={handleChange}
+                  fullWidth
+                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <FormControl fullWidth sx={{ marginBottom: "12px" }}>
+                  <InputLabel
+                    id="weight-unit-label"
+                    sx={{ zIndex: 1, backgroundColor: "white", padding: "5px" }}
+                  >
+                    Weight Unit
+                  </InputLabel>
+                  <Select
+                    labelId="weight-unit-label"
+                    id="weight-unit"
+                    name="weightOption"
+                    value={registerData.weightOption || ""}
+                    onChange={handleChange}
+                    sx={{ zIndex: 0 }}
+                  >
+                    <MenuItem value="lb">lb</MenuItem>
+                    <MenuItem value="oz">oz</MenuItem>
+                    <MenuItem value="g">g</MenuItem>
+                    <MenuItem value="kg">kg</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
 
-    </Stack>
+              <Grid item xs={3}>
+  <FormControl fullWidth sx={{ marginBottom: "12px" }}>
+    <InputLabel
+      id="distance-unit-label"
+      sx={{ zIndex: 1, backgroundColor: "white", padding: "5px" }}
+    >
+      Distance Unit
+    </InputLabel>
+    <Select
+      labelId="distance-unit-label"
+      id="distance-unit"
+      name="distance"
+      value={registerData.distance || ""}
+      onChange={handleChange}
+      sx={{ zIndex: 0 }}
+    >
+      <MenuItem value="km">km</MenuItem>
+      <MenuItem value="miles">miles</MenuItem>
+    </Select>
+  </FormControl>
+</Grid>
+              <Grid item xs={3}>
+                <FormControl fullWidth sx={{ marginBottom: "12px" }}>
+                  <InputLabel
+                    id="gender-label"
+                    sx={{ zIndex: 1, backgroundColor: "white", padding: "5px" }}
+                  >
+                    Gender
+                  </InputLabel>
+                  <Select
+                    labelId="gender-label"
+                    id="gender"
+                    name="gender"
+                    optional
+                    value={registerData.gender || ""}
+                    onChange={handleChange}
+                    sx={{ zIndex: 0 }}
+                  >
+                    <MenuItem value="male">Male</MenuItem>
+                    <MenuItem value="female">Female</MenuItem>
+                    <MenuItem value="other">Other</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  optional
+                  type="number"
+                  label="Age"
+                  name="age"
+                  onChange={handleChange}
+                  fullWidth
+                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth sx={{ marginBottom: "12px" }}>
+                  <InputLabel
+                    id="activity-level-label"
+                    sx={{ zIndex: 1, backgroundColor: "white", padding: "5px" }}
+                  >
+                    Activity Level
+                  </InputLabel>
+                  <Select
+                    labelId="activity-level-label"
+                    id="activity-level"
+                    name="activityLevel"
+                    value={registerData.activityLevel || ""}
+                    optional
+                    onChange={handleChange}
+                    sx={{ zIndex: 0 }}
+                  >
+                    <MenuItem value="beginner">Beginner</MenuItem>
+                    <MenuItem value="intermediate">Intermediate</MenuItem>
+                    <MenuItem value="advanced">Advanced</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+           
+              <Grid item xs={6}>
+                <TextField
+                  optional
+                  type="text"
+                  label="Country"
+                  name="country"
+                  onChange={handleChange}
+                  fullWidth
+                  sx={{ marginBottom: "20px", borderRadius: "7px" }}
+                />
+              </Grid>
+            </Grid>
+
+            <button
+              type="submit"
+              className="login-button-regular"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              Create Account
+              {isLoading ? (
+                <CircularProgress
+                  color="inherit"
+                  size={20}
+                  sx={{ marginLeft: "15px" }}
+                />
+              ) : null}
+            </button>
+            <Typography
+              component="span"
+              variant="span"
+              width="100%"
+              color="gray"
+              mb={2}
+            >
+              Already have an account?{" "}
+              <Typography
+                onClick={() => router.push("/login")}
+                component="span"
+                variant="span"
+                color="#2d7fb5"
+                sx={{ cursor: "pointer" }}
+              >
+                Sign in
+              </Typography>
+            </Typography>
+
+            {error ? <Alert severity="error">{error}</Alert> : null}
+            {success ? <Alert severity="success">{success}</Alert> : null}
+          </form>
+        </Stack>
       </div>
     </Stack>
-  )
-}
+  );
+};
 
-export default Register
-
+export default Register;

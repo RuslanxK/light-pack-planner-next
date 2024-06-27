@@ -29,7 +29,7 @@ export const POST = async (req) => {
     await connectToDB();
     
     
-    const { username, email, password, repeatedPassword } = await req.json();
+    const { username, email, password, repeatedPassword, weightOption, distance, gender, age, activityLevel, country} = await req.json();
 
 
     const putObjectCommand = new PutObjectCommand({
@@ -66,7 +66,7 @@ export const POST = async (req) => {
         admin = true
     }
 
-    const User = new user({ username, email, password: hashedPassword, profileImageKey: putObjectCommand.input.Key, isAdmin: admin });
+    const User = new user({ username, email, password: hashedPassword, profileImageKey: putObjectCommand.input.Key, isAdmin: admin, weightOption, distance, gender, age, activityLevel, country});
     await User.save();
     return new NextResponse(JSON.stringify({User, signedUrl}), { status: 200 });
   } catch (error) {

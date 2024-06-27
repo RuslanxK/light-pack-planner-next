@@ -69,7 +69,7 @@ const userSchema = new Schema({
   distance: {
 
      type: String,
-     default: "Miles"
+     default: "miles"
   },
 
 
@@ -78,6 +78,12 @@ const userSchema = new Schema({
        type: String,
        default: "light"
   },
+
+  gender: String,
+  age: String,
+  activityLevel: String,
+  country: String,
+  
   
 
   isAdmin: { 
