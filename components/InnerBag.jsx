@@ -296,9 +296,86 @@ const InnerBag = ({bagData, items, session}) => {
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
 
-    { items?.length ? <div className="side-bar-icon-mobile"><IconButton onClick={showHideSideBar} sx={{ width: "33.33%", height: "40px", zIndex: "99", borderRadius: "0px", position: "fixed", bottom: "0px", left: "0px", backgroundColor: theme.green, color: "white"}}>{showSideBarMobile === true ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{fontSize: "20px"}}/> }</IconButton></div> : null }
-     <div className="share-icon-mobile"><Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none"> <IconButton sx={{ width: items?.length ? "33.33%" : "50%", height: "40px", zIndex: "99", borderRadius: "0px", position: "fixed", bottom: "0px", left: items?.length ? "33.3%" : "0px", backgroundColor: theme.palette.primary.dark, color: "white"}}><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Link></div> 
-     <div className="switch-icon-mobile"><IconButton sx={{ width: items?.length ? "33.33%" : "50%", height: "40px", zIndex: "99", borderRadius: "0px", position: "fixed", bottom: "0px", left: items?.length ? "66.6%" : "50%", backgroundColor: theme.palette.secondary.dark, color: "white"}}> <Switch onChange={handleSwitchChange} sx={{transform: "scale(0.9)"}} checked={bagData.bag.exploreBags}/> </IconButton></div> 
+{items?.length ? (
+  <div className="side-bar-icon-mobile">
+    <IconButton
+      onClick={showHideSideBar}
+      sx={{
+        width: "33.33%",
+        height: "40px",
+        zIndex: "99",
+        borderRadius: "0px",
+        position: "fixed",
+        bottom: "0px",
+        left: "0px",
+        backgroundColor: theme.palette.success.dark,
+        color: "white",
+        "&:hover": {
+          backgroundColor: theme.palette.success.main // Adjust this color as needed
+        },
+        "&:active": {
+          backgroundColor: theme.palette.success.main // Adjust this color as needed
+        }
+      }}
+    >
+      {showSideBarMobile ? <CloseIcon /> : <FlipCameraIosOutlinedIcon sx={{ fontSize: "20px" }} />}
+    </IconButton>
+  </div>
+) : null}
+
+<div className="share-icon-mobile">
+  <Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none">
+    <IconButton
+      sx={{
+        width: items?.length ? "33.33%" : "50%",
+        height: "40px",
+        zIndex: "99",
+        borderRadius: "0px",
+        position: "fixed",
+        bottom: "0px",
+        left: items?.length ? "33.3%" : "0px",
+        backgroundColor: theme.palette.primary.dark,
+        color: "white",
+        "&:hover": {
+          backgroundColor: theme.palette.primary.main // Adjust this color as needed
+        },
+        "&:active": {
+          backgroundColor: theme.palette.primary.light // Adjust this color as needed
+        }
+      }}
+    >
+      <ShareIcon sx={{ fontSize: "20px" }} />
+    </IconButton>
+  </Link>
+</div>
+
+<div className="switch-icon-mobile">
+  <IconButton
+    sx={{
+      width: items?.length ? "33.33%" : "50%",
+      height: "40px",
+      zIndex: "99",
+      borderRadius: "0px",
+      position: "fixed",
+      bottom: "0px",
+      left: items?.length ? "66.6%" : "50%",
+      backgroundColor: theme.palette.secondary.dark,
+      color: "white",
+      "&:hover": {
+        backgroundColor: theme.palette.secondary.main // Adjust this color as needed
+      },
+      "&:active": {
+        backgroundColor: theme.palette.secondary.light // Adjust this color as needed
+      }
+    }}
+  >
+    <Switch
+      onChange={handleSwitchChange}
+      sx={{ transform: "scale(0.9)" }}
+      checked={bagData.bag.exploreBags}
+    />
+  </IconButton>
+</div>
 
     <Box display="flex" flexDirection="row" width={theme.fullWidth} minHeight="100vh"height="100%">
 
