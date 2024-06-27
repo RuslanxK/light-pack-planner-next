@@ -120,7 +120,8 @@ const Register = () => {
         <Stack
           display={theme.flexBox}
           width="100%"
-          p={10}
+          sx={{maxWidth: "800px"}}
+          p={12}
         >
 
 
@@ -130,12 +131,12 @@ const Register = () => {
   display={theme.flexBox}
   direction="row"
   justifyContent="space-between"
-  alignItems="flex-end"
-  mb={3}
+  alignItems="stretch"
+  mb={2}
   width="100%"
 >
-  <Stack direction="column" alignItems="flex-start" width="50%">
-    <Typography component="h1" variant="h4" fontWeight="bold" mb={1}>
+  <Stack direction="column" alignItems="flex-start">
+    <Typography component="h1" variant="h4" fontWeight="bold" mb={0.5}>
       Register
     </Typography>
     <Typography component="span" variant="body1" color="gray">
@@ -147,7 +148,7 @@ const Register = () => {
 </Stack>
 
 
-<Stack display="flex" direction="column" alignItems="center" width="30%" mb={3}>
+<Stack display="flex" direction="column" alignItems="center" width="33%" mb={3}>
    
 
    <Button
@@ -214,7 +215,7 @@ const Register = () => {
  </Stack>
 
 
-            <Grid container spacing={2}>
+            <Grid container spacing={2.5}>
               <Grid item xs={6}>
                 <TextField
                   required
@@ -223,7 +224,7 @@ const Register = () => {
                   name="username"
                   onChange={handleChange}
                   fullWidth
-                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                  sx={{ borderRadius: "7px" }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -234,11 +235,11 @@ const Register = () => {
                   name="email"
                   onChange={handleChange}
                   fullWidth
-                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                  sx={{ borderRadius: "7px" }}
                   InputProps={{ style: { border: "2px" } }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={6} >
                 <TextField
                   required
                   inputProps={{ minLength: 10 }}
@@ -247,7 +248,7 @@ const Register = () => {
                   name="password"
                   onChange={handleChange}
                   fullWidth
-                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                  sx={{ borderRadius: "7px" }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -259,14 +260,16 @@ const Register = () => {
                   name="repeatedPassword"
                   onChange={handleChange}
                   fullWidth
-                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                  sx={{ borderRadius: "7px" }}
                 />
               </Grid>
+
+              
               <Grid item xs={3}>
-                <FormControl fullWidth sx={{ marginBottom: "12px" }}>
+                <FormControl fullWidth>
                   <InputLabel
                     id="weight-unit-label"
-                    sx={{ zIndex: 1, backgroundColor: "white", padding: "5px" }}
+                    sx={{ zIndex: 1, backgroundColor: "white" }}
                   >
                     Weight Unit
                   </InputLabel>
@@ -287,10 +290,10 @@ const Register = () => {
               </Grid>
 
               <Grid item xs={3}>
-  <FormControl fullWidth sx={{ marginBottom: "12px" }}>
+  <FormControl fullWidth>
     <InputLabel
       id="distance-unit-label"
-      sx={{ zIndex: 1, backgroundColor: "white", padding: "5px" }}
+      sx={{ zIndex: 1, backgroundColor: "white" }}
     >
       Distance Unit
     </InputLabel>
@@ -308,10 +311,10 @@ const Register = () => {
   </FormControl>
 </Grid>
               <Grid item xs={3}>
-                <FormControl fullWidth sx={{ marginBottom: "12px" }}>
+                <FormControl fullWidth>
                   <InputLabel
                     id="gender-label"
-                    sx={{ zIndex: 1, backgroundColor: "white", padding: "5px" }}
+                    sx={{ zIndex: 1, backgroundColor: "white" }}
                   >
                     Gender
                   </InputLabel>
@@ -339,11 +342,11 @@ const Register = () => {
                   name="age"
                   onChange={handleChange}
                   fullWidth
-                  sx={{ marginBottom: "12px", borderRadius: "7px" }}
+                  sx={{ borderRadius: "7px" }}
                 />
               </Grid>
               <Grid item xs={6}>
-                <FormControl fullWidth sx={{ marginBottom: "12px" }}>
+                <FormControl fullWidth>
                   <InputLabel
                     id="activity-level-label"
                     sx={{ zIndex: 1, backgroundColor: "white", padding: "5px" }}
@@ -374,7 +377,7 @@ const Register = () => {
                   name="country"
                   onChange={handleChange}
                   fullWidth
-                  sx={{ marginBottom: "20px", borderRadius: "7px" }}
+                  sx={{ marginBottom: "15px", borderRadius: "7px" }}
                 />
               </Grid>
             </Grid>
@@ -398,22 +401,26 @@ const Register = () => {
               variant="span"
               width="100%"
               color="gray"
-              mb={2}
+            
             >
-              Already have an account?{" "}
+              Already have an account?
               <Typography
                 onClick={() => router.push("/login")}
                 component="span"
                 variant="span"
                 color="#2d7fb5"
-                sx={{ cursor: "pointer" }}
+                ml={0.5}
+                sx={{cursor: "pointer"}}
+               
+                
               >
                 Sign in
               </Typography>
             </Typography>
 
-            {error ? <Alert severity="error">{error}</Alert> : null}
-            {success ? <Alert severity="success">{success}</Alert> : null}
+            
+            {error ? <Stack mt={2}><Alert severity="error">{error}</Alert></Stack> : null}
+            {success ? <Stack mt={2}><Alert severity="success">{success}</Alert></Stack> : null}
           </form>
         </Stack>
       </div>

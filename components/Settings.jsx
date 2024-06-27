@@ -157,8 +157,8 @@ const Settings = ({session, user}) => {
     </Stack>
 
     <Select size='small' variant='outlined' name='distance' onChange={handleChange} value={userDetails.distance}  sx={{width: '10%', marginRight: "15px", fontSize: "13px", boxShadow: "none"}} >  
-       <MenuItem sx={{fontSize: "13px"}} value="Miles">Miles</MenuItem>
-       <MenuItem sx={{fontSize: "13px"}} value="Km">Km</MenuItem>
+       <MenuItem sx={{fontSize: "13px"}} value="miles">miles</MenuItem>
+       <MenuItem sx={{fontSize: "13px"}} value="km">km</MenuItem>
       </Select>
 
 
