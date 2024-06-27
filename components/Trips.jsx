@@ -1,7 +1,7 @@
 "use client"
 
 
-import {Stack, Typography, IconButton, Autocomplete, Button, Container, Tooltip, TextField} from '@mui/material';
+import {Stack, Typography, IconButton, Autocomplete, Button, Container, Tooltip, TextField, Alert} from '@mui/material';
 import Trip from './Trip';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -145,9 +145,12 @@ const Trips = ({trips, bags, session}) => {
         <div className="boxes">
           <Stack border="2px dashed gray" display={theme.flexBox} justifyContent={theme.center} alignItems={theme.center} height={theme.trips.height} borderRadius={theme.radius} sx={{cursor: "pointer"}} onClick={openPopup}>
             <Tooltip title="Add trip"><IconButton><AddLocationAltOutlinedIcon sx={{fontSize: "25px", color: "gray" }}/></IconButton></Tooltip>
-            { trips.tripsWithPictures.length ? null : <Typography>Add your first trip</Typography>}
           </Stack>
           {filteredTrips}
+        </div>
+
+        <div className="boxes">
+        { trips.tripsWithPictures.length ? null :  <Alert severity="info" sx={{mt: 2}}>Get started with your first trip!</Alert>}
         </div>
 
         { bags?.length >= 1 ? (

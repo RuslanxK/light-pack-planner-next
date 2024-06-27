@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack, Typography, IconButton, Autocomplete, TextField, Button, Container, Tooltip } from '@mui/material';
+import { Stack, Typography, IconButton, Autocomplete, TextField, Button, Container, Tooltip, Alert } from '@mui/material';
 import Bag from './Bag';
 import axios from 'axios';
 import { useState, useTransition, useEffect } from 'react';
@@ -193,13 +193,18 @@ const InnerTrip = ({ tripData, trips, session }) => {
           </Stack>
         </div>
 
+        
+
         <div className="boxes">
         
           <Stack border="2px dashed gray" alignItems={theme.center} display={theme.flexBox} justifyContent={theme.center} width={theme.bags.width} height={theme.bags.height} borderRadius={theme.radius} sx={{ cursor: "pointer" }} onClick={openAddPopup}>
             <Tooltip title="Add bag"><IconButton><AddOutlinedIcon sx={{ fontSize: "25px", color: "gray" }} /></IconButton></Tooltip>
-            {tripData?.bags.length ? null : <Typography>Add your first bag</Typography>}
           </Stack>
           {bags}
+        </div>
+
+        <div className="boxes">
+        {tripData?.bags.length ? null : <Alert severity="info" sx={{mt: 2}}>Get started with your first bag!</Alert>}
         </div>
 
         {isAddPopupOpen ? <MuiPopup isOpen={isAddPopupOpen} onClose={closePopup} >

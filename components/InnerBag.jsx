@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch, Link} from '@mui/material'
+import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch, Link, Alert} from '@mui/material'
 import Category from '../components/Category'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import axios from 'axios';
@@ -454,10 +454,9 @@ const InnerBag = ({bagData, items, session}) => {
     <div className="categories">
     <Stack border="1px dashed gray" display={theme.flexBox} direction="row" justifyContent={theme.center} alignItems={theme.center} height={theme.category.height} mb={1} sx={{cursor: "pointer"}} onClick={addCategory}>
      <Tooltip title="Add category"><IconButton><AddOutlinedIcon sx={{fontSize: "20px", color: "gray" }}/></IconButton></Tooltip>
-     { categoriesData.length ? null : <Typography>Add your first category</Typography>}
-
-     
     </Stack>
+
+    { categoriesData.length ? null :  <Alert severity="info" sx={{mt: 2}}>Get started with your first Category!</Alert>}
 
 
     <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors}>
