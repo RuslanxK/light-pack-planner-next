@@ -10,6 +10,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import EditIcon from "@mui/icons-material/Edit";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { LocalizationProvider } from "@mui/x-date-pickers-pro";
+import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers-pro";
+import dayjs from "dayjs";
+
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({});
@@ -38,6 +43,17 @@ const Register = () => {
     setError("");
     setSuccess("");
   };
+
+
+  const handleDateChange = (date, fieldName) => {
+
+  
+    setRegisterData((prevData) => ({
+      ...prevData,
+      [fieldName]: date,
+    }));
+  };
+
 
   const register = async (e) => {
     e.preventDefault();
@@ -335,15 +351,14 @@ const Register = () => {
               </Grid>
 
               <Grid item xs={3}>
-                <TextField
-                  optional
-                  type="number"
-                  label="Age"
-                  name="age"
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ borderRadius: "7px" }}
-                />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                name="birthdate"
+                onChange={(date) => handleDateChange(date, "birthdate")}
+                value={registerData.birthdate || null}
+               
+              />
+            </LocalizationProvider>
               </Grid>
               <Grid item xs={6}>
                 <FormControl fullWidth>

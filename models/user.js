@@ -80,7 +80,6 @@ const userSchema = new Schema({
   },
 
   gender: String,
-  age: String,
   activityLevel: String,
   country: String,
   
