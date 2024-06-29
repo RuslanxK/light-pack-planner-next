@@ -201,16 +201,9 @@ const saveItemsOrder = async (updatedItems) => {
           setLoading(true)
           const categoryId = props.categoryData._id;
           await axios.delete(`/categories/${categoryId}/${props?.session?.user?.id}`);
-          router.refresh();
-          setTimeout(() => {
-
-            setLoading(false)
-            if(loading === false) {
-
-              setRemovePopupOpen(false)
-            }
-            
-          }, 800);
+          await router.refresh();
+          setRemovePopupOpen(false)
+        
         }
          catch (error) {
             console.log(error)

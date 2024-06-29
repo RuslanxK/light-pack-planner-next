@@ -134,20 +134,15 @@ const InnerBag = ({bagData, items, session}) => {
     setLoading(true); // Set loading to true before the API call
     try {
       const res = await axios.post('/categories/new', newCategory);
-      router.refresh();
-      setTimeout(() => {
-
-        setLoading(false);
-        
-      }, 800);
-
+      await router.refresh(); // Wait for the router refresh to complete
+      setLoading(false); // Set loading to false after the router refresh is done
     } catch (err) {
       console.log(err);
-   
+      setLoading(false); // Set loading to false in case of an error
+    }
   };
 
-}
-
+  
   const handleSwitchChange = async (e) => {
 
     if(bagData?.totalBagWeight === 0) {
