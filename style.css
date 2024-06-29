@@ -13,6 +13,20 @@ html, body {
     overflow-x: hidden !important;
 }
 
+.loading-overlay {
+
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  min-height: 100vh;
+  height: fit-content;
+  z-index: 9999;
+  
+
+}
+
 
 
 span.MuiBadge-badge {

@@ -5,7 +5,7 @@ import Category from '../components/Category'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useTransition} from 'react';
+import { useState, useEffect, useTransition, Fragment} from 'react';
 import { useTheme } from '@emotion/react';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MuiPopup from './custom/MuiPopup';
@@ -326,9 +326,12 @@ useEffect(() => {
 
   return (
 
+    <Fragment>
+      {loading ? <div className='loading-overlay' style={{ background: theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.15)"}}> {<CircularProgress color="success" />}</div> : null }
+   
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
 
-{loading ? <Stack width="100vw" justifyContent="center" alignItems="center" sx={{ position: "fixed", minHeight: "100vh", height: "fit-content", zIndex: "9999"}} backgroundColor={ theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.15)"}> {<CircularProgress color="success" sx={{marginRight: "210px"}}/>}</Stack> : null }
+
 
 
 {items?.length ? (
@@ -678,6 +681,9 @@ useEffect(() => {
 
     </Box>
     </Container>
+
+    </Fragment>
+
   )
 }
 
