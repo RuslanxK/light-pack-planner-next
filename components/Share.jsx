@@ -472,7 +472,7 @@ const Share = ({ bagData, user, session }) => {
                   }}
                   variant="contained"
                   color="primary"
-                  onClick={() => window.open("/register", "_blank")}
+                  onClick={() => window.open("/login", "_blank")}
                 >
                   Create Your FREE bag
                 </Button>

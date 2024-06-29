@@ -162,7 +162,7 @@ const Register = () => {
                 variant="outlined"
                 sx={{
                   width: "100%",
-                  height: "120px",
+                  height: "100px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -202,7 +202,7 @@ const Register = () => {
                       variant="body2"
                       sx={{ color: "#9e9e9e" }}
                     >
-                      Upload Photo
+                      Upload Profile
                     </Typography>
                   </Fragment>
                 )}

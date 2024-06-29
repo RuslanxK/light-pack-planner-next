@@ -33,7 +33,8 @@ const Login = () => {
     const response = await signIn("credentials", {
       email: loginData.email,
       password: loginData.password,
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/"
     });
 
     if (response?.error) {
@@ -43,10 +44,6 @@ const Login = () => {
       setError(null);
     }
 
-    if (response.url && response.ok === true) {
-      router.push("/");
-      router.refresh();
-    }
   };
 
   return (
