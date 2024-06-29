@@ -5,7 +5,7 @@ import Category from '../components/Category'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect} from 'react';
+import { useState, useEffect, useTransition} from 'react';
 import { useTheme } from '@emotion/react';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MuiPopup from './custom/MuiPopup';
@@ -36,7 +36,35 @@ const InnerBag = ({bagData, items, session}) => {
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
   const [confirmPopupOpen, setConfirmPopupOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
+  const [resolve, setResolve] = useState(null)
+  const [isTriggered, setIsTriggered] = useState(false)
   const [loading, setLoading] = useState(false);
+
+
+  const refresh = () => {
+    return new Promise((resolve, reject) => {
+        setResolve(() => resolve)
+        startTransition(() => {
+            router.refresh()
+        })
+    })
+}
+
+useEffect(() => {
+  if (isTriggered && !isPending) {
+      if (resolve) {
+          resolve(null)
+          
+          setIsTriggered(false)
+          setResolve(null)
+      }
+  }
+  if (isPending) {
+      setIsTriggered(true)
+  }
+
+}, [isTriggered, isPending, resolve])
 
 
 
@@ -55,7 +83,6 @@ const InnerBag = ({bagData, items, session}) => {
     },
   });
 
-
   const sensors = useSensors(
     mouseSensor,
     touchSensor,
@@ -68,8 +95,6 @@ const InnerBag = ({bagData, items, session}) => {
     setEditedBag({ ...editedBag, [name]: value });
   };
 
-
-  
 
   useEffect(() => {
     setCategoriesData(bagData?.categories || []);
@@ -131,11 +156,11 @@ const InnerBag = ({bagData, items, session}) => {
 
   const addCategory = async () => {
     const newCategory = { userId: session?.user?.id, bagId: bagData?.bag?._id, tripId: bagData?.bag?.tripId, name: 'new category', color: getRandomDarkColor() };
-    setLoading(true); // Set loading to true before the API call
+    setLoading(true); 
     try {
       const res = await axios.post('/categories/new', newCategory);
-      await router.refresh(); // Wait for the router refresh to complete
-      setLoading(false); // Set loading to false after the router refresh is done
+      await refresh(); 
+      setLoading(false); 
     } catch (err) {
       console.log(err);
      
@@ -303,7 +328,7 @@ const InnerBag = ({bagData, items, session}) => {
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
 
-{loading ? <Stack width="100vw" justifyContent="center" alignItems="center" sx={{ position: "fixed", minHeight: "100vh", height: "fit-content", zIndex: "9999"}} backgroundColor="rgba(0, 0, 0, 0.15)"> {<CircularProgress color="success" sx={{marginRight: "210px"}}/>}</Stack> : null }
+{loading ? <Stack width="100vw" justifyContent="center" alignItems="center" sx={{ position: "fixed", minHeight: "100vh", height: "fit-content", zIndex: "9999"}} backgroundColor={ theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.15)"}> {<CircularProgress color="success" sx={{marginRight: "210px"}}/>}</Stack> : null }
 
 
 {items?.length ? (
@@ -551,7 +576,7 @@ const InnerBag = ({bagData, items, session}) => {
       <SortableContext items={categoriesData.map(category => category.order)} strategy={verticalListSortingStrategy}>
 
     {categoriesData.sort((a, b) => a.order - b.order).map((category, index) => (
-                 <Category key={category._id} categoryData={category} items={bagData?.items} session={session} />
+                 <Category key={category._id} categoryData={category} items={bagData?.items} session={session} loading={(value) => setLoading(value)} />
                 ))}
 
 </SortableContext>

@@ -5,7 +5,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useTheme } from '@emotion/react';
-import React, { useState } from 'react';
+import React, { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import MuiPopup from './custom/MuiPopup';
@@ -26,11 +26,41 @@ const Item = (props) => {
   const [removePopupOpen ,setRemovePopupOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showEditIcon, setShowEditIcon] = useState(false)
+  const [isPending, startTransition] = useTransition()
+  const [resolve, setResolve] = useState(null)
+  const [isTriggered, setIsTriggered] = useState(false)
+
   const [itemData, setItem] = useState({ userId: props.itemData.creator, _id: props.itemData._id, tripId: props.itemData.tripId, bagId: props.itemData.bagId, categoryId: props.itemData.categoryId, name: props.itemData.name, selected: props.itemData.selected,
     priority: props.itemData.priority, description: props.itemData.description || '',  qty: +props.itemData.qty || 1, weight: +props.itemData.weight || 0.1, link: props.itemData.link, worn: props.itemData.worn, productImageKey: props.itemData.productImageKey, image: null, price: props.itemData.price || 0,});
 
     const theme = useTheme()
     const router = useRouter();
+
+    const refresh = () => {
+      return new Promise((resolve, reject) => {
+          setResolve(() => resolve)
+          startTransition(() => {
+              router.refresh()
+          })
+      })
+  }
+  
+  
+  useEffect(() => {
+    if (isTriggered && !isPending) {
+        if (resolve) {
+            resolve(null)
+            
+            setIsTriggered(false)
+            setResolve(null)
+        }
+    }
+    if (isPending) {
+        setIsTriggered(true)
+    }
+  
+  }, [isTriggered, isPending, resolve])
+  
 
 
     const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({id: props.itemData.order})
@@ -112,8 +142,11 @@ const Item = (props) => {
     const updateAsWorn =  async () => {
       setItem((prevItemData) => ({ ...prevItemData, worn: !prevItemData.worn }));
       try {
+
+        props.loading(true)
         await axios.put(`/items/${itemData._id}/${props?.session?.user?.id}`, { ...itemData, worn: !itemData.worn });
-        router.refresh();
+        await refresh();
+        props.loading(false)
       }
        catch (error) {
             console.log(error)
@@ -126,8 +159,10 @@ const Item = (props) => {
     const duplicatedItem = { ...itemData };
     delete duplicatedItem._id;
     try {
+      props.loading(true)
       await axios.post('/items/new', duplicatedItem);
-      router.refresh();
+     await refresh();
+     props.loading(false)
     }
      catch (error) {
           console.log(error)
@@ -150,9 +185,10 @@ const Item = (props) => {
       
       e.preventDefault()
       try {
+        setLoading(true)
         await axios.put(`/items/${itemData._id}/${props?.session?.user?.id}`, itemData);
         setPopupOpen(false)
-        router.refresh();
+        setLoading(false)
         
       }
        catch (error) {
@@ -181,9 +217,6 @@ const Item = (props) => {
           },
         });
 
-
-
-        router.refresh();
         setPicPopupOpen(false);
         setLoading(false)
   
@@ -294,7 +327,7 @@ const Item = (props) => {
             onChange={handleChange}
             sx={{ marginBottom: "10px" }} />
           
-          <Button type="submit" sx={{ color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Save</Button>
+          <Button type="submit" sx={{ color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Save {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
 
         </Stack>
       </form>
@@ -363,7 +396,7 @@ const Item = (props) => {
   variant="contained"
   disableElevation
 >
-  Save {loading ?  <CircularProgress color="inherit" size={20} sx={{marginLeft: "10px"}} /> : null}
+  Save {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}
  </Button>
 
       </Stack>

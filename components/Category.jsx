@@ -3,7 +3,7 @@
 import { Stack, Typography, IconButton, Button, TextField, Tooltip} from "@mui/material";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
@@ -34,6 +34,39 @@ const Category = (props) => {
   const [itemsData, setItemsData] = useState(props.items || []);
   const [checkedItems, setCheckedItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition()
+  const [resolve, setResolve] = useState(null)
+  const [isTriggered, setIsTriggered] = useState(false)
+
+
+
+  const refresh = () => {
+    return new Promise((resolve, reject) => {
+        setResolve(() => resolve)
+        startTransition(() => {
+            router.refresh()
+        })
+    })
+}
+
+
+useEffect(() => {
+  if (isTriggered && !isPending) {
+      if (resolve) {
+          resolve(null)
+          
+          setIsTriggered(false)
+          setResolve(null)
+      }
+  }
+  if (isPending) {
+      setIsTriggered(true)
+  }
+
+}, [isTriggered, isPending, resolve])
+
+
+
 
 
 
@@ -94,10 +127,12 @@ const Category = (props) => {
 
   const removeItems = async () => {
     try {
+      props.loading(true)
       for (const item of checkedItems) {
         await axios.delete(`/items/${item.id}/${props.session.user.id}`);
       }
-      router.refresh();
+      await refresh();
+      props.loading(false)
       setCheckedItems([]); 
       
     } catch (error) {
@@ -175,8 +210,10 @@ const saveItemsOrder = async (updatedItems) => {
     const itemObj = { userId: props.session.user.id, tripId: props.categoryData.tripId, bagId: props.categoryData.bagId, categoryId: props.categoryData._id, name: "new item", qty: 1, weight: 0.1, price: 0.00}
      
     try {
+      props.loading(true)
       await axios.post('/items/new', itemObj);
-      router.refresh();
+      await refresh();
+      props.loading(false)
     }
      catch (error) {
           console.log(error)
@@ -201,13 +238,13 @@ const saveItemsOrder = async (updatedItems) => {
           setLoading(true)
           const categoryId = props.categoryData._id;
           await axios.delete(`/categories/${categoryId}/${props?.session?.user?.id}`);
-          await router.refresh();
+          await refresh();
           setRemovePopupOpen(false)
         
         }
          catch (error) {
             console.log(error)
-            
+
          }
     }
 
@@ -265,7 +302,7 @@ const saveItemsOrder = async (updatedItems) => {
 
         <SortableContext items={itemsOfCategory.map(item => item.order)} strategy={verticalListSortingStrategy}>
           {itemsOfCategory.sort((a, b) => a.order - b.order).map((item, index) => (
-                <Item key={item._id} itemData={item} session={props.session}  onUpdateChecked={handleUpdateChecked} />
+                <Item key={item._id} itemData={item} session={props.session}  onUpdateChecked={handleUpdateChecked} loading={(value) => props.loading(value)} />
                 ))}
 
         </SortableContext>
@@ -293,7 +330,7 @@ const saveItemsOrder = async (updatedItems) => {
 </Stack>
 
 <CloseIcon onClick={closePopup} sx={{cursor: "pointer"}}/>
-<Button sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeCategory} disableElevation>Delete {loading ? < CircularProgress sx={{marginLeft: "7px"}} color="inherit" size={18} /> : null}</Button>
+<Button sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeCategory} disableElevation>Delete {loading ? < CircularProgress sx={{marginLeft: "7px"}} color="inherit" size={16} /> : null}</Button>
 </Stack>
 
 </MuiPopup> : null }
