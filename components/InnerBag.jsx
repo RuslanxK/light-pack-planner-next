@@ -135,12 +135,18 @@ const InnerBag = ({bagData, items, session}) => {
     try {
       const res = await axios.post('/categories/new', newCategory);
       router.refresh();
+      setTimeout(() => {
+
+        setLoading(false);
+        
+      }, 800);
+
     } catch (err) {
       console.log(err);
-    } finally {
-      setLoading(false); // Set loading to false after the API call
-    }
+   
   };
+
+}
 
   const handleSwitchChange = async (e) => {
 
@@ -216,6 +222,8 @@ const InnerBag = ({bagData, items, session}) => {
 
   const removeBag = async () => {
     try {
+
+    
       await axios.delete(`/bags/${bagData.bag._id}/${session?.user?.id}`);
     
       setDeletePopupOpen(false)
@@ -293,13 +301,15 @@ const InnerBag = ({bagData, items, session}) => {
     }
   };
 
-  
 
 
 
   return (
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
+
+{loading ? <Stack width="100vw" justifyContent="center" alignItems="center" sx={{ position: "fixed", minHeight: "100vh", height: "fit-content", zIndex: "9999"}} backgroundColor="rgba(0, 0, 0, 0.4)"> {<CircularProgress color="success" sx={{marginRight: "210px"}}/>}</Stack> : null }
+
 
 {items?.length ? (
   <div className="side-bar-icon-mobile">
@@ -535,7 +545,7 @@ const InnerBag = ({bagData, items, session}) => {
 
     <div className="categories">
     <Stack border="1px dashed gray" display={theme.flexBox} direction="row" justifyContent={theme.center} alignItems={theme.center} height={theme.category.height} mb={1} sx={{cursor: "pointer"}} onClick={addCategory}>
-     <Tooltip title="Add category"><IconButton><AddOutlinedIcon sx={{fontSize: "20px", color: "gray" }}/> {loading && <CircularProgress />}</IconButton></Tooltip>
+     <Tooltip title="Add category"><IconButton><AddOutlinedIcon sx={{fontSize: "20px", color: "gray" }}/></IconButton></Tooltip>
     </Stack>
 
     { categoriesData.length ? null :  <Alert severity="info" sx={{mt: 2}}>Get started with your first Category!</Alert>}

@@ -7,7 +7,7 @@ const Loading = () => {
   return (
     <Stack display="flex" justifyContent="center" height="100vh" alignItems="center" width="100%">
 
-    <CircularProgress color="success" size={70} />
+    <CircularProgress color="success" />
 
     </Stack>
   )

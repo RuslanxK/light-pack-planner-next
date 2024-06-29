@@ -12,11 +12,12 @@ import axios from "axios";
 import React from "react";
 import MuiPopup from "./custom/MuiPopup";
 import CloseIcon from "@mui/icons-material/Close";
-import Divider from '@mui/material/Divider';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import FolderDeleteOutlinedIcon from '@mui/icons-material/FolderDeleteOutlined';
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors, closestCorners} from '@dnd-kit/core';
 import {SortableContext, verticalListSortingStrategy, useSortable} from "@dnd-kit/sortable"
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 import { CSS } from "@dnd-kit/utilities";
 
@@ -32,6 +33,8 @@ const Category = (props) => {
   const [updatedCategory, setUpdatedCategory] = useState({name: props?.categoryData?.name})
   const [itemsData, setItemsData] = useState(props.items || []);
   const [checkedItems, setCheckedItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
 
   const handleUpdateChecked = (id, checked) => {
@@ -194,10 +197,20 @@ const saveItemsOrder = async (updatedItems) => {
     const removeCategory = async () => {
 
         try {
+
+          setLoading(true)
           const categoryId = props.categoryData._id;
           await axios.delete(`/categories/${categoryId}/${props?.session?.user?.id}`);
-          setRemovePopupOpen(false)
           router.refresh();
+          setTimeout(() => {
+
+            setLoading(false)
+            if(loading === false) {
+
+              setRemovePopupOpen(false)
+            }
+            
+          }, 800);
         }
          catch (error) {
             console.log(error)
@@ -286,7 +299,7 @@ const saveItemsOrder = async (updatedItems) => {
 </Stack>
 
 <CloseIcon onClick={closePopup} sx={{cursor: "pointer"}}/>
-<Button sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeCategory} disableElevation>Delete</Button>
+<Button sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeCategory} disableElevation>Delete {loading ? < CircularProgress sx={{marginLeft: "7px"}} color="inherit" size={18} /> : null}</Button>
 </Stack>
 
 </MuiPopup> : null }
