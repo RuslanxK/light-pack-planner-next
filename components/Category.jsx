@@ -207,6 +207,7 @@ const saveItemsOrder = async (updatedItems) => {
         }
          catch (error) {
             console.log(error)
+            
          }
     }
 

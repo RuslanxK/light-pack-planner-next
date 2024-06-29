@@ -138,11 +138,11 @@ const InnerBag = ({bagData, items, session}) => {
       setLoading(false); // Set loading to false after the router refresh is done
     } catch (err) {
       console.log(err);
-      setLoading(false); // Set loading to false in case of an error
+     
     }
   };
 
-  
+
   const handleSwitchChange = async (e) => {
 
     if(bagData?.totalBagWeight === 0) {
