@@ -19,21 +19,22 @@ import { DatePicker } from "@mui/x-date-pickers-pro";
 import dayjs from "dayjs";
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
-import { useState, useEffect, useTransition} from 'react';
+import { useState, useEffect} from 'react';
 
 const Trips = ({trips, bags, session}) => {
 
   const theme = useTheme();
   const router = useRouter();
+
   const countriesApi = "https://restcountries.com/v3.1/all?fields=name,flags";
 
   const [countries, setCountries] = useState([]);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [newTripData, setNewTripData] = useState({ startDate: dayjs(), endDate: dayjs() });
-  const [isTransitionStarted, startTransition] = useTransition();
+  const [newTripData, setNewTripData] = useState({ startDate: dayjs().add(1, "day"), endDate: dayjs().add(2, "day") });
   const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
+
     const getData = async () => {
       try {
         const { data } = await axios.get(countriesApi);
@@ -44,6 +45,7 @@ const Trips = ({trips, bags, session}) => {
         console.error("Error fetching countries:", error);
       }
     };
+
     getData();
   }, []);
 
@@ -65,14 +67,15 @@ const Trips = ({trips, bags, session}) => {
   const countriesArr = countries.map((x) => x.name);
   const countryNameArr = countriesArr.map((x) => x.common); 
 
+
   const createTrip = async (e) => {
     e.preventDefault();
 
     try {
       const newTripDataWithUserId = { ...newTripData, userId: session?.user?.id };
       const res = await axios.post(`/api/trips/new`, newTripDataWithUserId);
+      router.refresh()
       setPopupOpen(false);
-      startTransition(router.refresh);
     } catch (err) {
       console.log(err);
     }
@@ -213,7 +216,7 @@ const Trips = ({trips, bags, session}) => {
                   sx={{width: "48%", marginBottom: "20px"}}
                 />
                 <TextField
-                  label={`Distance - ${session?.user?.distance}`}
+                  label={`Distance (${session?.user?.distance})`}
                   type="number"
                   name="distance"
                   onChange={handleChange}
@@ -234,7 +237,7 @@ const Trips = ({trips, bags, session}) => {
                     name="startDate"
                     onChange={(date) => handleDateChange(date, "startDate")}
                     sx={{ width: "48.5%" }}
-                    defaultValue={dayjs()}
+                    defaultValue={dayjs().add(1, "day")}
                   />
                 </LocalizationProvider>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -243,7 +246,7 @@ const Trips = ({trips, bags, session}) => {
                     name="endDate"
                     onChange={(date) => handleDateChange(date, "endDate")}
                     sx={{ width: "48.5%" }}
-                    defaultValue={dayjs()}
+                    defaultValue={dayjs().add(2, "day")}
                     minDate={newTripData.startDate}
                   />
                 </LocalizationProvider>

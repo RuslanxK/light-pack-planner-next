@@ -22,6 +22,7 @@ import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable"
 import ShareIcon from '@mui/icons-material/Share';
 import BackpackOutlinedIcon from '@mui/icons-material/BackpackOutlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const InnerBag = ({bagData, items, session}) => {
@@ -35,6 +36,7 @@ const InnerBag = ({bagData, items, session}) => {
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
   const [confirmPopupOpen, setConfirmPopupOpen] = useState(false)
+  const [loading, setLoading] = useState(false);
 
 
 
@@ -128,15 +130,17 @@ const InnerBag = ({bagData, items, session}) => {
 
 
   const addCategory = async () => {
-    const newCategory = {userId: session?.user?.id, bagId: bagData?.bag?._id, tripId: bagData?.bag?.tripId, name: 'new category', color: getRandomDarkColor() };
+    const newCategory = { userId: session?.user?.id, bagId: bagData?.bag?._id, tripId: bagData?.bag?.tripId, name: 'new category', color: getRandomDarkColor() };
+    setLoading(true); // Set loading to true before the API call
     try {
       const res = await axios.post('/categories/new', newCategory);
       router.refresh();
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false); // Set loading to false after the API call
     }
   };
-
 
   const handleSwitchChange = async (e) => {
 
@@ -201,8 +205,8 @@ const InnerBag = ({bagData, items, session}) => {
      e.preventDefault()
     try {
         await axios.put(`/bags/${bagData.bag._id}/${session?.user?.id}`, editedBag)
+        router.refresh()
         setPopupOpen(false)
-        router.refresh();
     }
      catch (error) {
         console.log(error)
@@ -213,6 +217,7 @@ const InnerBag = ({bagData, items, session}) => {
   const removeBag = async () => {
     try {
       await axios.delete(`/bags/${bagData.bag._id}/${session?.user?.id}`);
+    
       setDeletePopupOpen(false)
       router.push(`/trips?id=${bagData.bag.tripId}`)
       router.refresh();
@@ -530,7 +535,7 @@ const InnerBag = ({bagData, items, session}) => {
 
     <div className="categories">
     <Stack border="1px dashed gray" display={theme.flexBox} direction="row" justifyContent={theme.center} alignItems={theme.center} height={theme.category.height} mb={1} sx={{cursor: "pointer"}} onClick={addCategory}>
-     <Tooltip title="Add category"><IconButton><AddOutlinedIcon sx={{fontSize: "20px", color: "gray" }}/></IconButton></Tooltip>
+     <Tooltip title="Add category"><IconButton><AddOutlinedIcon sx={{fontSize: "20px", color: "gray" }}/> {loading && <CircularProgress />}</IconButton></Tooltip>
     </Stack>
 
     { categoriesData.length ? null :  <Alert severity="info" sx={{mt: 2}}>Get started with your first Category!</Alert>}
@@ -593,7 +598,7 @@ const InnerBag = ({bagData, items, session}) => {
              </Stack>
              <CloseIcon onClick={closePopup} sx={{cursor: "pointer"}}/>
              <TextField label="Bag name" name="name" required onChange={handleChange} sx={{width: "48.5%", marginBottom: "20px"}} value={editedBag.name || ""} inputProps={{ maxLength: 26 }}/>
-             <TextField label={`Weight goal - ${session?.user?.weightOption}`} type="number" required name="goal" onChange={handleChange} sx={{width: "48.5%", marginBottom: "20px"}} value={editedBag.goal || ""} inputProps={{ min: 1 }} />
+             <TextField label={`Weight goal (${session?.user?.weightOption})`} type="number" required name="goal" onChange={handleChange} sx={{width: "48.5%", marginBottom: "20px"}} value={editedBag.goal || ""} inputProps={{ min: 1 }} />
             <TextField multiline label="Description" name="description" onChange={handleChange} sx={{width: "100%"}} value={editedBag.description || "" } inputProps={{ maxLength: 200 }} /> 
             <Button type="submit"  sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Update</Button>
           </Stack>

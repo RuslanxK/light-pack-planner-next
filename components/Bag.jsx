@@ -47,8 +47,9 @@ const Bag = ({bagData, trips, session}) => {
         const BagWithUserId = { ...duplicatedBag, userId: session.user.id};
 
         await axios.post(`/bags/duplicate`, BagWithUserId);
+        router.refresh()
         setIsPopupOpen(false)
-        startTransition(router.refresh)
+      
 
         } catch (err) {
          console.log(err);

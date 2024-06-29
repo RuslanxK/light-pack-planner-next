@@ -24,7 +24,6 @@ const InnerTrip = ({ tripData, trips, session }) => {
 
   const countriesApi = "https://restcountries.com/v3.1/all?fields=name,flags";
 
-  const [isTransitionStarted, startTransition] = useTransition();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
   const [countries, setCounties] = useState([]);
@@ -89,7 +88,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
       const newTripDataWithUserId = { ...newBag, tripId: tripData?.trip?._id, userId: session?.user?.id };
       await axios.post('/bags/new', newTripDataWithUserId);
 
-      startTransition(router.refresh);
+      router.refresh()
       setAddPopupOpen(false);
     } catch (err) {
       console.log(err);
@@ -98,11 +97,15 @@ const InnerTrip = ({ tripData, trips, session }) => {
 
   const updateTrip = async (e) => {
     e.preventDefault();
+
     try {
       await axios.put(`/api/trips/${tripData.trip._id}/${session?.user?.id}`, editedTrip);
 
-      startTransition(router.refresh);
+
+      router.refresh()
       setPopupOpen(false);
+      
+      
     }
     catch (err) {
       console.log(err);
@@ -114,7 +117,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
       await axios.delete(`/api/trips/${tripData.trip._id}/${session?.user?.id}`);
       setDeletePopupOpen(false);
       router.push('/');
-      startTransition(router.refresh);
+      router.refresh();
     }
     catch (error) {
       console.log(error);
@@ -167,7 +170,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
 
             <Stack mt={3}>
               <Stack direction="row" borderRadius={theme.radius} width="fit-content" alignItems="center" justifyContent="center">
-                <IconButton sx={{ marginRight: "2px" }}><SportsScoreOutlinedIcon sx={{ fontSize: "22px" }} /></IconButton> {tripData?.trip?.distance} km <IconButton sx={{ marginRight: "2px", marginLeft: "2px" }}><MoreTimeIcon sx={{ fontSize: "22px" }} /></IconButton> {calculateDaysLeft(tripData.trip) <= 0 ? (
+                <IconButton sx={{ marginRight: "2px" }}><SportsScoreOutlinedIcon sx={{ fontSize: "22px" }} /></IconButton> {tripData?.trip?.distance} {session?.user?.distance} <IconButton sx={{ marginRight: "2px", marginLeft: "2px" }}><MoreTimeIcon sx={{ fontSize: "22px" }} /></IconButton> {calculateDaysLeft(tripData.trip) <= 0 ? (
                   <Typography variant="span" sx={{ color: theme.black, fontWeight: "bold" }}>Traveled </Typography>) : (<Typography variant='span' sx={{ color: theme.green, fontWeight: "bold" }}> Starts in {calculateDaysLeft(tripData.trip)} {calculateDaysLeft(tripData.trip) > 0 ? 'day' : 'days'} </Typography>)}
                 <IconButton sx={{ marginRight: "2px", marginLeft: "2px" }}><WbSunnyOutlinedIcon sx={{ fontSize: "22px" }} /></IconButton> {calculateDuration()} {calculateDuration() === 1 ? 'day' : 'days'}
               </Stack>
@@ -214,7 +217,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
               </Stack>
               <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
               <TextField label="Bag name" name="name" required onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ maxLength: 26 }} />
-              <TextField label={`Weight goal - ${session?.user?.weightOption}`} type="number" required name="goal" onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ min: 1 }} />
+              <TextField label={`Weight goal (${session?.user?.weightOption})`} type="number" required name="goal" onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ min: 1 }} />
               <TextField multiline label="Description" name="description" onChange={handleBagChange} sx={{ width: "100%" }} inputProps={{ maxLength: 200 }} />
               <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Add</Button>
             </Stack>
@@ -236,7 +239,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
                 renderInput={(params) => <TextField required {...params} label="Location" />}
                 sx={{ width: "48%", marginBottom: "20px" }} />
               <TextField
-                label={`Distance - ${session?.user?.distance}`}
+                label={`Distance (${session?.user?.distance})`}
                 type="number"
                 value={editedTrip.distance}
                 name="distance"
