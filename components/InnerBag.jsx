@@ -303,7 +303,7 @@ const InnerBag = ({bagData, items, session}) => {
 
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
 
-{loading ? <Stack width="100vw" justifyContent="center" alignItems="center" sx={{ position: "fixed", minHeight: "100vh", height: "fit-content", zIndex: "9999"}} backgroundColor="rgba(0, 0, 0, 0.4)"> {<CircularProgress color="success" sx={{marginRight: "210px"}}/>}</Stack> : null }
+{loading ? <Stack width="100vw" justifyContent="center" alignItems="center" sx={{ position: "fixed", minHeight: "100vh", height: "fit-content", zIndex: "9999"}} backgroundColor="rgba(0, 0, 0, 0.15)"> {<CircularProgress color="success" sx={{marginRight: "210px"}}/>}</Stack> : null }
 
 
 {items?.length ? (
