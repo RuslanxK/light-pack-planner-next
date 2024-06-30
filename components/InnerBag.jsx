@@ -221,11 +221,12 @@ useEffect(() => {
   
   const confirmSwitchChange = async () => {
     try {
+      setConfirmPopupOpen(true)
       setPopupLoading(true);
       await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: true });
-      setConfirmPopupOpen(false);
       await refresh();
       setPopupLoading(false);
+      setConfirmPopupOpen(false);
       setSwitchChecked(true);
     } catch (error) {
       console.log(error);
