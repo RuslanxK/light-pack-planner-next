@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useTransition} from 'react'
+import React, { useState, useEffect, useTransition} from 'react'
 import { Stack, Typography, IconButton, Autocomplete, Button, TextField, Tooltip} from '@mui/material'
 import Image from 'next/image'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -10,6 +10,7 @@ import NearMeOutlinedIcon from '@mui/icons-material/NearMeOutlined';
 import CloseIcon from "@mui/icons-material/Close";
 import axios from 'axios';
 import MuiPopup from './custom/MuiPopup';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Bag = ({bagData, trips, session}) => {
 
@@ -19,7 +20,37 @@ const Bag = ({bagData, trips, session}) => {
   const [tripHover, setTripHover] = useState(false)
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [duplicatedBag, setDuplicatedBag] = useState({tripId: null, id: bagData._id, name: bagData.name, goal: bagData.goal, description: bagData.description});
-  const [isTransitionStarted, startTransition] = useTransition();
+
+  const [isPending, startTransition] = useTransition()
+  const [resolve, setResolve] = useState(null)
+  const [isTriggered, setIsTriggered] = useState(false)
+  const [loading, setLoading] = useState(false);
+
+  const refresh = () => {
+    return new Promise((resolve, reject) => {
+        setResolve(() => resolve)
+        startTransition(() => {
+            router.refresh()
+        })
+    })
+}
+
+useEffect(() => {
+  if (isTriggered && !isPending) {
+      if (resolve) {
+          resolve(null)
+          
+          setIsTriggered(false)
+          setResolve(null)
+      }
+  }
+  if (isPending) {
+      setIsTriggered(true)
+  }
+
+}, [isTriggered, isPending, resolve])
+
+
 
 
   const NavigateToInnerBag = () => {
@@ -44,12 +75,13 @@ const Bag = ({bagData, trips, session}) => {
 
        try {
 
+        setLoading(true)
         const BagWithUserId = { ...duplicatedBag, userId: session.user.id};
 
         await axios.post(`/bags/duplicate`, BagWithUserId);
-        router.refresh()
+        await refresh()
         setIsPopupOpen(false)
-      
+        setLoading(false)
 
         } catch (err) {
          console.log(err);
@@ -89,7 +121,7 @@ const Bag = ({bagData, trips, session}) => {
               isOptionEqualToValue={isOptionEqualToValue}
               sx={{marginBottom: "20px"}}/>
               
-            <Button type='submit'sx={{marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Duplicate</Button>
+            <Button type='submit'sx={{marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Duplicate {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
     
         </Stack>
        </form>

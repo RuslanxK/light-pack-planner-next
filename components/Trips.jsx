@@ -19,7 +19,8 @@ import { DatePicker } from "@mui/x-date-pickers-pro";
 import dayjs from "dayjs";
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
-import { useState, useEffect} from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useState, useEffect, useTransition} from 'react';
 
 const Trips = ({trips, bags, session}) => {
 
@@ -32,6 +33,38 @@ const Trips = ({trips, bags, session}) => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [newTripData, setNewTripData] = useState({ startDate: dayjs().add(1, "day"), endDate: dayjs().add(2, "day") });
   const [searchInput, setSearchInput] = useState("");
+
+  const [isPending, startTransition] = useTransition()
+  const [resolve, setResolve] = useState(null)
+  const [isTriggered, setIsTriggered] = useState(false)
+  const [loading, setLoading] = useState(false);
+
+
+  const refresh = () => {
+    return new Promise((resolve, reject) => {
+        setResolve(() => resolve)
+        startTransition(() => {
+            router.refresh()
+        })
+    })
+}
+
+useEffect(() => {
+  if (isTriggered && !isPending) {
+      if (resolve) {
+          resolve(null)
+          
+          setIsTriggered(false)
+          setResolve(null)
+      }
+  }
+  if (isPending) {
+      setIsTriggered(true)
+  }
+
+}, [isTriggered, isPending, resolve])
+
+
 
   useEffect(() => {
 
@@ -72,10 +105,13 @@ const Trips = ({trips, bags, session}) => {
     e.preventDefault();
 
     try {
+
+      setLoading(true)
       const newTripDataWithUserId = { ...newTripData, userId: session?.user?.id };
       const res = await axios.post(`/api/trips/new`, newTripDataWithUserId);
-      router.refresh()
+      await refresh()
       setPopupOpen(false);
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }
@@ -250,7 +286,7 @@ const Trips = ({trips, bags, session}) => {
                     minDate={newTripData.startDate}
                   />
                 </LocalizationProvider>
-                <Button type="submit" sx={{marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Create</Button>
+                <Button type="submit" sx={{marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Create {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
               </Stack>
             </form>
           </MuiPopup>

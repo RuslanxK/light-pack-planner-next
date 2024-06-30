@@ -19,6 +19,8 @@ import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import EditLocationOutlinedIcon from '@mui/icons-material/EditLocationOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const InnerTrip = ({ tripData, trips, session }) => {
 
@@ -31,8 +33,41 @@ const InnerTrip = ({ tripData, trips, session }) => {
   const [editedTrip, setEditedTrip] = useState({ name: tripData?.trip?.name, about: tripData?.trip?.about, distance: tripData?.trip?.distance, startDate: dayjs(tripData?.trip?.startDate), endDate: dayjs(tripData?.trip?.endDate) });
   const [newBag, setNewBag] = useState({});
   const [searchInput, setSearchInput] = useState('');
+
+  const [isPending, startTransition] = useTransition()
+  const [resolve, setResolve] = useState(null)
+  const [isTriggered, setIsTriggered] = useState(false)
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
   const theme = useTheme();
+
+
+  const refresh = () => {
+    return new Promise((resolve, reject) => {
+        setResolve(() => resolve)
+        startTransition(() => {
+            router.refresh()
+        })
+    })
+}
+
+useEffect(() => {
+  if (isTriggered && !isPending) {
+      if (resolve) {
+          resolve(null)
+          
+          setIsTriggered(false)
+          setResolve(null)
+      }
+  }
+  if (isPending) {
+      setIsTriggered(true)
+  }
+
+}, [isTriggered, isPending, resolve])
+
+
 
   useEffect(() => {
     const getCountries = async () => {
@@ -85,11 +120,14 @@ const InnerTrip = ({ tripData, trips, session }) => {
   const addBag = async (e) => {
     e.preventDefault();
     try {
+
+      setLoading(true)
       const newTripDataWithUserId = { ...newBag, tripId: tripData?.trip?._id, userId: session?.user?.id };
       await axios.post('/bags/new', newTripDataWithUserId);
 
-      router.refresh()
+      await refresh()
       setAddPopupOpen(false);
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }
@@ -99,13 +137,12 @@ const InnerTrip = ({ tripData, trips, session }) => {
     e.preventDefault();
 
     try {
+
+      setLoading(true)
       await axios.put(`/api/trips/${tripData.trip._id}/${session?.user?.id}`, editedTrip);
-
-
-      router.refresh()
+      await refresh()
       setPopupOpen(false);
-      
-      
+      setLoading(false)
     }
     catch (err) {
       console.log(err);
@@ -114,10 +151,12 @@ const InnerTrip = ({ tripData, trips, session }) => {
 
   const removeTrip = async () => {
     try {
+      setLoading(true)
       await axios.delete(`/api/trips/${tripData.trip._id}/${session?.user?.id}`);
-      setDeletePopupOpen(false);
       router.push('/');
-      router.refresh();
+      await refresh()
+      setDeletePopupOpen(false);
+      setLoading(false)
     }
     catch (error) {
       console.log(error);
@@ -219,7 +258,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
               <TextField label="Bag name" name="name" required onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ maxLength: 26 }} />
               <TextField label={`Weight goal (${session?.user?.weightOption})`} type="number" required name="goal" onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ min: 1 }} />
               <TextField multiline label="Description" name="description" onChange={handleBagChange} sx={{ width: "100%" }} inputProps={{ maxLength: 200 }} />
-              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Add</Button>
+              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Add {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
             </Stack>
           </form>
         </MuiPopup> : null}
@@ -272,7 +311,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
                   sx={{ width: "48.5%" }}
                   minDate={editedTrip.startDate || null} />
               </LocalizationProvider>
-              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Update</Button>
+              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Update {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
             </Stack>
           </form>
         </MuiPopup> : null}
@@ -286,7 +325,7 @@ const InnerTrip = ({ tripData, trips, session }) => {
                 Deleting this trip will permanently remove it from the system, and any associated data will be lost.</Typography>
             </Stack>
             <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
-            <Button sx={{ marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.red, '&:hover': { backgroundColor: theme.redHover } }} variant="contained" onClick={removeTrip} disableElevation>Delete</Button>
+            <Button sx={{ marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.red, '&:hover': { backgroundColor: theme.redHover } }} variant="contained" onClick={removeTrip} disableElevation>Delete {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
           </Stack>
         </MuiPopup> : null}
       </Stack>

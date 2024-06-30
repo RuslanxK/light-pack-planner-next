@@ -40,6 +40,9 @@ const InnerBag = ({bagData, items, session}) => {
   const [resolve, setResolve] = useState(null)
   const [isTriggered, setIsTriggered] = useState(false)
   const [loading, setLoading] = useState(false);
+  const [popupLoading, setPopupLoading] = useState(false)
+  const [showSwitchMessage, setShowSwitchMessage] = useState(false)
+  const [switchChecked, setSwitchChecked] = useState(bagData?.bag?.exploreBags || false);
 
 
   const refresh = () => {
@@ -65,6 +68,28 @@ useEffect(() => {
   }
 
 }, [isTriggered, isPending, resolve])
+
+
+
+useEffect(() => {
+  if (bagData?.totalBagWeight === 0 && switchChecked === true) {
+    setSwitchChecked(false);
+    const switchOff = async () => {
+
+      try {
+       
+        await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: false });
+        setConfirmPopupOpen(false);
+        await refresh();
+        setSwitchChecked(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    switchOff()
+  }
+}, [bagData?.totalBagWeight]);
 
 
 
@@ -169,47 +194,45 @@ useEffect(() => {
 
 
   const handleSwitchChange = async (e) => {
-
-    if(bagData?.totalBagWeight === 0) {
-
-       return alert("You must add categories and items to publish")
-       
-    }
-    
-
-    if(e.target.checked === true) {
-
-      setConfirmPopupOpen(true); 
+    if (bagData?.totalBagWeight === 0) {
+      setShowSwitchMessage(true);
+      return;
     }
 
-    else {
-
+    if (e.target.checked === true) {
+      setConfirmPopupOpen(true);
+      setShowSwitchMessage(false);
+    } else {
       try {
+        setLoading(true);
         await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: false });
-        setConfirmPopupOpen(false)
-        router.refresh()
+        setConfirmPopupOpen(false);
+        await refresh();
+        setLoading(false);
+        setSwitchChecked(false);
       } catch (error) {
         console.log(error);
       }
     }
-   
   };
+  
 
 
   
   const confirmSwitchChange = async () => {
     try {
+      setPopupLoading(true);
       await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: true });
-      setConfirmPopupOpen(false)
-      router.refresh()
+      setConfirmPopupOpen(false);
+      await refresh();
+      setPopupLoading(false);
+      setSwitchChecked(true);
     } catch (error) {
       console.log(error);
     }
   };
   
   
-
-
 
   const openPopup = () => {
       setPopupOpen(true)
@@ -230,9 +253,12 @@ useEffect(() => {
   const updateBag = async (e) => {
      e.preventDefault()
     try {
+
+      setPopupLoading(true)
         await axios.put(`/bags/${bagData.bag._id}/${session?.user?.id}`, editedBag)
-        router.refresh()
+        await refresh()
         setPopupOpen(false)
+        setPopupLoading(false)
     }
      catch (error) {
         console.log(error)
@@ -243,12 +269,13 @@ useEffect(() => {
   const removeBag = async () => {
     try {
 
-    
+      setPopupLoading(true)
       await axios.delete(`/bags/${bagData.bag._id}/${session?.user?.id}`);
     
-      setDeletePopupOpen(false)
       router.push(`/trips?id=${bagData.bag.tripId}`)
-      router.refresh();
+      await refresh();
+      setDeletePopupOpen(false)
+      setPopupLoading(false)
       
     }
      catch (error) {
@@ -442,9 +469,11 @@ useEffect(() => {
         <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" }}}  /></IconButton></Tooltip>
         </Stack>
         </Stack>
-      
-    
+
+
         </Stack>
+
+        {showSwitchMessage ? <Stack mb={2}><Alert severity="info">You must add categories and items to publish the bag.</Alert></Stack> : null }
 
 
         <Typography component="p" variant="p">
@@ -632,8 +661,8 @@ useEffect(() => {
              <CloseIcon onClick={closePopup} sx={{cursor: "pointer"}}/>
              <TextField label="Bag name" name="name" required onChange={handleChange} sx={{width: "48.5%", marginBottom: "20px"}} value={editedBag.name || ""} inputProps={{ maxLength: 26 }}/>
              <TextField label={`Weight goal (${session?.user?.weightOption})`} type="number" required name="goal" onChange={handleChange} sx={{width: "48.5%", marginBottom: "20px"}} value={editedBag.goal || ""} inputProps={{ min: 1 }} />
-            <TextField multiline label="Description" name="description" onChange={handleChange} sx={{width: "100%"}} value={editedBag.description || "" } inputProps={{ maxLength: 200 }} /> 
-            <Button type="submit"  sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Update</Button>
+            <TextField multiline label="Description" name="description" onChange={handleChange} sx={{width: "100%"}} value={editedBag.description} inputProps={{ maxLength: 200 }} /> 
+            <Button type="submit"  sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Update {popupLoading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
           </Stack>
       </form>
   </MuiPopup> : null }
@@ -649,7 +678,7 @@ useEffect(() => {
 
 
 <CloseIcon onClick={closePopup} sx={{cursor: "pointer"}}/>
-<Button sx={{marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeBag} disableElevation>Delete</Button>
+<Button sx={{marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeBag} disableElevation>Delete {popupLoading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
 </Stack>
 </MuiPopup> : null }
 
@@ -671,7 +700,7 @@ useEffect(() => {
         onClick={confirmSwitchChange}
         disableElevation
       >
-        Publish
+        Publish {popupLoading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}
       </Button>
     </Stack>
   </MuiPopup>
