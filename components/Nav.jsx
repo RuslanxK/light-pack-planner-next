@@ -29,6 +29,7 @@ import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ReportIcon from '@mui/icons-material/Report';
 
 const Nav = ({bags, session, user}) => {
 
@@ -197,6 +198,16 @@ const navigateToBag = (bag) => {
               Changelog 
             </Typography>
             <NotificationImportantIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
+          </AccordionSummary>
+        </Accordion>
+
+
+        <Accordion onClick={() => router.push('/bug-report')}>
+          <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
+            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+             Bug Report
+            </Typography>
+            <ReportIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
         </Accordion>
 
