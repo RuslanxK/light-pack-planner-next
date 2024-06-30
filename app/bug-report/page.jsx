@@ -1,9 +1,19 @@
 import {Fragment} from 'react'
 import BugReport from "../../components/BugReport"
+import { options } from '../api/auth/[...nextauth]/options'
+import { getServerSession } from 'next-auth';
 
-const page = () => {
+const page = async () => {
+
+
+  const session = await getServerSession(options)
+  
   return (
-    <Fragment><BugReport/></Fragment>
+    <Fragment>
+      
+      <BugReport session={session} />
+      
+    </Fragment>
   )
 }
 

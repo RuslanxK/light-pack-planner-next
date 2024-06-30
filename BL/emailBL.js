@@ -28,6 +28,24 @@ export const generateForgotPasswordHTML = (id) => {
     `
 };
 
+
+
+export const reportEmail = (title, content, user) => {
+
+  return `
+      <div style="text-align: center; height: 500px;">
+        <h2 style="font-weight: 500; color: black";>${title}</h2>
+        <hr class="solid" style="width: 50%; border: 1px solid #ededed;">
+        <p style="color: gray; font-size: 15px;">${content}</p>
+        
+        <hr class="solid" style="margin-bottom: 15px; width: 75px; border: 1px solid #ededed;">
+        <span style="color: gray; font-size: 12px;">${user.username} - ${user.email}</span>
+      </div>
+    `
+};
+
+
+
 export const sendEmail = async (recipientEmail, subject, htmlContent) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -44,6 +62,36 @@ export const sendEmail = async (recipientEmail, subject, htmlContent) => {
     const mailOptions = {
       from: process.env.EMAIL,
       to: recipientEmail,
+      subject: subject,
+      html: htmlContent,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return { success: true, message: "Email sent successfully" };
+  } catch (error) {
+    return { success: false, message: "Failed to send email" };
+  }
+};
+
+
+
+export const sendReportEmail = async (recipientEmail, subject, htmlContent) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: recipientEmail,
+      to: process.env.EMAIL,
       subject: subject,
       html: htmlContent,
     };
