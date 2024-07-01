@@ -1,21 +1,25 @@
-import React, { Fragment, useState, useTransition, useEffect } from 'react'
+import React, { Fragment, useState,  useEffect } from 'react'
 import { Stack, Typography, Autocomplete, TextField, Button} from '@mui/material'
 import FlipCameraIosOutlinedIcon from '@mui/icons-material/FlipCameraIosOutlined';
 import { useTheme } from '@emotion/react';
 import MuiPopup from './custom/MuiPopup';
 import CloseIcon from "@mui/icons-material/Close";
 import axios from 'axios';
+import useRefresh from './hooks/useRefresh'
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const SideItem = ({itemData, categoryData, update}) => {
 
 const [isPopupOpen, setPopupOpen] = useState(false);
-const [isTransitionStarted, startTransition] = useTransition();
 const [itemToCategory, setItemToCategory] = useState({ tripId: null, bagId: null, categoryId: null});
 const [selectedCategory, setSelectedCategory] = useState(null); // State to manage the selected category
+const [loading, setLoading] = useState(false);
 
 
 const theme = useTheme()
+const { refresh } = useRefresh();
+
 
 const categoryOptions = categoryData?.map((x) => ({ name: x.name, _id: x._id, key: x._id })) 
 const isOptionEqualToValue = (option, value) => option._id === value?._id;
@@ -52,10 +56,15 @@ const addItemToCategory = async (e) => {
       name: itemData.name, description: itemData.description, link: itemData.link, priority: itemData.priority, qty: itemData.qty, weight: itemData.weight, wgtOpt: itemData.wgtOpt, worn: itemData.worn}
 
     try {
+        
+        setLoading(true)
         await axios.post('/items/new', itemObj);
-        setPopupOpen(false)
+        await refresh()
         update()
+        setPopupOpen(false)
+        setLoading(false)
         setSelectedCategory(null)
+        
       }
        catch (error) {
             console.log(error)
@@ -74,12 +83,12 @@ const addItemToCategory = async (e) => {
 
  <MuiPopup isOpen={isPopupOpen} onClose={closePopup} >
   <form onSubmit={addItemToCategory}>
-        <Stack spacing={2}>
+        <Stack>
           <Stack direction="row" justifyContent="space-between">
-            <Typography component="h2" variant="span">Add to category</Typography>
+            <Typography component="h2" variant="span" mb={0.5}>Add item to category</Typography>
             <CloseIcon onClick={closePopup} />
           </Stack>
-          <Typography component="p" variant="p"> Choose where to add <Typography component="span" variant="span" color={theme.green}>{itemData.name}</Typography></Typography>
+          <Typography component="p" variant="p" mb={3}> Select a category to add <Typography component="span" variant="span" color={theme.green}>{itemData.name}</Typography></Typography>
              <Autocomplete
               value={selectedCategory}
               renderInput={(params) => <TextField  required {...params} label="Categories" />}
@@ -92,7 +101,7 @@ const addItemToCategory = async (e) => {
               getOptionLabel={(option) => option.name}
               isOptionEqualToValue={isOptionEqualToValue}
               getOptionKey={(option) => option.key}/>
-             <Button type="submit"  sx={{ marginTop: "20px", color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Add</Button>
+             <Button type="submit"  sx={{ marginTop: "20px", color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Add to Category  {loading && <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} />}</Button>
         </Stack>
       </form>
   </MuiPopup>

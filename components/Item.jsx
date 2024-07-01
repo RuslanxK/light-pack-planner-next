@@ -283,7 +283,7 @@ const Item = (props) => {
         <Stack spacing={2}>
           <Stack flex={1} direction="row" justifyContent="space-between">
             <Typography variant="span" component="h2" marginBottom="10px">
-              Add a link for this item
+             Attach a link to this item.
             </Typography>
             <CloseIcon onClick={closePopup} />
           </Stack>
@@ -310,7 +310,7 @@ const Item = (props) => {
       <Stack>
         <Stack flex={1} direction="row" justifyContent="space-between" alignItems="center">
           <Typography variant="span" component="h2" marginBottom="10px">
-            Add a picture for this item
+            Upload a picture for this item.
           </Typography>
           <IconButton onClick={closePopup}><CloseIcon /></IconButton>
         </Stack>
