@@ -8,11 +8,16 @@ import { options } from '../api/auth/[...nextauth]/options'
 
 const getBags = async (session) => {
 
-  const res = await fetch(`${process.env.API_URL}/bags/${session?.user?.id}/creator`, { cache: 'no-store'});
-  if (!res.ok) {
-    throw new Error("Failed to fetch bags");
+  try {
+   const res = await fetch(`${process.env.API_URL}/bags/${session?.user?.id}/creator`, { cache: 'no-store'});
+   return res.json();
   }
-     return res.json();
+  
+  catch(error) {
+
+    return { error: "Could not retrieve your bags at this time. Please try again later." }
+  }
+     
 }
 
 
@@ -26,11 +31,17 @@ const getTrips = async (session) => {
 
 
 const getTrip = async (id, session) => {
+
+  try {
   const res = await fetch(`${process.env.API_URL}/api/trips/${id}/${session?.user?.id}`, { cache: 'no-store'});
-  if(!res.ok) {
-    console.error()
-   }
   return res.json()
+  }
+ 
+  catch(error) {
+
+    return { error: "Something went wrong." }
+  }
+ 
 
 }
 
@@ -47,7 +58,7 @@ const page = async({searchParams}) => {
   return (
    <Fragment>
 
-    <InnerTrip tripData={trip} trips={trips.trips} bagsData={bags} session={session}  />
+    <InnerTrip tripData={trip} trips={trips.trips} bagsData={bags} error={trip.error} session={session}  />
 
    </Fragment>
 

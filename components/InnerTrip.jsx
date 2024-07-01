@@ -3,7 +3,7 @@
 import { Stack, Typography, IconButton, Autocomplete, TextField, Button, Container, Tooltip, Alert } from '@mui/material';
 import Bag from './Bag';
 import axios from 'axios';
-import { useState, useTransition, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -20,11 +20,12 @@ import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import EditLocationOutlinedIcon from '@mui/icons-material/EditLocationOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CircularProgress from '@mui/material/CircularProgress';
+import { countriesApi } from '../utils/apiConfig'
+import useRefresh from './hooks/useRefresh'
 
 
-const InnerTrip = ({ tripData, trips, session }) => {
+const InnerTrip = ({ tripData, trips, session, error}) => {
 
-  const countriesApi = "https://restcountries.com/v3.1/all?fields=name,flags";
 
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
@@ -34,39 +35,12 @@ const InnerTrip = ({ tripData, trips, session }) => {
   const [newBag, setNewBag] = useState({});
   const [searchInput, setSearchInput] = useState('');
 
-  const [isPending, startTransition] = useTransition()
-  const [resolve, setResolve] = useState(null)
-  const [isTriggered, setIsTriggered] = useState(false)
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const theme = useTheme();
 
-
-  const refresh = () => {
-    return new Promise((resolve, reject) => {
-        setResolve(() => resolve)
-        startTransition(() => {
-            router.refresh()
-        })
-    })
-}
-
-useEffect(() => {
-  if (isTriggered && !isPending) {
-      if (resolve) {
-          resolve(null)
-          
-          setIsTriggered(false)
-          setResolve(null)
-      }
-  }
-  if (isPending) {
-      setIsTriggered(true)
-  }
-
-}, [isTriggered, isPending, resolve])
-
+  const { refresh } = useRefresh();
 
 
   useEffect(() => {
@@ -244,6 +218,7 @@ useEffect(() => {
           <Stack border="2px dashed gray" alignItems={theme.center} display={theme.flexBox} justifyContent={theme.center} width={theme.bags.width} height={theme.bags.height} borderRadius={theme.radius} sx={{ cursor: "pointer" }} onClick={openAddPopup}>
             <Tooltip title="Add bag"><IconButton><AddOutlinedIcon sx={{ fontSize: "25px", color: "gray" }} /></IconButton></Tooltip>
           </Stack>
+          {error ? <Alert severity='error' sx={{mt: 2}}>{error}</Alert> : null }
           {bags}
         </div>
 
