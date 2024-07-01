@@ -30,8 +30,13 @@ import NotificationImportantIcon from '@mui/icons-material/NotificationImportant
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ReportIcon from '@mui/icons-material/Report';
+import useRefresh from './hooks/useRefresh'
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const Nav = ({bags, session, user}) => {
+
+const { refresh } = useRefresh();
 
 const theme = useTheme()
 const router = useRouter()
@@ -39,6 +44,7 @@ const path = usePathname()
 
 const [mode, setMode] = useState(user.mode);
 const [isOpenMenu, setOpenMenu] = useState(false)
+const [ loading, setLoading] = useState(false)
 
 
 
@@ -49,11 +55,15 @@ const toggleTheme = async () => {
 
   const obj = {mode: newMode}
   try {
+
+         setLoading(true)
          await axios.put(`/api/user/${session?.user.id}`, obj)
-         router.refresh()
+         await refresh()
+         setLoading(false)
        }
          catch(err) {
            console.log(err)
+           setLoading(false)
        }
 };
 
@@ -119,6 +129,12 @@ const navigateToBag = (bag) => {
 
 
   return (
+
+    <Fragment>
+
+
+
+{loading ? <div className='loading-overlay' style={{ background: theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.15)"}}> {<CircularProgress color="success" />}</div> : null }
 
     <>
     {!disableNavBar.includes(path) && (
@@ -242,6 +258,8 @@ const navigateToBag = (bag) => {
         
       )}
       </>
+
+      </Fragment>
    )
    
 }
