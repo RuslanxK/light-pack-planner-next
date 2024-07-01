@@ -1,4 +1,4 @@
-/* * {
+* {
   padding: 0px;
   margin: 0px;
   font-family: "Poppins", sans-serif !important;
@@ -347,6 +347,13 @@ span.MuiBadge-badge {
 @media only screen and (max-width: 768px) {
 
 
+  .MuiFilledInput-root {
+    background-color: rgb(233, 233, 233) !important;
+    border-bottom: 1px solid rgb(122, 122, 122) !important;
+  }
+  
+
+
 
   .login-form {
 
@@ -546,4 +553,4 @@ span.MuiBadge-badge {
   .side-bar-icon-mobile, .share-icon-mobile {
     display: block;
   }
-} */
+}
