@@ -81,14 +81,7 @@ const Login = () => {
           height="58"
           style={{ position: "absolute", top: "25px", left: "25px" }}
         />
-        <Stack
-          display={theme.flexBox}
-          justifyContent={theme.center}
-          alignItems="stretch"
-          width="100%"
-          sx={{ maxWidth: "800px" }}
-          p={12}
-        >
+        <div className="login-form">
           <h1 className="login-text">Login</h1>
           <Typography
             component="span"
@@ -185,7 +178,7 @@ const Login = () => {
           </Typography>
 
           {error ? <Stack mt={3}><Alert severity="error">{error}</Alert></Stack> : null}
-        </Stack>
+        </div>
       </div>
     </Stack>
   );

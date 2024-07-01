@@ -28,6 +28,18 @@ html, body {
 }
 
 
+.login-form {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 800px;
+  padding: 100px;
+
+  
+}
 
 span.MuiBadge-badge {
   transform: scale(0.75);
@@ -333,6 +345,14 @@ span.MuiBadge-badge {
 
 
 @media only screen and (max-width: 768px) {
+
+
+
+  .login-form {
+
+      padding: 25px;
+      background-color: white;
+  }
 
 
   .switch-icon-mobile {
