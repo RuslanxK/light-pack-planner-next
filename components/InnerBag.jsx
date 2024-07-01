@@ -5,7 +5,7 @@ import Category from '../components/Category'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useTransition, Fragment} from 'react';
+import { useState, useEffect, Fragment} from 'react';
 import { useTheme } from '@emotion/react';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MuiPopup from './custom/MuiPopup';
@@ -23,6 +23,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import BackpackOutlinedIcon from '@mui/icons-material/BackpackOutlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
+import useRefresh from './hooks/useRefresh'
 
 
 const InnerBag = ({bagData, items, session}) => {
@@ -36,39 +37,13 @@ const InnerBag = ({bagData, items, session}) => {
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
   const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
   const [confirmPopupOpen, setConfirmPopupOpen] = useState(false)
-  const [isPending, startTransition] = useTransition()
-  const [resolve, setResolve] = useState(null)
-  const [isTriggered, setIsTriggered] = useState(false)
   const [loading, setLoading] = useState(false);
   const [popupLoading, setPopupLoading] = useState(false)
   const [showSwitchMessage, setShowSwitchMessage] = useState(false)
   const [switchChecked, setSwitchChecked] = useState(bagData?.bag?.exploreBags || false);
 
 
-  const refresh = () => {
-    return new Promise((resolve, reject) => {
-        setResolve(() => resolve)
-        startTransition(() => {
-            router.refresh()
-        })
-    })
-}
-
-useEffect(() => {
-  if (isTriggered && !isPending) {
-      if (resolve) {
-          resolve(null)
-          
-          setIsTriggered(false)
-          setResolve(null)
-      }
-  }
-  if (isPending) {
-      setIsTriggered(true)
-  }
-
-}, [isTriggered, isPending, resolve])
-
+  const { refresh } = useRefresh();
 
 
 useEffect(() => {
@@ -95,13 +70,13 @@ useEffect(() => {
 
 
   const mouseSensor = useSensor(MouseSensor, {
-    // Require the mouse to move by 10 pixels before activating
+   
     activationConstraint: {
       distance: 10,
     },
   });
   const touchSensor = useSensor(TouchSensor, {
-    // Press delay of 250ms, with tolerance of 5px of movement
+    
     activationConstraint: {
       delay: 250,
       tolerance: 5,
@@ -299,21 +274,20 @@ useEffect(() => {
       const updatedCategories = [...categoriesData];
       const movedCategory = updatedCategories[fromIndex];
   
-      // Remove the moved category from the original position
+     
       updatedCategories.splice(fromIndex, 1);
   
-      // Insert the moved category into the new position
+     
       updatedCategories.splice(toIndex, 0, movedCategory);
   
-      // Update the order property to start from 1
+      
       const reorderedCategories = updatedCategories.map((category, index) => ({
         ...category,
-        order: index + 1 // Start indexing from 1
+        order: index + 1 
       }));
   
-      setCategoriesData(reorderedCategories); // Update state with reordered categories
+      setCategoriesData(reorderedCategories); 
   
-      // Send reordered categories to backend to save the order
       await saveCategoriesOrder(reorderedCategories);
     } catch (error) {
       console.error('Failed to move category:', error);
@@ -379,10 +353,10 @@ useEffect(() => {
         backgroundColor: theme.palette.success.dark,
         color: "white",
         "&:hover": {
-          backgroundColor: theme.palette.success.main // Adjust this color as needed
+          backgroundColor: theme.palette.success.main 
         },
         "&:active": {
-          backgroundColor: theme.palette.success.main // Adjust this color as needed
+          backgroundColor: theme.palette.success.main 
         }
       }}
     >
@@ -405,10 +379,10 @@ useEffect(() => {
         backgroundColor: theme.palette.primary.dark,
         color: "white",
         "&:hover": {
-          backgroundColor: theme.palette.primary.main // Adjust this color as needed
+          backgroundColor: theme.palette.primary.main 
         },
         "&:active": {
-          backgroundColor: theme.palette.primary.light // Adjust this color as needed
+          backgroundColor: theme.palette.primary.light 
         }
       }}
     >
@@ -430,10 +404,10 @@ useEffect(() => {
       backgroundColor: theme.palette.secondary.dark,
       color: "white",
       "&:hover": {
-        backgroundColor: theme.palette.secondary.main // Adjust this color as needed
+        backgroundColor: theme.palette.secondary.main
       },
       "&:active": {
-        backgroundColor: theme.palette.secondary.light // Adjust this color as needed
+        backgroundColor: theme.palette.secondary.light 
       }
     }}
   >
@@ -606,7 +580,7 @@ useEffect(() => {
     { categoriesData.length ? null :  <Alert severity="info" sx={{mt: 2}}>Get started with your first Category!</Alert>}
 
 
-    <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors}>
+    <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
 
       <SortableContext items={categoriesData.map(category => category.order)} strategy={verticalListSortingStrategy}>
 
@@ -658,8 +632,8 @@ useEffect(() => {
         <form onSubmit={updateBag}>
           <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
              <Stack width="90%">
-             <Typography variant='span' component="h2">Update Bag</Typography>
-             <Typography variant='span' component="span" mb={3}>Popup content goes here</Typography>
+             <Typography variant='span' component="h2">Update Your Bag Details</Typography>
+             <Typography variant='span' component="span" mb={3}>Modify the fields below to update your bag information</Typography>
              </Stack>
              <CloseIcon onClick={closePopup} sx={{cursor: "pointer"}}/>
              <TextField label="Bag name" name="name" required onChange={handleChange} sx={{width: "48.5%", marginBottom: "20px"}} value={editedBag.name || ""} inputProps={{ maxLength: 26 }}/>
@@ -673,7 +647,7 @@ useEffect(() => {
 { isDeletePopupOpen ? <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
 <Stack width="90%">
-<Typography variant='span' component="h2" mb={1.5}>Delete Bag</Typography>
+<Typography variant='span' component="h2" mb={1.5}>Delete {bagData.bag.name}</Typography>
 <Typography variant='span' component="span">
    Are you sure you want to delete this bag? This action cannot be undone.
    Deleting this bag will permanently remove it from the system, and any associated data will be lost.</Typography>

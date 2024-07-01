@@ -195,11 +195,11 @@ const InnerTrip = ({ tripData, trips, session}) => {
               
 
               <Typography component="h3" variant="h6" mb={0.3} mt={4}>My Bags</Typography>
-              <Typography component="p" variant="p" mb={3}>Lorem ipsum dolor sit amet</Typography>
+              <Typography component="p" variant="p" mb={3}>Organize and manage your bags for trips.</Typography>
 
               
          {  tripData.bags.length ? <TextField
-            label="Search Bags"
+            label="Search"
             variant='filled'
             fullWidth
             size='small'
@@ -231,14 +231,14 @@ const InnerTrip = ({ tripData, trips, session}) => {
           <form onSubmit={addBag}>
             <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
               <Stack width="90%">
-                <Typography variant='span' component="h2">Add new bag</Typography>
-                <Typography variant='span' component="span" mb={3}>Popup content goes here</Typography>
+                <Typography variant='span' component="h2" mb={0.5}>Create Bag</Typography>
+                <Typography variant='span' component="span" mb={3}>Fill in the details below to add a new bag to your collection.</Typography>
               </Stack>
               <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
-              <TextField label="Bag name" name="name" required onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ maxLength: 26 }} />
-              <TextField label={`Weight goal (${session?.user?.weightOption})`} type="number" required name="goal" onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ min: 1 }} />
+              <TextField label="Name" name="name" required onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ maxLength: 26 }} />
+              <TextField label={`Weight Goal (${session?.user?.weightOption})`} type="number" required name="goal" onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ min: 1 }} />
               <TextField multiline label="Description" name="description" onChange={handleBagChange} sx={{ width: "100%" }} inputProps={{ maxLength: 200 }} />
-              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Add {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
+              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation> Create {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
             </Stack>
           </form>
         </MuiPopup> : null}
@@ -247,15 +247,15 @@ const InnerTrip = ({ tripData, trips, session}) => {
           <form onSubmit={updateTrip}>
             <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
               <Stack width="90%">
-                <Typography variant='span' component="h2">Update Trip</Typography>
-                <Typography variant='span' component="span" mb={3}>Popup content goes here</Typography>
+                <Typography variant='span' component="h2" mb={0.5}>Update Your Trip Details</Typography>
+                <Typography variant='span' component="span" mb={3}>Modify the fields below to update your trip information</Typography>
               </Stack>
               <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
               <Autocomplete
                 onChange={(event, newValue) => setEditedTrip((prevData) => ({ ...prevData, name: newValue || '' }))}
                 value={countryNameArr?.includes(editedTrip.name) ? editedTrip.name : null}
                 options={countryNameArr || []}
-                renderInput={(params) => <TextField required {...params} label="Location" />}
+                renderInput={(params) => <TextField required {...params} label="Destination" />}
                 sx={{ width: "48%", marginBottom: "20px" }} />
               <TextField
                 label={`Distance (${session?.user?.distance})`}
@@ -267,7 +267,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
                 inputProps={{ min: 1, max: 999999 }} />
               <TextField
                 multiline
-                label="Description"
+                label="Trip Description"
                 name="about"
                 value={editedTrip.about}
                 onChange={handleChange}
@@ -291,7 +291,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
                   sx={{ width: "48.5%" }}
                   minDate={editedTrip.startDate || null} />
               </LocalizationProvider>
-              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Update {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
+              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation> Save Changes{loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
               
             </Stack>
           </form>
@@ -300,7 +300,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
         {isDeletePopupOpen ? <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
           <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
             <Stack width="90%">
-              <Typography variant='span' component="h2" mb={1.5}>Delete Trip</Typography>
+              <Typography variant='span' component="h2" mb={0.5}>Delete Trip to {tripData?.trip?.name} </Typography>
               <Typography variant='span' component="span">
                 Are you sure you want to delete this trip? This action cannot be undone.
                 Deleting this trip will permanently remove it from the system, and any associated data will be lost.</Typography>

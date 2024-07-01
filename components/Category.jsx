@@ -3,7 +3,7 @@
 import { Stack, Typography, IconButton, Button, TextField, Tooltip} from "@mui/material";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
@@ -17,6 +17,7 @@ import FolderDeleteOutlinedIcon from '@mui/icons-material/FolderDeleteOutlined';
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors, closestCorners} from '@dnd-kit/core';
 import {SortableContext, verticalListSortingStrategy, useSortable} from "@dnd-kit/sortable"
 import CircularProgress from '@mui/material/CircularProgress';
+import useRefresh from './hooks/useRefresh'
 
 
 import { CSS } from "@dnd-kit/utilities";
@@ -34,40 +35,8 @@ const Category = (props) => {
   const [itemsData, setItemsData] = useState(props.items || []);
   const [checkedItems, setCheckedItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isPending, startTransition] = useTransition()
-  const [resolve, setResolve] = useState(null)
-  const [isTriggered, setIsTriggered] = useState(false)
-
-
-
-  const refresh = () => {
-    return new Promise((resolve, reject) => {
-        setResolve(() => resolve)
-        startTransition(() => {
-            router.refresh()
-        })
-    })
-}
-
-
-useEffect(() => {
-  if (isTriggered && !isPending) {
-      if (resolve) {
-          resolve(null)
-          
-          setIsTriggered(false)
-          setResolve(null)
-      }
-  }
-  if (isPending) {
-      setIsTriggered(true)
-  }
-
-}, [isTriggered, isPending, resolve])
-
-
-
-
+  
+  const { refresh } = useRefresh();
 
 
   const handleUpdateChecked = (id, checked) => {
@@ -295,7 +264,7 @@ const saveItemsOrder = async (updatedItems) => {
        </Stack>
 
 
-       <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors}>
+       <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
 
       {showItems && (
         <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pt={0.5} pb={1} borderTop="1px solid gray" width="100%" height={theme.auto}>
@@ -325,7 +294,7 @@ const saveItemsOrder = async (updatedItems) => {
 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
 
 <Stack width="90%">
-<Typography variant='span' component="h2" fontWeight="600" mb={1.5}>Delete Category </Typography>
+<Typography variant='span' component="h2" fontWeight="600" mb={1.5}>Delete {props.categoryData.name} </Typography>
 <Typography variant='span' component="span">
    Are you sure you want to delete this category? This action cannot be undone.
    Deleting this category will permanently remove it from the system, and any associated data will be lost.</Typography>

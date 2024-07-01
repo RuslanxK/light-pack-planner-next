@@ -5,7 +5,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useTheme } from '@emotion/react';
-import React, { useState, useTransition, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import MuiPopup from './custom/MuiPopup';
@@ -17,6 +17,7 @@ import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import {useSortable} from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities";
+import useRefresh from './hooks/useRefresh'
 
 
 const Item = (props) => {
@@ -26,41 +27,13 @@ const Item = (props) => {
   const [removePopupOpen ,setRemovePopupOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showEditIcon, setShowEditIcon] = useState(false)
-  const [isPending, startTransition] = useTransition()
-  const [resolve, setResolve] = useState(null)
-  const [isTriggered, setIsTriggered] = useState(false)
-
   const [itemData, setItem] = useState({ userId: props.itemData.creator, _id: props.itemData._id, tripId: props.itemData.tripId, bagId: props.itemData.bagId, categoryId: props.itemData.categoryId, name: props.itemData.name, selected: props.itemData.selected,
     priority: props.itemData.priority, description: props.itemData.description || '',  qty: +props.itemData.qty || 1, weight: +props.itemData.weight || 0.1, link: props.itemData.link, worn: props.itemData.worn, productImageKey: props.itemData.productImageKey, image: null, price: props.itemData.price || 0,});
 
     const theme = useTheme()
     const router = useRouter();
 
-    const refresh = () => {
-      return new Promise((resolve, reject) => {
-          setResolve(() => resolve)
-          startTransition(() => {
-              router.refresh()
-          })
-      })
-  }
-  
-  
-  useEffect(() => {
-    if (isTriggered && !isPending) {
-        if (resolve) {
-            resolve(null)
-            
-            setIsTriggered(false)
-            setResolve(null)
-        }
-    }
-    if (isPending) {
-        setIsTriggered(true)
-    }
-  
-  }, [isTriggered, isPending, resolve])
-  
+    const { refresh } = useRefresh();
 
 
     const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({id: props.itemData.order})
@@ -70,9 +43,7 @@ const Item = (props) => {
       transition,
       transform: CSS.Translate.toString(transform),
       opacity: isDragging ? 0.9 : 1,
-
   }
-
 
 
    const closePopup = () => {
@@ -82,8 +53,6 @@ const Item = (props) => {
      setPicPopupOpen(false)
      
    };
-
-
 
 
    const updateChecked = async (e) => {
@@ -107,7 +76,6 @@ const Item = (props) => {
 
 
    
-
   
     const handleChange = async (event) => {
 
@@ -124,7 +92,6 @@ const Item = (props) => {
       }
     };
   
-
 
 
     const handleFileChange = (event) => {
@@ -250,7 +217,7 @@ const Item = (props) => {
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>
         </IconButton> 
      
-        <Checkbox size="small" name='selected' sx={{transform: "scale(0.8)", marginBottom: "-4px"}} onChange={updateChecked}  /> 
+      <Checkbox size="small" name='selected' sx={{transform: "scale(0.8)", marginBottom: "-4px"}} onChange={updateChecked}  /> 
       <TextField size='small' variant='standard' placeholder='name' name='name' sx={{ width: '50%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.name} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{style: {fontSize: 12}}} onChange={handleChange} onBlur={saveItemData}/>
       <TextField size='small' variant='standard' placeholder='note' name='description' sx={{ width: '100%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.description} InputLabelProps={{ style : {fontSize: 12}}} inputProps={{style: {fontSize: 12}}} InputProps={{disableUnderline: true}} onChange={handleChange} onBlur={saveItemData} />
       <TextField size='small' variant='standard' type='number' name='price' label="$ price" step="any" sx={{width: '10%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.price} onChange={handleChange} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{ min: 1, max: 99, style: {fontSize: 12} }} onBlur={saveItemData}/>

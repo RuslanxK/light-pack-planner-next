@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useTransition} from 'react'
+import React, { useState} from 'react'
 import { Stack, Typography, IconButton, Autocomplete, Button, TextField, Tooltip} from '@mui/material'
 import Image from 'next/image'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -11,6 +11,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from 'axios';
 import MuiPopup from './custom/MuiPopup';
 import CircularProgress from '@mui/material/CircularProgress';
+import useRefresh from './hooks/useRefresh'
 
 const Bag = ({bagData, trips, session}) => {
 
@@ -21,35 +22,9 @@ const Bag = ({bagData, trips, session}) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [duplicatedBag, setDuplicatedBag] = useState({tripId: null, id: bagData._id, name: bagData.name, goal: bagData.goal, description: bagData.description});
 
-  const [isPending, startTransition] = useTransition()
-  const [resolve, setResolve] = useState(null)
-  const [isTriggered, setIsTriggered] = useState(false)
   const [loading, setLoading] = useState(false);
 
-  const refresh = () => {
-    return new Promise((resolve, reject) => {
-        setResolve(() => resolve)
-        startTransition(() => {
-            router.refresh()
-        })
-    })
-}
-
-useEffect(() => {
-  if (isTriggered && !isPending) {
-      if (resolve) {
-          resolve(null)
-          
-          setIsTriggered(false)
-          setResolve(null)
-      }
-  }
-  if (isPending) {
-      setIsTriggered(true)
-  }
-
-}, [isTriggered, isPending, resolve])
-
+  const { refresh } = useRefresh();
 
 
 
@@ -104,24 +79,23 @@ useEffect(() => {
 
     { isPopupOpen ? <MuiPopup isOpen={isPopupOpen} onClose={closePopup} >
             <form onSubmit={duplicateBag}>
-            <Stack  spacing={2}>
-            <Stack flex={1} direction="row" justifyContent="space-between">
-            <Typography component="h2" variant="span">
-              Choose trip
+            <Stack >
+            <Stack direction="row" justifyContent="space-between">
+            <Typography component="h2" variant="span" mb={0.5}>
+            Select Trip for Duplication
             </Typography>
             <CloseIcon onClick={closePopup} />
             </Stack>
-            <Typography component="p" variant="p"> Choose in which trip to duplicate <Typography component="span" variant="span" color={theme.green}>{bagData.name}</Typography></Typography>
+            <Typography component="p" variant="p" mb={3}> Select the trip where you want to duplicate <Typography component="span" variant="span" color={theme.green}>{bagData.name}</Typography></Typography>
 
             <Autocomplete
               renderInput={(params) => <TextField required {...params} label="Trips" />}
               onChange={(event, newValue) => setDuplicatedBag((prevData) => ({ ...prevData, tripId: newValue ? newValue._id : '' }))}
               options={tripOptions}
               getOptionLabel={(option) => option.name}
-              isOptionEqualToValue={isOptionEqualToValue}
-              sx={{marginBottom: "20px"}}/>
+              isOptionEqualToValue={isOptionEqualToValue}/>
               
-            <Button type='submit'sx={{marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Duplicate {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
+            <Button type='submit'sx={{marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation> Duplicate {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
     
         </Stack>
        </form>

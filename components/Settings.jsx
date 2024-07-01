@@ -103,7 +103,8 @@ const Settings = ({ session, user }) => {
               Settings
             </Typography>
           </Stack>
-          <Typography component="p" variant="p" mb={4} color="gray">
+          <Typography component="p" variant="body2" mb={4} color="gray">
+
             Update your details here.
           </Typography>
 
