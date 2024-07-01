@@ -42,10 +42,29 @@ const page = async ({searchParams}) => {
   const items = await getItems(session)
   const bags = await getBags(session)
 
+
+  const itemsTotal = bag.items?.reduce((acc, item) => acc + item.qty, 0) 
+
+  const categoryWeightsArr = bag.totalWeightCategory 
+  const categoryPieChartData = bag.categories.map((category) => {  
+  const categoryWeight = categoryWeightsArr.categoriesTotalWeight.find((item) => item.categoryId === category._id)
+
+
+        return {
+          id: category._id,
+          value: categoryWeight.totalWeight || 0 ,
+          label: category.name,
+          color: category.color
+        };
+      })
+    ;
+
+  
+
   return (
    <Fragment>
      
-    <InnerBag bagData={bag} items={items} bags={bags} session={session}/>
+    <InnerBag bagData={bag} items={items} bags={bags} session={session} itemsTotal={itemsTotal} categoryPieChartData={categoryPieChartData} categoryWeightsArr={categoryWeightsArr} />
     
    </Fragment>
 

@@ -26,7 +26,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import useRefresh from './hooks/useRefresh'
 
 
-const InnerBag = ({bagData, items, session}) => {
+const InnerBag = ({bagData, items, session, itemsTotal, categoryPieChartData, categoryWeightsArr}) => {
 
   const router = useRouter();
   const theme = useTheme()
@@ -103,21 +103,7 @@ useEffect(() => {
   
   const allBagsItems = items.map((item) => { return <SideItem key={item._id} itemData={item} color="white" categoryData={bagData?.categories} update={() => router.refresh()}  /> }) 
 
-  const itemsTotal = bagData?.items?.reduce((acc, item) => acc + item.qty, 0) 
-
-  const categoryWeightsArr = bagData?.totalWeightCategory 
-  const categoryPieChartData = bagData?.categories?.map((category) => {  
-  const categoryWeight = categoryWeightsArr?.categoriesTotalWeight?.find((item) => item.categoryId === category._id)
-
-
-        return {
-          id: category._id,
-          value: categoryWeight?.totalWeight || 0 ,
-          label: category?.name,
-          color: category.color
-        };
-      })
-    ;
+ 
 
   const TOTAL = categoryWeightsArr?.categoriesTotalWeight?.map((category) => category.totalWeight).reduce((a, b) => a + b, 0) 
   const getArcLabel = (params) => {
@@ -196,7 +182,6 @@ useEffect(() => {
   
   const confirmSwitchChange = async () => {
     try {
-      setConfirmPopupOpen(true)
       setPopupLoading(true);
       await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: true });
       await refresh();
@@ -297,7 +282,7 @@ useEffect(() => {
 
   
   const onDragEnd = (event) => {
-    console.log(event);
+   
     const { active, over } = event;
 
     if (active.id === over.id) {

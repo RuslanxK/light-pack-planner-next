@@ -166,7 +166,6 @@ const saveItemsOrder = async (updatedItems) => {
   const arr = {items: updatedItems}
 
     await axios.put('/items', arr);
-    console.log("updated")
   } catch (error) {
     console.error('Failed to save items order:', error);
   }
