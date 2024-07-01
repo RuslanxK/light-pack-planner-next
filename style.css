@@ -350,8 +350,15 @@ span.MuiBadge-badge {
 
   .login-form {
 
-      padding: 25px;
+      padding: 30px;
       background-color: white;
+      margin: 25px;
+      border-radius: 20px;
+  }
+
+  .login-form h1 {
+
+      color: black;
   }
 
 
