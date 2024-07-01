@@ -33,19 +33,19 @@ const Login = () => {
     const response = await signIn("credentials", {
       email: loginData.email,
       password: loginData.password,
-      redirect: false,
+      redirect: true,
       callbackUrl: "/"
     });
 
+    console.log(response)
+
     if (response?.error) {
+
+
       setError("Invalid email or password");
       setIsLoading(false);
     } else {
 
-      if(response.ok) {
-
-          router.push("/")
-      }
       setError(null);
     }
 
