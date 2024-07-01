@@ -241,7 +241,7 @@ useEffect(() => {
 
   const closePopup = () => {
 
-    popupLoading(false)
+    setPopupLoading(false)
     setPopupOpen(false);
     setDeletePopupOpen(false)
     setConfirmPopupOpen(false);
