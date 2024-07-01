@@ -97,6 +97,7 @@ const Login = () => {
               <Grid item xs={12}>
                 <TextField
                   type="email"
+                  variant="filled"
                   label="Email"
                   name="email"
                   onChange={handleChange}
@@ -106,6 +107,7 @@ const Login = () => {
               <Grid item xs={12}>
                 <TextField
                   type="password"
+                  variant="filled"
                   label="Password"
                   name="password"
                   onChange={handleChange}
