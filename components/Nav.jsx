@@ -63,7 +63,6 @@ const toggleTheme = async () => {
        }
          catch(err) {
            console.log(err)
-           setLoading(false)
        }
 };
 
@@ -78,7 +77,11 @@ const bagData = filteredBags?.map((bag) => {
 
 
 const logOut = () => {
+
+  setLoading(true)
   signOut({ callbackUrl: `/login` })
+  setLoading(false)
+
 }
 
 
