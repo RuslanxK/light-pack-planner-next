@@ -102,6 +102,21 @@ const Login = () => {
                   name="email"
                   onChange={handleChange}
                   fullWidth
+                  sx={{
+                    '& .MuiFilledInput-root': {
+                      backgroundColor: 'lightgray',
+                      border: '1px solid black',
+                    },
+                    '& .MuiFilledInput-underline:before': {
+                      borderBottom: 'none',
+                    },
+                    '& .MuiFilledInput-underline:hover:before': {
+                      borderBottom: 'none',
+                    },
+                    '& .MuiFilledInput-underline:after': {
+                      borderBottom: 'none',
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
