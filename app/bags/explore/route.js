@@ -57,3 +57,5 @@ export const GET = async (req) => {
   }
 }
 
+
+export const revalidate = 0

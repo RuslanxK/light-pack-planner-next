@@ -19,3 +19,5 @@ export const GET = async (req, {params}) => {
     return new NextResponse('Failed to fetch article', { status: 500 });
   }
 };
+
+
