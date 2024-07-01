@@ -150,12 +150,14 @@ const InnerTrip = ({ tripData, trips, session}) => {
 
   const openPopup = () => {
     setPopupOpen(true);
+    
   };
 
   const closePopup = () => {
     setPopupOpen(false);
     setDeletePopupOpen(false);
     setAddPopupOpen(false);
+    setLoading(false)
   };
 
   const countriesArr = countries?.map((x) => x.name);
