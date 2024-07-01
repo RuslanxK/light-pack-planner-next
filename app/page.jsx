@@ -60,7 +60,6 @@ const Home = async () => {
       <Trips 
         trips={dataResult.data} 
         bags={bagsResult.data} 
-        error={dataResult.error || bagsResult.error} 
         session={session} 
       />
     </Fragment>

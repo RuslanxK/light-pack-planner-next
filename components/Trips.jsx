@@ -22,7 +22,7 @@ import { useState, useEffect } from 'react';
 import useRefresh from './hooks/useRefresh'
 import { countriesApi } from '../utils/apiConfig'
 
-const Trips = ({ trips, bags, session, error }) => {
+const Trips = ({ trips, bags, session }) => {
   const theme = useTheme();
   const router = useRouter();
 
@@ -31,7 +31,6 @@ const Trips = ({ trips, bags, session, error }) => {
   const [newTripData, setNewTripData] = useState({ startDate: dayjs().add(1, "day"), endDate: dayjs().add(2, "day") });
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [popupErrorMessage, setPopupErrorMessage] = useState("");
 
   const { refresh } = useRefresh();
 
@@ -72,16 +71,6 @@ const Trips = ({ trips, bags, session, error }) => {
   const createTrip = async (e) => {
     e.preventDefault();
 
-    if (error) {
-      setPopupErrorMessage("Unable to create a new trip due to an error. Please try again later.");
-      return;
-    }
-
-    if (!navigator.onLine) {
-      setPopupErrorMessage("Unable to proceed. Please check your network connection and try again.");
-      return;
-    }
-
     try {
       setLoading(true);
       const newTripDataWithUserId = { ...newTripData, userId: session?.user?.id };
@@ -90,7 +79,7 @@ const Trips = ({ trips, bags, session, error }) => {
       setPopupOpen(false);
       setLoading(false);
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
@@ -101,18 +90,19 @@ const Trips = ({ trips, bags, session, error }) => {
   };
 
   const openPopup = () => setPopupOpen(true);
+
   const closePopup = () => {
     setPopupOpen(false);
     setPopupErrorMessage("");
   };
 
   const handleDateChange = (date, fieldName) => {
-    setPopupErrorMessage("");
+  
     setNewTripData((prevData) => ({ ...prevData, [fieldName]: date }));
   };
 
   const handleChange = (event) => {
-    setPopupErrorMessage("");
+   
     const { name, value } = event.target;
     setNewTripData({ ...newTripData, [name]: value });
   };
@@ -155,10 +145,8 @@ const Trips = ({ trips, bags, session, error }) => {
             ) : null}
           </div>
 
-          {!trips?.tripsWithPictures.length && !error ? (
-            <Alert severity="info" sx={{ mt: 2 }}>Get started with your first trip!</Alert>
-          ) : null}
-          {error ? <Alert severity='error' sx={{ mt: 2 }}>{error}</Alert> : null}
+          {!trips?.tripsWithPictures.length ? <Alert severity="info" sx={{ mt: 2 }}>Get started with your first trip!</Alert> : null}
+          
         </div>
 
         <div className="boxes">
@@ -267,7 +255,7 @@ const Trips = ({ trips, bags, session, error }) => {
                   Create {loading && <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} />}
                 </Button>
 
-                {popupErrorMessage.length ? <Alert severity='error' sx={{ mt: 2 }}>{popupErrorMessage}</Alert> : null}
+               
               </Stack>
             </form>
           </MuiPopup>

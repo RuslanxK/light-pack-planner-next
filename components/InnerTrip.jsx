@@ -24,7 +24,7 @@ import { countriesApi } from '../utils/apiConfig'
 import useRefresh from './hooks/useRefresh'
 
 
-const InnerTrip = ({ tripData, trips, session, error}) => {
+const InnerTrip = ({ tripData, trips, session}) => {
 
 
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -196,8 +196,7 @@ const InnerTrip = ({ tripData, trips, session, error}) => {
               <Typography component="h3" variant="h6" mb={0.3} mt={4}>My Bags</Typography>
               <Typography component="p" variant="p" mb={3}>Lorem ipsum dolor sit amet</Typography>
 
-              {error ? <Alert severity='error'>{error}</Alert> : null }
-           
+              
          {  tripData.bags.length ? <TextField
             label="Search Bags"
             variant='filled'
@@ -292,7 +291,7 @@ const InnerTrip = ({ tripData, trips, session, error}) => {
                   minDate={editedTrip.startDate || null} />
               </LocalizationProvider>
               <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Update {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
-              {error ? <Alert severity='error'>{error}</Alert> : null}
+              
             </Stack>
           </form>
         </MuiPopup> : null}
