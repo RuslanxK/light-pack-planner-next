@@ -93,7 +93,8 @@ const Trips = ({ trips, bags, session }) => {
 
   const closePopup = () => {
     setPopupOpen(false);
-    setPopupErrorMessage("");
+    setLoading(false)
+   
   };
 
   const handleDateChange = (date, fieldName) => {

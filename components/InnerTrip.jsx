@@ -75,7 +75,6 @@ const InnerTrip = ({ tripData, trips, session}) => {
 
   const handleChange = (event) => {
 
-    setError("")
 
     let { name, value } = event.target;
     setEditedTrip({ ...editedTrip, [name]: value });
