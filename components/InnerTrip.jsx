@@ -34,7 +34,6 @@ const InnerTrip = ({ tripData, trips, session, error}) => {
   const [editedTrip, setEditedTrip] = useState({ name: tripData?.trip?.name, about: tripData?.trip?.about, distance: tripData?.trip?.distance, startDate: dayjs(tripData?.trip?.startDate), endDate: dayjs(tripData?.trip?.endDate) });
   const [newBag, setNewBag] = useState({});
   const [searchInput, setSearchInput] = useState('');
-
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -75,6 +74,9 @@ const InnerTrip = ({ tripData, trips, session, error}) => {
   };
 
   const handleChange = (event) => {
+
+    setError("")
+
     let { name, value } = event.target;
     setEditedTrip({ ...editedTrip, [name]: value });
   };
@@ -117,9 +119,10 @@ const InnerTrip = ({ tripData, trips, session, error}) => {
       await refresh()
       setPopupOpen(false);
       setLoading(false)
+      
     }
     catch (err) {
-      console.log(err);
+       console.log(err)
     }
   };
 
@@ -133,7 +136,8 @@ const InnerTrip = ({ tripData, trips, session, error}) => {
       setLoading(false)
     }
     catch (error) {
-      console.log(error);
+      
+       console.log(error)
     }
   };
 
@@ -191,6 +195,8 @@ const InnerTrip = ({ tripData, trips, session, error}) => {
 
               <Typography component="h3" variant="h6" mb={0.3} mt={4}>My Bags</Typography>
               <Typography component="p" variant="p" mb={3}>Lorem ipsum dolor sit amet</Typography>
+
+              {error ? <Alert severity='error'>{error}</Alert> : null }
            
          {  tripData.bags.length ? <TextField
             label="Search Bags"
@@ -218,7 +224,6 @@ const InnerTrip = ({ tripData, trips, session, error}) => {
           <Stack border="2px dashed gray" alignItems={theme.center} display={theme.flexBox} justifyContent={theme.center} width={theme.bags.width} height={theme.bags.height} borderRadius={theme.radius} sx={{ cursor: "pointer" }} onClick={openAddPopup}>
             <Tooltip title="Add bag"><IconButton><AddOutlinedIcon sx={{ fontSize: "25px", color: "gray" }} /></IconButton></Tooltip>
           </Stack>
-          {error ? <Alert severity='error' sx={{mt: 2}}>{error}</Alert> : null }
           {bags}
         </div>
 
@@ -287,6 +292,7 @@ const InnerTrip = ({ tripData, trips, session, error}) => {
                   minDate={editedTrip.startDate || null} />
               </LocalizationProvider>
               <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation>Update {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
+              {error ? <Alert severity='error'>{error}</Alert> : null}
             </Stack>
           </form>
         </MuiPopup> : null}
