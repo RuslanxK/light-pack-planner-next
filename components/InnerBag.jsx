@@ -240,6 +240,8 @@ useEffect(() => {
   }
 
   const closePopup = () => {
+
+    popupLoading(false)
     setPopupOpen(false);
     setDeletePopupOpen(false)
     setConfirmPopupOpen(false);
