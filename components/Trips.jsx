@@ -220,6 +220,7 @@ const Trips = ({ trips, bags, session }) => {
                   label={`Distance (${session?.user?.distance})`}
                   type="number"
                   name="distance"
+                  required
                   onChange={handleChange}
                   sx={{ width: "48.5%", marginBottom: "20px" }}
                   inputProps={{ min: 1, max: 999999 }}
