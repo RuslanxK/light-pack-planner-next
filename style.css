@@ -359,6 +359,7 @@ span.MuiBadge-badge {
   .login-form h1 {
 
       color: black;
+      font-size: 27px;
   }
 
 
@@ -445,10 +446,7 @@ span.MuiBadge-badge {
     display: block;
   }
 
-  .login-text {
-    color: white;
-    font-size: 27px;
-  }
+  
 
   .login-img {
     display: none;
