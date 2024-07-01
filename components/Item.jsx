@@ -76,6 +76,7 @@ const Item = (props) => {
 
 
    const closePopup = () => {
+     setLoading(false)
      setRemovePopupOpen(false);
      setPopupOpen(false)
      setPicPopupOpen(false)

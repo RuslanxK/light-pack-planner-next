@@ -228,6 +228,8 @@ const saveItemsOrder = async (updatedItems) => {
 
 
     const closePopup = () => {
+
+      setLoading(false)
       setRemovePopupOpen(false);
     };
 
