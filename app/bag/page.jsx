@@ -57,7 +57,7 @@ const page = async ({searchParams}) => {
           color: category.color
         };
       })
-    ;
+    
 
   
 

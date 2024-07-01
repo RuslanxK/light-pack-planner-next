@@ -40,9 +40,24 @@ const page = async ({searchParams}) => {
   const userId = bag.bag.creator
   const user = await getUser(userId)
 
+  const itemsTotal = bag.items?.reduce((acc, item) => acc + item.qty, 0) 
+
+  const categoryWeightsArr = bag.totalWeightCategory 
+  const categoryPieChartData = bag.categories.map((category) => {  
+  const categoryWeight = categoryWeightsArr.categoriesTotalWeight.find((item) => item.categoryId === category._id)
+
+
+        return {
+          id: category._id,
+          value: categoryWeight.totalWeight || 0 ,
+          label: category.name,
+          color: category.color
+        };
+      })
+
   
   return (
-    <Share bagData={bag} user={user} session={session} />
+    <Share bagData={bag} user={user} session={session} itemsTotal ={itemsTotal} categoryPieChartData={categoryPieChartData} categoryWeightsArr={categoryWeightsArr} />
   )
 }
 

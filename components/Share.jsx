@@ -31,7 +31,7 @@ import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 
 import axios from "axios";
 
-const Share = ({ bagData, user, session }) => {
+const Share = ({ bagData, user, session, itemsTotal, categoryPieChartData, categoryWeightsArr}) => {
   const router = useRouter();
   const theme = useTheme();
 
@@ -73,21 +73,7 @@ const Share = ({ bagData, user, session }) => {
     }
   };
 
-  const itemsTotal = bagData?.items?.reduce((acc, item) => acc + item.qty, 0);
-
-  const categoryWeightsArr = bagData?.totalWeightCategory;
-  const categoryPieChartData = bagData?.categories?.map((category) => {
-    const categoryWeight = categoryWeightsArr?.categoriesTotalWeight?.find(
-      (item) => item.categoryId === category._id
-    );
-
-    return {
-      id: category._id,
-      value: categoryWeight?.totalWeight || 0,
-      label: category?.name,
-      color: category.color,
-    };
-  });
+ 
 
   const TOTAL = categoryWeightsArr?.categoriesTotalWeight
     ?.map((category) => category.totalWeight)
