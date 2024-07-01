@@ -25,4 +25,3 @@ export const PUT = async (req, res) => {
   
 }
 
-export const revalidate = 0;

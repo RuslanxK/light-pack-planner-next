@@ -69,4 +69,3 @@ export const DELETE = async (req, { params }) => {
   }
 };
 
-export const revalidate = 0;

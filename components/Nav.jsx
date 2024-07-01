@@ -19,7 +19,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { usePathname } from "next/navigation"
 import { disableNavBar } from "../utils/disableNavBar"
 import BackpackIcon from '@mui/icons-material/Backpack';
-import TranslateComponent from "../components/TranslateComponent"
 import axios from 'axios';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -230,7 +229,6 @@ const navigateToBag = (bag) => {
         {session && session?.user ? (
   <Stack display={theme.flexBox} pb={1} mt={1} alignItems={theme.center}>
 
-  <TranslateComponent />
 
 
     <Tooltip title={<><Typography p={0.2} variant='span' component="h3" fontWeight="300" color="inherit">{user.username}</Typography>
