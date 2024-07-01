@@ -348,8 +348,12 @@ span.MuiBadge-badge {
 
 
   .MuiFilledInput-root {
-    background-color: rgb(233, 233, 233) !important;
+    background-color: rgb(207, 207, 207) !important;
     border-bottom: 1px solid rgb(122, 122, 122) !important;
+  }
+
+  .MuiInputLabel-root {
+    color: black !important;
   }
   
 
