@@ -476,6 +476,8 @@ span.MuiBadge-badge {
 
   .login-content {
     width: 100vw;
+    height: auto;
+    min-height: 100vh;
     background-image: url("./public/hiking.png");
     background-size: cover;
     background-position: center;

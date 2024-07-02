@@ -91,7 +91,7 @@ const NewPassword = ({user, err}) => {
     <div className="login-content">
     <img id="logo-mobile-login" src="/logo.png" alt="logo" width="90px" height="58" style={{ position: "absolute", top: "25px", left: '25px' }}/> 
     <div className='login-form'>
-    <h1 className='login-text'>Reset your password</h1>
+    <h1 className='login-text'>Reset password</h1>
     <Typography component="span" variant="span" mb={4} width="100%" color="gray">
           Enter the email address you used to create the account, and we will email you instructions to reset your password
     </Typography>

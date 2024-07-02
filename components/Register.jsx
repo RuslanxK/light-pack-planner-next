@@ -1,13 +1,10 @@
 "use client";
 
-import { Fragment } from "react";
-import { Stack, TextField, Typography, Button, Select, MenuItem, InputLabel, FormControl, Grid } from "@mui/material";
-import { useTheme } from "@emotion/react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@emotion/react";
+import { Stack, TextField, Typography, Button, Select, MenuItem, InputLabel, FormControl, Grid, CircularProgress, Alert, useMediaQuery } from "@mui/material";
 import axios from "axios";
-import CircularProgress from "@mui/material/CircularProgress";
-import Alert from "@mui/material/Alert";
 import EditIcon from "@mui/icons-material/Edit";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
@@ -24,6 +21,8 @@ const Register = () => {
 
   const theme = useTheme();
   const router = useRouter();
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleFileChange = (event) => {
     const { name } = event.target;
@@ -213,11 +212,11 @@ const Register = () => {
             </div>
 
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={isMobile ? 12 : 6}>
                 <TextField
                   required
                   type="text"
-                   variant="filled"
+                  variant="filled"
                   label="Username"
                   name="username"
                   onChange={handleChange}
@@ -225,11 +224,11 @@ const Register = () => {
                   sx={{ borderRadius: "7px" }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={isMobile ? 12 : 6}>
                 <TextField
                   required
                   type="email"
-                   variant="filled"
+                  variant="filled"
                   label="Email"
                   name="email"
                   onChange={handleChange}
@@ -238,26 +237,26 @@ const Register = () => {
                   InputProps={{ style: { border: "2px" } }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={isMobile ? 12 : 6}>
                 <TextField
                   required
                   inputProps={{ minLength: 10 }}
                   type="password"
                   label="Password"
-                   variant="filled"
+                  variant="filled"
                   name="password"
                   onChange={handleChange}
                   fullWidth
                   sx={{ borderRadius: "7px" }}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={isMobile ? 12 : 6}>
                 <TextField
                   required
                   inputProps={{ minLength: 10 }}
                   type="password"
                   label="Repeat password"
-                   variant="filled"
+                  variant="filled"
                   name="repeatedPassword"
                   onChange={handleChange}
                   fullWidth
@@ -265,11 +264,11 @@ const Register = () => {
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={isMobile ? 6 : 4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="weight-unit-label"
-                    sx={{ zIndex: 1}}
+                    sx={{ zIndex: 1 }}
                   >
                     Weight Unit
                   </InputLabel>
@@ -277,7 +276,7 @@ const Register = () => {
                     labelId="weight-unit-label"
                     id="weight-unit"
                     name="weightOption"
-                     variant="filled"
+                    variant="filled"
                     value={registerData.weightOption || ""}
                     onChange={handleChange}
                     sx={{ zIndex: 0 }}
@@ -290,11 +289,11 @@ const Register = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={isMobile ? 6 : 4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="distance-unit-label"
-                    sx={{ zIndex: 1}}
+                    sx={{ zIndex: 1 }}
                   >
                     Distance Unit
                   </InputLabel>
@@ -302,7 +301,7 @@ const Register = () => {
                     labelId="distance-unit-label"
                     id="distance-unit"
                     name="distance"
-                     variant="filled"
+                    variant="filled"
                     value={registerData.distance || ""}
                     onChange={handleChange}
                     sx={{ zIndex: 0 }}
@@ -312,11 +311,11 @@ const Register = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={isMobile ? 6 : 4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="gender-label"
-                    sx={{ zIndex: 1}}
+                    sx={{ zIndex: 1 }}
                   >
                     Gender
                   </InputLabel>
@@ -337,33 +336,33 @@ const Register = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={isMobile ? 6 : 4}>
                 <FormControl fullWidth>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-  <DemoContainer components={['DatePicker']} sx={{ m: 0, p: 0 }}>
-    <DatePicker
-      label="Birthdate"
-      name="birthdate"
-      onChange={(date) => handleDateChange(date, "birthdate")}
-      value={registerData.birthdate || null}
-      renderInput={(params) => (
-        <TextField 
-          {...params} 
-          fullWidth 
-          sx={{ m: 0, p: 0, '& .MuiInputLabel-root': { zIndex: 1 } }} 
-        />
-      )}
-    />
-  </DemoContainer>
-</LocalizationProvider>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']} sx={{ m: 0, p: 0 }}>
+                      <DatePicker
+                        label="Birthdate"
+                        name="birthdate"
+                        onChange={(date) => handleDateChange(date, "birthdate")}
+                        value={registerData.birthdate || null}
+                        renderInput={(params) => (
+                          <TextField 
+                            {...params} 
+                            fullWidth 
+                            sx={{ m: 0, p: 0, '& .MuiInputLabel-root': { zIndex: 1 } }} 
+                          />
+                        )}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
                 </FormControl>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={isMobile ? 6 : 4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="activity-level-label"
-                    sx={{ zIndex: 1}}
+                    sx={{ zIndex: 1 }}
                   >
                     Activity Level
                   </InputLabel>
@@ -384,12 +383,12 @@ const Register = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={isMobile ? 6 : 4}>
                 <TextField
                   optional
                   type="text"
                   label="Country"
-                   variant="filled"
+                  variant="filled"
                   name="country"
                   onChange={handleChange}
                   fullWidth
