@@ -313,7 +313,7 @@ const Item = (props) => {
     <form onSubmit={savePicture}>
       <Stack>
         <Stack flex={1} direction="row" justifyContent="space-between" alignItems="center">
-          <Typography variant="span" component="h2" marginBottom="10px">
+          <Typography variant="h5" component="h2" marginBottom="10px">
             Upload a picture for this item.
           </Typography>
           <IconButton onClick={closePopup}><CloseIcon /></IconButton>
