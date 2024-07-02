@@ -51,6 +51,7 @@ span.MuiBadge-badge {
   margin-bottom: 20px;
   font-weight: 600;
   width: 100%;
+  font-size: 30px;
   line-height: 1;
 }
 
@@ -389,7 +390,6 @@ span.MuiBadge-badge {
 
   .login-form h1, .register-form h1 {
 
-      color: black;
       font-size: 27px;
   }
   
