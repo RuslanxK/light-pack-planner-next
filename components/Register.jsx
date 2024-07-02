@@ -148,7 +148,7 @@ const Register = () => {
               </Stack>
             </Stack>
 
-            <Stack display="flex" direction="column" alignItems="center" width="33%" mb={3}>
+            <div className="register-image-upload">
               <Button
                 onMouseEnter={() => setIsHover(true)}
                 onMouseLeave={() => setIsHover(false)}
@@ -210,7 +210,7 @@ const Register = () => {
                   onChange={handleFileChange}
                 />
               </Button>
-            </Stack>
+            </div>
 
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -269,7 +269,7 @@ const Register = () => {
                 <FormControl fullWidth>
                   <InputLabel
                     id="weight-unit-label"
-                    sx={{ zIndex: 1, backgroundColor: "white" }}
+                    sx={{ zIndex: 1}}
                   >
                     Weight Unit
                   </InputLabel>
@@ -277,6 +277,7 @@ const Register = () => {
                     labelId="weight-unit-label"
                     id="weight-unit"
                     name="weightOption"
+                     variant="filled"
                     value={registerData.weightOption || ""}
                     onChange={handleChange}
                     sx={{ zIndex: 0 }}
@@ -293,7 +294,7 @@ const Register = () => {
                 <FormControl fullWidth>
                   <InputLabel
                     id="distance-unit-label"
-                    sx={{ zIndex: 1, backgroundColor: "white" }}
+                    sx={{ zIndex: 1}}
                   >
                     Distance Unit
                   </InputLabel>
@@ -301,6 +302,7 @@ const Register = () => {
                     labelId="distance-unit-label"
                     id="distance-unit"
                     name="distance"
+                     variant="filled"
                     value={registerData.distance || ""}
                     onChange={handleChange}
                     sx={{ zIndex: 0 }}
@@ -314,7 +316,7 @@ const Register = () => {
                 <FormControl fullWidth>
                   <InputLabel
                     id="gender-label"
-                    sx={{ zIndex: 1, backgroundColor: "white" }}
+                    sx={{ zIndex: 1}}
                   >
                     Gender
                   </InputLabel>
@@ -322,6 +324,7 @@ const Register = () => {
                     labelId="gender-label"
                     id="gender"
                     name="gender"
+                    variant="filled"
                     optional
                     value={registerData.gender || ""}
                     onChange={handleChange}
@@ -360,7 +363,7 @@ const Register = () => {
                 <FormControl fullWidth>
                   <InputLabel
                     id="activity-level-label"
-                    sx={{ zIndex: 1, backgroundColor: "white"}}
+                    sx={{ zIndex: 1}}
                   >
                     Activity Level
                   </InputLabel>
@@ -368,6 +371,7 @@ const Register = () => {
                     labelId="activity-level-label"
                     id="activity-level"
                     name="activityLevel"
+                    variant="filled"
                     value={registerData.activityLevel || ""}
                     optional
                     onChange={handleChange}
@@ -385,6 +389,7 @@ const Register = () => {
                   optional
                   type="text"
                   label="Country"
+                   variant="filled"
                   name="country"
                   onChange={handleChange}
                   fullWidth

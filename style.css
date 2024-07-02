@@ -343,8 +343,23 @@ span.MuiBadge-badge {
 }
 
 
+.register-image-upload {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33%;
+  margin-bottom: 25px;
+
+ 
+}
+
+
 
 @media only screen and (max-width: 768px) {
+
+
+
 
 
   .login-content .MuiFilledInput-root {
@@ -375,6 +390,13 @@ span.MuiBadge-badge {
 
       color: black;
       font-size: 27px;
+  }
+
+
+  .register-image-upload {
+
+    width: 100%;
+
   }
 
 
