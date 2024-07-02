@@ -10,7 +10,9 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers-pro";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { DemoContainer, DemoItem  } from '@mui/x-date-pickers/internals/demo';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({});
@@ -339,8 +341,8 @@ const Register = () => {
               <Grid item xs={isMobile ? 12 : 4}>
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']} sx={{ m: 0, pt: 0 }}>
-                      <DatePicker
+                    <DemoItem components={['DatePicker']} sx={{ m: 0, pt: 0 }}>
+                      <MobileDatePicker
                         label="Birthdate"
                         name="birthdate"
                         onChange={(date) => handleDateChange(date, "birthdate")}
@@ -353,7 +355,7 @@ const Register = () => {
                           />
                         )}
                       />
-                    </DemoContainer>
+                    </DemoItem>
                   </LocalizationProvider>
                 </FormControl>
               </Grid>
