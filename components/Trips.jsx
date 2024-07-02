@@ -335,7 +335,7 @@ const Trips = ({ trips, bags, session }) => {
             <form onSubmit={createTrip}>
               <Grid container spacing={2}>
                 <Grid item xs={11}>
-                  <Typography variant="h5" component="h2" mb={0.5}>
+                  <Typography variant="h6" component="h2" mb={0.5}>
                     Plan Your Adventure
                   </Typography>
                   <Typography variant="span" component="span" mb={3}>

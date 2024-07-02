@@ -47,6 +47,7 @@ const InnerBag = ({bagData, items, session, itemsTotal, categoryPieChartData, ca
 
 
 useEffect(() => {
+
   if (bagData?.totalBagWeight === 0 && switchChecked === true) {
     setSwitchChecked(false);
     const switchOff = async () => {
@@ -615,7 +616,7 @@ useEffect(() => {
     <form onSubmit={updateBag}>
       <Grid container spacing={2}>
         <Grid item xs={11}>
-          <Typography variant="h5" component="h2" mb={0.5}>
+          <Typography variant="h6" component="h2" mb={0.5}>
             Update Bag Details
           </Typography>
           <Typography variant="span" component="span" mb={3}>
@@ -632,7 +633,7 @@ useEffect(() => {
             required
             onChange={handleChange}
             sx={{ width: "100%"}}
-            value={editedBag.name || ""}
+            value={editedBag.name}
             inputProps={{ maxLength: 26 }}
           />
         </Grid>
@@ -644,7 +645,7 @@ useEffect(() => {
             name="goal"
             onChange={handleChange}
             sx={{ width: "100%" }}
-            value={editedBag.goal || ""}
+            value={editedBag.goal}
             inputProps={{ min: 1 }}
           />
         </Grid>
@@ -688,15 +689,17 @@ useEffect(() => {
 
 { isDeletePopupOpen ? <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
-<Stack width="90%">
-<Typography variant='h5' component="h2" mb={1.5}>Delete {bagData.bag.name}</Typography>
-<Typography variant='span' component="span">
-   Are you sure you want to delete this bag? This action cannot be undone.
-   Deleting this bag will permanently remove it from the system, and any associated data will be lost.</Typography>
-</Stack>
-
-
+<Stack direction="row" width="100%" alignItems="center" mb={1} justifyContent="space-between">
+<Typography variant='h6' component="h2">Delete Bag</Typography>
 <CloseIcon onClick={closePopup} sx={{cursor: "pointer"}}/>
+</Stack>
+<Typography variant='span' component="span">
+   Are you sure you want to delete <b>{bagData.bag.name} ?</b> This action cannot be undone.
+   Deleting this bag will permanently remove it from the system, and any associated data will be lost.</Typography>
+
+
+
+
 <Button sx={{marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeBag} disableElevation>Delete {popupLoading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
 </Stack>
 </MuiPopup> : null }
@@ -705,14 +708,16 @@ useEffect(() => {
 {confirmPopupOpen ? (
   <MuiPopup isOpen={confirmPopupOpen} onClose={closePopup}>
     <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
-      <Stack width="90%">
-        <Typography variant='h5' component="h2" mb={1.5}>Notice</Typography>
+      <Stack direction="row" width="100%" alignItems="center" mb={1} justifyContent="space-between">
+        <Typography variant='h6' component="h2">Notice</Typography>
+        <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+        </Stack>
         <Typography variant="body1" component="span">
           You are about to publish <b style={{ color: theme.green }}>{bagData.bag.name}</b> to the "Explore Bags".
           Please note that confirming this action will make your bag details visible to everyone and allow them to react to it.
         </Typography>
-      </Stack>
-      <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+      
+      
       <Button
         sx={{ marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.green }}
         variant="contained"

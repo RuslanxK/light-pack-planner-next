@@ -75,7 +75,6 @@ const InnerTrip = ({ tripData, trips, session}) => {
 
   const handleChange = (event) => {
 
-
     let { name, value } = event.target;
     setEditedTrip({ ...editedTrip, [name]: value });
   };
@@ -232,7 +231,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
     <form onSubmit={addBag}>
       <Grid container spacing={2}>
         <Grid item xs={11}>
-          <Typography variant="h5" component="h2" mb={0.5}>
+          <Typography variant="h6" component="h2" mb={0.5}>
             Create Bag
           </Typography>
           <Typography variant="span" component="span" mb={3}>
@@ -306,8 +305,8 @@ const InnerTrip = ({ tripData, trips, session}) => {
     <form onSubmit={updateTrip}>
       <Grid container spacing={2}>
         <Grid item xs={11}>
-          <Typography variant='h5' component="h2" mb={0.5}>Update Your Trip Details</Typography>
-          <Typography variant='span' component="span" mb={3}>Modify the fields below to update your trip information</Typography>
+          <Typography variant='h6' component="h2" mb={0.5}>Update Trip Details</Typography>
+          <Typography variant='span' component="span" mb={3}>Modify the fields below to update trip information.</Typography>
         </Grid>
         <Grid item xs={1}>
           <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
@@ -332,7 +331,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
             inputProps={{ min: 1, max: 999999 }}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <TextField
             multiline
             label="Trip Description"
@@ -388,14 +387,16 @@ const InnerTrip = ({ tripData, trips, session}) => {
 ) : null}
 
         {isDeletePopupOpen ? <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
-          <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
-            <Stack width="90%">
-              <Typography variant='h5' component="h2" mb={1}>Delete Trip to {tripData?.trip?.name} </Typography>
+          <Stack direction="row" justifyContent="space-between" alignIte ms="flex-start" flexWrap="wrap">
+            <Stack direction="row" width="100%" alignItems="center" mb={1} justifyContent="space-between">
+              <Typography variant='h6' component="h2">Delete Trip </Typography>
+              <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+              </Stack>
               <Typography variant='span' component="span">
-                Are you sure you want to delete this trip? This action cannot be undone.
+                Are you sure you want to delete <b>{tripData?.trip?.name} ?</b> This action cannot be undone.
                 Deleting this trip will permanently remove it from the system, and any associated data will be lost.</Typography>
-            </Stack>
-            <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+           
+          
             <Button sx={{ marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.red, '&:hover': { backgroundColor: theme.redHover } }} variant="contained" onClick={removeTrip} disableElevation>Delete {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
           </Stack>
         </MuiPopup> : null}

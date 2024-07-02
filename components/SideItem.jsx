@@ -84,11 +84,11 @@ const addItemToCategory = async (e) => {
  <MuiPopup isOpen={isPopupOpen} onClose={closePopup} >
   <form onSubmit={addItemToCategory}>
         <Stack>
-          <Stack direction="row" justifyContent="space-between">
-            <Typography component="h2" variant="span" mb={0.5}>Add item to category</Typography>
+          <Stack direction="row" justifyContent="space-between" mb={0.5}>
+            <Typography variant="h6" component="h2">Add item to category</Typography>
             <CloseIcon onClick={closePopup} />
           </Stack>
-          <Typography component="p" variant="p" mb={3}> Select a category to add <Typography component="span" variant="span" color={theme.green}>{itemData.name}</Typography></Typography>
+          <Typography component="p" variant="p" mb={2}> Select a category to add <Typography component="span" variant="span" color={theme.green}>{itemData.name}</Typography></Typography>
              <Autocomplete
               value={selectedCategory}
               renderInput={(params) => <TextField  required {...params} label="Categories" />}
@@ -101,7 +101,7 @@ const addItemToCategory = async (e) => {
               getOptionLabel={(option) => option.name}
               isOptionEqualToValue={isOptionEqualToValue}
               getOptionKey={(option) => option.key}/>
-             <Button type="submit"  sx={{ marginTop: "20px", color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Add to Category  {loading && <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} />}</Button>
+             <Button type="submit"  sx={{ marginTop: "15px", color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Add to Category  {loading && <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} />}</Button>
         </Stack>
       </form>
   </MuiPopup>

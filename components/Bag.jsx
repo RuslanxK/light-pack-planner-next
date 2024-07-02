@@ -81,8 +81,8 @@ const Bag = ({bagData, trips, session}) => {
             <form onSubmit={duplicateBag}>
             <Stack >
             <Stack direction="row" justifyContent="space-between">
-            <Typography component="h2" variant="h5" mb={0.5}>
-            Select Trip for Duplication
+            <Typography component="h2" variant="h6" mb={0.5}>
+            Duplicate Trip
             </Typography>
             <CloseIcon onClick={closePopup} />
             </Stack>

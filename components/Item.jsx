@@ -282,8 +282,8 @@ const Item = (props) => {
    <form onSubmit={saveLink}>
           <Stack direction="column">
             <Stack direction="row" justifyContent="space-between">
-            <Typography variant="h5" component="h2" mb={0.5}>
-             Attach a link.
+            <Typography variant="h6" component="h2" mb={0.5}>
+             Attach a link
             </Typography>
             <CloseIcon onClick={closePopup} />
             </Stack>
@@ -297,7 +297,7 @@ const Item = (props) => {
             variant="outlined"
             value={itemData.link}
             onChange={handleChange}
-            sx={{ marginBottom: "20px", width: "100%" }} />
+            sx={{ marginBottom: "15px", width: "100%" }} />
           
           <Button type="submit" sx={{ color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Save {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
 
@@ -312,8 +312,8 @@ const Item = (props) => {
   <MuiPopup isOpen={picPopupOpen} onClose={closePopup}>
     <form onSubmit={savePicture}>
       <Stack>
-        <Stack flex={1} direction="row" justifyContent="space-between" alignItems="center">
-          <Typography variant="h5" component="h2" marginBottom="10px">
+        <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1}>
+          <Typography variant="h6" component="h2">
             Upload a picture for this item.
           </Typography>
           <IconButton onClick={closePopup}><CloseIcon /></IconButton>
