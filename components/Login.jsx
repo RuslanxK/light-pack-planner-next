@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import useRefresh from './hooks/useRefresh'
 
 
 const Login = () => {
@@ -18,7 +17,6 @@ const Login = () => {
   const theme = useTheme();
   const router = useRouter();
 
-  const { refresh } = useRefresh();
 
 
   const loginWithGoogle = () => {
