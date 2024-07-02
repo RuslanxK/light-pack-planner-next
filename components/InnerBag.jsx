@@ -98,10 +98,10 @@ useEffect(() => {
   };
 
 
-  // useEffect(() => {
-  //   setCategoriesData(bagData?.categories || []);
+  useEffect(() => {
+    setCategoriesData(bagData?.categories || []);
     
-  // }, [bagData]);
+  }, [bagData]);
 
   
   const allBagsItems = items.map((item) => { return <SideItem key={item._id} itemData={item} color="white" categoryData={bagData?.categories} update={() => router.refresh()}  /> }) 
