@@ -128,12 +128,7 @@ const Register = () => {
           height="58"
           style={{ position: "absolute", top: "25px", left: "25px" }}
         />
-        <Stack
-          display={theme.flexBox}
-          width="100%"
-          sx={{ maxWidth: "800px" }}
-          p={12}
-        >
+        <div className="login-form">
           <form onSubmit={register}>
             <Stack
               display={theme.flexBox}
@@ -222,6 +217,7 @@ const Register = () => {
                 <TextField
                   required
                   type="text"
+                   variant="filled"
                   label="Username"
                   name="username"
                   onChange={handleChange}
@@ -233,6 +229,7 @@ const Register = () => {
                 <TextField
                   required
                   type="email"
+                   variant="filled"
                   label="Email"
                   name="email"
                   onChange={handleChange}
@@ -247,6 +244,7 @@ const Register = () => {
                   inputProps={{ minLength: 10 }}
                   type="password"
                   label="Password"
+                   variant="filled"
                   name="password"
                   onChange={handleChange}
                   fullWidth
@@ -259,6 +257,7 @@ const Register = () => {
                   inputProps={{ minLength: 10 }}
                   type="password"
                   label="Repeat password"
+                   variant="filled"
                   name="repeatedPassword"
                   onChange={handleChange}
                   fullWidth
@@ -430,7 +429,7 @@ const Register = () => {
             {error ? <Stack mt={2}><Alert severity="error">{error}</Alert></Stack> : null}
             {success ? <Stack mt={2}><Alert severity="success">{success}</Alert></Stack> : null}
           </form>
-        </Stack>
+        </div>
       </div>
     </Stack>
   );
