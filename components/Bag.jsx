@@ -77,7 +77,7 @@ const Bag = ({bagData, trips, session}) => {
       <Typography height="25px" marginRight="auto" pl={2} borderRadius="7px" pb={1} component="span" variant='span' fontSize="14px" display={theme.flexBox} alignItems={theme.left} justifyContent={theme.start} 
       onClick={NavigateToInnerBag}>{bagData?.name?.length > 25 ? `${bagData?.name?.substring(0, 25)}..` : bagData?.name}  { tripHover ? <IconButton onClick={NavigateToInnerBag} size='small' sx={{marginLeft: "5px"}}><NearMeOutlinedIcon  sx={{fontSize: "17px"}}  /></IconButton> : null }</Typography>
 
-    { isPopupOpen ? <MuiPopup isOpen={isPopupOpen} onClose={closePopup} >
+     <MuiPopup isOpen={isPopupOpen} onClose={closePopup} >
             <form onSubmit={duplicateBag}>
             <Stack >
             <Stack direction="row" justifyContent="space-between">
@@ -99,7 +99,7 @@ const Bag = ({bagData, trips, session}) => {
     
         </Stack>
        </form>
-      </MuiPopup> : null }
+      </MuiPopup>
 
 
     </Stack>

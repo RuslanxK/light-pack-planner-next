@@ -330,7 +330,7 @@ const Trips = ({ trips, bags, session }) => {
           </div>
         )}
 
-        {isPopupOpen && (
+      
           <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
             <form onSubmit={createTrip}>
               <Grid container spacing={2}>
@@ -429,7 +429,7 @@ const Trips = ({ trips, bags, session }) => {
               </Grid>
             </form>
           </MuiPopup>
-        )}
+     
       </Stack>
     </Box>
   );

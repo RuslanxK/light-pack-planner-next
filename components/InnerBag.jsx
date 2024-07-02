@@ -35,7 +35,7 @@ const InnerBag = ({bagData, items, session, itemsTotal, categoryPieChartData, ca
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
   const [editedBag, setEditedBag] = useState({tripId: bagData?.bag?.tripId, name: bagData?.bag?.name, goal: bagData?.bag?.goal, description: bagData?.bag?.description})
   const [showSideBarMobile, setShowSideBarMobile] = useState(false)
-  const [categoriesData, setCategoriesData] = useState(bagData?.categories || []);
+  const [categoriesData, setCategoriesData] = useState(bagData?.categories);
   const [confirmPopupOpen, setConfirmPopupOpen] = useState(false)
   const [loading, setLoading] = useState(false);
   const [popupLoading, setPopupLoading] = useState(false)
@@ -94,12 +94,14 @@ useEffect(() => {
   const handleChange = (event) => {
     let { name, value } = event.target;
     setEditedBag({ ...editedBag, [name]: value });
+    
   };
 
 
-  useEffect(() => {
-    setCategoriesData(bagData?.categories || []);
-  }, [bagData]);
+  // useEffect(() => {
+  //   setCategoriesData(bagData?.categories || []);
+    
+  // }, [bagData]);
 
   
   const allBagsItems = items.map((item) => { return <SideItem key={item._id} itemData={item} color="white" categoryData={bagData?.categories} update={() => router.refresh()}  /> }) 
@@ -611,7 +613,7 @@ useEffect(() => {
      </div> : null }
     
 
-     {isPopupOpen ? (
+     
   <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
     <form onSubmit={updateBag}>
       <Grid container spacing={2}>
@@ -685,9 +687,9 @@ useEffect(() => {
       </Grid>
     </form>
   </MuiPopup>
-) : null}
 
-{ isDeletePopupOpen ? <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
+
+ <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
 <Stack direction="row" width="100%" alignItems="center" mb={1} justifyContent="space-between">
 <Typography variant='h6' component="h2">Delete Bag</Typography>
@@ -697,15 +699,12 @@ useEffect(() => {
    Are you sure you want to delete <b>{bagData.bag.name} ?</b> This action cannot be undone.
    Deleting this bag will permanently remove it from the system, and any associated data will be lost.</Typography>
 
-
-
-
 <Button sx={{marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeBag} disableElevation>Delete {popupLoading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
 </Stack>
-</MuiPopup> : null }
+</MuiPopup> 
 
 
-{confirmPopupOpen ? (
+
   <MuiPopup isOpen={confirmPopupOpen} onClose={closePopup}>
     <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
       <Stack direction="row" width="100%" alignItems="center" mb={1} justifyContent="space-between">
@@ -728,7 +727,7 @@ useEffect(() => {
       </Button>
     </Stack>
   </MuiPopup>
-) : null}
+
 
 
 

@@ -259,26 +259,9 @@ const Item = (props) => {
           </Stack>
     
 
-      { removePopupOpen ? <MuiPopup isOpen={removePopupOpen} onClose={closePopup}>
-       <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
-
-      <Stack width="90%">
-      <Typography variant='span' component="h2" mb={1.5}>Delete item</Typography>
-      <Typography variant='span' component="span">
-       Are you sure you want to delete this item? This action cannot be undone.
-       Deleting this item will permanently remove it from the system, and any associated data will be lost.</Typography>
-      </Stack>
-
-<CloseIcon onClick={closePopup} sx={{cursor: "pointer"}}/>
-<Button sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeItem} disableElevation>Delete</Button>
-</Stack>
-
-</MuiPopup> : null }
 
 
-
-{popupOpen ? <MuiPopup isOpen={popupOpen} onClose={closePopup}>
-
+<MuiPopup isOpen={popupOpen} onClose={closePopup}>
    <form onSubmit={saveLink}>
           <Stack direction="column">
             <Stack direction="row" justifyContent="space-between">
@@ -289,7 +272,6 @@ const Item = (props) => {
             </Stack>
             <Typography variant='span' component="span" mb={2}>
             Provide a link that relates to this item for further reference.</Typography>
-        
           </Stack>
           <TextField
             name="link"
@@ -299,16 +281,12 @@ const Item = (props) => {
             onChange={handleChange}
             sx={{ marginBottom: "15px", width: "100%" }} />
           
-          <Button type="submit" sx={{ color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Save {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
-
-        
+          <Button type="submit" sx={{ color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Save {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button> 
       </form>
+</MuiPopup> 
 
 
-</MuiPopup> : null }
 
-
-{picPopupOpen ? (
   <MuiPopup isOpen={picPopupOpen} onClose={closePopup}>
     <form onSubmit={savePicture}>
       <Stack>
@@ -374,7 +352,7 @@ const Item = (props) => {
       </Stack>
     </form>
   </MuiPopup>
-) : null}
+
 
 
 

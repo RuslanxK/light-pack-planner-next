@@ -289,7 +289,7 @@ const saveItemsOrder = async (updatedItems) => {
 
 
 
-{ removePopupOpen ? <MuiPopup isOpen={removePopupOpen} onClose={closePopup}>
+ <MuiPopup isOpen={removePopupOpen} onClose={closePopup}>
 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
 
 <Stack direction="row" width="100%" alignItems="center" mb={1} justifyContent="space-between">
@@ -305,7 +305,7 @@ const saveItemsOrder = async (updatedItems) => {
 <Button sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.red, '&:hover': {backgroundColor: theme.redHover}}} variant="contained" onClick={removeCategory} disableElevation>Delete {loading ? < CircularProgress sx={{marginLeft: "7px"}} color="inherit" size={16} /> : null}</Button>
 </Stack>
 
-</MuiPopup> : null }
+</MuiPopup> 
 
     </Stack>
   );

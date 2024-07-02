@@ -226,7 +226,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
           {bags}
         </div>
 
-        {isAddPopupOpen ? (
+       
   <MuiPopup isOpen={isAddPopupOpen} onClose={closePopup}>
     <form onSubmit={addBag}>
       <Grid container spacing={2}>
@@ -297,10 +297,9 @@ const InnerTrip = ({ tripData, trips, session}) => {
       </Grid>
     </form>
   </MuiPopup>
-) : null}
 
 
-        {isPopupOpen ? (
+      
   <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
     <form onSubmit={updateTrip}>
       <Grid container spacing={2}>
@@ -384,9 +383,9 @@ const InnerTrip = ({ tripData, trips, session}) => {
       </Grid>
     </form>
   </MuiPopup>
-) : null}
 
-        {isDeletePopupOpen ? <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
+
+         <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
           <Stack direction="row" justifyContent="space-between" alignIte ms="flex-start" flexWrap="wrap">
             <Stack direction="row" width="100%" alignItems="center" mb={1} justifyContent="space-between">
               <Typography variant='h6' component="h2">Delete Trip </Typography>
@@ -399,7 +398,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
           
             <Button sx={{ marginTop: "20px", width: "100%", fontWeight: "500", color: theme.palette.mode === "dark" ? "white" : null, backgroundColor: theme.red, '&:hover': { backgroundColor: theme.redHover } }} variant="contained" onClick={removeTrip} disableElevation>Delete {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
           </Stack>
-        </MuiPopup> : null}
+        </MuiPopup> 
       </Stack>
     </Container>
   );
