@@ -381,7 +381,7 @@ span.MuiBadge-badge {
      border-radius: 20px;
   }
 
-  .login-form h1 {
+  .login-form h1, .register-form h1 {
 
       color: black;
       font-size: 27px;
