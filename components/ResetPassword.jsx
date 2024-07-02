@@ -69,7 +69,7 @@ const ResetPassword = () => {
 
 
   return (
-    <Stack display={theme.flexBox} direction="row" justifyContent={theme.end} sx={{overflowY: "hidden"}}>
+    <Stack display={theme.flexBox} direction="row" justifyContent={theme.center} sx={{overflowY: "hidden"}}>
       
       <div className="login-img">
         <img id="hiking-image" src="/hiking-3.jpg" alt="hiking" width="100%" style={{objectFit: "cover", height:"100vh" }} /> 
@@ -79,7 +79,7 @@ const ResetPassword = () => {
 
     <div className="login-content">
     <img id="logo-mobile-login" src="/logo.png" alt="logo" width="90px" height="58" style={{ position: "absolute", top: "25px", left: '25px' }}/> 
-    <Stack display={theme.flexBox} justifyContent={theme.center} alignItems="stretch" width="100%" p={12} sx={{ maxWidth: "800px" }}>
+    <div className='login-form'>
     <h1 className='login-text'>Forgot password</h1>
     <Typography component="span" variant="span" mb={4} width="100%" color="gray">
           Enter the email address you used to create the account, and we will email you instructions to reset your password
@@ -98,7 +98,7 @@ const ResetPassword = () => {
     { error ? <Alert severity="error">{error}</Alert> : null }
     {success ?  <Alert severity="success">{success}</Alert>: null }
 
-    </Stack>
+    </div>
     
 
       </div>
