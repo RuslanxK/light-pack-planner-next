@@ -293,7 +293,7 @@ const saveItemsOrder = async (updatedItems) => {
 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
 
 <Stack width="90%">
-<Typography variant='span' component="h2" fontWeight="600" mb={1.5}>Delete {props.categoryData.name} </Typography>
+<Typography variant='h5' component="h2" mb={1}>Delete {props.categoryData.name} </Typography>
 <Typography variant='span' component="span">
    Are you sure you want to delete this category? This action cannot be undone.
    Deleting this category will permanently remove it from the system, and any associated data will be lost.</Typography>

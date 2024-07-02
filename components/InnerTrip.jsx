@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack, Typography, IconButton, Autocomplete, TextField, Button, Container, Tooltip, Alert } from '@mui/material';
+import { Stack, Typography, IconButton, Autocomplete, TextField, Button, Container, Tooltip, Alert, Grid} from '@mui/material';
 import Bag from './Bag';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -227,80 +227,170 @@ const InnerTrip = ({ tripData, trips, session}) => {
           {bags}
         </div>
 
-        {isAddPopupOpen ? <MuiPopup isOpen={isAddPopupOpen} onClose={closePopup} >
-          <form onSubmit={addBag}>
-            <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
-              <Stack width="90%">
-                <Typography variant='span' component="h2" mb={0.5}>Create Bag</Typography>
-                <Typography variant='span' component="span" mb={3}>Fill in the details below to add a new bag to your collection.</Typography>
-              </Stack>
-              <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
-              <TextField label="Name" name="name" required onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ maxLength: 26 }} />
-              <TextField label={`Weight Goal (${session?.user?.weightOption})`} type="number" required name="goal" onChange={handleBagChange} sx={{ width: "48.5%", marginBottom: "20px" }} inputProps={{ min: 1 }} />
-              <TextField multiline label="Description" name="description" onChange={handleBagChange} sx={{ width: "100%" }} inputProps={{ maxLength: 200 }} />
-              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation> Create {loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
-            </Stack>
-          </form>
-        </MuiPopup> : null}
+        {isAddPopupOpen ? (
+  <MuiPopup isOpen={isAddPopupOpen} onClose={closePopup}>
+    <form onSubmit={addBag}>
+      <Grid container spacing={2}>
+        <Grid item xs={11}>
+          <Typography variant="h5" component="h2" mb={0.5}>
+            Create Bag
+          </Typography>
+          <Typography variant="span" component="span" mb={3}>
+            Fill in the details below to add a new bag to your collection.
+          </Typography>
+        </Grid>
+        <Grid item xs={1}>
+          <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Name"
+            name="name"
+            required
+            onChange={handleBagChange}
+            sx={{ width: "100%"}}
+            inputProps={{ maxLength: 26 }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label={`Weight Goal (${session?.user?.weightOption})`}
+            type="number"
+            required
+            name="goal"
+            onChange={handleBagChange}
+            sx={{ width: "100%"}}
+            inputProps={{ min: 1 }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            multiline
+            label="Description"
+            name="description"
+            onChange={handleBagChange}
+            sx={{ width: "100%" }}
+            inputProps={{ maxLength: 200 }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            type="submit"
+            sx={{
+              width: "100%",
+              fontWeight: "500",
+              backgroundColor: theme.green,
+              color: theme.palette.mode === "dark" ? "white" : null,
+            }}
+            variant="contained"
+            disableElevation
+          >
+            Create{" "}
+            {loading && (
+              <CircularProgress
+                color="inherit"
+                size={16}
+                sx={{ marginLeft: "10px" }}
+              />
+            )}
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
+  </MuiPopup>
+) : null}
 
-        {isPopupOpen ? <MuiPopup isOpen={isPopupOpen} onClose={closePopup} >
-          <form onSubmit={updateTrip}>
-            <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
-              <Stack width="90%">
-                <Typography variant='span' component="h2" mb={0.5}>Update Your Trip Details</Typography>
-                <Typography variant='span' component="span" mb={3}>Modify the fields below to update your trip information</Typography>
-              </Stack>
-              <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
-              <Autocomplete
-                onChange={(event, newValue) => setEditedTrip((prevData) => ({ ...prevData, name: newValue || '' }))}
-                value={countryNameArr?.includes(editedTrip.name) ? editedTrip.name : null}
-                options={countryNameArr || []}
-                renderInput={(params) => <TextField required {...params} label="Destination" />}
-                sx={{ width: "48%", marginBottom: "20px" }} />
-              <TextField
-                label={`Distance (${session?.user?.distance})`}
-                type="number"
-                value={editedTrip.distance}
-                name="distance"
-                onChange={handleChange}
-                sx={{ width: "48.5%", marginBottom: "20px" }}
-                inputProps={{ min: 1, max: 999999 }} />
-              <TextField
-                multiline
-                label="Trip Description"
-                name="about"
-                value={editedTrip.about}
-                onChange={handleChange}
-                sx={{ width: "100%", marginBottom: "20px" }}
-                inputProps={{ maxLength: 300 }} />
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  label="Start date"
-                  name="startDate"
-                  value={editedTrip.startDate || null}
-                  onChange={(date) => handleDateChange(date, "startDate")}
-                  sx={{ width: "48.5%" }}
-                />
-              </LocalizationProvider>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  label="End date"
-                  name="endDate"
-                  onChange={(date) => handleDateChange(date, "endDate")}
-                  value={editedTrip.endDate || null}
-                  sx={{ width: "48.5%" }}
-                  minDate={editedTrip.startDate || null} />
-              </LocalizationProvider>
-              <Button type="submit" sx={{ marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green, color: theme.palette.mode === "dark" ? "white" : null }} variant="contained" disableElevation> Save Changes{loading ? <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
-              
-            </Stack>
-          </form>
-        </MuiPopup> : null}
+
+        {isPopupOpen ? (
+  <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
+    <form onSubmit={updateTrip}>
+      <Grid container spacing={2}>
+        <Grid item xs={11}>
+          <Typography variant='h5' component="h2" mb={0.5}>Update Your Trip Details</Typography>
+          <Typography variant='span' component="span" mb={3}>Modify the fields below to update your trip information</Typography>
+        </Grid>
+        <Grid item xs={1}>
+          <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Autocomplete
+            onChange={(event, newValue) => setEditedTrip((prevData) => ({ ...prevData, name: newValue || '' }))}
+            value={countryNameArr?.includes(editedTrip.name) ? editedTrip.name : null}
+            options={countryNameArr || []}
+            renderInput={(params) => <TextField required {...params} label="Destination" />}
+            sx={{ width: "100%" }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label={`Distance (${session?.user?.distance})`}
+            type="number"
+            value={editedTrip.distance}
+            name="distance"
+            onChange={handleChange}
+            sx={{ width: "100%" }}
+            inputProps={{ min: 1, max: 999999 }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            multiline
+            label="Trip Description"
+            name="about"
+            value={editedTrip.about}
+            onChange={handleChange}
+            sx={{ width: "100%" }}
+            inputProps={{ maxLength: 300 }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Start date"
+              name="startDate"
+              value={editedTrip.startDate || null}
+              onChange={(date) => handleDateChange(date, "startDate")}
+              sx={{ width: "100%" }}
+            />
+          </LocalizationProvider>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="End date"
+              name="endDate"
+              onChange={(date) => handleDateChange(date, "endDate")}
+              value={editedTrip.endDate || null}
+              sx={{ width: "100%" }}
+              minDate={editedTrip.startDate || null}
+            />
+          </LocalizationProvider>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            type="submit"
+            sx={{ 
+          
+              width: "100%", 
+              fontWeight: "500", 
+              backgroundColor: theme.green, 
+              color: theme.palette.mode === "dark" ? "white" : null 
+            }} 
+            variant="contained" 
+            disableElevation
+          >
+            Save Changes {loading && <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} />}
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
+  </MuiPopup>
+) : null}
 
         {isDeletePopupOpen ? <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
           <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
             <Stack width="90%">
-              <Typography variant='span' component="h2" mb={0.5}>Delete Trip to {tripData?.trip?.name} </Typography>
+              <Typography variant='h5' component="h2" mb={1}>Delete Trip to {tripData?.trip?.name} </Typography>
               <Typography variant='span' component="span">
                 Are you sure you want to delete this trip? This action cannot be undone.
                 Deleting this trip will permanently remove it from the system, and any associated data will be lost.</Typography>

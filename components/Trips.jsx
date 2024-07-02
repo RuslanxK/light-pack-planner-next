@@ -12,7 +12,6 @@ import {
   Alert,
   CircularProgress,
   Grid,
-  useMediaQuery,
 } from "@mui/material";
 import Trip from "./Trip";
 import axios from "axios";
@@ -50,7 +49,6 @@ const Trips = ({ trips, bags, session }) => {
 
   const { refresh } = useRefresh();
 
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const getData = async () => {
@@ -347,7 +345,7 @@ const Trips = ({ trips, bags, session }) => {
                 <Grid item xs={1}>
                  <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
                 </Grid>
-                <Grid item xs={isMobile ? 12 : 6}>
+                <Grid item xs={12} sm={6}>
                   <Autocomplete
                     onChange={(event, newValue) =>
                       setNewTripData((prevData) => ({
@@ -362,7 +360,7 @@ const Trips = ({ trips, bags, session }) => {
                     sx={{ width: "100%" }}
                   />
                 </Grid>
-                <Grid item xs={isMobile ? 12 : 6}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     label={`Distance (${session?.user?.distance})`}
                     type="number"
@@ -383,7 +381,7 @@ const Trips = ({ trips, bags, session }) => {
                     inputProps={{ maxLength: 300 }}
                   />
                 </Grid>
-                <Grid item xs={isMobile ? 12 : 6}>
+                <Grid item xs={12} sm={6}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       label="Start Date"
@@ -394,7 +392,7 @@ const Trips = ({ trips, bags, session }) => {
                     />
                   </LocalizationProvider>
                 </Grid>
-                <Grid item xs={isMobile ? 12 : 6}>
+                <Grid item xs={12} sm={6}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       label="End Date"

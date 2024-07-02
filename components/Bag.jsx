@@ -81,12 +81,12 @@ const Bag = ({bagData, trips, session}) => {
             <form onSubmit={duplicateBag}>
             <Stack >
             <Stack direction="row" justifyContent="space-between">
-            <Typography component="h2" variant="span" mb={0.5}>
+            <Typography component="h2" variant="h5" mb={0.5}>
             Select Trip for Duplication
             </Typography>
             <CloseIcon onClick={closePopup} />
             </Stack>
-            <Typography component="p" variant="p" mb={3}> Select the trip where you want to duplicate <Typography component="span" variant="span" color={theme.green}>{bagData.name}</Typography></Typography>
+            <Typography component="p" variant="p" mb={2}> Select the trip where you want to duplicate <Typography component="span" variant="span" color={theme.green}>{bagData.name}</Typography></Typography>
 
             <Autocomplete
               renderInput={(params) => <TextField required {...params} label="Trips" />}

@@ -280,12 +280,16 @@ const Item = (props) => {
 {popupOpen ? <MuiPopup isOpen={popupOpen} onClose={closePopup}>
 
    <form onSubmit={saveLink}>
-        <Stack spacing={2}>
-          <Stack flex={1} direction="row" justifyContent="space-between">
-            <Typography variant="span" component="h2" marginBottom="10px">
-             Attach a link to this item.
+          <Stack direction="column">
+            <Stack direction="row" justifyContent="space-between">
+            <Typography variant="h5" component="h2" mb={0.5}>
+             Attach a link.
             </Typography>
             <CloseIcon onClick={closePopup} />
+            </Stack>
+            <Typography variant='span' component="span" mb={2}>
+            Provide a link that relates to this item for further reference.</Typography>
+        
           </Stack>
           <TextField
             name="link"
@@ -293,11 +297,11 @@ const Item = (props) => {
             variant="outlined"
             value={itemData.link}
             onChange={handleChange}
-            sx={{ marginBottom: "10px" }} />
+            sx={{ marginBottom: "20px", width: "100%" }} />
           
           <Button type="submit" sx={{ color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Save {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
 
-        </Stack>
+        
       </form>
 
 

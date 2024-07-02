@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch, Link, Alert} from '@mui/material'
+import { Stack, Typography, IconButton, Box, TextField, Button, Container, Tooltip, Badge, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Switch, Link, Alert, Grid} from '@mui/material'
 import Category from '../components/Category'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import axios from 'axios';
@@ -420,7 +420,7 @@ useEffect(() => {
         </Stack>
        
 
-        <Stack direction="row">
+        <Stack direction="row" alignItems="center">
 
         <div className="switch-icon-desktop"><Tooltip title={bagData.bag.exploreBags ? "Remove this bag from 'Explore Bags'" : "Share this bag in 'Explore Bags'"}><Switch onChange={handleSwitchChange} checked={bagData.bag.exploreBags}/></Tooltip></div>
         <div className="share-icon-desktop"><Link href={`/share?id=${bagData.bag._id}`} target="_blank" rel="noopener noreferrer" underline="none"> <Tooltip title="Share Link"><IconButton><ShareIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip></Link></div>
@@ -610,26 +610,86 @@ useEffect(() => {
      </div> : null }
     
 
-     { isPopupOpen ?  <MuiPopup isOpen={isPopupOpen} onClose={closePopup} >
-        <form onSubmit={updateBag}>
-          <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
-             <Stack width="90%">
-             <Typography variant='span' component="h2">Update Your Bag Details</Typography>
-             <Typography variant='span' component="span" mb={3}>Modify the fields below to update your bag information</Typography>
-             </Stack>
-             <CloseIcon onClick={closePopup} sx={{cursor: "pointer"}}/>
-             <TextField label="Bag name" name="name" required onChange={handleChange} sx={{width: "48.5%", marginBottom: "20px"}} value={editedBag.name || ""} inputProps={{ maxLength: 26 }}/>
-             <TextField label={`Weight goal (${session?.user?.weightOption})`} type="number" required name="goal" onChange={handleChange} sx={{width: "48.5%", marginBottom: "20px"}} value={editedBag.goal || ""} inputProps={{ min: 1 }} />
-            <TextField multiline label="Description" name="description" onChange={handleChange} sx={{width: "100%"}} value={editedBag.description} inputProps={{ maxLength: 200 }} /> 
-            <Button type="submit"  sx={{color: theme.palette.mode === "dark" ? "white" : null, marginTop: "20px", width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Update {popupLoading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button>
-          </Stack>
-      </form>
-  </MuiPopup> : null }
+     {isPopupOpen ? (
+  <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
+    <form onSubmit={updateBag}>
+      <Grid container spacing={2}>
+        <Grid item xs={11}>
+          <Typography variant="h5" component="h2" mb={0.5}>
+            Update Bag Details
+          </Typography>
+          <Typography variant="span" component="span" mb={3}>
+            Modify the fields below to update your bag information
+          </Typography>
+        </Grid>
+        <Grid item xs={1}>
+          <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Bag name"
+            name="name"
+            required
+            onChange={handleChange}
+            sx={{ width: "100%"}}
+            value={editedBag.name || ""}
+            inputProps={{ maxLength: 26 }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label={`Weight goal (${session?.user?.weightOption})`}
+            type="number"
+            required
+            name="goal"
+            onChange={handleChange}
+            sx={{ width: "100%" }}
+            value={editedBag.goal || ""}
+            inputProps={{ min: 1 }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            multiline
+            label="Description"
+            name="description"
+            onChange={handleChange}
+            sx={{ width: "100%" }}
+            value={editedBag.description}
+            inputProps={{ maxLength: 200 }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            type="submit"
+            sx={{
+              color: theme.palette.mode === "dark" ? "white" : null,
+              width: "100%",
+              fontWeight: "500",
+              backgroundColor: theme.green,
+            }}
+            variant="contained"
+            disableElevation
+          >
+            Update{" "}
+            {popupLoading && (
+              <CircularProgress
+                color="inherit"
+                size={16}
+                sx={{ marginLeft: "10px" }}
+              />
+            )}
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
+  </MuiPopup>
+) : null}
 
 { isDeletePopupOpen ? <MuiPopup isOpen={isDeletePopupOpen} onClose={closePopup}>
 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
 <Stack width="90%">
-<Typography variant='span' component="h2" mb={1.5}>Delete {bagData.bag.name}</Typography>
+<Typography variant='h5' component="h2" mb={1.5}>Delete {bagData.bag.name}</Typography>
 <Typography variant='span' component="span">
    Are you sure you want to delete this bag? This action cannot be undone.
    Deleting this bag will permanently remove it from the system, and any associated data will be lost.</Typography>
@@ -646,7 +706,7 @@ useEffect(() => {
   <MuiPopup isOpen={confirmPopupOpen} onClose={closePopup}>
     <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
       <Stack width="90%">
-        <Typography variant='span' component="h2" mb={1.5}>Notice</Typography>
+        <Typography variant='h5' component="h2" mb={1.5}>Notice</Typography>
         <Typography variant="body1" component="span">
           You are about to publish <b style={{ color: theme.green }}>{bagData.bag.name}</b> to the "Explore Bags".
           Please note that confirming this action will make your bag details visible to everyone and allow them to react to it.
