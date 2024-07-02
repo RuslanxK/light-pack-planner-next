@@ -28,7 +28,7 @@ html, body {
 }
 
 
-.login-form {
+.login-form, .register-form {
 
   display: flex;
   flex-direction: column;
@@ -221,7 +221,7 @@ span.MuiBadge-badge {
   height: 100vh;
 }
 
-.login-content {
+.login-content, .register-content {
   width: 50vw;
   height: 100vh;
   display: flex;
@@ -370,11 +370,23 @@ span.MuiBadge-badge {
       border-radius: 20px;
   }
 
+  .register-form {
+
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.911);
+     margin-left: 25px;
+     margin-right: 25px;
+     margin-top: 150px;
+     margin-bottom: 50px;
+     border-radius: 20px;
+  }
+
   .login-form h1 {
 
       color: black;
       font-size: 27px;
   }
+  
 
 
   .register-image-upload {
@@ -479,6 +491,18 @@ span.MuiBadge-badge {
     height: auto;
     min-height: 100vh;
     background-image: url("./public/hiking.png");
+    background-size: cover;
+    background-position: center;
+    align-items: center;
+  }
+
+
+  .register-content {
+
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    background-image: url("./public/hiking-2.jpg");
     background-size: cover;
     background-position: center;
     align-items: center;

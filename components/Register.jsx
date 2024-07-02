@@ -118,7 +118,7 @@ const Register = () => {
         />
       </div>
 
-      <div className="login-content">
+      <div className="register-content">
         <img
           id="logo-mobile-login"
           src="/logo.png"
@@ -127,7 +127,7 @@ const Register = () => {
           height="58"
           style={{ position: "absolute", top: "25px", left: "25px" }}
         />
-        <div className="login-form">
+        <div className="register-form">
           <form onSubmit={register}>
             <Stack
               display={theme.flexBox}
@@ -216,7 +216,7 @@ const Register = () => {
                 <TextField
                   required
                   type="text"
-                  variant="filled"
+                
                   label="Username"
                   name="username"
                   onChange={handleChange}
@@ -228,7 +228,7 @@ const Register = () => {
                 <TextField
                   required
                   type="email"
-                  variant="filled"
+                 
                   label="Email"
                   name="email"
                   onChange={handleChange}
@@ -243,7 +243,7 @@ const Register = () => {
                   inputProps={{ minLength: 10 }}
                   type="password"
                   label="Password"
-                  variant="filled"
+                
                   name="password"
                   onChange={handleChange}
                   fullWidth
@@ -256,7 +256,7 @@ const Register = () => {
                   inputProps={{ minLength: 10 }}
                   type="password"
                   label="Repeat password"
-                  variant="filled"
+                
                   name="repeatedPassword"
                   onChange={handleChange}
                   fullWidth
@@ -264,7 +264,7 @@ const Register = () => {
                 />
               </Grid>
 
-              <Grid item xs={isMobile ? 6 : 4}>
+              <Grid item xs={isMobile ? 12 : 4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="weight-unit-label"
@@ -276,7 +276,7 @@ const Register = () => {
                     labelId="weight-unit-label"
                     id="weight-unit"
                     name="weightOption"
-                    variant="filled"
+                   
                     value={registerData.weightOption || ""}
                     onChange={handleChange}
                     sx={{ zIndex: 0 }}
@@ -289,7 +289,7 @@ const Register = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={isMobile ? 6 : 4}>
+              <Grid item xs={isMobile ? 12 : 4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="distance-unit-label"
@@ -301,7 +301,7 @@ const Register = () => {
                     labelId="distance-unit-label"
                     id="distance-unit"
                     name="distance"
-                    variant="filled"
+                   
                     value={registerData.distance || ""}
                     onChange={handleChange}
                     sx={{ zIndex: 0 }}
@@ -311,7 +311,7 @@ const Register = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={isMobile ? 6 : 4}>
+              <Grid item xs={isMobile ? 12 : 4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="gender-label"
@@ -323,7 +323,7 @@ const Register = () => {
                     labelId="gender-label"
                     id="gender"
                     name="gender"
-                    variant="filled"
+                  
                     optional
                     value={registerData.gender || ""}
                     onChange={handleChange}
@@ -336,7 +336,7 @@ const Register = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={isMobile ? 6 : 4}>
+              <Grid item xs={isMobile ? 12 : 4}>
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']} sx={{ m: 0, p: 0 }}>
@@ -358,7 +358,7 @@ const Register = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={isMobile ? 6 : 4}>
+              <Grid item xs={isMobile ? 12 : 4}>
                 <FormControl fullWidth>
                   <InputLabel
                     id="activity-level-label"
@@ -370,7 +370,7 @@ const Register = () => {
                     labelId="activity-level-label"
                     id="activity-level"
                     name="activityLevel"
-                    variant="filled"
+                   
                     value={registerData.activityLevel || ""}
                     optional
                     onChange={handleChange}
@@ -383,12 +383,12 @@ const Register = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={isMobile ? 6 : 4}>
+              <Grid item xs={isMobile ? 12 : 4}>
                 <TextField
                   optional
                   type="text"
                   label="Country"
-                  variant="filled"
+                  
                   name="country"
                   onChange={handleChange}
                   fullWidth
