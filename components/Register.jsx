@@ -138,7 +138,7 @@ const Register = () => {
               width="100%"
             >
               <Stack direction="column" alignItems="flex-start">
-                <Typography component="h1" variant="h4" fontWeight="bold" mb={0.5}>
+                <Typography component="h1" variant="h4" fontWeight={600} mb={0.5}>
                   Register
                 </Typography>
                 <Typography component="span" variant="body1" color="gray">
