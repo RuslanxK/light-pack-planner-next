@@ -129,7 +129,7 @@ const Register = () => {
           height="58"
           style={{ position: "absolute", top: "25px", left: "25px" }}
         />
-        <div className="register-form">
+        <div className="register-form"  style={{backgroundColor: theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null}}>
           <form onSubmit={register}>
             <Stack
               display={theme.flexBox}
@@ -163,11 +163,10 @@ const Register = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   borderRadius: "12px",
-                  backgroundColor: "#f5f5f5",
+                
                   border: "2px dashed #c4c4c4",
                   transition: "background-color 0.3s, border-color 0.3s",
                   '&:hover': {
-                    backgroundColor: "#e0e0e0",
                     borderColor: "#a4a4a4",
                   },
                 }}

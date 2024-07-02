@@ -89,7 +89,7 @@ const Login = () => {
           height="58"
           style={{ position: "absolute", top: "25px", left: "25px" }}
         />
-        <div className="login-form" style={{backgroundColor: theme.palette.mode === "dark" ? "#1E1E1E" : null}}>
+        <div className="login-form" style={{backgroundColor: theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null}}>
           <h1 className="login-text">Login</h1>
           <Typography
             component="span"
