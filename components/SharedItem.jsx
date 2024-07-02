@@ -45,9 +45,45 @@ const SharedItem = (props) => {
       {props.itemData.productImageKey ? <img src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`} onClick={() => setPicPopupOpen(true)} style={{marginRight: "10px", objectFit: "cover"}} width="50px" height="40px" alt='item'/> : null }
 
       {props.itemData.link ? (
-          <Link href={props.itemData.link} target="_blank" rel="noopener" underline="none" sx={{ width: '50%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0", fontSize: 12, color: theme.palette.info.main }}>
-            <TextField size='small' variant='standard' placeholder='name' name='name' sx={{  width: '100%', borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0" }} value={props.itemData.name} InputLabelProps={{ style: { fontSize: 12 } }} InputProps={{ disableUnderline: true, readOnly: true, style: { color: theme.palette.info.main } }} inputProps={{ style: { fontSize: 12 } }} />
-          </Link>
+          <Link 
+          href={props.itemData.link} 
+          target="_blank" 
+          rel="noopener" 
+          underline="none" 
+          sx={{ 
+            width: '50%', 
+            marginRight: "15px", 
+            borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0", 
+            fontSize: 12, 
+            color: theme.palette.info.main, 
+            '&:hover': {
+              color: theme.palette.primary.main,
+              cursor: 'pointer'
+            } 
+          }}
+        >
+          <TextField 
+            size='small' 
+            variant='standard' 
+            placeholder='name' 
+            name='name' 
+            sx={{  
+              width: '100%', 
+              borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0", 
+              '& .MuiInputBase-input': {
+                fontSize: 12,
+                color: theme.palette.info.main,
+                '&:hover': {
+                  color: theme.palette.primary.main,
+                  cursor: 'pointer'
+                }
+              }
+            }} 
+            value={props.itemData.name} 
+            InputLabelProps={{ style: { fontSize: 12 } }} 
+            InputProps={{ disableUnderline: true, readOnly: true }} 
+          />
+        </Link>
         ) : (
           <TextField size='small' variant='standard' placeholder='name' name='name' sx={{ width: '50%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0" }} value={props.itemData.name} InputLabelProps={{ style: { fontSize: 12 } }} InputProps={{ disableUnderline: true, readOnly: true }} inputProps={{ style: { fontSize: 12 } }} />
         )}
