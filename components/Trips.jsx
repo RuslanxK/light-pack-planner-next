@@ -345,7 +345,7 @@ const Trips = ({ trips, bags, session }) => {
                   </Typography>
                 </Grid>
                 <Grid item xs={1}>
-                  <IconButton><CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} /></IconButton>
+                 <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
                 </Grid>
                 <Grid item xs={isMobile ? 12 : 6}>
                   <Autocomplete
