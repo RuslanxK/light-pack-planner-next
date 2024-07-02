@@ -314,7 +314,7 @@ const Item = (props) => {
       <Stack>
         <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1}>
           <Typography variant="h6" component="h2">
-            Upload a picture for this item.
+           Upload item picture
           </Typography>
           <IconButton onClick={closePopup}><CloseIcon /></IconButton>
         </Stack>
