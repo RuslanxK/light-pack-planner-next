@@ -320,9 +320,6 @@ useEffect(() => {
    
     <Container sx={{display: "flex"}} maxWidth={false} disableGutters>
 
-
-
-
 {items?.length ? (
   <div className="side-bar-icon-mobile">
     <IconButton
@@ -414,7 +411,7 @@ useEffect(() => {
 
         <Stack display="flex" direction="row" justifyContent={theme.between} width="100%" flexWrap="wrap">
 
-        <Stack direction="row" alignItems="center">
+        <Stack direction="row" alignItems="center" width="80%">
         <IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0", marginRight: "5px"}} onClick={() => router.push(`/trips?id=${bagData.bag.tripId}`)}><ArrowBackIcon sx={{fontSize: "20px"}}/></IconButton>
         <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
         <Badge color="success" badgeContent={bagData.bag.likes || "0" } sx={{zIndex: 0}}>
