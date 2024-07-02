@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Autocomplete, Button,Box, Tooltip, TextField, Alert, CircularProgress } from '@mui/material';
+import { Stack, Typography, IconButton, Autocomplete, Button,Box, Tooltip, TextField, Alert, CircularProgress, Grid, useMediaQuery } from '@mui/material';
 import Trip from './Trip';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -34,6 +34,7 @@ const Trips = ({ trips, bags, session }) => {
 
   const { refresh } = useRefresh();
 
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
 
 
@@ -205,73 +206,88 @@ const Trips = ({ trips, bags, session }) => {
         )}
 
         {isPopupOpen && (
-         <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
-         <form onSubmit={createTrip}>
-           <Stack direction="row" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap">
-             <Stack width="90%">
-               <Typography variant='span' component="h2" mb={0.5}>Plan Your Next Adventure</Typography>
-               <Typography variant='span' component="span" mb={3}>Fill in the details below to create a new trip</Typography>
-             </Stack>
-             <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
-             <Autocomplete
-               onChange={(event, newValue) => setNewTripData((prevData) => ({ ...prevData, name: newValue || '' }))}
-               options={countryNameArr || []}
-               renderInput={(params) => <TextField required {...params} label="Destination" />}
-               sx={{ width: "48%", marginBottom: "20px" }}
-             />
-             <TextField
-               label={`Distance (${session?.user?.distance})`}
-               type="number"
-               name="distance"
-               required
-               onChange={handleChange}
-               sx={{ width: "48.5%", marginBottom: "20px" }}
-               inputProps={{ min: 1, max: 999999 }}
-             />
-             <TextField
-               multiline
-               label="Description"
-               name="about"
-               onChange={handleChange}
-               sx={{ width: "100%", marginBottom: "20px" }}
-               inputProps={{ maxLength: 300 }}
-             />
-             <LocalizationProvider dateAdapter={AdapterDayjs}>
-               <DatePicker
-                 label="Start Date"
-                 name="startDate"
-                 onChange={(date) => handleDateChange(date, "startDate")}
-                 sx={{ width: "48.5%" }}
-                 defaultValue={dayjs().add(1, "day")}
-               />
-             </LocalizationProvider>
-             <LocalizationProvider dateAdapter={AdapterDayjs}>
-               <DatePicker
-                 label="End Date"
-                 name="endDate"
-                 onChange={(date) => handleDateChange(date, "endDate")}
-                 sx={{ width: "48.5%" }}
-                 defaultValue={dayjs().add(2, "day")}
-                 minDate={newTripData.startDate}
-               />
-             </LocalizationProvider>
-             <Button
-               type="submit"
-               sx={{
-                 marginTop: "20px",
-                 width: "100%",
-                 fontWeight: "500",
-                 backgroundColor: theme.green,
-                 color: theme.palette.mode === "dark" ? "white" : null
-               }}
-               variant="contained"
-               disableElevation
-             >
-               Plan Trip {loading && <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} />}
-             </Button>
-           </Stack>
-         </form>
-       </MuiPopup>
+        
+        <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
+          <form onSubmit={createTrip}>
+            <Grid container spacing={2}>
+              <Grid item xs={11}>
+                <Typography variant='span' component="h2" mb={0.5}>Plan Your Next Adventure</Typography>
+                <Typography variant='span' component="span" mb={3}>Fill in the details below to create a new trip</Typography>
+              </Grid>
+              <Grid item xs={1}>
+                <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+              </Grid>
+              <Grid item xs={isMobile ? 12 : 6}>
+                <Autocomplete
+                  onChange={(event, newValue) => setNewTripData((prevData) => ({ ...prevData, name: newValue || '' }))}
+                  options={countryNameArr || []}
+                  renderInput={(params) => <TextField required {...params} label="Destination" />}
+                  sx={{ width: "100%"}}
+                />
+              </Grid>
+              <Grid item xs={ isMobile ? 12 : 6}>
+                <TextField
+                  label={`Distance (${session?.user?.distance})`}
+                  type="number"
+                  name="distance"
+                  required
+                  onChange={handleChange}
+                  sx={{ width: "100%"}}
+                  inputProps={{ min: 1, max: 999999 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  multiline
+                  label="Description"
+                  name="about"
+                  onChange={handleChange}
+                  sx={{ width: "100%"}}
+                  inputProps={{ maxLength: 300 }}
+                />
+              </Grid>
+              <Grid item xs={isMobile ? 12 : 6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Start Date"
+                    name="startDate"
+                    onChange={(date) => handleDateChange(date, "startDate")}
+                    sx={{width: "100%"}}
+                    defaultValue={dayjs().add(1, "day")}
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={isMobile ? 12 : 6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="End Date"
+                    name="endDate"
+                    onChange={(date) => handleDateChange(date, "endDate")}
+                    sx={{width: "100%"}}
+                    defaultValue={dayjs().add(2, "day")}
+                    minDate={newTripData.startDate}
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  sx={{
+        
+                    width: "100%",
+                    fontWeight: "500",
+                    backgroundColor: theme.green,
+                    color: theme.palette.mode === "dark" ? "white" : null
+                  }}
+                  variant="contained"
+                  disableElevation
+                >
+                  Plan Trip {loading && <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} />}
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </MuiPopup>
        
         )}
       </Stack>
