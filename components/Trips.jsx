@@ -35,6 +35,8 @@ const Trips = ({ trips, bags, session }) => {
   const { refresh } = useRefresh();
 
 
+
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -49,6 +51,7 @@ const Trips = ({ trips, bags, session }) => {
 
     getData();
   }, []);
+
 
   const filteredTrips = trips?.tripsWithPictures.filter(trip => 
     trip.name.toLowerCase().includes(searchInput.toLowerCase())

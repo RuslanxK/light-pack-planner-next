@@ -8,7 +8,7 @@ import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { styled } from "@mui/material/styles";
-import { Fragment, useState} from 'react';
+import { Fragment, useState, useEffect} from 'react';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import HikingOutlinedIcon from "@mui/icons-material/HikingOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
@@ -44,6 +44,14 @@ const path = usePathname()
 const [mode, setMode] = useState(user.mode);
 const [isOpenMenu, setOpenMenu] = useState(false)
 const [ loading, setLoading] = useState(false)
+
+
+
+useEffect(() => {
+
+  setMode(user.mode)
+  
+}, [user.mode]);
 
 
 

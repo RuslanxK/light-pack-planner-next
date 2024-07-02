@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+import useRefresh from './hooks/useRefresh'
+
 
 const Login = () => {
   const [loginData, setLoginData] = useState({});
@@ -15,6 +17,9 @@ const Login = () => {
 
   const theme = useTheme();
   const router = useRouter();
+
+  const { refresh } = useRefresh();
+
 
   const loginWithGoogle = () => {
     signIn("google", { callbackUrl: "/" });
@@ -36,16 +41,17 @@ const Login = () => {
       redirect: false,
     });
 
-    console.log(response)
-
     if (response?.error) {
 
       setError("Invalid email or password");
       setIsLoading(false);
     } else {
 
-      setError(null);
-      router.push("/")
+      setError(null)
+      router.push('/')
+      router.refresh()
+      
+      
     }
 
   };
