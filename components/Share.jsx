@@ -249,6 +249,7 @@ const Share = ({ bagData, user, session, itemsTotal, categoryPieChartData, categ
                   component="h3"
                   variant="span"
                   fontWeight="600"
+                  width="80%"
                   mr={1}
                 >
                   {bagData?.bag?.name}
