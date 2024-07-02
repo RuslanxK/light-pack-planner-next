@@ -87,7 +87,7 @@ const ResetPassword = () => {
     <form onSubmit={handleSubmit}>
     <div style={{display: "flex", marginBottom: "15px", flexDirection: "column", justifyContent: "center", alignItems: "stretch", borderRadius:"10px"}}>
     
-    <TextField type="email" variant='filled' required label=" Enter Email" name="email" onChange={handleChange} sx={{marginBottom: "15px", background: "white", borderRadius: "7px"}} />
+    <TextField type="email" variant='filled' required label=" Enter Email" name="email" onChange={handleChange} sx={{marginBottom: "15px"}} />
     <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Send Email { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</button>
     <Typography component="span" variant="span" width="100%" color="gray" sx={{cursor: "pointer"}}  mb={2}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
 
