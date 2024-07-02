@@ -339,7 +339,7 @@ const Register = () => {
               <Grid item xs={isMobile ? 12 : 4}>
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']} sx={{ m: 0, p: 0 }}>
+                    <DemoContainer components={['DatePicker']} sx={{ m: 0, pt: 0 }}>
                       <DatePicker
                         label="Birthdate"
                         name="birthdate"
@@ -349,7 +349,7 @@ const Register = () => {
                           <TextField 
                             {...params} 
                             fullWidth 
-                            sx={{ m: 0, p: 0, '& .MuiInputLabel-root': { zIndex: 1 } }} 
+                            sx={{ m: 0, p: 0, '& .MuiInputLabel-root': { zIndex: 999 } }} 
                           />
                         )}
                       />
