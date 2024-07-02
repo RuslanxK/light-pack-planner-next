@@ -336,15 +336,15 @@ const Trips = ({ trips, bags, session }) => {
           <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
             <form onSubmit={createTrip}>
               <Grid container spacing={2}>
-                <Grid item xs={10.9}>
+                <Grid item xs={11}>
                   <Typography variant="h5" component="h2" mb={0.5}>
-                    Plan Your Next Adventure
+                    Plan Your Adventure
                   </Typography>
                   <Typography variant="span" component="span" mb={3}>
                     Fill in the details below to create a new trip
                   </Typography>
                 </Grid>
-                <Grid item xs={1.1}>
+                <Grid item xs={1}>
                   <IconButton><CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} /></IconButton>
                 </Grid>
                 <Grid item xs={isMobile ? 12 : 6}>
