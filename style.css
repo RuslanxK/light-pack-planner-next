@@ -347,16 +347,16 @@ span.MuiBadge-badge {
 @media only screen and (max-width: 768px) {
 
 
-  .MuiFilledInput-root {
+  .login-content .MuiFilledInput-root {
     background-color: rgb(231, 231, 231) !important;
     border-bottom: 1px solid rgb(122, 122, 122) !important;
   }
 
-  .MuiInputLabel-root {
+  .login-content .MuiInputLabel-root {
     color: black !important;
   }
   
-  .MuiFilledInput-input {
+  .login-content .MuiFilledInput-input {
     color: black !important;
   }
 
