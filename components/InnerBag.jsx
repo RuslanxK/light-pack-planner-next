@@ -414,12 +414,9 @@ useEffect(() => {
 
         <Stack display="flex" direction="row" justifyContent={theme.between} width="100%" flexWrap="wrap">
 
-        <Stack direction="row" alignItems="center" width="60%">
+        <Stack direction="row" alignItems="center" width="80%">
         <IconButton sx={{backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0", marginRight: "5px"}} onClick={() => router.push(`/trips?id=${bagData.bag.tripId}`)}><ArrowBackIcon sx={{fontSize: "20px"}}/></IconButton>
         <Typography component="h3" variant='span' fontWeight="600" mr={1}>{bagData?.bag?.name}</Typography>
-        <Badge color="success" badgeContent={bagData.bag.likes || "0" } sx={{zIndex: 0}}>
-        <Tooltip title="Total likes"><IconButton><FavoriteIcon sx={{fontSize: "20px"}}/></IconButton></Tooltip>
-        </Badge>
         </Stack>
        
 
@@ -540,6 +537,21 @@ useEffect(() => {
         </TableCell>
        </TableRow>
 
+       <TableRow>
+       <TableCell component="th" scope="row">
+       <Stack direction="row" alignItems="center">
+       <FavoriteIcon sx={{fontSize: "18px", marginRight: "4px"}}/> Likes
+        </Stack>
+
+       </TableCell>
+
+       <TableCell component="th" scope="row" align='right'>
+
+       {bagData.bag.likes}
+
+        </TableCell>
+       </TableRow>
+
     </TableBody>
   </Table>
 
@@ -636,7 +648,7 @@ useEffect(() => {
             onChange={handleChange}
             sx={{ width: "100%"}}
             value={editedBag.name}
-            inputProps={{ maxLength: 26 }}
+            
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -659,7 +671,7 @@ useEffect(() => {
             onChange={handleChange}
             sx={{ width: "100%" }}
             value={editedBag.description}
-            inputProps={{ maxLength: 200 }}
+           
           />
         </Grid>
         <Grid item xs={12}>

@@ -423,6 +423,21 @@ const Share = ({ bagData, user, session, itemsTotal, categoryPieChartData, categ
                         </TableCell>
                         <TableCell align="right">{itemsTotal}</TableCell>
                       </TableRow>
+
+                      <TableRow>
+       <TableCell component="th" scope="row">
+       <Stack direction="row" alignItems="center">
+       <FavoriteIcon sx={{fontSize: "18px", marginRight: "4px"}}/> Likes
+        </Stack>
+
+       </TableCell>
+
+       <TableCell component="th" scope="row" align='right'>
+
+       {bagData.bag.likes}
+
+        </TableCell>
+       </TableRow>
                       
                     </TableBody>
                   </Table>
