@@ -162,7 +162,7 @@ const navigateToBag = (bag) => {
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
       <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? <CloseIcon /> : <MenuIcon />  }</IconButton>
 
-      {isOpenMenu ? <Paper sx={{ width: 320, maxWidth: '100%', position: "absolute", top: 100 }}>
+      {isOpenMenu ? <Paper sx={{ width: "100%", maxWidth: '100%', position: "absolute", top: 100, left: 0, background: theme.palette.mode === "dark" ? "#171717" : "#fafafa"  }}>
       <MenuList>
         <MenuItem>
           <ListItemIcon>
