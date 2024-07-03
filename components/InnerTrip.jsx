@@ -246,7 +246,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
 
         <div className="boxes">
         
-          <Stack border="2px dashed gray" alignItems={theme.center} display={theme.flexBox} justifyContent={theme.center} width={theme.bags.width} height={theme.bags.height} borderRadius={theme.radius} sx={{ cursor: "pointer" }} onClick={openAddPopup}>
+          <Stack border="2px dashed gray" backgroundColor={theme.palette.mode === 'dark' ? null : "#FAFAFA"} alignItems={theme.center} display={theme.flexBox} justifyContent={theme.center} width={theme.bags.width} height={theme.bags.height} borderRadius={theme.radius} sx={{ cursor: "pointer" }} onClick={openAddPopup}>
             <Tooltip title="Add bag"><IconButton><AddOutlinedIcon sx={{ fontSize: "25px", color: "gray" }} /></IconButton></Tooltip>
           </Stack>
           {bags}

@@ -745,12 +745,13 @@ const InnerBag = ({
 
             <div className="categories">
               <Stack
-                border="1px dashed gray"
+                border="2px dashed gray"
                 display={theme.flexBox}
                 direction="row"
                 justifyContent={theme.center}
                 alignItems={theme.center}
                 height={theme.category.height}
+                backgroundColor={theme.palette.mode === "dark" ? null : "#FAFAFA"}
                 mb={1}
                 sx={{ cursor: "pointer" }}
                 onClick={addCategory}

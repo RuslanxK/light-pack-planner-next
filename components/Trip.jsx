@@ -27,7 +27,7 @@ const Trip = ({ tripData }) => {
 
   return (
     <Stack
-      backgroundColor={theme.palette.mode === 'dark' ? theme.main.darkColor : null}
+      backgroundColor={theme.palette.mode === 'dark' ? theme.main.darkColor : "#FAFAFA"}
       display={theme.flexBox}
       justifyContent={theme.between}
       alignItems={theme.center}

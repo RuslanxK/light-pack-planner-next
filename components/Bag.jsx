@@ -69,7 +69,7 @@ const Bag = ({bagData, trips, session}) => {
 
 
   return ( 
-    <Stack backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : null } onMouseOver={() => setTripHover(true)} onMouseLeave={() => setTripHover(false)} borderRadius={theme.radius} height={theme.bags.height} boxShadow={theme.boxShadow} sx={{cursor: "pointer", transition: theme.transition, '&:hover': {boxShadow: theme.boxShadowHover}}} 
+    <Stack backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : "#FAFAFA" } onMouseOver={() => setTripHover(true)} onMouseLeave={() => setTripHover(false)} borderRadius={theme.radius} height={theme.bags.height} boxShadow={theme.boxShadow} sx={{cursor: "pointer", transition: theme.transition, '&:hover': {boxShadow: theme.boxShadowHover}}} 
     display={theme.flexBox} justifyContent={theme.between} alignItems={theme.center}>
 
     <Tooltip title="Duplicate"><IconButton onClick={openPopup} sx={{marginLeft: "auto", marginTop: "4px", marginRight: "4px"}}><ContentCopyIcon sx={{fontSize: "14px"}}/></IconButton></Tooltip>

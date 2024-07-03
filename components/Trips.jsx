@@ -205,6 +205,7 @@ const Trips = ({ trips, bags, session }) => {
             alignItems={theme.center}
             height={theme.trips.height}
             borderRadius={theme.radius}
+            backgroundColor={ theme.palette.mode === "dark" ? null : "#FAFAFA"}
             sx={{ cursor: "pointer" }}
             onClick={openPopup}
           >
