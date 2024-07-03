@@ -173,7 +173,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
       <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} minHeight="100vh">
         <div className="main-info">
           <Stack>
-            <Stack display={theme.flexBox} flexDirection={theme.row} justifyContent={theme.between} flexWrap="wrap" alignItems={theme.center} backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
+            <Stack display={theme.flexBox} flexDirection={theme.row} justifyContent={theme.between}  alignItems={theme.center} backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
 
               
    <Grid container alignItems="center" justifyContent="space-between">
