@@ -38,8 +38,6 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
-import ContentCut from '@mui/icons-material/ContentCut';
-import ContentCopy from '@mui/icons-material/ContentCopy';
 import ContentPaste from '@mui/icons-material/ContentPaste';
 import Cloud from '@mui/icons-material/Cloud';
 
@@ -186,37 +184,82 @@ const navigateToBag = (bag) => {
       <MenuList>
         <MenuItem>
           <ListItemIcon>
-            <ContentCut fontSize="small" />
+            <WindowOutlinedIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Cut</ListItemText>
+          <ListItemText>Home</ListItemText>
           <Typography variant="body2" color="text.secondary">
             ⌘X
           </Typography>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <ContentCopy fontSize="small" />
+            <HikingOutlinedIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Copy</ListItemText>
+          <ListItemText>Recent Bags</ListItemText>
           <Typography variant="body2" color="text.secondary">
             ⌘C
           </Typography>
         </MenuItem>
+
         <MenuItem>
           <ListItemIcon>
-            <ContentPaste fontSize="small" />
+            <PublicOutlinedIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Paste</ListItemText>
+          <ListItemText>Articles</ListItemText>
           <Typography variant="body2" color="text.secondary">
             ⌘V
           </Typography>
         </MenuItem>
-        <Divider />
+
         <MenuItem>
           <ListItemIcon>
-            <Cloud fontSize="small" />
+            <StarOutlinedIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Web Clipboard</ListItemText>
+          <ListItemText>Explore Bags</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            ⌘V
+          </Typography>
+        </MenuItem>
+
+        <MenuItem>
+          <ListItemIcon>
+            <SettingsOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Settings</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            ⌘V
+          </Typography>
+        </MenuItem>
+
+        <MenuItem>
+          <ListItemIcon>
+            <NotificationImportantIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Changelog</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            ⌘V
+          </Typography>
+        </MenuItem>
+
+        <MenuItem>
+          <ListItemIcon>
+            <ReportIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Bug Report</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            ⌘V
+          </Typography>
+        </MenuItem>
+
+        <Divider />
+        <MenuItem>
+        <ListItemIcon>
+          <img src={session?.user?.image || `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`} alt='user' style={{ borderRadius: "100px", objectFit: "contain", width: "35px", height: "35px", marginRight: "10px" }} />
+        </ListItemIcon>
+          <ListItemText>{user.username}</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            ⌘V
+          </Typography>
         </MenuItem>
       </MenuList>
     </Paper> : null }
@@ -304,7 +347,7 @@ const navigateToBag = (bag) => {
 
 
         {session && session?.user ? (
-  <Stack display={theme.flexBox} pb={1} mt={1} alignItems={theme.center}>
+         <Stack display={theme.flexBox} pb={1} mt={1} alignItems={theme.center}>
 
 
 
@@ -321,7 +364,7 @@ const navigateToBag = (bag) => {
      
 ) : null}
 
-</Stack>
+      </Stack>
        <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mb={1}><Typography component="span" variant="span" fontWeight="600" mr={1}><LightModeIcon sx={{color: "#4a4a4a"}}/></Typography> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <Typography component="span" variant="span" ml={1} fontWeight="600"><DarkModeIcon sx={{color: "#4a4a4a"}}/></Typography></Stack>
         </Stack>
     
