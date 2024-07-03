@@ -311,4 +311,4 @@ const saveItemsOrder = async (updatedItems) => {
   );
 };
 
-export default React.memo(Category);
+export default Category;

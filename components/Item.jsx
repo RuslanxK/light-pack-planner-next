@@ -138,16 +138,7 @@ const Item = (props) => {
       
     }
 
-    const removeItem = async () => {
-      try {
-        await axios.delete(`/items/${props.itemData._id}/${props?.session?.user?.id}`);
-        router.refresh();
-      }
-       catch (error) {
-            console.log(error)
-       }
-    }
-
+  
 
     const saveLink = async (e) => {
       
