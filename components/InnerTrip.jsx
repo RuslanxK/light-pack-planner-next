@@ -174,14 +174,40 @@ const InnerTrip = ({ tripData, trips, session}) => {
         <div className="main-info">
           <Stack>
             <Stack display={theme.flexBox} flexDirection={theme.row} justifyContent={theme.between} flexWrap="wrap" alignItems={theme.center} backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f2f2"} pt={1.5} pb={1.5} mb={3} borderRadius="7px">
-              <Stack direction="row" alignItems={theme.center} width="80%">
-                <IconButton sx={{ marginRight: "5px", backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0" }} onClick={() => router.push('/')}><ArrowBackIcon sx={{ fontSize: "20px" }} /></IconButton>
-                <Typography component="h3" variant='span' fontWeight="600" mr={1}>{tripData?.trip?.name}</Typography>
-              </Stack>
-              <Stack direction="row">
-                <Tooltip title="Edit"><IconButton onClick={openPopup}><EditLocationOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange } }} /></IconButton> </Tooltip>
-                <Tooltip title="Delete"><IconButton onClick={openRemovePopup}><DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" } }} /></IconButton></Tooltip>
-              </Stack>
+
+              
+   <Grid container alignItems="center" justifyContent="space-between">
+  <Grid item xs={10}>
+    <Stack direction="row" alignItems="center">
+      <IconButton
+        sx={{
+          marginRight: "5px",
+          backgroundColor: theme.palette.mode === "dark" ? theme.main.darkColor : "#f2f0f0",
+        }}
+        onClick={() => router.push('/')}
+      >
+        <ArrowBackIcon sx={{ fontSize: "20px" }} />
+      </IconButton>
+      <Typography component="h3" variant='span' fontWeight="600" mr={1}>
+        {tripData?.trip?.name}
+      </Typography>
+    </Stack>
+  </Grid>
+  <Grid item xs={2}>
+    <Stack direction="row">
+      <Tooltip title="Edit">
+        <IconButton onClick={openPopup}>
+          <EditLocationOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: theme.orange } }} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Delete">
+        <IconButton onClick={openRemovePopup}>
+          <DeleteOutlineOutlinedIcon sx={{ fontSize: "20px", cursor: "pointer", "&:hover": { color: "red" } }} />
+        </IconButton>
+      </Tooltip>
+    </Stack>
+  </Grid>
+</Grid>
             </Stack>
             <Typography component="p" variant="p"> {tripData?.trip?.about} </Typography>
 
