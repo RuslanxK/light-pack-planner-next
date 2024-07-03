@@ -109,8 +109,8 @@ const InnerBag = ({
   ]);
 
   useEffect(() => {
-    setCategoriesData(bagData?.categories || []);
-  }, [bagData?.categories]);
+    setCategoriesData(bagData.categories || []);
+  }, [bagData.categories]);
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {

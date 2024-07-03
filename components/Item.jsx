@@ -206,7 +206,7 @@ const Item = (props) => {
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>
         </IconButton> 
      
-      <Checkbox size="small" name='selected' sx={{transform: "scale(0.8)", marginBottom: "-4px"}} onChange={updateChecked} checked={itemData.checked} /> 
+      <Checkbox size="small" name='selected' sx={{transform: "scale(0.8)", marginBottom: "-4px"}} onChange={updateChecked}  /> 
       <TextField size='small' variant='standard' placeholder='name' name='name' sx={{ width: '50%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.name} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{style: {fontSize: 12}}} onChange={handleChange} onBlur={saveItemData}/>
       <TextField size='small' variant='standard' placeholder='note' name='description' sx={{ width: '100%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.description} InputLabelProps={{ style : {fontSize: 12}}} inputProps={{style: {fontSize: 12}}} InputProps={{disableUnderline: true}} onChange={handleChange} onBlur={saveItemData} />
       <TextField size='small' variant='standard' type='number' name='price' label="$ price" step="any" sx={{width: '10%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.price} onChange={handleChange} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{ min: 1, max: 99, style: {fontSize: 12} }} onBlur={saveItemData}/>
