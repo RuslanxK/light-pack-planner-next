@@ -431,7 +431,7 @@ useEffect(() => {
   </Grid>
   
   <Grid item xs={3}>
-    <Stack direction="row" alignItems="center">
+    <Stack direction="row" alignItems="center" justifyContent="flex-end">
       <div className="switch-icon-desktop">
         <Tooltip title={bagData.bag.exploreBags ? "Remove this bag from 'Explore Bags'" : "Share this bag in 'Explore Bags'"}>
           <Switch onChange={handleSwitchChange} checked={bagData.bag.exploreBags} />
