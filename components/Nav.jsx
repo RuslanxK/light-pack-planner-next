@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Switch, Divider } from '@mui/material'
+import { Stack, Typography, IconButton, Switch, Divider, Menu } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
@@ -52,7 +52,7 @@ const menuRef = useRef(null);
 const [mode, setMode] = useState(user.mode);
 const [isOpenMenu, setOpenMenu] = useState(false)
 const [ loading, setLoading] = useState(false)
-
+const [ nestedMenuOpen, setNestedMenuOpen] = useState(false)
 
 
 useEffect(() => {
@@ -60,6 +60,13 @@ useEffect(() => {
   setMode(user.mode)
   
 }, [user.mode]);
+
+
+const handleMenuClick = () => {
+  
+    setNestedMenuOpen(!nestedMenuOpen)
+};
+
 
 
 useEffect(() => {
@@ -103,9 +110,11 @@ const filteredBags = sortedBags?.slice(0, 4)
 
 
 const bagData = filteredBags?.map((bag) => {
-      return <Typography onClick={() =>  navigateToBag(bag)} fontSize="14px" variant='span'component="span" mt={0.5} ml={0.8} 
-      sx={{ cursor: "pointer" ,"&:hover": { color: theme.green }}} key={bag._id}> <BackpackIcon sx={{fontSize: "15px", color: "#4a4a4a", marginRight: "5px"}} /> {bag?.name?.length > 10 ? `${bag?.name?.substring(0, 12)}...` : bag?.name}</Typography>
+      return <Stack onClick={() =>  navigateToBag(bag)}> <Typography fontSize="14px" variant='span'component="span" ml={0.8} 
+      sx={{ cursor: "pointer" ,"&:hover": { color: theme.green }}} key={bag._id}>{bag?.name?.length > 10 ? `${bag?.name?.substring(0, 12)}...` : bag?.name}</Typography></Stack>
   })
+
+
 
 
 const logOut = () => {
@@ -159,6 +168,13 @@ const navigateToBag = (bag) => {
 }
 
 
+const navigateToUrl = (url) => {
+
+    setOpenMenu(false)
+    router.push(url)
+}
+
+
   return (
 
     <Fragment>
@@ -177,75 +193,68 @@ const navigateToBag = (bag) => {
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
       <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? <CloseIcon /> : <MenuIcon />  }</IconButton>
 
-      {isOpenMenu ? <Paper ref={menuRef} elevation={2} sx={{ width: "100%", maxWidth: '100%', background: theme.palette.mode === "dark" ? "#171717" : "#f0f0f0"  }}>
+      {isOpenMenu ? <Paper ref={menuRef} elevation={2} sx={{ width: "100%", maxWidth: '100%', position: "absolute", marginLeft: "auto", marginRight: "auto", top: 90, left: 0, right: 0,  zIndex: "9999", background: theme.palette.mode === "dark" ? "#171717" : "#f0f0f0"  }}>
       <MenuList>
-        <MenuItem>
+        <MenuItem onClick={ () => navigateToUrl("/")}>
           <ListItemIcon>
             <WindowOutlinedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Home</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘X
-          </Typography>
         </MenuItem>
-        <MenuItem>
+
+        <MenuItem onClick={handleMenuClick}>
           <ListItemIcon>
             <HikingOutlinedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Recent Bags</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘C
-          </Typography>
+          <ListItemIcon>
+            <ArrowDropDownIcon fontSize="small" />
+          </ListItemIcon>
         </MenuItem>
 
-        <MenuItem>
+       
+       {  nestedMenuOpen ?  <MenuItem>
+         {bagData?.length > 0 ? bagData : (
+                        <MenuItem>
+                          <Typography component="p" fontSize="13px">No bags yet</Typography>
+                        </MenuItem>
+                      )}
+         </MenuItem> : null }
+        
+    
+        <MenuItem onClick={ () => navigateToUrl("/articles")}>
           <ListItemIcon>
             <PublicOutlinedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Articles</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘V
-          </Typography>
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem onClick={ () => navigateToUrl("/explore")}>
           <ListItemIcon>
             <StarOutlinedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Explore Bags</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘V
-          </Typography>
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem onClick={ () => navigateToUrl("/settings")}>
           <ListItemIcon>
             <SettingsOutlinedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Settings</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘V
-          </Typography>
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem onClick={ () => navigateToUrl("/changelog")}>
           <ListItemIcon>
             <NotificationImportantIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Changelog</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘V
-          </Typography>
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem onClick={ () => navigateToUrl("/bug-report")}>
           <ListItemIcon>
             <ReportIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Bug Report</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘V
-          </Typography>
         </MenuItem>
         <Divider />
 
