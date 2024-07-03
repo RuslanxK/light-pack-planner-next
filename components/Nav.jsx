@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Switch } from '@mui/material'
+import { Stack, Typography, IconButton, Switch, Divider } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
@@ -32,6 +32,16 @@ import ReportIcon from '@mui/icons-material/Report';
 import useRefresh from './hooks/useRefresh'
 import CircularProgress from '@mui/material/CircularProgress';
 
+import Paper from '@mui/material/Paper';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+
+import ContentCut from '@mui/icons-material/ContentCut';
+import ContentCopy from '@mui/icons-material/ContentCopy';
+import ContentPaste from '@mui/icons-material/ContentPaste';
+import Cloud from '@mui/icons-material/Cloud';
 
 const Nav = ({bags, session, user}) => {
 
@@ -151,6 +161,45 @@ const navigateToBag = (bag) => {
 
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
       <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? <CloseIcon /> : <MenuIcon />  }</IconButton>
+
+      {isOpenMenu ? <Paper sx={{ width: 320, maxWidth: '100%', position: "absolute", top: 100 }}>
+      <MenuList>
+        <MenuItem>
+          <ListItemIcon>
+            <ContentCut fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Cut</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            ⌘X
+          </Typography>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <ContentCopy fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Copy</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            ⌘C
+          </Typography>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <ContentPaste fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Paste</ListItemText>
+          <Typography variant="body2" color="text.secondary">
+            ⌘V
+          </Typography>
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <ListItemIcon>
+            <Cloud fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Web Clipboard</ListItemText>
+        </MenuItem>
+      </MenuList>
+    </Paper> : null }
           
       </div>
 
