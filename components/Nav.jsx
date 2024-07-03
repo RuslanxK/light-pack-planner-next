@@ -251,6 +251,8 @@ const navigateToBag = (bag) => {
           </Typography>
         </MenuItem>
 
+        <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mb={1}><Typography component="span" variant="span" fontWeight="600" mr={1}><LightModeIcon sx={{color: "#4a4a4a"}}/></Typography> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <Typography component="span" variant="span" ml={1} fontWeight="600"><DarkModeIcon sx={{color: "#4a4a4a"}}/></Typography></Stack>
+
         <Divider />
         <MenuItem>
         <ListItemIcon>
