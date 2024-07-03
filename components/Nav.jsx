@@ -8,7 +8,7 @@ import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { styled } from "@mui/material/styles";
-import { Fragment, useState, useEffect} from 'react';
+import { Fragment, useState, useEffect, useRef} from 'react';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import HikingOutlinedIcon from "@mui/icons-material/HikingOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
@@ -51,6 +51,9 @@ const theme = useTheme()
 const router = useRouter()
 const path = usePathname()
 
+const menuRef = useRef(null);
+
+
 const [mode, setMode] = useState(user.mode);
 const [isOpenMenu, setOpenMenu] = useState(false)
 const [ loading, setLoading] = useState(false)
@@ -62,6 +65,23 @@ useEffect(() => {
   setMode(user.mode)
   
 }, [user.mode]);
+
+
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setOpenMenu(false);
+    }
+  };
+
+  // Add event listener
+  document.addEventListener('mousedown', handleClickOutside);
+
+  return () => {
+    // Cleanup the event listener
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, []);
 
 
 
@@ -162,7 +182,7 @@ const navigateToBag = (bag) => {
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
       <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? <CloseIcon /> : <MenuIcon />  }</IconButton>
 
-      {isOpenMenu ? <Paper elevation={2} sx={{ width: "100%", maxWidth: '100%', background: theme.palette.mode === "dark" ? "#171717" : "#fafafa"  }}>
+      {isOpenMenu ? <Paper ref={menuRef} elevation={2} sx={{ width: "100%", maxWidth: '100%', background: theme.palette.mode === "dark" ? "#171717" : "#fafafa"  }}>
       <MenuList>
         <MenuItem>
           <ListItemIcon>
