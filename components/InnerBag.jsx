@@ -46,84 +46,61 @@ const InnerBag = ({bagData, items, session, itemsTotal, categoryPieChartData, ca
   const { refresh } = useRefresh();
 
 
-useEffect(() => {
-
-  if (bagData?.totalBagWeight === 0 && switchChecked === true) {
-    setSwitchChecked(false);
-    const switchOff = async () => {
-
-      try {
-       
-        await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: false });
-        setConfirmPopupOpen(false);
-        await refresh();
-        setSwitchChecked(false);
-      } catch (error) {
-        console.log(error);
-      }
+  useEffect(() => {
+    if (bagData?.totalBagWeight === 0 && switchChecked) {
+      const switchOff = async () => {
+        try {
+          await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: false });
+          setSwitchChecked(false);
+          await refresh();
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      switchOff();
     }
+  }, [bagData?.totalBagWeight, switchChecked, bagData?.bag?._id, session?.user.id, refresh]);
 
-    switchOff()
-  }
-}, [bagData?.totalBagWeight]);
-
-
-
+  useEffect(() => {
+    setCategoriesData(bagData?.categories || []);
+  }, [bagData?.categories]);
 
   const mouseSensor = useSensor(MouseSensor, {
-   
     activationConstraint: {
       distance: 10,
     },
   });
   const touchSensor = useSensor(TouchSensor, {
-    
     activationConstraint: {
       delay: 250,
       tolerance: 5,
     },
   });
 
-  const sensors = useSensors(
-    mouseSensor,
-    touchSensor,
-    
-  );
-
+  const sensors = useSensors(mouseSensor, touchSensor);
 
   const handleChange = (event) => {
-    let { name, value } = event.target;
-    setEditedBag({ ...editedBag, [name]: value });
-    
+    const { name, value } = event.target;
+    setEditedBag((prev) => ({ ...prev, [name]: value }));
   };
 
+  const allBagsItems = items.map((item) => (
+    <SideItem key={item._id} itemData={item} color="white" categoryData={bagData?.categories} update={refresh} />
+  ));
 
-  useEffect(() => {
-    setCategoriesData(bagData?.categories || []);
-    
-  }, [bagData]);
+  const TOTAL = categoryWeightsArr?.categoriesTotalWeight?.reduce((a, b) => a + b.totalWeight, 0) || 1;
 
-  
-  const allBagsItems = items.map((item) => { return <SideItem key={item._id} itemData={item} color="white" categoryData={bagData?.categories} update={() => router.refresh()}  /> }) 
-
- 
-
-  const TOTAL = categoryWeightsArr?.categoriesTotalWeight?.map((category) => category.totalWeight).reduce((a, b) => a + b, 0) 
   const getArcLabel = (params) => {
     const percent = params.value / TOTAL;
     return `${(percent * 100).toFixed(1)}%`;
   };
-
-
 
   const categoryTableData = categoryPieChartData.map((category) => ({
     id: category.id,
     value: category.value,
     label: category.label,
     color: category.color
-    
   }));
-
 
   function getRandomDarkColor() {
     let color;
@@ -132,7 +109,7 @@ useEffect(() => {
     do {
       color = '#';
       for (let i = 0; i < 3; i++) {
-        const part = Math.floor(Math.random() * 256 * 0.6); 
+        const part = Math.floor(Math.random() * 256 * 0.6);
         color += ('0' + part.toString(16)).slice(-2);
       }
     } while (existingColors.includes(color));
@@ -140,179 +117,147 @@ useEffect(() => {
     return color;
   }
 
-
-
-
   const addCategory = async () => {
-    const newCategory = { userId: session?.user?.id, bagId: bagData?.bag?._id, tripId: bagData?.bag?.tripId, name: 'new category', color: getRandomDarkColor() };
-    setLoading(true); 
+    const newCategory = {
+      userId: session?.user?.id,
+      bagId: bagData?.bag?._id,
+      tripId: bagData?.bag?.tripId,
+      name: 'new category',
+      color: getRandomDarkColor()
+    };
+    setLoading(true);
     try {
-      const res = await axios.post('/categories/new', newCategory);
-      await refresh(); 
-      setLoading(false); 
+      await axios.post('/categories/new', newCategory);
+      await refresh();
     } catch (err) {
       console.log(err);
-     
+    } finally {
+      setLoading(false);
     }
   };
 
-
-  const handleSwitchChange = async (e) => {
+  const handleSwitchChange = (e) => {
     if (bagData?.totalBagWeight === 0) {
       setShowSwitchMessage(true);
       return;
     }
 
-    if (e.target.checked === true) {
+    if (e.target.checked) {
       setConfirmPopupOpen(true);
       setShowSwitchMessage(false);
     } else {
-      try {
-        setLoading(true);
-        await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: false });
-        setConfirmPopupOpen(false);
-        await refresh();
-        setLoading(false);
-        setSwitchChecked(false);
-      } catch (error) {
-        console.log(error);
-      }
+      const switchOff = async () => {
+        try {
+          setLoading(true);
+          await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: false });
+          setSwitchChecked(false);
+          await refresh();
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      switchOff();
     }
   };
-  
 
-
-  
   const confirmSwitchChange = async () => {
     try {
       setPopupLoading(true);
       await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, { exploreBags: true });
-      await refresh();
-      setPopupLoading(false);
-      setConfirmPopupOpen(false);
       setSwitchChecked(true);
+      await refresh();
     } catch (error) {
       console.log(error);
+    } finally {
+      setPopupLoading(false);
+      setConfirmPopupOpen(false);
     }
   };
-  
-  
 
-  const openPopup = () => {
-      setPopupOpen(true)
-  }
+  const openPopup = () => setPopupOpen(true);
 
   const closePopup = () => {
-
-    setPopupLoading(false)
     setPopupOpen(false);
-    setDeletePopupOpen(false)
+    setDeletePopupOpen(false);
     setConfirmPopupOpen(false);
+    setPopupLoading(false);
   };
 
-  const openRemovePopup = () => {
-    setDeletePopupOpen(true)
-}
-
-
+  const openRemovePopup = () => setDeletePopupOpen(true);
 
   const updateBag = async (e) => {
-     e.preventDefault()
+    e.preventDefault();
     try {
-
-      setPopupLoading(true)
-        await axios.put(`/bags/${bagData.bag._id}/${session?.user?.id}`, editedBag)
-        await refresh()
-        setPopupOpen(false)
-        setPopupLoading(false)
+      setPopupLoading(true);
+      await axios.put(`/bags/${bagData.bag._id}/${session?.user?.id}`, editedBag);
+      await refresh();
+      closePopup();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setPopupLoading(false);
     }
-     catch (error) {
-        console.log(error)
-     }
-  }
-
+  };
 
   const removeBag = async () => {
     try {
-
-      setPopupLoading(true)
+      setPopupLoading(true);
       await axios.delete(`/bags/${bagData.bag._id}/${session?.user?.id}`);
-    
-      router.push(`/trips?id=${bagData.bag.tripId}`)
+      router.push(`/trips?id=${bagData.bag.tripId}`);
       await refresh();
-      setDeletePopupOpen(false)
-      setPopupLoading(false)
-      
+      closePopup();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setPopupLoading(false);
     }
-     catch (error) {
-        console.log(error)
-     }
-  }
+  };
 
-
-  const showHideSideBar  = () => {
-    setShowSideBarMobile(!showSideBarMobile)
-  }
-
-
-
+  const showHideSideBar = () => {
+    setShowSideBarMobile((prev) => !prev);
+  };
 
   const moveCategory = async (fromIndex, toIndex) => {
     try {
       const updatedCategories = [...categoriesData];
-      const movedCategory = updatedCategories[fromIndex];
-  
-     
-      updatedCategories.splice(fromIndex, 1);
-  
-     
+      const [movedCategory] = updatedCategories.splice(fromIndex, 1);
       updatedCategories.splice(toIndex, 0, movedCategory);
-  
-      
+
       const reorderedCategories = updatedCategories.map((category, index) => ({
         ...category,
-        order: index + 1 
+        order: index + 1
       }));
-  
-      setCategoriesData(reorderedCategories); 
-  
+
+      setCategoriesData(reorderedCategories);
       await saveCategoriesOrder(reorderedCategories);
     } catch (error) {
       console.error('Failed to move category:', error);
     }
   };
 
-
-  
   const onDragEnd = (event) => {
-   
     const { active, over } = event;
-
-    if (active.id === over.id) {
-      return;
-    }
-
-    const fromIndex = categoriesData.findIndex(category => category.order === active.id);
-    const toIndex = categoriesData.findIndex(category => category.order === over.id);
-
-    if (fromIndex !== -1 && toIndex !== -1) {
+    if (active.id !== over.id) {
+      const fromIndex = categoriesData.findIndex(category => category.order === active.id);
+      const toIndex = categoriesData.findIndex(category => category.order === over.id);
       moveCategory(fromIndex, toIndex);
     }
   };
 
+  const saveCategoriesOrder = async (categories) => {
+    const orderData = categories.map((category) => ({
+      _id: category._id,
+      order: category.order
+    }));
 
-
-  const saveCategoriesOrder = async (updatedCategories) => {
     try {
-      const arr = { categories: updatedCategories };
-      await axios.put('/categories', arr);
-      console.log("Updated categories order successfully");
+      await axios.put(`/categories/${bagData.bag._id}/order`, orderData);
     } catch (error) {
       console.error('Failed to save categories order:', error);
-      throw new Error('Failed to save categories order');
     }
   };
-
 
 
 
