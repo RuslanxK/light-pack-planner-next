@@ -38,9 +38,6 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
-import ContentPaste from '@mui/icons-material/ContentPaste';
-import Cloud from '@mui/icons-material/Cloud';
-
 const Nav = ({bags, session, user}) => {
 
 const { refresh } = useRefresh();
@@ -250,8 +247,9 @@ const navigateToBag = (bag) => {
             ⌘V
           </Typography>
         </MenuItem>
+        <Divider />
 
-        <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mb={1}><Typography component="span" variant="span" fontWeight="600" mr={1}><LightModeIcon sx={{color: "#4a4a4a"}}/></Typography> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <Typography component="span" variant="span" ml={1} fontWeight="600"><DarkModeIcon sx={{color: "#4a4a4a"}}/></Typography></Stack>
+        <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mt={1} mb={1}><LightModeIcon sx={{color: "#4a4a4a", marginRight: "5px"}}/> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <DarkModeIcon sx={{color: "#4a4a4a", marginLeft: "5px"}}/></Stack>
 
         <Divider />
         <MenuItem>
@@ -368,7 +366,7 @@ const navigateToBag = (bag) => {
 ) : null}
 
       </Stack>
-       <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mb={1}><Typography component="span" variant="span" fontWeight="600" mr={1}><LightModeIcon sx={{color: "#4a4a4a"}}/></Typography> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <Typography component="span" variant="span" ml={1} fontWeight="600"><DarkModeIcon sx={{color: "#4a4a4a"}}/></Typography></Stack>
+       <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mb={1}><LightModeIcon sx={{color: "#4a4a4a", marginRight: "5px"}}/> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <DarkModeIcon sx={{color: "#4a4a4a", marginLeft: "5px"}}/></Stack>
         </Stack>
     
     </Stack>
