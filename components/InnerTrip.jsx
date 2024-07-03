@@ -193,7 +193,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
       </Typography>
     </Stack>
   </Grid>
-  <Grid item xs={2}>
+  <Grid item>
     <Stack direction="row">
       <Tooltip title="Edit">
         <IconButton onClick={openPopup}>
