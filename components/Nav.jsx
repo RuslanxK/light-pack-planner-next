@@ -254,12 +254,13 @@ const navigateToBag = (bag) => {
         <Divider />
         <MenuItem>
         <ListItemIcon>
-          <img src={session?.user?.image || `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`} alt='user' style={{ borderRadius: "100px", objectFit: "contain", width: "35px", height: "35px", marginRight: "10px" }} />
+          <img src={session?.user?.image || `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`} alt='user' style={{ borderRadius: "100px", objectFit: "contain", width: "35px", height: "35px", marginRight: "15px" }} />
         </ListItemIcon>
           <ListItemText>{user.username}</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘V
-          </Typography>
+          <Stack direction="row" alignItems="center" onClick={logOut}>
+          <IconButton><LogoutIcon sx={{fontSize: "17px"}}/></IconButton>
+          <Typography className='logout' fontSize="15px"> Log out</Typography>
+          </Stack>
         </MenuItem>
       </MenuList>
     </Paper> : null }
