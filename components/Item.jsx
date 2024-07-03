@@ -24,7 +24,6 @@ const Item = (props) => {
 
   const [popupOpen, setPopupOpen] = useState(false)
   const [picPopupOpen, setPicPopupOpen] = useState(false)
-  const [removePopupOpen ,setRemovePopupOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showEditIcon, setShowEditIcon] = useState(false)
   const [itemData, setItem] = useState({ userId: props.itemData.creator, _id: props.itemData._id, tripId: props.itemData.tripId, bagId: props.itemData.bagId, categoryId: props.itemData.categoryId, name: props.itemData.name, selected: props.itemData.selected,
@@ -48,7 +47,6 @@ const Item = (props) => {
 
    const closePopup = () => {
      setLoading(false)
-     setRemovePopupOpen(false);
      setPopupOpen(false)
      setPicPopupOpen(false)
      
