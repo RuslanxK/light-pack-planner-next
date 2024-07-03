@@ -177,7 +177,7 @@ const navigateToBag = (bag) => {
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
       <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? <CloseIcon /> : <MenuIcon />  }</IconButton>
 
-      {isOpenMenu ? <Paper ref={menuRef} elevation={2} sx={{ width: "100%", maxWidth: '100%', background: theme.palette.mode === "dark" ? "#171717" : "#fafafa"  }}>
+      {isOpenMenu ? <Paper ref={menuRef} elevation={2} sx={{ width: "100%", maxWidth: '100%', background: theme.palette.mode === "dark" ? "#171717" : "#f0f0f0"  }}>
       <MenuList>
         <MenuItem>
           <ListItemIcon>
