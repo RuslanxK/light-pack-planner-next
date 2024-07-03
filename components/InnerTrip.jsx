@@ -177,7 +177,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
 
               
    <Grid container alignItems="center" justifyContent="space-between">
-  <Grid item xs={10}>
+  <Grid item xs={9}>
     <Stack direction="row" alignItems="center">
       <IconButton
         sx={{
@@ -193,7 +193,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
       </Typography>
     </Stack>
   </Grid>
-  <Grid item xs={2}>
+  <Grid item xs={3}>
     <Stack direction="row" justifyContent="flex-end">
       <Tooltip title="Edit">
         <IconButton onClick={openPopup}>
