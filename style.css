@@ -606,20 +606,13 @@ span.MuiBadge-badge {
 
 
 @media (min-width: 768px) and (max-width: 1400px){
+
    
    .pieChart-table {
 
        width: 100%;
    }
 
-   .scroll-div {
-    overflow-x: scroll;
-
-  }
-
-  .scroll-div input, .scroll-div select {
-    
-     width: auto;
-  }
+   
   
   }
