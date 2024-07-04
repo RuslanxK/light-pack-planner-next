@@ -214,11 +214,7 @@ const navigateToUrl = (url) => {
 
        
        {  nestedMenuOpen ?  <MenuItem>
-         {bagData?.length > 0 ? bagData : (
-                        <MenuItem>
-                          <Typography component="p" fontSize="13px">No bags yet</Typography>
-                        </MenuItem>
-                      )}
+           <Stack ml={4}>{bagData}</Stack>
          </MenuItem> : null }
         
     
