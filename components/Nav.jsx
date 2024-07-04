@@ -164,6 +164,7 @@ const handleChange = (panel) => (event, newExpanded) => {
 
 const navigateToBag = (bag) => {
 
+     setOpenMenu(false)
      localStorage.setItem('tripId', bag.tripId);
      localStorage.setItem('bagId', bag._id);
      router.push(`/bag?id=${bag._id}`)
