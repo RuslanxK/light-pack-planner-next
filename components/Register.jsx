@@ -228,7 +228,7 @@ const Register = () => {
                 <TextField
                   required
                   type="email"
-                 
+                
                   label="Email"
                   name="email"
                   onChange={handleChange}
@@ -268,7 +268,7 @@ const Register = () => {
                 <FormControl fullWidth>
                   <InputLabel
                     id="weight-unit-label"
-                    sx={{ zIndex: 1 }}
+                    sx={{ zIndex: 1, background:  theme.palette.mode === "dark" ? "black" : "white" }}
                   >
                     Weight Unit
                   </InputLabel>
@@ -293,7 +293,7 @@ const Register = () => {
                 <FormControl fullWidth>
                   <InputLabel
                     id="distance-unit-label"
-                    sx={{ zIndex: 1 }}
+                    sx={{ zIndex: 1, background:  theme.palette.mode === "dark" ? "black" : "white" }}
                   >
                     Distance Unit
                   </InputLabel>
@@ -315,7 +315,7 @@ const Register = () => {
                 <FormControl fullWidth>
                   <InputLabel
                     id="gender-label"
-                    sx={{ zIndex: 1 }}
+                    sx={{ zIndex: 1, background:  theme.palette.mode === "dark" ? "black" : "white" }}
                   >
                     Gender
                   </InputLabel>
@@ -362,7 +362,7 @@ const Register = () => {
                 <FormControl fullWidth>
                   <InputLabel
                     id="activity-level-label"
-                    sx={{ zIndex: 1 }}
+                    sx={{ zIndex: 1, background:  theme.palette.mode === "dark" ? "black" : "white" }}
                   >
                     Activity Level
                   </InputLabel>
@@ -388,7 +388,6 @@ const Register = () => {
                   optional
                   type="text"
                   label="Country"
-                  
                   name="country"
                   onChange={handleChange}
                   fullWidth
