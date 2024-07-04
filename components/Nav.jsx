@@ -193,7 +193,7 @@ const navigateToUrl = (url) => {
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
       <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? <CloseIcon /> : <MenuIcon />  }</IconButton>
 
-      {isOpenMenu ? <Paper ref={menuRef} elevation={2} sx={{ width: 300, maxWidth: '100%', position: "absolute", marginLeft: "auto", marginRight: "auto", top: 90, left: 0, right: 0,  zIndex: "9999", background: theme.palette.mode === "dark" ? "#171717" : "#f0f0f0"  }}>
+      {isOpenMenu ? <Paper ref={menuRef} elevation={2} sx={{ width: "90%", maxWidth: '100%', position: "absolute", marginLeft: "auto", marginRight: "auto", top: 90, left: 0, right: 0,  zIndex: "9999", background: theme.palette.mode === "dark" ? "#171717" : "#f0f0f0"  }}>
       <MenuList>
         <MenuItem onClick={ () => navigateToUrl("/")}>
           <ListItemIcon>
