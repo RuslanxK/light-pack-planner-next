@@ -314,6 +314,7 @@ span.MuiBadge-badge {
 
     margin-left: 10px;
     margin-right: 10px;
+   
 }
 
 
@@ -601,3 +602,14 @@ span.MuiBadge-badge {
     display: block;
   }
 }
+
+
+
+@media (min-width: 768px) and (max-width: 1024px){
+
+   .categories {
+
+     width: 700px;
+   }
+  
+  }
