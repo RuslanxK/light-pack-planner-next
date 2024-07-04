@@ -840,7 +840,7 @@ const InnerBag = ({
                 </Stack>
               </Stack>
             </div>
-          ) : <div className="recent-desktop">
+          ) : items?.length && bagData?.categories.length ? <div className="recent-desktop">
 
               <Stack width={"40px"} height={theme.nav.height}>
                 <Stack
@@ -859,7 +859,7 @@ const InnerBag = ({
              </Stack>
              </Stack>
             
-            </div>}
+            </div> : null}
 
 
 
