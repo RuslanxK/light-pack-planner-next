@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Switch, Divider, Menu } from '@mui/material'
+import { Stack, Typography, IconButton, Switch, Divider, Grid } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
@@ -257,19 +257,34 @@ const navigateToUrl = (url) => {
         </MenuItem>
         <Divider />
 
-        <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mt={1} mb={1}><LightModeIcon sx={{color: "#4a4a4a", marginRight: "5px"}}/> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <DarkModeIcon sx={{color: "#4a4a4a", marginLeft: "5px"}}/></Stack>
 
-        <Divider />
+
         <MenuItem>
         <ListItemIcon>
           <img src={session?.user?.image || `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`} alt='user' style={{ borderRadius: "100px", objectFit: "contain", width: "35px", height: "35px", marginRight: "15px" }} />
         </ListItemIcon>
           <ListItemText>{user.username}</ListItemText>
-          <Stack direction="row" alignItems="center" onClick={logOut}>
+        
+        </MenuItem>
+
+        <Divider />
+        
+         <Stack display="flex" direction="row" justifyContent="space-between" alignItems="center">
+         <MenuItem sx={{width: "100%"}}>
+          <Stack direction="row" alignItems="center" sx={{width: "50%"}} justifyContent="flex-start">
+          <LightModeIcon sx={{color: "#4a4a4a", marginRight: "5px"}}/> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <DarkModeIcon sx={{color: "#4a4a4a", marginLeft: "5px"}}/> 
+          </Stack>
+
+          <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{width: "50%"}}>
           <IconButton><LogoutIcon sx={{fontSize: "17px"}}/></IconButton>
           <Typography className='logout' fontSize="15px"> Log out</Typography>
           </Stack>
-        </MenuItem>
+          </MenuItem>
+          </Stack>
+         
+
+
+      
       </MenuList>
     </Paper> : null }
           
