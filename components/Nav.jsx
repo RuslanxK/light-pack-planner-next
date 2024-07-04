@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Switch, Divider, Grid } from '@mui/material'
+import { Stack, Typography, IconButton, Switch, Divider } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
@@ -18,8 +18,7 @@ import { Tooltip } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { usePathname } from "next/navigation"
 import { disableNavBar } from "../utils/disableNavBar"
-import BackpackIcon from '@mui/icons-material/Backpack';
-import axios from 'axios';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';import axios from 'axios';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -255,9 +254,16 @@ const navigateToUrl = (url) => {
           </ListItemIcon>
           <ListItemText>Bug Report</ListItemText>
         </MenuItem>
+
+        <MenuItem onClick={ () => navigateToUrl("/admin-settings")}>
+          <ListItemIcon>
+            <AdminPanelSettingsIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Admin Settings</ListItemText>
+        </MenuItem>
         <Divider />
 
-
+        
 
         <MenuItem>
         <ListItemIcon>
@@ -366,6 +372,15 @@ const navigateToUrl = (url) => {
              Bug Report
             </Typography>
             <ReportIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
+          </AccordionSummary>
+        </Accordion>
+
+        <Accordion onClick={() => router.push('/admin-settings')}>
+          <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
+            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+             Admin Settings
+            </Typography>
+            <AdminPanelSettingsIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
         </Accordion>
 
