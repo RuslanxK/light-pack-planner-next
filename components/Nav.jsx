@@ -208,7 +208,7 @@ const navigateToUrl = (url) => {
           </ListItemIcon>
           <ListItemText>Recent Bags</ListItemText>
           <ListItemIcon>
-            <ArrowDropDownIcon fontSize="small" />
+            { nestedMenuOpen ?  <ArrowDropUpIcon fontSize='small' /> : <ArrowDropDownIcon fontSize="small" /> }
           </ListItemIcon>
         </MenuItem>
 
