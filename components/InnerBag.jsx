@@ -36,6 +36,8 @@ import FlipCameraIosOutlinedIcon from "@mui/icons-material/FlipCameraIosOutlined
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import {
   DndContext,
   closestCorners,
@@ -74,6 +76,7 @@ const InnerBag = ({
     description: bagData?.bag?.description,
   });
   const [showSideBarMobile, setShowSideBarMobile] = useState(false);
+  const [showSideBarDesktop, setShowSideBarDesktop] = useState(true);
   const [categoriesData, setCategoriesData] = useState(bagData?.categories);
   const [confirmPopupOpen, setConfirmPopupOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -795,7 +798,7 @@ const InnerBag = ({
             </div>
           </Stack>
 
-          {items?.length && bagData?.categories.length ? (
+          {items?.length && bagData?.categories.length && showSideBarDesktop ? (
             <div className="recent-desktop">
               <Stack width={theme.nav.width} height={theme.nav.height}>
                 <Stack
@@ -812,6 +815,8 @@ const InnerBag = ({
                         : theme.green,
                   }}
                 >
+
+                  <Stack alignItems="center"><Tooltip title="Close sidebar"><IconButton onClick={() =>  setShowSideBarDesktop(!showSideBarDesktop)}><ArrowForwardOutlinedIcon /></IconButton></Tooltip></Stack>
                   <Typography
                     component="h3"
                     variant="span"
@@ -829,13 +834,37 @@ const InnerBag = ({
                   >
                     added to your plans
                   </Typography>
-                  <Stack sx={{ overflowY: "scroll" }} height="85.5vh" pl={3}>
+                  <Stack sx={{ overflowY: "scroll" }} height="80vh" pl={3}>
                     {allBagsItems}
                   </Stack>
                 </Stack>
               </Stack>
             </div>
-          ) : null}
+          ) : <div className="recent-desktop">
+
+              <Stack width={"40px"} height={theme.nav.height}>
+                <Stack
+                  pt={2}
+                  position={theme.nav.fixed}
+                  height={theme.nav.height}
+                  sx={{
+                    backgroundColor:
+                      theme.palette.mode === "dark"
+                        ? theme.main.darkColor
+                        : theme.green,
+                  }}
+                >
+             <Stack alignItems="center"><Tooltip title="Open sidebar"><IconButton onClick={() =>  setShowSideBarDesktop(!showSideBarDesktop)}><ArrowBackOutlinedIcon /></IconButton></Tooltip></Stack>
+
+             </Stack>
+             </Stack>
+            
+            </div>}
+
+
+
+
+
 
           {items?.length && showSideBarMobile ? (
             <div className="recent-mobile">

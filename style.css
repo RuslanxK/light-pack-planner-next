@@ -236,6 +236,7 @@ span.MuiBadge-badge {
 
 .recent-desktop {
   display: block;
+  background-color: #00ac1c;
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
 }
