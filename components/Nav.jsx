@@ -275,7 +275,7 @@ const navigateToUrl = (url) => {
           <LightModeIcon sx={{color: "#4a4a4a", marginRight: "5px"}}/> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <DarkModeIcon sx={{color: "#4a4a4a", marginLeft: "5px"}}/> 
           </Stack>
 
-          <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{width: "50%"}}>
+          <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{width: "50%"}} onClick={logOut}>
           <IconButton><LogoutIcon sx={{fontSize: "17px"}}/></IconButton>
           <Typography className='logout' fontSize="15px"> Log out</Typography>
           </Stack>
