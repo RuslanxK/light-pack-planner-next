@@ -611,5 +611,15 @@ span.MuiBadge-badge {
 
        width: 100%;
    }
+
+   .scroll-div {
+    overflow-x: scroll;
+
+  }
+
+  .scroll-div input, .scroll-div select {
+    
+     width: auto;
+  }
   
   }
