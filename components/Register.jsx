@@ -11,45 +11,21 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DemoItem  } from '@mui/x-date-pickers/internals/demo';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { countriesApi } from "../utils/apiConfig";
-
+import useCountries from './hooks/useCountries'
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isHover, setIsHover] = useState(false);
-  const [countries, setCountries] = useState([]);
 
   const theme = useTheme();
   const router = useRouter();
 
+  const { countryNameArr } = useCountries();
+
+
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const { data } = await axios.get(countriesApi);
-        const filteredData = data.filter(
-          (country) => country.name.common !== "Palestine"
-        );
-        const sortedData = filteredData.sort((a, b) =>
-          a.name.common.localeCompare(b.name.common)
-        );
-        setCountries(sortedData);
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-      }
-    };
-
-    getData();
-  }, []);
-
-
-
-  const countriesArr = countries.map((x) => x.name);
-  const countryNameArr = countriesArr.map((x) => x.common);
 
 
 
@@ -244,7 +220,7 @@ const Register = () => {
                   required
                   type="text"
                 
-                  label="Username"
+                  label="Full name"
                   name="username"
                   onChange={handleChange}
                   fullWidth

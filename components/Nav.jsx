@@ -75,11 +75,9 @@ useEffect(() => {
     }
   };
 
-  // Add event listener
   document.addEventListener('mousedown', handleClickOutside);
 
   return () => {
-    // Cleanup the event listener
     document.removeEventListener('mousedown', handleClickOutside);
   };
 }, []);
@@ -394,7 +392,7 @@ const navigateToUrl = (url) => {
       <Typography variant='span'p={0.2} component="h3" fontWeight="300" color="inherit">{session?.user?.email}</Typography>
     </>
   }>
-     <IconButton sx={{marginTop: "5px"}}><Image src={session?.user?.image || `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`} alt='user' style={{ borderRadius: "100%" }} width={35} height={35} /></IconButton>
+     <IconButton sx={{marginTop: "5px"}}><Image src={session?.user?.image || `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`} alt='user' style={{ borderRadius: "100%", objectFit: "cover" }} width={35} height={35} /></IconButton>
      </Tooltip>
       <Typography className='logout' fontSize="15px" onClick={logOut}> <LogoutIcon sx={{fontSize: "17px", marginRight: "5px"}}/> Log out</Typography>
 

@@ -30,15 +30,19 @@ import { DatePicker } from "@mui/x-date-pickers-pro";
 import dayjs from "dayjs";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useRefresh from "./hooks/useRefresh";
-import { countriesApi } from "../utils/apiConfig";
+import useCountries from './hooks/useCountries'
+
 
 const Trips = ({ trips, bags, session }) => {
+
   const theme = useTheme();
   const router = useRouter();
 
-  const [countries, setCountries] = useState([]);
+  const { countryNameArr } = useCountries();
+
+
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [newTripData, setNewTripData] = useState({
     startDate: dayjs().add(1, "day"),
@@ -49,25 +53,6 @@ const Trips = ({ trips, bags, session }) => {
 
   const { refresh } = useRefresh();
 
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const { data } = await axios.get(countriesApi);
-        const filteredData = data.filter(
-          (country) => country.name.common !== "Palestine"
-        );
-        const sortedData = filteredData.sort((a, b) =>
-          a.name.common.localeCompare(b.name.common)
-        );
-        setCountries(sortedData);
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-      }
-    };
-
-    getData();
-  }, []);
 
   const filteredTrips = trips?.tripsWithPictures
     .filter((trip) =>
@@ -86,12 +71,9 @@ const Trips = ({ trips, bags, session }) => {
     })
     .map((trip) => <Trip key={trip._id} tripData={trip} />);
 
-  const itemsTotal = trips?.totalItems?.reduce(
-    (acc, item) => acc + item.qty,
-    0
-  );
-  const countriesArr = countries.map((x) => x.name);
-  const countryNameArr = countriesArr.map((x) => x.common);
+  const itemsTotal = trips?.totalItems?.reduce((acc, item) => acc + item.qty,0);
+
+ 
 
   const createTrip = async (e) => {
     e.preventDefault();

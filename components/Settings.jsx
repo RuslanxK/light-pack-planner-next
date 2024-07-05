@@ -1,17 +1,21 @@
 'use client';
 
-import { useState, Fragment } from 'react';
-import { Typography, Stack, TextField, Container, useTheme, Button, Select, MenuItem, Alert, IconButton } from '@mui/material';
+import { useState, Fragment, useEffect } from 'react';
+import { Typography, Stack, TextField, Container, useTheme, Button, Select, MenuItem, Alert, IconButton, Autocomplete} from '@mui/material';
 import Divider from '@mui/material/Divider';
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers-pro";
 import dayjs from "dayjs";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from "@mui/icons-material/Edit";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { DemoItem  } from '@mui/x-date-pickers/internals/demo';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import useCountries from './hooks/useCountries'
+
+
 
 const Settings = ({ session, user }) => {
   const theme = useTheme();
@@ -33,6 +37,11 @@ const Settings = ({ session, user }) => {
   const [savedMessage, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [isHover, setIsHover] = useState(false);
+
+
+  const { countryNameArr } = useCountries();
+
+
 
   const handleDateChange = (date, fieldName) => {
     setError(null);
@@ -113,7 +122,7 @@ const Settings = ({ session, user }) => {
           <Stack flexDirection="row" alignItems="flex-start" mt={3} mb={4}>
             <Stack mr={9.5}>
               <Typography component="span" variant="span" fontWeight="600" mb={0.5} sx={{ fontSize: "14px" }}>
-                Username
+                Full name
               </Typography>
             </Stack>
             <TextField
@@ -291,12 +300,22 @@ const Settings = ({ session, user }) => {
               </Typography>
             </Stack>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                value={userDetails.birthdate}
-                onChange={(date) => handleDateChange(date, 'birthdate')}
-                format="DD/MM/YYYY"
-              />
-            </LocalizationProvider>
+                    <DemoItem components={['DatePicker']} sx={{ m: 0, pt: 0 }}>
+                      <MobileDatePicker
+                        label="Birthdate"
+                        name="birthdate"
+                        onChange={(date) => handleDateChange(date, "birthdate")}
+                        value={userDetails.birthdate || null}
+                        renderInput={(params) => (
+                          <TextField 
+                            {...params} 
+                            fullWidth 
+                            sx={{ m: 0, p: 0, '& .MuiInputLabel-root': { zIndex: 999 } }} 
+                          />
+                        )}
+                      />
+                    </DemoItem>
+                  </LocalizationProvider>
           </Stack>
 
           <Divider light />
@@ -351,15 +370,17 @@ const Settings = ({ session, user }) => {
                 Country
               </Typography>
             </Stack>
-            <TextField
-              type='text'
-              size='small'
-              name='country'
-              inputProps={{ style: { fontSize: 14 } }}
-              onChange={handleChange}
-              value={userDetails.country}
-              InputLabelProps={{ style: { fontSize: 14 } }}
-            />
+          
+
+                   <Autocomplete
+                    onChange={(event, newValue) => setUserDetails((prevData) => ({...prevData, country: newValue}))}
+                    options={countryNameArr || []}
+                    value={userDetails.country}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Your Country" />
+                    )}
+                    sx={{ width: "100%" }}
+                  />
           </Stack>
 
           <Divider light />
