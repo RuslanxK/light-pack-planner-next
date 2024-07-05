@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@emotion/react";
 import { Stack, TextField, Typography, Button, Select, MenuItem, InputLabel, FormControl, Grid, CircularProgress, Alert, useMediaQuery, Autocomplete } from "@mui/material";
@@ -9,25 +9,23 @@ import EditIcon from "@mui/icons-material/Edit";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-import { DemoItem  } from '@mui/x-date-pickers/internals/demo';
+import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import useCountries from './hooks/useCountries'
+import useCountries from './hooks/useCountries';
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isHover, setIsHover] = useState(false);
+  const [step, setStep] = useState(1);
 
   const theme = useTheme();
   const router = useRouter();
 
   const { countryNameArr } = useCountries();
 
-
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-
 
   const handleFileChange = (event) => {
     const { name } = event.target;
@@ -51,6 +49,70 @@ const Register = () => {
       [fieldName]: date,
     }));
   };
+
+
+  const handleNext = async () => {
+   
+    if (step === 1) {
+      if (!registerData.username || !registerData.email) {
+        setError("Please fill in all required fields.");
+        return;
+      }
+  
+     
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(registerData.email)) {
+        setError("Please enter a valid email address.");
+        return;
+      }
+  
+     
+      try {
+
+        const email = {email: registerData.email}
+
+        const response = await axios.post('/api/checkEmail', email);
+
+        if (response.status !== 200) {
+          setError(response.data.message || "An error occurred.");
+          return;
+        }
+
+      } catch (error) {
+        setError(error.response?.data?.message);
+        return;
+      }
+    } else if (step === 2) {
+      if (!registerData.password || !registerData.repeatedPassword) {
+        setError("Please fill in all required fields.");
+        return;
+      }
+      if (registerData.password !== registerData.repeatedPassword) {
+        setError("Passwords do not match.");
+        return;
+      }
+      if (registerData.password.length < 10 || registerData.repeatedPassword.length < 10) {
+        setError("Password must be at least 10 characters long.");
+        return;
+      }
+    } else if (step === 3) {
+      if (!registerData.image) {
+        setError("Please upload a profile picture.");
+        return;
+      }
+    }
+    setError("");
+    setStep((prevStep) => prevStep + 1);
+  };
+  
+
+
+
+  const handleBack = () => {
+    setStep((prevStep) => prevStep - 1);
+  };
+
+
 
   const register = async (e) => {
     e.preventDefault();
@@ -131,7 +193,7 @@ const Register = () => {
           height="58"
           style={{ position: "absolute", top: "25px", left: "25px" }}
         />
-        <div className="register-form"  style={{backgroundColor: theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null}}>
+        <div className="register-form" style={{ backgroundColor: theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null }}>
           <form onSubmit={register}>
             <Stack
               display={theme.flexBox}
@@ -142,295 +204,278 @@ const Register = () => {
               width="100%"
             >
               <Stack direction="column" alignItems="flex-start">
-                <Typography component="h1" variant="h1" fontSize="30px" fontWeight={600} mb={0.5}>
+                <Typography component="h1" variant="h1" fontSize="30px" fontWeight={600} mb={1}>
                   Register
                 </Typography>
                 <Typography component="span" variant="body1" color="gray">
                   Welcome! Create your free account.
                 </Typography>
               </Stack>
+              <Typography component="span" variant="body1" color="gray">
+                Step {step} of 4
+              </Typography>
             </Stack>
 
-            <div className="register-image-upload">
-              <Button
-                onMouseEnter={() => setIsHover(true)}
-                onMouseLeave={() => setIsHover(false)}
-                component="label"
-                role={undefined}
-                variant="outlined"
-                sx={{
-                  width: "100%",
-                  height: "100px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "12px",
-                
-                  border: "2px dashed #c4c4c4",
-                  transition: "background-color 0.3s, border-color 0.3s",
-                  '&:hover': {
-                    borderColor: "#a4a4a4",
-                  },
-                }}
-              >
-                {registerData.image ? (
-                  <Fragment>
-                    <img
-                      width="100%"
-                      height="100%"
-                      style={{ objectFit: "contain" }}
-                      src={URL.createObjectURL(registerData.image)}
+            {step === 1 && (
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    type="text"
+                    label="Full name"
+                    name="username"
+                    value={registerData.username}
+                    onChange={handleChange}
+                    fullWidth
+                    sx={{ borderRadius: "7px" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    type="email"
+                    label="Email"
+                    value={registerData.email}
+                    name="email"
+                    onChange={handleChange}
+                    fullWidth
+                    sx={{ borderRadius: "7px" }}
+                    InputProps={{ style: { border: "2px" } }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    fullWidth
+                    sx={{padding: "10px"}}
+                    disableElevation
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                  >
+                    Next
+                  </Button>
+                </Grid>
+              </Grid>
+            )}
+
+            {step === 2 && (
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    inputProps={{ minLength: 10 }}
+                    type="password"
+                    label="Password"
+                    name="password"
+                    value={registerData.password}
+                    onChange={handleChange}
+                    fullWidth
+                    sx={{ borderRadius: "7px" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    inputProps={{ minLength: 10 }}
+                    type="password"
+                    label="Repeat password"
+                    name="repeatedPassword"
+                    value={registerData.repeatedPassword}
+                    onChange={handleChange}
+                    fullWidth
+                    sx={{ borderRadius: "7px" }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    sx={{padding: "10px"}}
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleBack}
+                  >
+                    Back
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    sx={{padding: "10px"}}
+                    disableElevation
+                    onClick={handleNext}
+                  >
+                    Next
+                  </Button>
+                </Grid>
+              </Grid>
+            )}
+
+            {step === 3 && (
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Button
+                    onMouseEnter={() => setIsHover(true)}
+                    onMouseLeave={() => setIsHover(false)}
+                    component="label"
+                    role={undefined}
+                    variant="outlined"
+                    sx={{
+                      width: "100%",
+                      height: "400px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "2px dotted",
+                      transition: "background-color 0.3s, border-color 0.3s",
+                      '&:hover': {
+                        borderColor: "#a4a4a4",
+                      },
+                    }}
+                  >
+                    {registerData.image ? (
+                      <Fragment>
+                        <img
+                          width="100%"
+                          height="100%"
+                          style={{ objectFit: "contain" }}
+                          src={URL.createObjectURL(registerData.image)}
+                          alt="user profile"
+                        />
+                        <EditIcon
+                          sx={{
+                            position: "absolute",
+                            color: isHover ? "#ffffff" : "#e6e6e6",
+                            width: "30px",
+                            height: "30px",
+                            border: "1px solid",
+                            borderRadius: "50%",
+                            backgroundColor: isHover ? "#000000" : "transparent",
+                            transition: "color 0.3s, background-color 0.3s",
+                          }}
+                        />
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        <AddPhotoAlternateIcon
+                          sx={{ width: "40px", height: "40px", color: "#e6e6e6" }}
+                        />
+                        <Typography color="gray" component="span" variant="body2">
+                          Upload a profile picture
+                        </Typography>
+                      </Fragment>
+                    )}
+                    <input
+                      hidden
+                      type="file"
+                      name="image"
+                      accept="image/png, image/jpeg, image/webp"
+                      onChange={handleFileChange}
                     />
-                    {isHover ? (
-                      <EditIcon
-                        sx={{
-                          position: "absolute",
-                          fill: "rgba(255, 255, 255, 0.7)",
-                          fontSize: "2.5rem",
-                        }}
-                      />
-                    ) : null}
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <AddPhotoAlternateIcon sx={{ fontSize: "2.5em", color: "#9e9e9e" }} />
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      sx={{ color: "#9e9e9e" }}
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleBack}
+                  >
+                    Back
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                  >
+                    Next
+                  </Button>
+                </Grid>
+              </Grid>
+            )}
+
+            {step === 4 && (
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id="country-label">Select your country</InputLabel>
+                    <Select
+                      labelId="country-label"
+                      name="country"
+                      value={registerData.country || ""}
+                      onChange={handleChange}
+                      required
                     >
-                      Upload Profile
-                    </Typography>
-                  </Fragment>
-                )}
-
-                <input
-                  type="file"
-                  name="image"
-                  style={{ display: "none" }}
-                  accept="image/jpeg,image/png,image/webp"
-                  onChange={handleFileChange}
-                />
-              </Button>
-            </div>
-
-            <Grid container spacing={2}>
-              <Grid item xs={isMobile ? 12 : 6}>
-                <TextField
-                  required
-                  type="text"
-                
-                  label="Full name"
-                  name="username"
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ borderRadius: "7px" }}
-                />
-              </Grid>
-              <Grid item xs={isMobile ? 12 : 6}>
-                <TextField
-                  required
-                  type="email"
-                
-                  label="Email"
-                  name="email"
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ borderRadius: "7px" }}
-                  InputProps={{ style: { border: "2px" } }}
-                />
-              </Grid>
-              <Grid item xs={isMobile ? 12 : 6}>
-                <TextField
-                  required
-                  inputProps={{ minLength: 10 }}
-                  type="password"
-                  label="Password"
-                
-                  name="password"
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ borderRadius: "7px" }}
-                />
-              </Grid>
-              <Grid item xs={isMobile ? 12 : 6}>
-                <TextField
-                  required
-                  inputProps={{ minLength: 10 }}
-                  type="password"
-                  label="Repeat password"
-                
-                  name="repeatedPassword"
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ borderRadius: "7px" }}
-                />
-              </Grid>
-
-              <Grid item xs={isMobile ? 12 : 4}>
-                <FormControl fullWidth>
-                  <InputLabel
-                    id="weight-unit-label"
-                    sx={{ zIndex: 1, background:  theme.palette.mode === "dark" ? "black" : "white" }}
-                  >
-                    Weight Unit
-                  </InputLabel>
-                  <Select
-                    labelId="weight-unit-label"
-                    id="weight-unit"
-                    name="weightOption"
-                   
-                    value={registerData.weightOption || ""}
-                    onChange={handleChange}
-                    sx={{ zIndex: 0 }}
-                  >
-                    <MenuItem value="lb">lb</MenuItem>
-                    <MenuItem value="kg">kg</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={isMobile ? 12 : 4}>
-                <FormControl fullWidth>
-                  <InputLabel
-                    id="distance-unit-label"
-                    sx={{ zIndex: 1, background:  theme.palette.mode === "dark" ? "black" : "white" }}
-                  >
-                    Distance Unit
-                  </InputLabel>
-                  <Select
-                    labelId="distance-unit-label"
-                    id="distance-unit"
-                    name="distance"
-                   
-                    value={registerData.distance || ""}
-                    onChange={handleChange}
-                    sx={{ zIndex: 0 }}
-                  >
-                    <MenuItem value="km">km</MenuItem>
-                    <MenuItem value="miles">miles</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={isMobile ? 12 : 4}>
-                <FormControl fullWidth>
-                  <InputLabel
-                    id="gender-label"
-                    sx={{ zIndex: 1, background:  theme.palette.mode === "dark" ? "black" : "white" }}
-                  >
-                    Gender
-                  </InputLabel>
-                  <Select
-                    labelId="gender-label"
-                    id="gender"
-                    name="gender"
-                  
-                    optional
-                    value={registerData.gender || ""}
-                    onChange={handleChange}
-                    sx={{ zIndex: 0 }}
-                  >
-                    <MenuItem value="male">Male</MenuItem>
-                    <MenuItem value="female">Female</MenuItem>
-                    <MenuItem value="other">Other</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={isMobile ? 12 : 4}>
-                <FormControl fullWidth>
+                      {countryNameArr.map((country) => (
+                        <MenuItem key={country} value={country}>
+                          {country}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoItem components={['DatePicker']} sx={{ m: 0, pt: 0 }}>
+                    <DemoItem>
                       <MobileDatePicker
-                        label="Birthdate"
-                        name="birthdate"
-                        onChange={(date) => handleDateChange(date, "birthdate")}
-                        value={registerData.birthdate || null}
-                        renderInput={(params) => (
-                          <TextField 
-                            {...params} 
-                            fullWidth 
-                            sx={{ m: 0, p: 0, '& .MuiInputLabel-root': { zIndex: 999 } }} 
-                          />
-                        )}
+                        label="Date of birth"
+                        value={registerData.dob || null}
+                        onChange={(date) => handleDateChange(date, "dob")}
+                        slotProps={{ textField: { required: true, fullWidth: true } }}
                       />
                     </DemoItem>
                   </LocalizationProvider>
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={isMobile ? 12 : 4}>
-                <FormControl fullWidth>
-                  <InputLabel
-                    id="activity-level-label"
-                    sx={{ zIndex: 1, background:  theme.palette.mode === "dark" ? "black" : "white" }}
-                  >
-                    Activity Level
-                  </InputLabel>
-                  <Select
-                    labelId="activity-level-label"
-                    id="activity-level"
-                    name="activityLevel"
-                   
-                    value={registerData.activityLevel || ""}
-                    optional
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    type="text"
+                    label="City"
+                    name="city"
                     onChange={handleChange}
-                    sx={{ zIndex: 0 }}
-                  >
-                    <MenuItem value="beginner">Beginner</MenuItem>
-                    <MenuItem value="intermediate">Intermediate</MenuItem>
-                    <MenuItem value="advanced">Advanced</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={isMobile ? 12 : 4}>
-              <Autocomplete
-                    onChange={(event, newValue) => setRegisterData((prevData) => ({...prevData, country: newValue}))}
-                    options={countryNameArr || []}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Your Country" />
-                    )}
-                    sx={{ width: "100%" }}
+                    fullWidth
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    type="text"
+                    label="Address"
+                    name="address"
+                    onChange={handleChange}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleBack}
+                  >
+                    Back
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    {isLoading ? <CircularProgress size={24} /> : "Register"}
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-
-            <button
-              type="submit"
-              className="login-button-regular"
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              Create Account
-              {isLoading ? (
-                <CircularProgress
-                  color="inherit"
-                  size={20}
-                  sx={{ marginLeft: "15px" }}
-                />
-              ) : null}
-            </button>
-            <Typography
-              component="span"
-              variant="span"
-              width="100%"
-              color="gray"
-            >
-              Already have an account?
-              <Typography
-                onClick={() => router.push("/login")}
-                component="span"
-                variant="span"
-                color="#2d7fb5"
-                ml={0.5}
-                sx={{ cursor: "pointer" }}
-              >
-                Sign in
-              </Typography>
-            </Typography>
-
-            {error ? <Stack mt={2}><Alert severity="error">{error}</Alert></Stack> : null}
+            )}
           </form>
+          {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error}
+            </Alert>
+          )}
         </div>
       </div>
     </Stack>

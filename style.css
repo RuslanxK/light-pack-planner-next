@@ -121,7 +121,6 @@ span.MuiBadge-badge {
 .login-button,
 .login-button-regular {
   padding: 13.5px;
-  margin-top: 10px;
   width: 100%;
   font-size: 16px;
   cursor: pointer;
@@ -222,7 +221,7 @@ span.MuiBadge-badge {
   height: 100vh;
 }
 
-.login-content, .register-content {
+.login-content, .register-content, .reset-password-content {
   width: 50vw;
   height: 100vh;
   display: flex;
@@ -354,7 +353,7 @@ span.MuiBadge-badge {
   flex-direction: column;
   align-items: center;
   width: 33%;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 
  
 }
@@ -513,6 +512,18 @@ span.MuiBadge-badge {
     height: auto;
     min-height: 100vh;
     background-image: url("./public/hiking-2.jpg");
+    background-size: cover;
+    background-position: center;
+    align-items: center;
+  }
+
+
+  .reset-password-content {
+
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    background-image: url("./public/hiking-3.jpg");
     background-size: cover;
     background-position: center;
     align-items: center;

@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, TextField, Typography } from '@mui/material'
+import { Stack, TextField, Typography, Grid } from '@mui/material'
 import { useTheme } from '@emotion/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -77,21 +77,27 @@ const ResetPassword = () => {
       </div>
 
 
-    <div className="login-content">
+    <div className="reset-password-content">
     <img id="logo-mobile-login" src="/logo.png" alt="logo" width="90px" height="58" style={{ position: "absolute", top: "25px", left: '25px' }}/> 
     <div className='login-form'  style={{backgroundColor: theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null}}>
     <h1 className='login-text'>Forgot password</h1>
     <Typography component="span" variant="span" mb={3} width="100%" color="gray">
-          Enter the email address you used to create the account, and we will email you instructions to reset your password
+       Enter the email address you used to create the account, and we will email you instructions to reset your password
     </Typography>
     <form onSubmit={handleSubmit}>
-    <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "stretch", borderRadius:"10px"}}>
-    
-    <TextField type="email" required label=" Enter Email" name="email" onChange={handleChange} sx={{marginBottom: "5px"}} />
-    <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Send Email { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</button>
-    <Typography component="span" variant="span" width="100%" color="gray" sx={{cursor: "pointer"}}  mb={2}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
+    <Grid container spacing={2}>
 
-    </div>
+    <Grid item xs={12}>
+    
+    <TextField type="email" required label=" Enter Email" name="email" onChange={handleChange} sx={{width: "100%"}} />
+    </Grid>
+
+    <Grid item xs={12}>
+    <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Send Email { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</button>
+    </Grid>
+    <Typography component="span" variant="span" width="100%" ml={2} color="gray" sx={{cursor: "pointer"}}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
+
+    </Grid>
     </form>
 
 

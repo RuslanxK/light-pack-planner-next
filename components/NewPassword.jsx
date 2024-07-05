@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, TextField, Typography } from '@mui/material'
+import { Stack, TextField, Typography, Grid} from '@mui/material'
 import { useTheme } from '@emotion/react';
 import { Fragment, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -88,7 +88,7 @@ const NewPassword = ({user, err}) => {
       </div>
 
 
-    <div className="login-content">
+    <div className="reset-password-content">
     <img id="logo-mobile-login" src="/logo.png" alt="logo" width="90px" height="58" style={{ position: "absolute", top: "25px", left: '25px' }}/> 
     <div className='login-form'  style={{backgroundColor: theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null}}>
     <h1 className='login-text'>Reset password</h1>
@@ -96,14 +96,23 @@ const NewPassword = ({user, err}) => {
           Enter the email address you used to create the account, and we will email you instructions to reset your password
     </Typography>
     <form onSubmit={handleSubmit}>
-    <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "stretch", borderRadius:"10px"}}>
-    
-    <TextField type="password" required inputProps={{minLength : 10}} label="New Password" name="password" onChange={handleChange} sx={{marginBottom: "5px"}} />
-    <TextField type="password" required inputProps={{minLength : 10}} label="Confirm New Password" name="confirmPassword" onChange={handleChange} sx={{marginBottom: "15px"}} />
-    <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Reset Password { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</button>
-    <Typography component="span" variant="span" width="100%" color="gray" sx={{cursor: "pointer"}}  mb={2}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
 
-    </div>
+    <Grid container spacing={2}>
+    <Grid item xs={12}>
+    <TextField type="password" sx={{width: "100%"}} required inputProps={{minLength : 10}} label="New Password" name="password" onChange={handleChange} />
+    </Grid>
+    <Grid item xs={12}>
+    <TextField type="password" sx={{width: "100%"}} required inputProps={{minLength : 10}} label="Confirm New Password" name="confirmPassword" onChange={handleChange}  />
+    </Grid>
+    <Grid item xs={12}>
+    <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Reset Password { isLoading ? <CircularProgress color="inherit" size={20} /> : null }</button>
+    </Grid>
+
+    <Typography component="span" variant="span" width="100%" color="gray" ml={2}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
+  
+
+    </Grid>
+    
     </form>
 
 

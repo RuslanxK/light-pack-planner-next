@@ -108,7 +108,7 @@ const Login = () => {
           <Typography
             component="span"
             variant="span"
-            mb={4}
+            mb={3}
             width="100%"
             color="gray"
           >
@@ -149,17 +149,7 @@ const Login = () => {
                 />
               ) : null}
             </button>
-            <Typography
-              component="span"
-              variant="span"
-              width="100%"
-              color="#2d7fb5"
-              sx={{ cursor: "pointer" }}
-              mb={2}
-              onClick={() => router.push("/reset-password")}
-            >
-             Forgot your password?
-            </Typography>
+          
           </form>
 
           <button className="login-button" onClick={loginWithGoogle}>
@@ -179,6 +169,7 @@ const Login = () => {
               Continue with Google
             </Stack>
           </button>
+          
           <Typography
             component="span"
             variant="span"
@@ -191,6 +182,7 @@ const Login = () => {
             <Typography
               onClick={() => router.push("/register")}
               component="span"
+              
               variant="span"
               color="#2d7fb5"
               sx={{ cursor: "pointer", marginLeft: "3px" }}
@@ -198,6 +190,18 @@ const Login = () => {
                Free Register
             </Typography>
           </Typography>
+
+          <Stack mt={1}>
+          <Typography
+              component="span"
+              variant="span"
+              width="100%"
+              color="#2d7fb5"
+              sx={{ cursor: "pointer" }}
+              onClick={() => router.push("/reset-password")}>
+             Forgot your password?
+            </Typography>
+            </Stack>
 
           {error ? <Stack mt={3}><Alert severity="error">{error}</Alert></Stack> : null}
           {success ? <Stack mt={2}><Alert severity="success">{success}</Alert></Stack> : null}
