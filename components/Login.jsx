@@ -3,7 +3,7 @@
 import { Stack, TextField, Typography, Grid } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
@@ -13,9 +13,21 @@ const Login = () => {
   const [loginData, setLoginData] = useState({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState("");
 
   const theme = useTheme();
   const router = useRouter();
+
+
+
+
+  useEffect(() => {
+    const registrationSuccess = localStorage.getItem('registrationSuccess');
+    if (registrationSuccess === 'true') {
+      setSuccess("Account created successfully. Please check your email to verify your account.");
+      localStorage.removeItem('registrationSuccess');
+    }
+  }, []);
 
 
 
@@ -32,6 +44,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    setSuccess("")
 
     const response = await signIn("credentials", {
       email: loginData.email,
@@ -186,6 +200,7 @@ const Login = () => {
           </Typography>
 
           {error ? <Stack mt={3}><Alert severity="error">{error}</Alert></Stack> : null}
+          {success ? <Stack mt={2}><Alert severity="success">{success}</Alert></Stack> : null}
         </div>
       </div>
     </Stack>

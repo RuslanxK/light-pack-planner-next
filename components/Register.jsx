@@ -17,7 +17,6 @@ import { countriesApi } from "../utils/apiConfig";
 const Register = () => {
   const [registerData, setRegisterData] = useState({});
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const [countries, setCountries] = useState([]);
@@ -61,7 +60,6 @@ const Register = () => {
     if (selectedFile) {
       setRegisterData({ ...registerData, [name]: selectedFile });
       setError("");
-      setSuccess("");
     }
   };
 
@@ -69,7 +67,6 @@ const Register = () => {
     const { name, value } = event.target;
     setRegisterData({ ...registerData, [name]: value });
     setError("");
-    setSuccess("");
   };
 
   const handleDateChange = (date, fieldName) => {
@@ -110,9 +107,8 @@ const Register = () => {
       const sendTo = { email: registerData.email, id: data.data.User._id };
 
       await axios.post("/api/emailVerify", sendTo);
-      setSuccess(
-        "Account created successfully. Please check your email to verify your account."
-      );
+      localStorage.setItem('registrationSuccess', 'true');
+
       router.push("/login")
 
       setIsLoading(false);
@@ -458,7 +454,6 @@ const Register = () => {
             </Typography>
 
             {error ? <Stack mt={2}><Alert severity="error">{error}</Alert></Stack> : null}
-            {success ? <Stack mt={2}><Alert severity="success">{success}</Alert></Stack> : null}
           </form>
         </div>
       </div>
