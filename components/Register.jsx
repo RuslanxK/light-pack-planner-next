@@ -223,7 +223,7 @@ const Register = () => {
                   Welcome! Create your free account.
                 </Typography>
               </Stack>
-              <Typography component="span" variant="body1" color="gray">
+              <Typography component="span" fontSize="14px" variant="body1" color="gray">
                 Step {step} of 4
               </Typography>
             </Stack>
@@ -489,6 +489,32 @@ const Register = () => {
               </Grid>
             )}
           </form>
+
+          
+          <Stack mt={2}>
+
+<Typography
+component="span"
+variant="span"
+width="100%"
+color="gray"
+mr={2}
+
+>
+Already have an account?
+<Typography
+onClick={() => router.push("/login")}
+component="span"
+
+variant="span"
+color="#2d7fb5"
+sx={{ cursor: "pointer", marginLeft: "3px" }}
+>
+Login
+</Typography>
+</Typography>
+
+</Stack>
           {error && (
             <Alert severity="error" sx={{ mt: 2 }}>
               {error}
