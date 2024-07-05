@@ -419,7 +419,7 @@ const Register = () => {
 
             {step === 4 && (
               <Grid container spacing={2}>
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                   <FormControl fullWidth>
                     <InputLabel id="country-label">
                       Select your country
@@ -429,7 +429,7 @@ const Register = () => {
                       name="country"
                       value={registerData.country || ""}
                       onChange={handleChange}
-                      required
+                     
                     >
                       {countryNameArr.map((country) => (
                         <MenuItem key={country} value={country}>
@@ -439,7 +439,7 @@ const Register = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoItem>
                       <MobileDatePicker
@@ -453,14 +453,23 @@ const Register = () => {
                     </DemoItem>
                   </LocalizationProvider>
                 </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    type="text"
-                    label="City"
-                    name="city"
-                    onChange={handleChange}
-                    fullWidth
-                  />
+                <Grid item xs={6}>
+                
+                <FormControl variant="outlined" size="small">
+  <InputLabel id="distance-label">Distance Unit</InputLabel>
+  <Select
+    labelId="distance-label"
+    label="Distance Unit"
+    name="distance"
+    onChange={handleChange}
+    value={registerData.distance}
+    
+  >
+    <MenuItem sx={{ fontSize: "13px" }} value="miles">Miles</MenuItem>
+    <MenuItem sx={{ fontSize: "13px" }} value="km">Kilometers</MenuItem>
+  </Select>
+</FormControl>
+
                 </Grid>
               
                 <Grid item xs={6}>
