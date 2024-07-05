@@ -1,9 +1,9 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@emotion/react";
-import { Stack, TextField, Typography, Button, Select, MenuItem, InputLabel, FormControl, Grid, CircularProgress, Alert, useMediaQuery } from "@mui/material";
+import { Stack, TextField, Typography, Button, Select, MenuItem, InputLabel, FormControl, Grid, CircularProgress, Alert, useMediaQuery, Autocomplete } from "@mui/material";
 import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -11,6 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DemoItem  } from '@mui/x-date-pickers/internals/demo';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { countriesApi } from "../utils/apiConfig";
 
 
 const Register = () => {
@@ -19,11 +20,39 @@ const Register = () => {
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isHover, setIsHover] = useState(false);
+  const [countries, setCountries] = useState([]);
 
   const theme = useTheme();
   const router = useRouter();
 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const { data } = await axios.get(countriesApi);
+        const filteredData = data.filter(
+          (country) => country.name.common !== "Palestine"
+        );
+        const sortedData = filteredData.sort((a, b) =>
+          a.name.common.localeCompare(b.name.common)
+        );
+        setCountries(sortedData);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
+    getData();
+  }, []);
+
+
+
+  const countriesArr = countries.map((x) => x.name);
+  const countryNameArr = countriesArr.map((x) => x.common);
+
+
 
   const handleFileChange = (event) => {
     const { name } = event.target;
@@ -84,6 +113,8 @@ const Register = () => {
       setSuccess(
         "Account created successfully. Please check your email to verify your account."
       );
+      router.push("/login")
+
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -282,8 +313,6 @@ const Register = () => {
                     sx={{ zIndex: 0 }}
                   >
                     <MenuItem value="lb">lb</MenuItem>
-                    <MenuItem value="oz">oz</MenuItem>
-                    <MenuItem value="g">g</MenuItem>
                     <MenuItem value="kg">kg</MenuItem>
                   </Select>
                 </FormControl>
@@ -384,15 +413,14 @@ const Register = () => {
               </Grid>
 
               <Grid item xs={isMobile ? 12 : 4}>
-                <TextField
-                  optional
-                  type="text"
-                  label="Country"
-                  name="country"
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ marginBottom: "15px", borderRadius: "7px" }}
-                />
+              <Autocomplete
+                    onChange={(event, newValue) => setRegisterData((prevData) => ({...prevData, country: newValue}))}
+                    options={countryNameArr || []}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Your Country" />
+                    )}
+                    sx={{ width: "100%" }}
+                  />
               </Grid>
             </Grid>
 

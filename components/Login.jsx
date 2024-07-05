@@ -144,7 +144,7 @@ const Login = () => {
               mb={2}
               onClick={() => router.push("/reset-password")}
             >
-              Forgot password?
+             Forgot your password?
             </Typography>
           </form>
 
@@ -181,7 +181,7 @@ const Login = () => {
               color="#2d7fb5"
               sx={{ cursor: "pointer", marginLeft: "3px" }}
             >
-               Create
+               Free Register
             </Typography>
           </Typography>
 
