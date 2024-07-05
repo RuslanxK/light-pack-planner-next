@@ -353,7 +353,7 @@ const InnerBag = ({
             <IconButton
               onClick={showHideSideBar}
               sx={{
-                width: "33.33%",
+                width: "20%",
                 height: "40px",
                 zIndex: "99",
                 borderRadius: "0px",
@@ -388,13 +388,13 @@ const InnerBag = ({
           >
             <IconButton
               sx={{
-                width: items?.length ? "33.33%" : "50%",
+                width: items?.length ? "20%" : "40%",
                 height: "40px",
                 zIndex: "99",
                 borderRadius: "0px",
                 position: "fixed",
                 bottom: "0px",
-                left: items?.length ? "33.3%" : "0px",
+                left: items?.length ? "20%" : "0px",
                 backgroundColor: theme.palette.primary.dark,
                 color: "white",
                 "&:hover": {
@@ -413,13 +413,13 @@ const InnerBag = ({
         <div className="switch-icon-mobile">
           <IconButton
             sx={{
-              width: items?.length ? "33.33%" : "50%",
+              width: items?.length ? "60%" : "60%",
               height: "40px",
               zIndex: "99",
               borderRadius: "0px",
               position: "fixed",
               bottom: "0px",
-              left: items?.length ? "66.6%" : "50%",
+              left: items?.length ? "40%" : "50%",
               backgroundColor: theme.palette.secondary.dark,
               color: "white",
               "&:hover": {
@@ -430,6 +430,7 @@ const InnerBag = ({
               },
             }}
           >
+           <Typography variant="span" component="span" fontSize="15px" mr={1}>Share to explore</Typography>
             <Switch
               onChange={handleSwitchChange}
               sx={{ transform: "scale(0.9)" }}
@@ -523,9 +524,12 @@ const InnerBag = ({
                             checked={bagData.bag.exploreBags}
                           />
                         </Tooltip>
+
+                        <Typography mr={5}>Share to explore</Typography>
+
                       </div>
 
-                      <Typography mr={5}>Share to explore</Typography>
+                      
 
                       <div className="share-icon-desktop">
                         <Link

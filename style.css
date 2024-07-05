@@ -343,6 +343,8 @@ span.MuiBadge-badge {
 .switch-icon-desktop {
 
   display: block;
+  display: flex;
+  align-items: center;
 }
 
 
