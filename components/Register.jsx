@@ -3,15 +3,29 @@
 import { Fragment, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@emotion/react";
-import { Stack, TextField, Typography, Button, Select, MenuItem, InputLabel, FormControl, Grid, CircularProgress, Alert, useMediaQuery, Autocomplete } from "@mui/material";
+import {
+  Stack,
+  TextField,
+  Typography,
+  Button,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Grid,
+  CircularProgress,
+  Alert,
+  useMediaQuery,
+  Autocomplete,
+} from "@mui/material";
 import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-import { DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import useCountries from './hooks/useCountries';
+import { DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import useCountries from "./hooks/useCountries";
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({});
@@ -25,7 +39,7 @@ const Register = () => {
 
   const { countryNameArr } = useCountries();
 
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleFileChange = (event) => {
     const { name } = event.target;
@@ -50,34 +64,28 @@ const Register = () => {
     }));
   };
 
-
   const handleNext = async () => {
-   
     if (step === 1) {
       if (!registerData.username || !registerData.email) {
         setError("Please fill in all required fields.");
         return;
       }
-  
-     
+
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(registerData.email)) {
         setError("Please enter a valid email address.");
         return;
       }
-  
-     
+
       try {
+        const email = { email: registerData.email };
 
-        const email = {email: registerData.email}
-
-        const response = await axios.post('/api/checkEmail', email);
+        const response = await axios.post("/api/checkEmail", email);
 
         if (response.status !== 200) {
           setError(response.data.message || "An error occurred.");
           return;
         }
-
       } catch (error) {
         setError(error.response?.data?.message);
         return;
@@ -91,7 +99,10 @@ const Register = () => {
         setError("Passwords do not match.");
         return;
       }
-      if (registerData.password.length < 10 || registerData.repeatedPassword.length < 10) {
+      if (
+        registerData.password.length < 10 ||
+        registerData.repeatedPassword.length < 10
+      ) {
         setError("Password must be at least 10 characters long.");
         return;
       }
@@ -104,9 +115,6 @@ const Register = () => {
     setError("");
     setStep((prevStep) => prevStep + 1);
   };
-  
-
-
 
   const handleBack = () => {
     setStep((prevStep) => prevStep - 1);
@@ -117,16 +125,7 @@ const Register = () => {
   const register = async (e) => {
     e.preventDefault();
 
-    if (!registerData.image || !(registerData.image instanceof File)) {
-      setError("Profile picture is required.");
-      return;
-    }
-
-    if (registerData.image && registerData.image.size > 2 * 1024 * 1024) {
-      setError("File size exceeds the maximum limit of 2 MB.");
-      return;
-    }
-
+   
     try {
       setIsLoading(true);
 
@@ -145,9 +144,9 @@ const Register = () => {
       const sendTo = { email: registerData.email, id: data.data.User._id };
 
       await axios.post("/api/emailVerify", sendTo);
-      localStorage.setItem('registrationSuccess', 'true');
+      localStorage.setItem("registrationSuccess", "true");
 
-      router.push("/login")
+      router.push("/login");
 
       setIsLoading(false);
     } catch (error) {
@@ -157,6 +156,7 @@ const Register = () => {
       setError(error?.response?.data);
     }
   };
+  
 
   return (
     <Stack
@@ -193,7 +193,13 @@ const Register = () => {
           height="58"
           style={{ position: "absolute", top: "25px", left: "25px" }}
         />
-        <div className="register-form" style={{ backgroundColor: theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null }}>
+        <div
+          className="register-form"
+          style={{
+            backgroundColor:
+              theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null,
+          }}
+        >
           <form onSubmit={register}>
             <Stack
               display={theme.flexBox}
@@ -204,7 +210,13 @@ const Register = () => {
               width="100%"
             >
               <Stack direction="column" alignItems="flex-start">
-                <Typography component="h1" variant="h1" fontSize="30px" fontWeight={600} mb={1}>
+                <Typography
+                  component="h1"
+                  variant="h1"
+                  fontSize="30px"
+                  fontWeight={600}
+                  mb={1}
+                >
                   Register
                 </Typography>
                 <Typography component="span" variant="body1" color="gray">
@@ -246,7 +258,7 @@ const Register = () => {
                 <Grid item xs={12}>
                   <Button
                     fullWidth
-                    sx={{padding: "10px"}}
+                    sx={{ padding: "10px" }}
                     disableElevation
                     variant="contained"
                     color="primary"
@@ -289,7 +301,7 @@ const Register = () => {
                 <Grid item xs={6}>
                   <Button
                     fullWidth
-                    sx={{padding: "10px"}}
+                    sx={{ padding: "10px" }}
                     variant="outlined"
                     color="primary"
                     onClick={handleBack}
@@ -302,7 +314,7 @@ const Register = () => {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    sx={{padding: "10px"}}
+                    sx={{ padding: "10px" }}
                     disableElevation
                     onClick={handleNext}
                   >
@@ -320,7 +332,7 @@ const Register = () => {
                     onMouseLeave={() => setIsHover(false)}
                     component="label"
                     role={undefined}
-                    variant="outlined"
+                    variant="text"
                     sx={{
                       width: "100%",
                       height: "400px",
@@ -329,7 +341,7 @@ const Register = () => {
                       justifyContent: "center",
                       border: "2px dotted",
                       transition: "background-color 0.3s, border-color 0.3s",
-                      '&:hover': {
+                      "&:hover": {
                         borderColor: "#a4a4a4",
                       },
                     }}
@@ -339,19 +351,15 @@ const Register = () => {
                         <img
                           width="100%"
                           height="100%"
-                          style={{ objectFit: "contain" }}
+                          style={{ objectFit: "cover" }}
                           src={URL.createObjectURL(registerData.image)}
                           alt="user profile"
                         />
                         <EditIcon
                           sx={{
                             position: "absolute",
+                            fontSize: "35px",
                             color: isHover ? "#ffffff" : "#e6e6e6",
-                            width: "30px",
-                            height: "30px",
-                            border: "1px solid",
-                            borderRadius: "50%",
-                            backgroundColor: isHover ? "#000000" : "transparent",
                             transition: "color 0.3s, background-color 0.3s",
                           }}
                         />
@@ -359,9 +367,17 @@ const Register = () => {
                     ) : (
                       <Fragment>
                         <AddPhotoAlternateIcon
-                          sx={{ width: "40px", height: "40px", color: "#e6e6e6" }}
+                          sx={{
+                            width: "40px",
+                            height: "40px",
+                            color: "#e6e6e6",
+                          }}
                         />
-                        <Typography color="gray" component="span" variant="body2">
+                        <Typography
+                          color="gray"
+                          component="span"
+                          variant="body2"
+                        >
                           Upload a profile picture
                         </Typography>
                       </Fragment>
@@ -381,6 +397,7 @@ const Register = () => {
                     variant="outlined"
                     color="primary"
                     onClick={handleBack}
+                    sx={{padding: "10px"}}
                   >
                     Back
                   </Button>
@@ -390,6 +407,8 @@ const Register = () => {
                     fullWidth
                     variant="contained"
                     color="primary"
+                    sx={{padding: "10px"}}
+                    disableElevation
                     onClick={handleNext}
                   >
                     Next
@@ -400,9 +419,11 @@ const Register = () => {
 
             {step === 4 && (
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={4}>
                   <FormControl fullWidth>
-                    <InputLabel id="country-label">Select your country</InputLabel>
+                    <InputLabel id="country-label">
+                      Select your country
+                    </InputLabel>
                     <Select
                       labelId="country-label"
                       name="country"
@@ -418,19 +439,21 @@ const Register = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={4}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoItem>
                       <MobileDatePicker
                         label="Date of birth"
                         value={registerData.dob || null}
                         onChange={(date) => handleDateChange(date, "dob")}
-                        slotProps={{ textField: { required: true, fullWidth: true } }}
+                        slotProps={{
+                          textField: { required: true, fullWidth: true },
+                        }}
                       />
                     </DemoItem>
                   </LocalizationProvider>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={4}>
                   <TextField
                     type="text"
                     label="City"
@@ -439,20 +462,13 @@ const Register = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    type="text"
-                    label="Address"
-                    name="address"
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
+              
                 <Grid item xs={6}>
                   <Button
                     fullWidth
                     variant="outlined"
                     color="primary"
+                    sx={{padding: "10px"}}
                     onClick={handleBack}
                   >
                     Back
@@ -463,6 +479,8 @@ const Register = () => {
                     fullWidth
                     type="submit"
                     variant="contained"
+                    sx={{padding: "10px"}}
+                    disableElevation
                     color="primary"
                   >
                     {isLoading ? <CircularProgress size={24} /> : "Register"}
