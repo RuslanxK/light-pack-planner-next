@@ -237,7 +237,7 @@ const saveItemsOrder = async (updatedItems) => {
 
 
   return (
-    <Stack width={theme.category.width}  display={theme.flexBox} mb={1}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#FAFAFA" } ref={setNodeRef} style={style} boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px">
+    <Stack width={theme.category.width}  display={theme.flexBox} mb={2}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#FAFAFA" } ref={setNodeRef} style={style} boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px">
 
   
       <Stack display={theme.flexBox} direction="row" pt={0.8} pb={0.3}>

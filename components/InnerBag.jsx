@@ -474,7 +474,7 @@ const InnerBag = ({
                   justifyContent="space-between"
                   width="100%"
                 >
-                  <Grid item xs={9}>
+                  <Grid item xs={8}>
                     <Stack direction="row" alignItems="center">
                       <IconButton
                         sx={{
@@ -501,26 +501,32 @@ const InnerBag = ({
                     </Stack>
                   </Grid>
 
-                  <Grid item xs={3}>
+                  <Grid item xs={4}>
                     <Stack
                       direction="row"
                       alignItems="center"
                       justifyContent="flex-end"
                     >
                       <div className="switch-icon-desktop">
+                        
                         <Tooltip
                           title={
                             bagData.bag.exploreBags
-                              ? "Remove this bag from 'Explore Bags'"
-                              : "Share this bag in 'Explore Bags'"
+                              ? "Remove this bag from 'Explore'"
+                              : "Share this bag to 'Explore'"
                           }
                         >
+                          
+                          
                           <Switch
                             onChange={handleSwitchChange}
                             checked={bagData.bag.exploreBags}
                           />
                         </Tooltip>
                       </div>
+
+                      <Typography mr={5}>Share to explore</Typography>
+
                       <div className="share-icon-desktop">
                         <Link
                           href={`/share?id=${bagData.bag._id}`}
@@ -755,7 +761,7 @@ const InnerBag = ({
                 alignItems={theme.center}
                 height={theme.category.height}
                 backgroundColor={theme.palette.mode === "dark" ? null : "#FAFAFA"}
-                mb={1}
+                mb={2}
                 sx={{ cursor: "pointer" }}
                 onClick={addCategory}
               >
@@ -802,7 +808,7 @@ const InnerBag = ({
             <div className="recent-desktop">
               <Stack width={theme.nav.width} height={theme.nav.height}>
                 <Stack
-                  pt={2}
+                  pt={1}
                   display={theme.flexBox}
                   alignItems={theme.left}
                   position={theme.nav.fixed}
@@ -816,7 +822,7 @@ const InnerBag = ({
                   }}
                 >
 
-                  <Stack alignItems="center"><Tooltip title="Close sidebar"><IconButton onClick={() =>  setShowSideBarDesktop(!showSideBarDesktop)}><ArrowForwardOutlinedIcon /></IconButton></Tooltip></Stack>
+                  <Stack pb={1} alignItems="center"><Tooltip title="Close sidebar"><IconButton sx={{background: "white", color: theme.green, '&:hover': {background: "#e0e0e0"}}} onClick={() =>  setShowSideBarDesktop(!showSideBarDesktop)}><ArrowForwardOutlinedIcon sx={{fontSize: "20px"}} /></IconButton></Tooltip></Stack>
                   <Typography
                     component="h3"
                     variant="span"
@@ -842,7 +848,7 @@ const InnerBag = ({
             </div>
           ) : items?.length && bagData?.categories.length ? <div className="recent-desktop">
 
-              <Stack width={"40px"} height={theme.nav.height}>
+              <Stack width={"36px"} height={theme.nav.height}>
                 <Stack
                   pt={2}
                   position={theme.nav.fixed}
@@ -854,7 +860,7 @@ const InnerBag = ({
                         : theme.green,
                   }}
                 >
-             <Stack alignItems="center"><Tooltip title="Open sidebar"><IconButton onClick={() =>  setShowSideBarDesktop(!showSideBarDesktop)}><ArrowBackOutlinedIcon /></IconButton></Tooltip></Stack>
+             <Stack alignItems="center"><Tooltip title="Open sidebar"><IconButton sx={{background: theme.palette.mode === "dark" ? "#404040" : "white", color: theme.green, '&:hover': {background: "#e0e0e0"}}} onClick={() =>  setShowSideBarDesktop(!showSideBarDesktop)}><ArrowBackOutlinedIcon sx={{fontSize: "20px"}} /></IconButton></Tooltip></Stack>
 
              </Stack>
              </Stack>
