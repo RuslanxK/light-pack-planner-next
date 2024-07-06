@@ -17,6 +17,7 @@ import {
   Alert,
   useMediaQuery,
   Autocomplete,
+  IconButton,
 } from "@mui/material";
 import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
@@ -324,108 +325,123 @@ const Register = () => {
               </Grid>
             )}
 
-            {step === 3 && (
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Button
-                    onMouseEnter={() => setIsHover(true)}
-                    onMouseLeave={() => setIsHover(false)}
-                    component="label"
-                    role={undefined}
-                    variant="text"
-                    sx={{
-                      width: "100%",
-                      height: "400px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      border: "2px dotted",
-                      transition: "background-color 0.3s, border-color 0.3s",
-                      "&:hover": {
-                        borderColor: "#a4a4a4",
-                      },
-                    }}
-                  >
-                    {registerData.image ? (
-                      <Fragment>
-                        <img
-                          width="100%"
-                          height="100%"
-                          style={{ objectFit: "cover" }}
-                          src={URL.createObjectURL(registerData.image)}
-                          alt="user profile"
-                        />
-                        <EditIcon
-                          sx={{
-                            position: "absolute",
-                            fontSize: "35px",
-                            color: isHover ? "#ffffff" : "#e6e6e6",
-                            transition: "color 0.3s, background-color 0.3s",
-                          }}
-                        />
-                      </Fragment>
-                    ) : (
-                      <Fragment>
-                        <AddPhotoAlternateIcon
-                          sx={{
-                            width: "40px",
-                            height: "40px",
-                            color: "#e6e6e6",
-                          }}
-                        />
-                        <Typography
-                          color="gray"
-                          component="span"
-                          variant="body2"
-                        >
-                          Upload a profile picture
-                        </Typography>
-                      </Fragment>
-                    )}
-                    <input
-                      hidden
-                      type="file"
-                      name="image"
-                      accept="image/png, image/jpeg, image/webp"
-                      onChange={handleFileChange}
-                    />
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    color="primary"
-                    onClick={handleBack}
-                    sx={{padding: "10px"}}
-                  >
-                    Back
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    sx={{padding: "10px"}}
-                    disableElevation
-                    onClick={handleNext}
-                  >
-                    Next
-                  </Button>
-                </Grid>
-              </Grid>
-            )}
+{step === 3 && (
+  <Grid container spacing={2}>
+    <Grid item xs={12}>
+      <Button
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+        component="label"
+        role={undefined}
+        variant="text"
+        sx={{
+          width: "100%",
+          height: "350px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "2px dotted",
+          position: "relative", // Added to position the edit icon correctly
+          transition: "background-color 0.3s, border-color 0.3s",
+          "&:hover": {
+            borderColor: "#a4a4a4",
+          },
+        }}
+      >
+        {registerData.image ? (
+          <Fragment>
+            <img
+              width="100%"
+              height="100%"
+              style={{ objectFit: "cover" }}
+              src={URL.createObjectURL(registerData.image)}
+              alt="user profile"
+            />
+            <IconButton 
+              sx={{zIndex: 1, position: "absolute"}}
+              component="label"
+            >
+              <EditIcon
+                sx={{
+                  fontSize: "40px",
+                  color: isHover ? "#bfbfbf" : "#f5f5f5",
+                  transition: "color 0.3s, background-color 0.3s",
+                }}
+              />
+              <input
+                hidden
+                type="file"
+                name="image"
+                accept="image/png, image/jpeg, image/webp"
+                onChange={handleFileChange}
+              />
+            </IconButton>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <AddPhotoAlternateIcon
+              sx={{
+                width: "40px",
+                height: "40px",
+                color: "#e6e6e6",
+              }}
+            />
+            <Typography
+              color="gray"
+              component="span"
+              variant="body2"
+            >
+              Upload a profile picture
+            </Typography>
+          </Fragment>
+        )}
+        <input
+          hidden
+          style={{ position: "absolute", zIndex: 9999 }}
+          type="file"
+          name="image"
+          accept="image/png, image/jpeg, image/webp"
+          onChange={handleFileChange}
+        />
+      </Button>
+    </Grid>
+    <Grid item xs={6}>
+      <Button
+        fullWidth
+        variant="outlined"
+        color="primary"
+        onClick={handleBack}
+        sx={{ padding: "10px" }}
+      >
+        Back
+      </Button>
+    </Grid>
+    <Grid item xs={6}>
+      <Button
+        fullWidth
+        variant="contained"
+        color="primary"
+        sx={{ padding: "10px" }}
+        disableElevation
+        onClick={handleNext}
+      >
+        Next
+      </Button>
+    </Grid>
+  </Grid>
+)}
+
 
             {step === 4 && (
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth variant="outlined">
                     <InputLabel id="country-label">
                       Select your country
                     </InputLabel>
                     <Select
                       labelId="country-label"
+                      label="Select your country"
                       name="country"
                       value={registerData.country || ""}
                       onChange={handleChange}
@@ -447,30 +463,77 @@ const Register = () => {
                         value={registerData.dob || null}
                         onChange={(date) => handleDateChange(date, "dob")}
                         slotProps={{
-                          textField: { required: true, fullWidth: true },
+                          textField: { fullWidth: true },
                         }}
                       />
                     </DemoItem>
                   </LocalizationProvider>
                 </Grid>
-                <Grid item xs={6}>
-                
-                <FormControl variant="outlined" size="small">
-  <InputLabel id="distance-label">Distance Unit</InputLabel>
-  <Select
-    labelId="distance-label"
-    label="Distance Unit"
-    name="distance"
-    onChange={handleChange}
-    value={registerData.distance}
-    
-  >
-    <MenuItem sx={{ fontSize: "13px" }} value="miles">Miles</MenuItem>
-    <MenuItem sx={{ fontSize: "13px" }} value="km">Kilometers</MenuItem>
-  </Select>
-</FormControl>
 
+
+                <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined">
+               <InputLabel id="distance-label">Distance Unit</InputLabel>
+               <Select
+               labelId="distance-label"
+               label="Distance Unit"
+               name="distance"
+               onChange={handleChange}
+               value={registerData.distance}>
+               <MenuItem sx={{ fontSize: "13px" }} value="miles">Miles</MenuItem>
+               <MenuItem sx={{ fontSize: "13px" }} value="km">Kilometers</MenuItem>
+               </Select>
+               </FormControl>
                 </Grid>
+
+                <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined">
+               <InputLabel id="gender-label">Gender</InputLabel>
+               <Select
+               labelId="gender-label"
+               label="Gender"
+               name="gender"
+               onChange={handleChange}
+               value={registerData.gender}>
+               <MenuItem sx={{ fontSize: "13px" }} value="male">Male</MenuItem>
+               <MenuItem sx={{ fontSize: "13px" }} value="female">Female</MenuItem>
+               </Select>
+               </FormControl>
+                </Grid>
+
+
+                <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined">
+               <InputLabel id="weight-unit-label">Weight Unit</InputLabel>
+               <Select
+               labelId="weight-unit-label"
+               label="Weight Unit"
+               name="weightOption"
+               onChange={handleChange}
+               value={registerData.weightOption}>
+               <MenuItem sx={{ fontSize: "13px" }} value="lb">lb</MenuItem>
+               <MenuItem sx={{ fontSize: "13px" }} value="kg">kg</MenuItem>
+               </Select>
+               </FormControl>
+                </Grid>
+
+                <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined">
+               <InputLabel id="activity-level-label">Activity Level</InputLabel>
+               <Select
+               labelId="activity-level-label"
+               label="Activity Level"
+               name="activityLevel"
+               onChange={handleChange}
+               value={registerData.activityLevel}>
+               <MenuItem sx={{ fontSize: "13px" }} value="beginner">Beginner</MenuItem>
+               <MenuItem sx={{ fontSize: "13px" }} value="intermediate">Intermediate</MenuItem>
+               <MenuItem sx={{ fontSize: "13px" }} value="advanced">Advanced</MenuItem>
+               </Select>
+               </FormControl>
+                </Grid>
+
+              
               
                 <Grid item xs={6}>
                   <Button
@@ -492,7 +555,7 @@ const Register = () => {
                     disableElevation
                     color="primary"
                   >
-                    {isLoading ? <CircularProgress size={24} /> : "Register"}
+                   Register {isLoading ? <CircularProgress color="inherit" size={20} sx={{ marginLeft: "15px" }} /> : null}
                   </Button>
                 </Grid>
               </Grid>

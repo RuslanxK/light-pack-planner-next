@@ -149,6 +149,18 @@ const Login = () => {
                 />
               ) : null}
             </button>
+
+            <Stack mb={1.5}>
+          <Typography
+              component="span"
+              variant="span"
+              width="100%"
+              color="#2d7fb5"
+              sx={{ cursor: "pointer" }}
+              onClick={() => router.push("/reset-password")}>
+             Forgot your password?
+            </Typography>
+            </Stack>
           
           </form>
 
@@ -170,6 +182,7 @@ const Login = () => {
             </Stack>
           </button>
           
+          
           <Typography
             component="span"
             variant="span"
@@ -190,18 +203,6 @@ const Login = () => {
                Free Register
             </Typography>
           </Typography>
-
-          <Stack mt={1}>
-          <Typography
-              component="span"
-              variant="span"
-              width="100%"
-              color="#2d7fb5"
-              sx={{ cursor: "pointer" }}
-              onClick={() => router.push("/reset-password")}>
-             Forgot your password?
-            </Typography>
-            </Stack>
 
           {error ? <Stack mt={3}><Alert severity="error">{error}</Alert></Stack> : null}
           {success ? <Stack mt={2}><Alert severity="success">{success}</Alert></Stack> : null}
