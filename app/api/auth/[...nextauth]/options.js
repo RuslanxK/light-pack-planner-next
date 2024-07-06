@@ -96,6 +96,7 @@ export const options = {
         session.user.profileImageKey = sessionUser.profileImageKey;
         session.user.weightOption = sessionUser.weightOption
         session.user.distance = sessionUser.distance
+        session.user.isAdmin = sessionUser.isAdmin
         return session;
       }
     },

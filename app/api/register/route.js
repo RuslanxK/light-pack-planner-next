@@ -61,7 +61,7 @@ export const POST = async (req) => {
 
     let admin = false
 
-    if(email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+    if(email === process.env.NEXT_PUBLIC_ADMIN_1_EMAIL || email === process.env.NEXT_PUBLIC_ADMIN_2_EMAIL, email === process.env.NEXT_PUBLIC_ADMIN_3_EMAIL) {
        
         admin = true
     }
