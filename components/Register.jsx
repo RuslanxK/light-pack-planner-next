@@ -210,7 +210,9 @@ const Register = () => {
               mb={2}
               width="100%"
             >
-              <Stack direction="column" alignItems="flex-start">
+              <Stack direction="column" alignItems="flex-start" width="100%">
+
+                <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
                 <Typography
                   component="h1"
                   variant="h1"
@@ -220,13 +222,18 @@ const Register = () => {
                 >
                   Register
                 </Typography>
+
+                <Typography component="span" fontSize="14px" variant="body1" color="gray">
+                Step {step} of 4
+              </Typography>
+
+              </Stack>
+
                 <Typography component="span" variant="body1" color="gray">
                   Welcome! Create your free account.
                 </Typography>
               </Stack>
-              <Typography component="span" fontSize="14px" variant="body1" color="gray">
-                Step {step} of 4
-              </Typography>
+            
             </Stack>
 
             {step === 1 && (
@@ -336,12 +343,12 @@ const Register = () => {
         variant="text"
         sx={{
           width: "100%",
-          height: "350px",
+          height: "300px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           border: "2px dotted",
-          position: "relative", // Added to position the edit icon correctly
+          position: "relative",
           transition: "background-color 0.3s, border-color 0.3s",
           "&:hover": {
             borderColor: "#a4a4a4",
@@ -480,8 +487,8 @@ const Register = () => {
                name="distance"
                onChange={handleChange}
                value={registerData.distance}>
-               <MenuItem sx={{ fontSize: "13px" }} value="miles">Miles</MenuItem>
-               <MenuItem sx={{ fontSize: "13px" }} value="km">Kilometers</MenuItem>
+               <MenuItem value="miles">Miles</MenuItem>
+               <MenuItem value="km">Kilometers</MenuItem>
                </Select>
                </FormControl>
                 </Grid>
@@ -495,8 +502,8 @@ const Register = () => {
                name="gender"
                onChange={handleChange}
                value={registerData.gender}>
-               <MenuItem sx={{ fontSize: "13px" }} value="male">Male</MenuItem>
-               <MenuItem sx={{ fontSize: "13px" }} value="female">Female</MenuItem>
+               <MenuItem value="male">Male</MenuItem>
+               <MenuItem value="female">Female</MenuItem>
                </Select>
                </FormControl>
                 </Grid>
@@ -511,8 +518,8 @@ const Register = () => {
                name="weightOption"
                onChange={handleChange}
                value={registerData.weightOption}>
-               <MenuItem sx={{ fontSize: "13px" }} value="lb">lb</MenuItem>
-               <MenuItem sx={{ fontSize: "13px" }} value="kg">kg</MenuItem>
+               <MenuItem value="lb">lb</MenuItem>
+               <MenuItem value="kg">kg</MenuItem>
                </Select>
                </FormControl>
                 </Grid>
@@ -526,9 +533,9 @@ const Register = () => {
                name="activityLevel"
                onChange={handleChange}
                value={registerData.activityLevel}>
-               <MenuItem sx={{ fontSize: "13px" }} value="beginner">Beginner</MenuItem>
-               <MenuItem sx={{ fontSize: "13px" }} value="intermediate">Intermediate</MenuItem>
-               <MenuItem sx={{ fontSize: "13px" }} value="advanced">Advanced</MenuItem>
+               <MenuItem value="beginner">Beginner</MenuItem>
+               <MenuItem value="intermediate">Intermediate</MenuItem>
+               <MenuItem value="advanced">Advanced</MenuItem>
                </Select>
                </FormControl>
                 </Grid>
