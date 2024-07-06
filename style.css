@@ -120,7 +120,7 @@ span.MuiBadge-badge {
 
 .login-button,
 .login-button-regular {
-  padding: 13.5px;
+  padding: 12px;
   width: 100%;
   font-size: 16px;
   cursor: pointer;
@@ -138,7 +138,7 @@ span.MuiBadge-badge {
   background-color: #00ac1c;
   color: white;
   border: #00ac1c;
-  padding: 15px;
+  padding: 12px;
 }
 
 .login-button-regular:hover {

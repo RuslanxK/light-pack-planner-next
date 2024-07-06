@@ -265,7 +265,7 @@ const Register = () => {
                 <Grid item xs={12}>
                   <Button
                     fullWidth
-                    sx={{ padding: "10px" }}
+                    sx={{ padding: "12px" }}
                     disableElevation
                     variant="contained"
                     color="primary"
@@ -308,7 +308,7 @@ const Register = () => {
                 <Grid item xs={6}>
                   <Button
                     fullWidth
-                    sx={{ padding: "10px" }}
+                    sx={{ padding: "12px" }}
                     variant="outlined"
                     color="primary"
                     onClick={handleBack}
@@ -321,7 +321,7 @@ const Register = () => {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    sx={{ padding: "10px" }}
+                    sx={{ padding: "12px" }}
                     disableElevation
                     onClick={handleNext}
                   >
@@ -385,12 +385,14 @@ const Register = () => {
           </Fragment>
         ) : (
           <Fragment>
+
+            <Stack>
             <AddPhotoAlternateIcon
               sx={{
-                width: "65px",
-                height: "65px",
+                width: "60px",
+                height: "60px",
                 color: "#e6e6e6",
-                marginRight: "5px"
+               
               }}
             />
             <Typography
@@ -400,6 +402,7 @@ const Register = () => {
             >
               Upload a profile picture
             </Typography>
+            </Stack>
           </Fragment>
         )}
         <input
@@ -418,7 +421,7 @@ const Register = () => {
         variant="outlined"
         color="primary"
         onClick={handleBack}
-        sx={{ padding: "10px" }}
+        sx={{ padding: "12px" }}
       >
         Back
       </Button>
@@ -428,7 +431,7 @@ const Register = () => {
         fullWidth
         variant="contained"
         color="primary"
-        sx={{ padding: "10px" }}
+        sx={{ padding: "12px" }}
         disableElevation
         onClick={handleNext}
       >
@@ -547,7 +550,7 @@ const Register = () => {
                     fullWidth
                     variant="outlined"
                     color="primary"
-                    sx={{padding: "10px"}}
+                    sx={{padding: "12px"}}
                     onClick={handleBack}
                   >
                     Back
@@ -558,7 +561,7 @@ const Register = () => {
                     fullWidth
                     type="submit"
                     variant="contained"
-                    sx={{padding: "10px"}}
+                    sx={{padding: "12px"}}
                     disableElevation
                     color="primary"
                   >
