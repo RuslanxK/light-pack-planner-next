@@ -359,7 +359,7 @@ const Register = () => {
             <img
               width="100%"
               height="100%"
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "contain" }}
               src={URL.createObjectURL(registerData.image)}
               alt="user profile"
             />
