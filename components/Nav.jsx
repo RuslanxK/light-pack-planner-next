@@ -373,14 +373,14 @@ const navigateToUrl = (url) => {
           </AccordionSummary>
         </Accordion>
 
-        <Accordion onClick={() => router.push('/admin-settings')}>
+        { session.user.email === process.env.NEXT_PUBLIC_ADMIN_1_EMAIL ||  process.env.NEXT_PUBLIC_ADMIN_2_EMAIL  || process.env.NEXT_PUBLIC_ADMIN_3_EMAIL ? <Accordion onClick={() => router.push('/admin-settings')}>
           <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
             <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
              Admin Settings
             </Typography>
             <AdminPanelSettingsIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
-        </Accordion>
+        </Accordion> : null }
 
 
         {session && session?.user ? (
