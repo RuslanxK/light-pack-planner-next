@@ -445,7 +445,7 @@ const Register = () => {
 
             {step === 4 && (
               <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <FormControl fullWidth variant="outlined">
                     <InputLabel id="country-label">
                       Select your country
@@ -482,20 +482,6 @@ const Register = () => {
                 </Grid>
 
 
-                <Grid item xs={6}>
-                <FormControl fullWidth variant="outlined">
-               <InputLabel id="distance-label">Distance Unit</InputLabel>
-               <Select
-               labelId="distance-label"
-               label="Distance Unit"
-               name="distance"
-               onChange={handleChange}
-               value={registerData.distance}>
-               <MenuItem value="miles">Miles</MenuItem>
-               <MenuItem value="km">Kilometers</MenuItem>
-               </Select>
-               </FormControl>
-                </Grid>
 
                 <Grid item xs={6}>
                 <FormControl fullWidth variant="outlined">
@@ -513,7 +499,23 @@ const Register = () => {
                 </Grid>
 
 
-                <Grid item xs={6}>
+                <Grid item xs={12}>
+                <FormControl fullWidth variant="outlined">
+               <InputLabel id="distance-label">Distance Unit</InputLabel>
+               <Select
+               labelId="distance-label"
+               label="Distance Unit"
+               name="distance"
+               onChange={handleChange}
+               value={registerData.distance}>
+               <MenuItem value="miles">Miles</MenuItem>
+               <MenuItem value="km">Kilometers</MenuItem>
+               </Select>
+               </FormControl>
+                </Grid>
+
+
+                <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
                <InputLabel id="weight-unit-label">Weight Unit</InputLabel>
                <Select
@@ -528,7 +530,7 @@ const Register = () => {
                </FormControl>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
                <InputLabel id="activity-level-label">Activity Level</InputLabel>
                <Select
@@ -546,7 +548,7 @@ const Register = () => {
 
               
               
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <Button
                     fullWidth
                     variant="outlined"
@@ -557,7 +559,7 @@ const Register = () => {
                     Back
                   </Button>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <Button
                     fullWidth
                     type="submit"
