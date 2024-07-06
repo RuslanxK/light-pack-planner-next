@@ -56,13 +56,10 @@ const NewPassword = ({user, err}) => {
       const updateUser = { ...user, password: passwords.password, changingPassword: false, passwordResetTokenExpires: null, emailToken: null };
 
       setIsLoading(true)
-
       await axios.put(`/api/userToken/${user.emailToken}`, updateUser)
-      setIsLoading(false)
-      setError("")
       setSuccess("Password changed successfully.")
-     
          setTimeout(() => {
+          setIsLoading(false)
           router.push("/login")
          }, 2000);
       }

@@ -116,11 +116,20 @@ export const options = {
         if (!credentials) {
         const userExists = await user.findOne({ email: profile?.email });
 
-        console.log(profile);
-        console.log(userExists);
-
         if (!userExists) {
+
+          let isAdmin;
           let imageUrl = profile?.picture;
+
+          if(profile?.email === process.env.NEXT_PUBLIC_ADMIN_1_EMAIL || profile?.email === process.env.NEXT_PUBLIC_ADMIN_2_EMAIL || profile?.email === process.env.NEXT_PUBLIC_ADMIN_3_EMAIL ) {
+
+              isAdmin = true
+          }
+
+          else {
+
+              isAdmin = false
+          }
 
           if (
             typeof profile?.picture === "object" &&
@@ -133,6 +142,7 @@ export const options = {
             email: profile?.email,
             username: profile?.name?.replace(" ", "").toLowerCase(),
             image: imageUrl || null,
+            isAdmin: isAdmin
           });
         }
 
