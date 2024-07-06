@@ -386,12 +386,13 @@ const Register = () => {
         ) : (
           <Fragment>
 
-            <Stack>
+            <Stack justifyContent="center" alignItems="center">
             <AddPhotoAlternateIcon
               sx={{
                 width: "60px",
                 height: "60px",
                 color: "#e6e6e6",
+                marginBottom: "7px"
                
               }}
             />
