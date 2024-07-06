@@ -84,7 +84,7 @@ const BugReport = ({session}) => {
 
 
 
-        <Box sx={{width: "100%", maxWidth: "800px"}}>
+        <Box sx={{width: "100%"}}>
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
             
@@ -110,7 +110,7 @@ const BugReport = ({session}) => {
               onChange={(e) => setContent(e.target.value)}
             />
            
-            <Button type="submit" variant="contained" color="primary" disableElevation>
+            <Button type="submit" variant="contained" color="primary" disableElevation sx={{padding: "12px"}}>
               Submit {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}
             </Button>
           </Stack>
