@@ -58,15 +58,12 @@ const NewPassword = ({user, err}) => {
       setIsLoading(true)
 
       await axios.put(`/api/userToken/${user.emailToken}`, updateUser)
-
+      setIsLoading(false)
+      setError("")
       setSuccess("Password changed successfully.")
-
+     
          setTimeout(() => {
-
-          setError("")
-          setIsLoading(false)
           router.push("/login")
-          
          }, 2000);
       }
      
@@ -88,7 +85,7 @@ const NewPassword = ({user, err}) => {
       </div>
 
 
-    <div className="reset-password-content">
+    <div className="new-password-content">
     <img id="logo-mobile-login" src="/logo.png" alt="logo" width="90px" height="58" style={{ position: "absolute", top: "25px", left: '25px' }}/> 
     <div className='login-form'  style={{backgroundColor: theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null}}>
     <h1 className='login-text'>Reset password</h1>
@@ -105,10 +102,10 @@ const NewPassword = ({user, err}) => {
     <TextField type="password" sx={{width: "100%"}} required inputProps={{minLength : 10}} label="Confirm New Password" name="confirmPassword" onChange={handleChange}  />
     </Grid>
     <Grid item xs={12}>
-    <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Reset Password { isLoading ? <CircularProgress color="inherit" size={20} /> : null }</button>
+    <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Reset Password { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</button>
     </Grid>
 
-    <Typography component="span" variant="span" width="100%" color="gray" ml={2}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
+    <Typography component="span" variant="span" width="100%" color="gray" mb={2} ml={2}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
   
 
     </Grid>

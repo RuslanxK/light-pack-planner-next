@@ -95,7 +95,7 @@ const ResetPassword = () => {
     <Grid item xs={12}>
     <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Send Email { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</button>
     </Grid>
-    <Typography component="span" variant="span" width="100%" ml={2} color="gray" sx={{cursor: "pointer"}}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
+    <Typography component="span" variant="span" width="100%" mb={2} ml={2} color="gray" sx={{cursor: "pointer"}}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
 
     </Grid>
     </form>

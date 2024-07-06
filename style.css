@@ -221,7 +221,7 @@ span.MuiBadge-badge {
   height: 100vh;
 }
 
-.login-content, .register-content, .reset-password-content {
+.login-content, .register-content, .reset-password-content, .new-password-content {
   width: 50vw;
   height: 100vh;
   display: flex;
@@ -524,6 +524,18 @@ span.MuiBadge-badge {
     height: auto;
     min-height: 100vh;
     background-image: url("./public/hiking-3.jpg");
+    background-size: cover;
+    background-position: center;
+    align-items: center;
+  }
+
+  .new-password-content {
+
+      
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    background-image: url("./public/hiking-4.jpg");
     background-size: cover;
     background-position: center;
     align-items: center;
