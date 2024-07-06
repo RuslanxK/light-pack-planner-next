@@ -342,11 +342,11 @@ const Register = () => {
         variant="text"
         sx={{
           width: "100%",
-          height: "300px",
+          height: "250px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          border: "2px dotted",
+          border: "2px dashed",
           position: "relative",
           transition: "background-color 0.3s, border-color 0.3s",
           "&:hover": {
@@ -357,9 +357,9 @@ const Register = () => {
         {registerData.image ? (
           <Fragment>
             <img
-              width="100%"
-              height="100%"
-              style={{ objectFit: "contain" }}
+              width="200px"
+              height="200px"
+              style={{ objectFit: "cover", borderRadius: "100%" }}
               src={URL.createObjectURL(registerData.image)}
               alt="user profile"
             />
@@ -387,9 +387,10 @@ const Register = () => {
           <Fragment>
             <AddPhotoAlternateIcon
               sx={{
-                width: "40px",
-                height: "40px",
+                width: "65px",
+                height: "65px",
                 color: "#e6e6e6",
+                marginRight: "5px"
               }}
             />
             <Typography

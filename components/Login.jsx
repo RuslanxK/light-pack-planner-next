@@ -191,7 +191,7 @@ const Login = () => {
             mr={2}
             
           >
-            Don't have an account?
+            No account?
             <Typography
               onClick={() => router.push("/register")}
               component="span"
@@ -200,7 +200,7 @@ const Login = () => {
               color="#2d7fb5"
               sx={{ cursor: "pointer", marginLeft: "3px" }}
             >
-               Free Register
+              Register free
             </Typography>
           </Typography>
 
