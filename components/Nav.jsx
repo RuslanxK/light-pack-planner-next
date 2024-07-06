@@ -214,8 +214,8 @@ const navigateToUrl = (url) => {
 
        
        {  nestedMenuOpen ?  <MenuItem>
-           <Stack ml={4}>{bagData}</Stack>
-         </MenuItem> : null }
+           <Stack ml={4}>{bagData.length ? bagData : "No bags yet"}</Stack>
+         </MenuItem> :  null }
         
     
         <MenuItem onClick={ () => navigateToUrl("/articles")}>
