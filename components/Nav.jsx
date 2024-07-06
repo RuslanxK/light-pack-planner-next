@@ -253,12 +253,12 @@ const navigateToUrl = (url) => {
           <ListItemText>Bug Report</ListItemText>
         </MenuItem>
 
-        <MenuItem onClick={ () => navigateToUrl("/admin-settings")}>
+       { session.user.email === process.env.NEXT_PUBLIC_ADMIN_1_EMAIL ||  process.env.NEXT_PUBLIC_ADMIN_2_EMAIL  || process.env.NEXT_PUBLIC_ADMIN_3_EMAIL ? <MenuItem onClick={ () => navigateToUrl("/admin-settings")}>
           <ListItemIcon>
             <AdminPanelSettingsIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Admin Settings</ListItemText>
-        </MenuItem>
+        </MenuItem> : null }
         <Divider />
 
         

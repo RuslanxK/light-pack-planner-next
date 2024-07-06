@@ -86,7 +86,7 @@ const Articles = ({articles, session}) => {
       
 <div className="main-info">
 
-{session.user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? 
+{session.user.email === process.env.NEXT_PUBLIC_ADMIN_1_EMAIL ? 
 <form onSubmit={addArticle} ref={formRef}>
 <Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow={theme.boxShadow}>
 <Typography component="h2" variant='h5' mb={3}>Upload Article</Typography>
