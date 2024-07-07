@@ -140,7 +140,7 @@ const handleChangeLog = (event) => {
       
     >
       <div className="main-info">
-        <Stack direction="row" alignItems="center" mb={2}>
+        <Stack direction="row" alignItems="center" mb={1}>
           <IconButton
             sx={{ marginRight: "5px" }}
             onClick={() => router.push("/")}
@@ -151,7 +151,7 @@ const handleChangeLog = (event) => {
             Admin Settings
           </Typography>
         </Stack>
-        <Typography component="p" variant="body2" mb={4} color="gray">
+        <Typography component="p" variant="body2" mb={3} >
           Use the forms below to add new content for users.
         </Typography>
 

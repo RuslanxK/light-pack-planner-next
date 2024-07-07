@@ -16,6 +16,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
+import SendIcon from '@mui/icons-material/Send';
 
 
 const BugReport = ({session}) => {
@@ -67,7 +68,7 @@ const BugReport = ({session}) => {
       
     >
       <div className="main-info">
-        <Stack direction="row" alignItems="center" mb={2}>
+        <Stack direction="row" alignItems="center" mb={1}>
           <IconButton
             sx={{ marginRight: "5px" }}
             onClick={() => router.push("/")}
@@ -78,7 +79,7 @@ const BugReport = ({session}) => {
             Report a Bug
           </Typography>
         </Stack>
-        <Typography component="p" variant="body2" mb={4} color="gray">
+        <Typography component="p" variant="body2" mb={2}>
           Use the form below to report any bugs you encounter.
         </Typography>
 
@@ -86,14 +87,13 @@ const BugReport = ({session}) => {
 
         <Box sx={{width: "100%"}}>
         <form onSubmit={handleSubmit}>
-          <Stack spacing={2}>
-            
-
-          
+          <Stack spacing={2} p={4} borderRadius="7px" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"}>
+          <Typography component="h2" variant='h6' mb={3}>Send Us A Message</Typography>
             <TextField
               label="Title"
               variant="outlined"
               required
+              sx={{background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}}
               fullWidth
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -104,6 +104,7 @@ const BugReport = ({session}) => {
               variant="outlined"
               fullWidth
               required
+              sx={{background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}}
               multiline
               rows={10}
               value={content}
@@ -111,7 +112,7 @@ const BugReport = ({session}) => {
             />
            
             <Button type="submit" variant="contained" color="primary" disableElevation sx={{padding: "12px"}}>
-              Submit {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}
+              Send {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : <SendIcon sx={{fontSize: "16px", marginLeft: "5px"}}/>}
             </Button>
           </Stack>
         </form>
