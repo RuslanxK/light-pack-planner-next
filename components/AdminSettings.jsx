@@ -158,11 +158,11 @@ const handleChangeLog = (event) => {
 
          
 <form onSubmit={addArticle} ref={formRef} style={{width: "100%"}}>
-<Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow={theme.boxShadow}>
+<Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow="rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"}>
 <Typography component="h2" variant='h6' mb={3}>Upload Article</Typography>
 <input required type='file' name='image' style={{width: "fit-content"}} onChange={handleFileChange} />
-<TextField required type='text' name='title' label="title" sx={{marginTop: "15px"}} onChange={handleChange} />
-<TextField required multiline rows={8} name='description' label="description" sx={{marginTop: "15px"}} onChange={handleChange} />
+<TextField required type='text' name='title' label="title" sx={{marginTop: "15px", background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}} onChange={handleChange} />
+<TextField required multiline rows={8} name='description' label="description" sx={{marginTop: "15px", background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}} onChange={handleChange} />
 <Button type='submit' variant="contained" sx={{marginTop: "15px", padding: "15px"}} disableElevation>Add article {loading &&  <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> }</Button>
 
 { error ? <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert> : null }
@@ -170,10 +170,10 @@ const handleChangeLog = (event) => {
 
 
 <form onSubmit={addToChangeLog} ref={formRefChangeLog} style={{width: "100%"}}>
-<Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow={theme.boxShadow}>
+<Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow="rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"}>
 <Typography component="h2" variant='h6' mb={1}>Changelog</Typography>
-<TextField required type='text' name='title' label="title" sx={{marginTop: "15px"}} onChange={handleChangeLog} />
-<TextField required multiline rows={8} name='description' label="description" sx={{marginTop: "15px"}} onChange={handleChangeLog} />
+<TextField required type='text' name='title' label="title" sx={{marginTop: "15px", background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}} onChange={handleChangeLog} />
+<TextField required multiline rows={8} name='description' label="description" sx={{marginTop: "15px", background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}} onChange={handleChangeLog} />
 <Button type='submit' variant="contained" sx={{marginTop: "15px", padding: "15px"}} disableElevation>Add last update {loadingChangeLog &&  <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> }</Button>
 
 { errorChangeLog ? <Alert severity="error" sx={{ mt: 2 }}>{errorChangeLog}</Alert> : null }
