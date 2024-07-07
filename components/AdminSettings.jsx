@@ -1,4 +1,4 @@
-"use client"; // Ensures that the component is rendered on the client-side
+"use client"; 
 
 import * as React from "react";
 import { useState, useRef } from "react";
@@ -22,12 +22,40 @@ const AdminSettings = () => {
   const theme = useTheme();
   const router = useRouter();
   const formRef = useRef(null);
+  const formRefChangeLog = useRef(null);
 
 
   const [articleData, setArticleData] = useState({})
+  const [changelogData, setChangeLogData]= useState({})
   const [error, setError] = useState("")
+  const [errorChangeLog, setErrorChangeLog] = useState("")
   const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
+  const [successChangeLog, setSuccessChangeLog] = useState("")
+  const [loadingChangeLog, setLoadingChangeLog] = useState(false)
+
+
+
+
+  const addToChangeLog = async (e) => {
+
+      e.preventDefault()
+
+      try {
+        setLoadingChangeLog(true)
+        await axios.post('/api/articles', changelogData)
+        formRefChangeLog.current.reset();
+        setSuccessChangeLog("Uploaded successfully!")
+        setLoadingChangeLog(false)
+  
+    }
+    
+     catch (error) {
+  
+        setErrorChangeLog(error.message)
+     }
+
+  }
 
 
 
@@ -80,6 +108,15 @@ const handleChange = (event) => {
 };
 
 
+const handleChangeLog = (event) => {
+    setSuccessChangeLog("")
+    setErrorChangeLog("")
+    const { name, value } = event.target;
+    setChangeLogData({ ...changelogData, [name]: value });
+  };
+  
+
+
  const handleFileChange = (event) => {
   const { name } = event.target;
   const selectedFile = event.target.files[0];
@@ -118,7 +155,7 @@ const handleChange = (event) => {
           Use the forms below to add new content for users.
         </Typography>
 
-<Stack direction="row" justifyContent="space-between">
+
          
 <form onSubmit={addArticle} ref={formRef} style={{width: "100%"}}>
 <Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow={theme.boxShadow}>
@@ -132,17 +169,16 @@ const handleChange = (event) => {
 { success.length ? <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert> : null }</Stack> </form> 
 
 
-<form onSubmit={addArticle} ref={formRef} style={{width: "100%"}}>
+<form onSubmit={addToChangeLog} ref={formRefChangeLog} style={{width: "100%"}}>
 <Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow={theme.boxShadow}>
 <Typography component="h2" variant='h6' mb={1}>Changelog</Typography>
-<TextField required type='text' name='title' label="title" sx={{marginTop: "15px"}} onChange={handleChange} />
-<TextField required multiline rows={8} name='description' label="description" sx={{marginTop: "15px"}} onChange={handleChange} />
-<Button type='submit' variant="contained" sx={{marginTop: "15px", padding: "15px"}} disableElevation>Add last update {loading &&  <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> }</Button>
+<TextField required type='text' name='title' label="title" sx={{marginTop: "15px"}} onChange={handleChangeLog} />
+<TextField required multiline rows={8} name='description' label="description" sx={{marginTop: "15px"}} onChange={handleChangeLog} />
+<Button type='submit' variant="contained" sx={{marginTop: "15px", padding: "15px"}} disableElevation>Add last update {loadingChangeLog &&  <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> }</Button>
 
-{ error ? <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert> : null }
-{ success.length ? <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert> : null }</Stack> </form> 
+{ errorChangeLog ? <Alert severity="error" sx={{ mt: 2 }}>{errorChangeLog}</Alert> : null }
+{ successChangeLog.length ? <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert> : null }</Stack> </form> 
 
-</Stack>
 
       </div>
     </Stack>
