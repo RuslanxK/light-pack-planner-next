@@ -23,10 +23,10 @@ const InnerArticle = ({articleData}) => {
         <div className="main-info">
 
         <Stack pr={5} mb={3}>
-        <Typography variant="span" component="span" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#fafafa"} p={1} width="fit-content" borderRadius="7px">{new Date(articleData.createdAt).toDateString()}</Typography>
+        <Typography variant="body2" component="span" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#fafafa"} p={1} width="fit-content" borderRadius="7px">{new Date(articleData.createdAt).toDateString()}</Typography>
 
-        <Typography component="h1" variant='span' pt={1} mb={2}>{articleData.title}</Typography>
-        <Typography component="span" variant='span' pt={1} lineHeight={2}>{articleData.description}</Typography>
+        <Typography component="h1" variant='h5' pt={2} mb={1}>{articleData.title}</Typography>
+        <Typography component="span" variant='body2' color="gray" pt={1} lineHeight={2}>{articleData.description}</Typography>
 
         </Stack>
 

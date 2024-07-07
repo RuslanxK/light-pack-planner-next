@@ -117,15 +117,15 @@ const ExploreBags = ({ exploreBags }) => {
     <Container sx={{ display: theme.flexBox }} maxWidth={false} disableGutters>
       <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.trips.width} minHeight="100vh" pb={5}>
         <div className="main-info">
-          <Stack direction="row" alignItems="center">
+          <Stack direction="row" alignItems="center" mb={1}>
             <IconButton sx={{ marginRight: "5px" }} onClick={() => router.push('/')}>
               <ArrowBackIcon />
             </IconButton>
-            <Typography component="h1" fontWeight="600" variant='span' fontSize="20px" mb={0.5}>
+            <Typography component="h2" variant="h6">
               Explore Bags
             </Typography>
           </Stack>
-          <Typography component="p" variant="p" mb={2.5} mt={1}>
+          <Typography component="p" variant="body2" color="gray" mb={3}>
             Discover the top-rated bags crafted for every journey. <br /> Whether you're conquering remote mountain peaks or exploring dense forests, find the perfect companion for your next adventure.
           </Typography>
 

@@ -104,15 +104,15 @@ const Settings = ({ session, user }) => {
     <Container sx={{ display: theme.flexBox }} maxWidth={false} disableGutters>
       <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} minHeight="100vh">
         <div className="main-info">
-          <Stack direction="row" alignItems="center">
+          <Stack direction="row" alignItems="center" mb={1}>
             <IconButton sx={{ marginRight: "5px" }} onClick={() => router.push('/')}>
               <ArrowBackIcon />
             </IconButton>
-            <Typography component="h2" variant="h6" mb={0.5}>
+            <Typography component="h2" variant="h6">
               Settings
             </Typography>
           </Stack>
-          <Typography component="p" variant="body2" mb={4} color="gray">
+          <Typography component="p" variant="body2" mb={3} color="gray">
 
             Update your details here.
           </Typography>

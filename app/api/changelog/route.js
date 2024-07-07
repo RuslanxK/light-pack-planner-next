@@ -28,7 +28,10 @@ export const GET = async (req, { params }) => {
 export const POST = async (req) => {
   try {
     await connectToDB();
+    
     const { title, description } = await req.json();
+
+
     const newPost = await new post({ title, description }).save();
     return NextResponse.json(newPost, { status: 200 });
   } catch (error) {

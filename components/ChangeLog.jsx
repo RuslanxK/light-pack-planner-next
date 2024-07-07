@@ -1,11 +1,11 @@
 "use client";
 import * as React from 'react';
 import { useState } from 'react';
-import { Stack, IconButton, Typography, Divider, Paper, Button, useTheme } from '@mui/material';
+import { Stack, IconButton, Typography, Divider, Button, useTheme } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/navigation';
 
-const ChangeLog = () => {
+const ChangeLog = ({posts}) => {
   const theme = useTheme();
   const router = useRouter();
   const [visibleEntries, setVisibleEntries] = useState(7);
@@ -125,7 +125,7 @@ const ChangeLog = () => {
   return (
     <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.fullWidth} minHeight="100vh">
       <div className="main-info">
-        <Stack direction="row" alignItems="center" mb={2}>
+        <Stack direction="row" alignItems="center" mb={1}>
           <IconButton sx={{ marginRight: "5px" }} onClick={() => router.push('/')}>
             <ArrowBackIcon />
           </IconButton>
@@ -133,7 +133,7 @@ const ChangeLog = () => {
             Changelog
           </Typography>
         </Stack>
-        <Typography component="p" variant="body2" mb={4} color="gray">
+        <Typography component="p" variant="body2" mb={3} color="gray">
           Keep track of updates and changes here.
         </Typography>
         <Stack spacing={3}>

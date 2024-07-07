@@ -79,7 +79,7 @@ const BugReport = ({session}) => {
             Report a Bug
           </Typography>
         </Stack>
-        <Typography component="p" variant="body2" mb={2}>
+        <Typography component="p" variant="body2" mb={3} color="gray">
           Use the form below to report any bugs you encounter.
         </Typography>
 

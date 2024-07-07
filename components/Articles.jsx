@@ -29,17 +29,17 @@ const Articles = ({articles}) => {
 
       
 <div className="main-info">
-<Stack direction="row" alignItems="center">
+<Stack direction="row" alignItems="center" mb={1}>
 <IconButton sx={{marginRight: "5px"}} onClick={() => router.push('/')}><ArrowBackIcon /></IconButton>
-<Typography component="h1" fontWeight="600" variant='span' fontSize="20px" mb={0.5}> 
+<Typography component="h2" variant="h6"> 
  Explore the Wilderness: Expert Tips, Stories, and Gear Recommendations Inside!
 </Typography>
 </Stack>
-<Typography component="p" variant="p" mb={2.5} mt={1}>
+<Typography component="p" variant="body2" color="gray">
  Embark on a journey with our backpacking blog, where seasoned adventurers share their tales of triumph, survival, and discovery. <br /> From remote mountain peaks to dense forests, find inspiration for your next expedition.
 </Typography>
 
-{ ArticleBox.length ? null : <Alert severity="info" sx={{width: "100%"}}>No articles yet</Alert> }
+{ ArticleBox.length ? null : <Alert severity="info" sx={{width: "100%", mt: 2}}>No articles yet</Alert> }
 
 </div>
 

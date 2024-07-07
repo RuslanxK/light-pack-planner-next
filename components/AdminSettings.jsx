@@ -42,9 +42,12 @@ const AdminSettings = () => {
 
       e.preventDefault()
 
+
+      console.log(changelogData)
+
       try {
         setLoadingChangeLog(true)
-        await axios.post('/api/articles', changelogData)
+        await axios.post('/api/changelog', changelogData)
         formRefChangeLog.current.reset();
         setSuccessChangeLog("Uploaded successfully!")
         setLoadingChangeLog(false)
@@ -152,7 +155,7 @@ const handleChangeLog = (event) => {
             Admin Settings
           </Typography>
         </Stack>
-        <Typography component="p" variant="body2" mb={3} >
+        <Typography component="p" variant="body2" mb={3} color="gray" >
           Use the forms below to add new content for users.
         </Typography>
 
@@ -178,7 +181,7 @@ const handleChangeLog = (event) => {
 <Button type='submit' variant="contained" sx={{marginTop: "15px", padding: "15px"}} disableElevation>Add last update {loadingChangeLog &&  <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> }</Button>
 
 { errorChangeLog ? <Alert severity="error" sx={{ mt: 2 }}>{errorChangeLog}</Alert> : null }
-{ successChangeLog.length ? <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert> : null }</Stack> </form> 
+{ successChangeLog.length ? <Alert severity="success" sx={{ mt: 2 }}>{successChangeLog}</Alert> : null }</Stack> </form> 
 
 </Box>
 
