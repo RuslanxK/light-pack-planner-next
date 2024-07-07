@@ -6,7 +6,6 @@ import { lightTheme, darkTheme } from "../components/custom/theme.jsx";
 import Providers from '../components/Providers'
 import '../style.css'
 import Nav from "../components/Nav.jsx";
-import { Stack } from '@mui/material'
 import { getServerSession } from 'next-auth';
 import {options} from './api/auth/[...nextauth]/options'
 

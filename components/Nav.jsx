@@ -253,7 +253,7 @@ const navigateToUrl = (url) => {
           <ListItemText>Bug Report</ListItemText>
         </MenuItem>
 
-       { session.user.isAdmin ? <MenuItem onClick={ () => navigateToUrl("/admin-settings")}>
+       { session.user.isAdmin ? <MenuItem onClick={ () => navigateToUrl("/admin")}>
           <ListItemIcon>
             <AdminPanelSettingsIcon fontSize="small" />
           </ListItemIcon>
@@ -373,7 +373,7 @@ const navigateToUrl = (url) => {
           </AccordionSummary>
         </Accordion>
 
-        { session.user.isAdmin ? <Accordion onClick={() => router.push('/admin-settings')}>
+        { session.user.isAdmin ? <Accordion onClick={() => router.push('/admin')}>
           <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
             <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
              Admin Settings

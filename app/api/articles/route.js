@@ -21,30 +21,29 @@ const s3 = new S3Client({
 })
 
 export const POST = async (req) => {
-    try {
-      await connectToDB();
+  try {
+    await connectToDB();
 
-      const { title, description } = await req.json();
+    const { title, description } = await req.json();
 
-      const putObjectCommand = new PutObjectCommand({
-
-        Bucket: process.env.S3_BUCKET_NAME,
-        Key: filename
-    })
+    const putObjectCommand = new PutObjectCommand({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: filename
+    });
 
     const signedUrl = await getSignedUrl(s3, putObjectCommand, {
-        expiresIn: 60
-    })
+      expiresIn: 60
+    });
 
-      const Article = new article({ title, description, imageKey: putObjectCommand.input.Key});
-      await Article.save();
-      return new NextResponse(JSON.stringify({Article, signedUrl}), { status: 200 });
-    } catch (error) {
-      
-      console.error('Error:', error);
-      return new NextResponse("Failed to post article" , { status: 500 });
-    }
-  };
+    const Article = new article({ title, description, imageKey: putObjectCommand.input.Key });
+    await Article.save();
+
+    return new NextResponse(JSON.stringify({ Article, signedUrl }), { status: 200 });
+  } catch (error) {
+   
+    return new NextResponse(JSON.stringify({ message: "Failed to post article", error: error.message }), { status: 500 });
+  }
+};
 
 
   export const GET = async (req) => {
