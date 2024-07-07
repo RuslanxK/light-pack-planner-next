@@ -66,6 +66,7 @@ const AdminSettings = () => {
   
    catch (error) {
 
+      console.log(error)
       setError(error.response.data)
    }
 }
@@ -118,8 +119,9 @@ const handleChange = (event) => {
           Use the forms below to add new content for users.
         </Typography>
 
+<Stack direction="row" justifyContent="space-between">
          
-<form onSubmit={addArticle} ref={formRef}>
+<form onSubmit={addArticle} ref={formRef} style={{width: "100%"}}>
 <Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow={theme.boxShadow}>
 <Typography component="h2" variant='h6' mb={3}>Upload Article</Typography>
 <input required type='file' name='image' style={{width: "fit-content"}} onChange={handleFileChange} />
@@ -128,10 +130,20 @@ const handleChange = (event) => {
 <Button type='submit' variant="contained" sx={{marginTop: "15px", padding: "15px"}} disableElevation>Add article {loading &&  <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> }</Button>
 
 { error ? <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert> : null }
-{ success.length ? <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert> : null }
+{ success.length ? <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert> : null }</Stack> </form> 
 
 
-   </Stack> </form> 
+<form onSubmit={addArticle} ref={formRef} style={{width: "100%"}}>
+<Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow={theme.boxShadow}>
+<Typography component="h2" variant='h6' mb={1}>Changelog</Typography>
+<TextField required type='text' name='title' label="title" sx={{marginTop: "15px"}} onChange={handleChange} />
+<TextField required multiline rows={8} name='description' label="description" sx={{marginTop: "15px"}} onChange={handleChange} />
+<Button type='submit' variant="contained" sx={{marginTop: "15px", padding: "15px"}} disableElevation>Add last update {loading &&  <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> }</Button>
+
+{ error ? <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert> : null }
+{ success.length ? <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert> : null }</Stack> </form> 
+
+</Stack>
 
       </div>
     </Stack>
