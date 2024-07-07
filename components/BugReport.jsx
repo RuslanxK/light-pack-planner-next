@@ -87,7 +87,7 @@ const BugReport = ({session}) => {
 
         <Box sx={{width: "100%"}}>
         <form onSubmit={handleSubmit}>
-          <Stack spacing={2} p={4} borderRadius="7px" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"}>
+          <Stack spacing={2} p={4} borderRadius="7px" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"} boxShadow="rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;">
           <Typography component="h2" variant='h6' mb={3}>Send Us A Message</Typography>
             <TextField
               label="Title"

@@ -9,7 +9,8 @@ import {
   TextField,
   Button,
   useTheme,
-  Alert
+  Alert,
+  Box
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
@@ -156,9 +157,9 @@ const handleChangeLog = (event) => {
         </Typography>
 
 
-         
-<form onSubmit={addArticle} ref={formRef} style={{width: "100%"}}>
-<Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow="rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"}>
+<Box sx={{width: "100%"}}>
+<form onSubmit={addArticle} ref={formRef}>
+<Stack  p={4} mb={5} borderRadius="7px" boxShadow="rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"}>
 <Typography component="h2" variant='h6' mb={3}>Upload Article</Typography>
 <input required type='file' name='image' style={{width: "fit-content"}} onChange={handleFileChange} />
 <TextField required type='text' name='title' label="title" sx={{marginTop: "15px", background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}} onChange={handleChange} />
@@ -169,8 +170,8 @@ const handleChangeLog = (event) => {
 { success.length ? <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert> : null }</Stack> </form> 
 
 
-<form onSubmit={addToChangeLog} ref={formRefChangeLog} style={{width: "100%"}}>
-<Stack mr={5} p={4} mb={5} borderRadius="7px" boxShadow="rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"}>
+<form onSubmit={addToChangeLog} ref={formRefChangeLog}>
+<Stack p={4} mb={5} borderRadius="7px" boxShadow="rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"}>
 <Typography component="h2" variant='h6' mb={1}>Changelog</Typography>
 <TextField required type='text' name='title' label="title" sx={{marginTop: "15px", background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}} onChange={handleChangeLog} />
 <TextField required multiline rows={8} name='description' label="description" sx={{marginTop: "15px", background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}} onChange={handleChangeLog} />
@@ -179,6 +180,7 @@ const handleChangeLog = (event) => {
 { errorChangeLog ? <Alert severity="error" sx={{ mt: 2 }}>{errorChangeLog}</Alert> : null }
 { successChangeLog.length ? <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert> : null }</Stack> </form> 
 
+</Box>
 
       </div>
     </Stack>
