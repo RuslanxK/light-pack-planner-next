@@ -79,9 +79,9 @@ const userSchema = new Schema({
        default: "light"
   },
 
-  gender: String,
-  activityLevel: String,
-  country: String,
+  gender: {type: String, default: "Please choose an option"},
+  activityLevel: {type: String, default: "Please choose an option"},
+  country: {type: String, default: "United States"},
   
   
 

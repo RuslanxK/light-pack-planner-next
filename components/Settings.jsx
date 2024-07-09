@@ -103,7 +103,7 @@ const Settings = ({ session, user }) => {
       }, 3000);
     } catch (err) {
       console.log(err);
-      setMessage("Something went wrong.");
+      setError("Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -146,7 +146,7 @@ const Settings = ({ session, user }) => {
         borderRadius: "100px",
         marginTop: "20px",
         marginBottom: "20px",
-        position: "relative", // Added to position the EditIcon correctly
+        position: "relative", 
       }}
     >
       {session.user.image ? (
@@ -158,13 +158,7 @@ const Settings = ({ session, user }) => {
             height="100%"
             style={{ objectFit: "cover", borderRadius: "100px" }}
           />
-          <EditIcon
-            sx={{
-              position: "absolute",
-              fontSize: "25px",
-              color: "rgba(255, 255, 255, 0.7)",
-            }}
-          />
+          
         </Fragment>
       ) : userDetails.profileImageUrl ? (
         <Fragment>
@@ -178,8 +172,12 @@ const Settings = ({ session, user }) => {
           <EditIcon
             sx={{
               position: "absolute",
-              fontSize: "25px",
-              color: "rgba(255, 255, 255, 0.7)",
+              bottom: 0,
+              background: "gray",
+              borderRadius: "100px",
+              padding: "4px",
+              fontSize: "20px",
+              color: "rgba(255,255, 255, 0.7)",
             }}
           />
         </Fragment>
@@ -201,13 +199,13 @@ const Settings = ({ session, user }) => {
           />
         </Fragment>
       )}
-      <input
+     { session.user.image ? null : <input
         type="file"
         name="image"
         accept="image/*"
         style={{ display: "none" }}
         onChange={handleFileChange}
-      />
+      />}
     </Button>
 
 
@@ -252,8 +250,6 @@ const Settings = ({ session, user }) => {
             >
               <MenuItem value="kg">kg</MenuItem>
               <MenuItem value="lb">lb</MenuItem>
-              <MenuItem value="g">g</MenuItem>
-              <MenuItem value="oz">oz</MenuItem>
             </Select>
           </Grid>
 
@@ -299,6 +295,7 @@ const Settings = ({ session, user }) => {
               onChange={handleChange}
               value={userDetails.gender}
             >
+              <MenuItem value="Please choose an option">Please choose an option</MenuItem>
               <MenuItem value="male">Male</MenuItem>
               <MenuItem value="female">Female</MenuItem>
               <MenuItem value="other">Other</MenuItem>
@@ -316,6 +313,7 @@ const Settings = ({ session, user }) => {
               sx={{ backgroundColor: theme.palette.mode === "dark" ? "#171717": "#fafafa"}}
               value={userDetails.activityLevel}
             >
+              <MenuItem value="Please choose an option">Please choose an option</MenuItem>
               <MenuItem value="low">Low</MenuItem>
               <MenuItem value="medium">Medium</MenuItem>
               <MenuItem value="high">High</MenuItem>
