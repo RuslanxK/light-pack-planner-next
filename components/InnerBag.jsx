@@ -374,7 +374,7 @@ const InnerBag = ({
             <IconButton
               onClick={showHideSideBar}
               sx={{
-                width: "25%",
+                width: "20%",
                 height: "40px",
                 zIndex: "99",
                 borderRadius: "0px",
@@ -401,22 +401,17 @@ const InnerBag = ({
         ) : null}
 
         <div className="share-icon-mobile">
-          {/* <Link
-            href={`/share?id=${bagData.bag._id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            underline="none"
-          > */}
+        
           <IconButton
             onClick={() => setShareLinkOpen(true)}
             sx={{
-              width: items?.length ? "25%" : "40%",
+              width: items?.length ? "20%" : "40%",
               height: "40px",
               zIndex: "99",
               borderRadius: "0px",
               position: "fixed",
               bottom: "0px",
-              left: items?.length ? "25%" : "0%",
+              left: items?.length ? "20%" : "0%",
               backgroundColor: theme.palette.primary.dark,
               color: "white",
               "&:hover": {
@@ -429,7 +424,7 @@ const InnerBag = ({
           >
             <ShareIcon sx={{ fontSize: "20px" }} />
           </IconButton>
-          {/* </Link> */}
+       
         </div>
 
         <div className="switch-icon-mobile">
@@ -441,7 +436,7 @@ const InnerBag = ({
               borderRadius: "0px",
               position: "fixed",
               bottom: "0px",
-              left: items?.length ? "50%" : "40%",
+              left: items?.length ? "40%" : "40%",
               backgroundColor: theme.palette.secondary.dark,
               color: "white",
               "&:hover": {
@@ -1154,12 +1149,12 @@ const InnerBag = ({
               </Typography>
 
               <Stack
-                direction="column"
+                direction="row"
                 alignItems="center"
                 width="100%"
                 marginTop={1}
               >
-                <Stack direction="row" alignItems='center' width="100%">
+                
                   <IconButton onClick={copyToClipboard} color="primary">
                     <FileCopyIcon />
                   </IconButton>
@@ -1174,12 +1169,8 @@ const InnerBag = ({
                   />
                 </Stack>
 
-                {copied ? (
-                  <Alert severity="info" sx={{ mt: 2 }}>
-                    {copied}
-                  </Alert>
-                ) : null}
-              </Stack>
+            
+            
 
               <Typography
                 variant="body1"

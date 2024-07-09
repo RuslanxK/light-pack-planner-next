@@ -266,7 +266,7 @@ const navigateToUrl = (url) => {
 
         <MenuItem>
         <ListItemIcon>
-          <img src={session?.user?.image || `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`} alt='user' style={{ borderRadius: "100px", objectFit: "cover", width: "35px", height: "35px", marginRight: "15px" }} />
+          <img src={session?.user?.image || profileUrl } alt='user' style={{ borderRadius: "100px", objectFit: "cover", width: "35px", height: "35px", marginRight: "15px" }} />
         </ListItemIcon>
           <ListItemText>{user.username}</ListItemText>
         
