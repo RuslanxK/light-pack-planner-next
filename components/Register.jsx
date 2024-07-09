@@ -80,7 +80,11 @@ const Register = () => {
       try {
         const email = { email: registerData.email };
 
+        setIsLoading(true);
+
         const response = await axios.post("/api/checkEmail", email);
+
+        setIsLoading(false);
 
         if (response.status !== 200) {
           setError(response.data.message || "An error occurred.");
@@ -88,6 +92,7 @@ const Register = () => {
         }
       } catch (error) {
         setError(error.response?.data?.message);
+        setIsLoading(false);
         return;
       }
     } else if (step === 2) {
@@ -100,18 +105,13 @@ const Register = () => {
         return;
       }
       if (
-        registerData.password.length < 10 ||
-        registerData.repeatedPassword.length < 10
+        registerData.password.length < 8 ||
+        registerData.repeatedPassword.length < 8
       ) {
-        setError("Password must be at least 10 characters long.");
+        setError("Password must be at least 8 characters long.");
         return;
       }
-    } else if (step === 3) {
-      if (!registerData.image) {
-        setError("Please upload a profile picture.");
-        return;
-      }
-    }
+    } 
     setError("");
     setStep((prevStep) => prevStep + 1);
   };
@@ -122,41 +122,56 @@ const Register = () => {
 
 
 
+
+
+
   const register = async (e) => {
     e.preventDefault();
-
-   
+  
     try {
       setIsLoading(true);
-
-      const data = await axios.post("/api/register", registerData);
-
-      const awsUrl = data.data.signedUrl;
-
-      await fetch(awsUrl, {
-        method: "PUT",
-        body: registerData.image,
-        headers: {
-          "Content-Type": registerData.image.type,
-        },
-      });
-
+  
+      let obj = { ...registerData };
+  
+      if (!registerData.image) {
+        const defaultImageURL = '/default.png';
+        const defaultImageFile = await fetch(defaultImageURL)
+          .then((res) => res.blob())
+          .then((blob) => new File([blob], 'default.png', { type: 'image/png' }));
+  
+        obj = { ...registerData, image: defaultImageFile };
+      }
+  
+      const data = await axios.post("/api/register", obj);
+  
+      if (obj.image) {
+        const awsUrl = data.data.signedUrl;
+        await fetch(awsUrl, {
+          method: "PUT",
+          body: obj.image,
+          headers: {
+            "Content-Type": obj.image.type,
+          },
+        });
+      }
+  
       const sendTo = { email: registerData.email, id: data.data.User._id };
-
+  
       await axios.post("/api/emailVerify", sendTo);
       localStorage.setItem("registrationSuccess", "true");
-
+  
       router.push("/login");
-
+  
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
-
+      console.error(error);
+  
       setIsLoading(false);
       setError(error?.response?.data);
     }
   };
   
+
 
   return (
     <Stack
@@ -271,7 +286,7 @@ const Register = () => {
                     color="primary"
                     onClick={handleNext}
                   >
-                    Next
+                    Next {isLoading ? <CircularProgress color="inherit" size={20} sx={{ marginLeft: "15px" }} /> : null}
                   </Button>
                 </Grid>
               </Grid>
@@ -282,7 +297,7 @@ const Register = () => {
                 <Grid item xs={12}>
                   <TextField
                     required
-                    inputProps={{ minLength: 10 }}
+                    inputProps={{ minLength: 8 }}
                     type="password"
                     label="Password"
                     name="password"
@@ -295,7 +310,7 @@ const Register = () => {
                 <Grid item xs={12}>
                   <TextField
                     required
-                    inputProps={{ minLength: 10 }}
+                    inputProps={{ minLength: 8 }}
                     type="password"
                     label="Repeat password"
                     name="repeatedPassword"

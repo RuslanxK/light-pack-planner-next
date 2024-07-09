@@ -26,6 +26,7 @@ export const POST = async (req) => {
 
     const { title, description } = await req.json();
 
+
     const putObjectCommand = new PutObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME,
       Key: filename
@@ -35,11 +36,15 @@ export const POST = async (req) => {
       expiresIn: 60
     });
 
+
     const Article = new article({ title, description, imageKey: putObjectCommand.input.Key });
+
     await Article.save();
+
 
     return new NextResponse(JSON.stringify({ Article, signedUrl }), { status: 200 });
   } catch (error) {
+
    
     return new NextResponse(JSON.stringify({ message: "Failed to post article", error: error.message }), { status: 500 });
   }

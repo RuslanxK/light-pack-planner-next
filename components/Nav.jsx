@@ -53,6 +53,8 @@ const [isOpenMenu, setOpenMenu] = useState(false)
 const [ loading, setLoading] = useState(false)
 const [ nestedMenuOpen, setNestedMenuOpen] = useState(false)
 
+const profileUrl =  `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}` 
+
 
 useEffect(() => {
 
@@ -111,7 +113,6 @@ const bagData = filteredBags?.map((bag) => {
       sx={{ cursor: "pointer" ,"&:hover": { color: theme.green }}} key={bag._id}>{bag?.name?.length > 15 ? `${bag?.name?.substring(0, 15)}...` : bag?.name}</Typography></Stack>
   })
 
-  
 
 
 
@@ -392,7 +393,7 @@ const navigateToUrl = (url) => {
       <Typography variant='span'p={0.2} component="h3" fontWeight="300" color="inherit">{session?.user?.email}</Typography>
     </>
   }>
-     <IconButton sx={{marginTop: "5px"}}><Image src={session?.user?.image || `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`} alt='user' style={{ borderRadius: "100%", objectFit: "cover" }} width={35} height={35} /></IconButton>
+     <IconButton sx={{marginTop: "5px"}}><Image src={session?.user?.image || profileUrl } alt='user' style={{ borderRadius: "100%", objectFit: "cover" }} width={35} height={35} /></IconButton>
      </Tooltip>
       <Typography className='logout' fontSize="15px" onClick={logOut}> <LogoutIcon sx={{fontSize: "17px", marginRight: "5px"}}/> Log out</Typography>
 
@@ -400,6 +401,7 @@ const navigateToUrl = (url) => {
      </Stack>
      
 ) : null}
+
 
       </Stack>
        <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mb={1}><LightModeIcon sx={{color: "#4a4a4a", marginRight: "5px"}}/> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <DarkModeIcon sx={{color: "#4a4a4a", marginLeft: "5px"}}/></Stack>

@@ -353,7 +353,7 @@ const InnerBag = ({
             <IconButton
               onClick={showHideSideBar}
               sx={{
-                width: "20%",
+                width: "25%",
                 height: "40px",
                 zIndex: "99",
                 borderRadius: "0px",
@@ -388,13 +388,13 @@ const InnerBag = ({
           >
             <IconButton
               sx={{
-                width: items?.length ? "20%" : "40%",
+                width: items?.length ? "25%" : "40%",
                 height: "40px",
                 zIndex: "99",
                 borderRadius: "0px",
                 position: "fixed",
                 bottom: "0px",
-                left: items?.length ? "20%" : "0px",
+                left: items?.length ? "25%" : "0%",
                 backgroundColor: theme.palette.primary.dark,
                 color: "white",
                 "&:hover": {
@@ -419,7 +419,7 @@ const InnerBag = ({
               borderRadius: "0px",
               position: "fixed",
               bottom: "0px",
-              left: items?.length ? "40%" : "50%",
+              left: items?.length ? "50%" : "40%",
               backgroundColor: theme.palette.secondary.dark,
               color: "white",
               "&:hover": {
@@ -532,18 +532,18 @@ const InnerBag = ({
                       
 
                       <div className="share-icon-desktop">
-                        <Link
+                        {/* <Link
                           href={`/share?id=${bagData.bag._id}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           underline="none"
-                        >
+                        > */}
                           <Tooltip title="Share Link">
                             <IconButton>
                               <ShareIcon sx={{ fontSize: "20px" }} />
                             </IconButton>
                           </Tooltip>
-                        </Link>
+                        {/* </Link> */}
                       </div>
                       <Tooltip title="Edit">
                         <IconButton onClick={openPopup}>
