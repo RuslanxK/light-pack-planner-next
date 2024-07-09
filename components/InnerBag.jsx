@@ -82,6 +82,7 @@ const InnerBag = ({
   const [loading, setLoading] = useState(false);
   const [popupLoading, setPopupLoading] = useState(false);
   const [showSwitchMessage, setShowSwitchMessage] = useState(false);
+  const [shareLinkOpen, setShareLinkOpen] = useState(false)
   const [switchChecked, setSwitchChecked] = useState(
     bagData?.bag?.exploreBags || false
   );
@@ -247,6 +248,7 @@ const InnerBag = ({
     setDeletePopupOpen(false);
     setConfirmPopupOpen(false);
     setPopupLoading(false);
+    setShareLinkOpen(false)
   };
 
   const openRemovePopup = () => setDeletePopupOpen(true);
@@ -380,13 +382,14 @@ const InnerBag = ({
         ) : null}
 
         <div className="share-icon-mobile">
-          <Link
+          {/* <Link
             href={`/share?id=${bagData.bag._id}`}
             target="_blank"
             rel="noopener noreferrer"
             underline="none"
-          >
+          > */}
             <IconButton
+              onClick={() => setShareLinkOpen()}
               sx={{
                 width: items?.length ? "25%" : "40%",
                 height: "40px",
@@ -407,7 +410,7 @@ const InnerBag = ({
             >
               <ShareIcon sx={{ fontSize: "20px" }} />
             </IconButton>
-          </Link>
+          {/* </Link> */}
         </div>
 
         <div className="switch-icon-mobile">
@@ -532,18 +535,18 @@ const InnerBag = ({
                       
 
                       <div className="share-icon-desktop">
-                        {/* <Link
+                        <Link
                           href={`/share?id=${bagData.bag._id}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           underline="none"
-                        > */}
+                        >
                           <Tooltip title="Share Link">
                             <IconButton>
                               <ShareIcon sx={{ fontSize: "20px" }} />
                             </IconButton>
                           </Tooltip>
-                        {/* </Link> */}
+                        </Link>
                       </div>
                       <Tooltip title="Edit">
                         <IconButton onClick={openPopup}>
@@ -1088,6 +1091,73 @@ const InnerBag = ({
               </Button>
             </Stack>
           </MuiPopup>
+
+
+
+
+
+
+          <MuiPopup isOpen={shareLinkOpen} onClose={closePopup}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="flex-start"
+              flexWrap="wrap"
+            >
+              <Stack
+                direction="row"
+                width="100%"
+                alignItems="center"
+                mb={1}
+                justifyContent="space-between"
+              >
+                <Typography variant="h6" component="h2">
+                  Bag Link
+                </Typography>
+                <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+              </Stack>
+              <Typography variant="body1" component="span">
+                You are about to publish{" "}
+                <b style={{ color: theme.green }}>{bagData.bag.name}</b> to the
+                "Explore Bags". Please note that confirming this action will
+                make your bag details visible to everyone and allow them to
+                react to it.
+              </Typography>
+
+              <Button
+                sx={{
+                  marginTop: "20px",
+                  width: "100%",
+                  fontWeight: "500",
+                  color: theme.palette.mode === "dark" ? "white" : null,
+                  backgroundColor: theme.green,
+                }}
+                variant="contained"
+                onClick={confirmSwitchChange}
+                disableElevation
+              >
+                Publish{" "}
+                {popupLoading ? (
+                  <CircularProgress
+                    color="inherit"
+                    size={16}
+                    sx={{ marginLeft: "10px" }}
+                  />
+                ) : null}
+              </Button>
+            </Stack>
+          </MuiPopup>
+
+
+
+
+
+
+
+
+
+
+
         </Box>
       </Container>
     </Fragment>
