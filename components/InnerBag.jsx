@@ -36,8 +36,10 @@ import FlipCameraIosOutlinedIcon from "@mui/icons-material/FlipCameraIosOutlined
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+
 import {
   DndContext,
   closestCorners,
@@ -82,12 +84,29 @@ const InnerBag = ({
   const [loading, setLoading] = useState(false);
   const [popupLoading, setPopupLoading] = useState(false);
   const [showSwitchMessage, setShowSwitchMessage] = useState(false);
-  const [shareLinkOpen, setShareLinkOpen] = useState(false)
+  const [shareLinkOpen, setShareLinkOpen] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState("");
+  const [copied, setCopied] = useState("");
   const [switchChecked, setSwitchChecked] = useState(
     bagData?.bag?.exploreBags || false
   );
 
   const { refresh } = useRefresh();
+
+  const copyToClipboard = () => {
+    navigator.clipboard
+      .writeText(`${currentUrl}/share?id=${bagData.bag._id}`)
+      .then(() => {
+        setCopied("Text copied to clipboard");
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
+  };
+
+  useEffect(() => {
+    setCurrentUrl(window.location.origin);
+  }, []);
 
   useEffect(() => {
     if (bagData?.totalBagWeight === 0 && switchChecked) {
@@ -248,7 +267,7 @@ const InnerBag = ({
     setDeletePopupOpen(false);
     setConfirmPopupOpen(false);
     setPopupLoading(false);
-    setShareLinkOpen(false)
+    setShareLinkOpen(false);
   };
 
   const openRemovePopup = () => setDeletePopupOpen(true);
@@ -388,28 +407,28 @@ const InnerBag = ({
             rel="noopener noreferrer"
             underline="none"
           > */}
-            <IconButton
-              onClick={() => setShareLinkOpen()}
-              sx={{
-                width: items?.length ? "25%" : "40%",
-                height: "40px",
-                zIndex: "99",
-                borderRadius: "0px",
-                position: "fixed",
-                bottom: "0px",
-                left: items?.length ? "25%" : "0%",
-                backgroundColor: theme.palette.primary.dark,
-                color: "white",
-                "&:hover": {
-                  backgroundColor: theme.palette.primary.main,
-                },
-                "&:active": {
-                  backgroundColor: theme.palette.primary.light,
-                },
-              }}
-            >
-              <ShareIcon sx={{ fontSize: "20px" }} />
-            </IconButton>
+          <IconButton
+            onClick={() => setShareLinkOpen(true)}
+            sx={{
+              width: items?.length ? "25%" : "40%",
+              height: "40px",
+              zIndex: "99",
+              borderRadius: "0px",
+              position: "fixed",
+              bottom: "0px",
+              left: items?.length ? "25%" : "0%",
+              backgroundColor: theme.palette.primary.dark,
+              color: "white",
+              "&:hover": {
+                backgroundColor: theme.palette.primary.main,
+              },
+              "&:active": {
+                backgroundColor: theme.palette.primary.light,
+              },
+            }}
+          >
+            <ShareIcon sx={{ fontSize: "20px" }} />
+          </IconButton>
           {/* </Link> */}
         </div>
 
@@ -433,7 +452,9 @@ const InnerBag = ({
               },
             }}
           >
-           <Typography variant="span" component="span" fontSize="15px" mr={1}>Share to explore</Typography>
+            <Typography variant="span" component="span" fontSize="15px" mr={1}>
+              Share to explore
+            </Typography>
             <Switch
               onChange={handleSwitchChange}
               sx={{ transform: "scale(0.9)" }}
@@ -512,7 +533,6 @@ const InnerBag = ({
                       justifyContent="flex-end"
                     >
                       <div className="switch-icon-desktop">
-                        
                         <Tooltip
                           title={
                             bagData.bag.exploreBags
@@ -520,8 +540,6 @@ const InnerBag = ({
                               : "Share this bag to 'Explore'"
                           }
                         >
-                          
-                          
                           <Switch
                             onChange={handleSwitchChange}
                             checked={bagData.bag.exploreBags}
@@ -529,10 +547,7 @@ const InnerBag = ({
                         </Tooltip>
 
                         <Typography mr={5}>Share to explore</Typography>
-
                       </div>
-
-                      
 
                       <div className="share-icon-desktop">
                         <Link
@@ -767,7 +782,9 @@ const InnerBag = ({
                 justifyContent={theme.center}
                 alignItems={theme.center}
                 height={theme.category.height}
-                backgroundColor={theme.palette.mode === "dark" ? null : "#FAFAFA"}
+                backgroundColor={
+                  theme.palette.mode === "dark" ? null : "#FAFAFA"
+                }
                 mb={2}
                 sx={{ cursor: "pointer" }}
                 onClick={addCategory}
@@ -828,8 +845,22 @@ const InnerBag = ({
                         : theme.green,
                   }}
                 >
-
-                  <Stack pb={1} alignItems="center"><Tooltip title="Close sidebar"><IconButton sx={{background: "white", color: theme.green, '&:hover': {background: "#e0e0e0"}}} onClick={() =>  setShowSideBarDesktop(!showSideBarDesktop)}><ArrowForwardOutlinedIcon sx={{fontSize: "20px"}} /></IconButton></Tooltip></Stack>
+                  <Stack pb={1} alignItems="center">
+                    <Tooltip title="Close sidebar">
+                      <IconButton
+                        sx={{
+                          background: "white",
+                          color: theme.green,
+                          "&:hover": { background: "#e0e0e0" },
+                        }}
+                        onClick={() =>
+                          setShowSideBarDesktop(!showSideBarDesktop)
+                        }
+                      >
+                        <ArrowForwardOutlinedIcon sx={{ fontSize: "20px" }} />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
                   <Typography
                     component="h3"
                     variant="span"
@@ -853,8 +884,8 @@ const InnerBag = ({
                 </Stack>
               </Stack>
             </div>
-          ) : items?.length && bagData?.categories.length ? <div className="recent-desktop">
-
+          ) : items?.length && bagData?.categories.length ? (
+            <div className="recent-desktop">
               <Stack width={"36px"} height={theme.nav.height}>
                 <Stack
                   pt={2}
@@ -867,17 +898,27 @@ const InnerBag = ({
                         : theme.green,
                   }}
                 >
-             <Stack alignItems="center"><Tooltip title="Open sidebar"><IconButton sx={{background: theme.palette.mode === "dark" ? "#404040" : "white", color: theme.green, '&:hover': {background: "#e0e0e0"}}} onClick={() =>  setShowSideBarDesktop(!showSideBarDesktop)}><ArrowBackOutlinedIcon sx={{fontSize: "20px"}} /></IconButton></Tooltip></Stack>
-
-             </Stack>
-             </Stack>
-            
-            </div> : null}
-
-
-
-
-
+                  <Stack alignItems="center">
+                    <Tooltip title="Open sidebar">
+                      <IconButton
+                        sx={{
+                          background:
+                            theme.palette.mode === "dark" ? "#404040" : "white",
+                          color: theme.green,
+                          "&:hover": { background: "#e0e0e0" },
+                        }}
+                        onClick={() =>
+                          setShowSideBarDesktop(!showSideBarDesktop)
+                        }
+                      >
+                        <ArrowBackOutlinedIcon sx={{ fontSize: "20px" }} />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
+                </Stack>
+              </Stack>
+            </div>
+          ) : null}
 
           {items?.length && showSideBarMobile ? (
             <div className="recent-mobile">
@@ -1092,36 +1133,61 @@ const InnerBag = ({
             </Stack>
           </MuiPopup>
 
-
-
-
-
-
           <MuiPopup isOpen={shareLinkOpen} onClose={closePopup}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="flex-start"
-              flexWrap="wrap"
-            >
+            <Stack direction="column" alignItems="flex-start">
               <Stack
                 direction="row"
                 width="100%"
                 alignItems="center"
-                mb={1}
                 justifyContent="space-between"
+                marginBottom={1}
               >
                 <Typography variant="h6" component="h2">
-                  Bag Link
+                  Share Bag Link
                 </Typography>
                 <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
               </Stack>
               <Typography variant="body1" component="span">
-                You are about to publish{" "}
-                <b style={{ color: theme.green }}>{bagData.bag.name}</b> to the
-                "Explore Bags". Please note that confirming this action will
-                make your bag details visible to everyone and allow them to
-                react to it.
+                Copy the following URL to share{" "}
+                <b style={{ color: theme.green }}>{bagData.bag.name}</b> with
+                others:
+              </Typography>
+
+              <Stack
+                direction="column"
+                alignItems="center"
+                width="100%"
+                marginTop={1}
+              >
+                <Stack direction="row" alignItems='center' width="100%">
+                  <IconButton onClick={copyToClipboard} color="primary">
+                    <FileCopyIcon />
+                  </IconButton>
+
+                  <TextField
+                    value={`${currentUrl}/share?id=${bagData.bag._id}`}
+                    fullWidth
+                    variant="outlined"
+                    margin="dense"
+                    sx={{ width: "100%", marginLeft: "5px" }}
+                    inputProps={{ readOnly: true }}
+                  />
+                </Stack>
+
+                {copied ? (
+                  <Alert severity="info" sx={{ mt: 2 }}>
+                    {copied}
+                  </Alert>
+                ) : null}
+              </Stack>
+
+              <Typography
+                variant="body1"
+                component="span"
+                sx={{ marginTop: "10px" }}
+              >
+                Share this URL with your friends or colleagues to let them view
+                and react to the bag.
               </Typography>
 
               <Button
@@ -1133,31 +1199,13 @@ const InnerBag = ({
                   backgroundColor: theme.green,
                 }}
                 variant="contained"
-                onClick={confirmSwitchChange}
+                onClick={closePopup}
                 disableElevation
               >
-                Publish{" "}
-                {popupLoading ? (
-                  <CircularProgress
-                    color="inherit"
-                    size={16}
-                    sx={{ marginLeft: "10px" }}
-                  />
-                ) : null}
+                Close
               </Button>
             </Stack>
           </MuiPopup>
-
-
-
-
-
-
-
-
-
-
-
         </Box>
       </Container>
     </Fragment>
