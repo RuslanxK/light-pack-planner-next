@@ -102,7 +102,7 @@ const Share = ({ bagData, user, session, itemsTotal, categoryPieChartData, categ
 
     let convertedWeight = weight;
 
-    // Conversion logic based on the selected weightUnit
+   
     switch (unit) {
       case "kg":
         switch (targetUnit) {
@@ -191,7 +191,7 @@ const Share = ({ bagData, user, session, itemsTotal, categoryPieChartData, categ
               margin="0 auto"
               width="100%"
               pb={2.5}
-              direction="row"
+              direction="column"
               justifyContent="space-between"
               alignItems="center"
             >
@@ -207,7 +207,7 @@ const Share = ({ bagData, user, session, itemsTotal, categoryPieChartData, categ
                 width={110}
                 height={70}
               />
-              <Typography fontWeight="600" component="span" variant="span">
+              <Typography fontWeight="600" mt={1} component="span" variant="span">
                 Shared by {user.username}
               </Typography>
               {session?.user?.id ? null : (
