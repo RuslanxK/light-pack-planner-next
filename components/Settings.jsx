@@ -5,7 +5,6 @@ import {
   Typography,
   Stack,
   TextField,
-  Container,
   useTheme,
   Button,
   Select,
@@ -23,7 +22,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import useCountries from "./hooks/useCountries";
 
@@ -32,9 +30,9 @@ const Settings = ({ session, user }) => {
   const theme = useTheme();
   const router = useRouter();
 
-  const profileImageUrl = session?.user?.profileImageKey
-    ? `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`
-    : null;
+   
+
+  const profileImageUrl = session?.user?.profileImageKey ? `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}` : null;
 
   const [userDetails, setUserDetails] = useState({
     username: user.username,
@@ -49,7 +47,6 @@ const Settings = ({ session, user }) => {
   });
   const [savedMessage, setMessage] = useState(null);
   const [error, setError] = useState(null);
-  const [isHover, setIsHover] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { countryNameArr } = useCountries();
@@ -113,6 +110,7 @@ const Settings = ({ session, user }) => {
   };
 
   return (
+
     <Stack
       display={theme.flexBox}
       justifyContent={theme.start}
@@ -138,77 +136,80 @@ const Settings = ({ session, user }) => {
         </Typography>
 
         <Button
-          onMouseEnter={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
-          component="label"
-          sx={{
-            width: "120px",
-            height: "120px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 1,
-            borderRadius: "100px",
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        >
-          {userDetails.image ? (
-            <Fragment>
-              <img
-                src={URL.createObjectURL(userDetails.image)}
-                alt="Profile"
-                width="100%"
-                height="100%"
-                style={{ objectFit: "cover", borderRadius: "100px" }}
-              />
-              {isHover && (
-                <EditIcon
-                  sx={{
-                    position: "absolute",
-                    fontSize: "25px",
-                    color: "rgba(255, 255, 255, 0.7)",
-                  }}
-                />
-              )}
-            </Fragment>
-          ) : userDetails.profileImageUrl ? (
-            <Fragment>
-              <img
-                src={userDetails.profileImageUrl}
-                alt="Profile"
-                width="100%"
-                height="100%"
-                style={{ objectFit: "cover", borderRadius: "100px" }}
-              />
-              {isHover && (
-                <EditIcon
-                  sx={{
-                    position: "absolute",
-                    fontSize: "25px",
-                    color: "rgba(255, 255, 255, 0.7)",
-                  }}
-                />
-              )}
-            </Fragment>
-          ) : (
-            <Fragment>
-              <AddPhotoAlternateIcon
-                sx={{ fontSize: "2.5rem", color: "#9e9e9e" }}
-              />
-              <Typography variant="body2" sx={{ color: "#9e9e9e" }}>
-                Upload Photo
-              </Typography>
-            </Fragment>
-          )}
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleFileChange}
+      component="label"
+      sx={{
+        width: "120px",
+        height: "120px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: "100px",
+        marginTop: "20px",
+        marginBottom: "20px",
+        position: "relative", // Added to position the EditIcon correctly
+      }}
+    >
+      {session.user.image ? (
+        <Fragment>
+          <img
+            src={session.user.image}
+            alt="Profile"
+            width="100%"
+            height="100%"
+            style={{ objectFit: "cover", borderRadius: "100px" }}
           />
-        </Button>
+          <EditIcon
+            sx={{
+              position: "absolute",
+              fontSize: "25px",
+              color: "rgba(255, 255, 255, 0.7)",
+            }}
+          />
+        </Fragment>
+      ) : userDetails.profileImageUrl ? (
+        <Fragment>
+          <img
+            src={userDetails.profileImageUrl}
+            alt="Profile"
+            width="100%"
+            height="100%"
+            style={{ objectFit: "cover", borderRadius: "100px" }}
+          />
+          <EditIcon
+            sx={{
+              position: "absolute",
+              fontSize: "25px",
+              color: "rgba(255, 255, 255, 0.7)",
+            }}
+          />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <img
+            src={URL.createObjectURL(userDetails.image)}
+            alt="Profile"
+            width="100%"
+            height="100%"
+            style={{ objectFit: "cover", borderRadius: "100px" }}
+          />
+          <EditIcon
+            sx={{
+              position: "absolute",
+              fontSize: "25px",
+              color: "rgba(255, 255, 255, 0.7)",
+            }}
+          />
+        </Fragment>
+      )}
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
+    </Button>
+
 
         <Grid container spacing={2} mb={3}>
           <Grid item xs={12} sm={6}>
