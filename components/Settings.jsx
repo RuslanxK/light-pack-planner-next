@@ -109,10 +109,8 @@ const Settings = ({ session, user }) => {
 
       setMessage("Saved successfully!");
 
-    
       setTimeout(() => {
 
-      
         if(userDetails.image) {
           window.location.reload()
       }
