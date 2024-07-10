@@ -326,9 +326,9 @@ const Settings = ({ session, user }) => {
               value={userDetails.activityLevel}
             >
               <MenuItem value="Please choose an option">Please choose an option</MenuItem>
-              <MenuItem value="low">Low</MenuItem>
-              <MenuItem value="medium">Medium</MenuItem>
-              <MenuItem value="high">High</MenuItem>
+              <MenuItem value="beginner">Beginner</MenuItem>
+               <MenuItem value="intermediate">Intermediate</MenuItem>
+               <MenuItem value="advanced">Advanced</MenuItem>
             </Select>
           </Grid>
 
