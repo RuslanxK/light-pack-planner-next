@@ -110,10 +110,7 @@ const Settings = ({ session, user }) => {
     
 
       setMessage("Saved successfully!");
-      setTimeout(() => {
-        setMessage("");
       
-      }, 3000);
     } catch (err) {
       console.log(err);
       setError("Something went wrong.");
