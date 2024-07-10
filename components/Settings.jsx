@@ -114,10 +114,10 @@ const Settings = ({ session, user }) => {
 
       
         if(userDetails.image) {
-
-          setLoading(false)
           window.location.reload()
       }
+
+      setLoading(false)
       
       }, 2000);
 
