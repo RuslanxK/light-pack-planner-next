@@ -39,7 +39,6 @@ const Register = () => {
 
   const { countryNameArr } = useCountries();
 
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleFileChange = (event) => {
     const { name } = event.target;

@@ -42,6 +42,8 @@ const AdminSettings = () => {
 
       e.preventDefault()
 
+      if(loading) return
+
 
       console.log(changelogData)
 
@@ -67,6 +69,9 @@ const AdminSettings = () => {
   const addArticle = async (e) => {
 
     e.preventDefault()
+
+    if(loading) return
+
 
     if (articleData.image && articleData.image.size > 2 * 1024 * 1024) {
       setError("File size exceeds the maximum limit of 2 MB.");

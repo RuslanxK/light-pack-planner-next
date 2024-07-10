@@ -48,6 +48,8 @@ const Bag = ({bagData, trips, session}) => {
   const duplicateBag =  async (e) => {
       e.preventDefault()
 
+      if (loading) return;
+
        try {
 
         setLoading(true)

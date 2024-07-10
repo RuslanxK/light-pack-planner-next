@@ -93,6 +93,9 @@ const InnerTrip = ({ tripData, trips, session}) => {
 
   const addBag = async (e) => {
     e.preventDefault();
+
+    if (loading) return;
+    
     try {
 
       setLoading(true)
@@ -108,7 +111,10 @@ const InnerTrip = ({ tripData, trips, session}) => {
   };
 
   const updateTrip = async (e) => {
+    
     e.preventDefault();
+
+    if (loading) return;
 
     try {
 
@@ -125,6 +131,9 @@ const InnerTrip = ({ tripData, trips, session}) => {
   };
 
   const removeTrip = async () => {
+
+    if (loading) return;
+
     try {
       setLoading(true)
       await axios.delete(`/api/trips/${tripData.trip._id}/${session?.user?.id}`);

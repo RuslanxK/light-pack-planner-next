@@ -141,6 +141,9 @@ const Item = (props) => {
     const saveLink = async (e) => {
       
       e.preventDefault()
+
+      if (loading) return;
+
       try {
         setLoading(true)
         await axios.put(`/items/${itemData._id}/${props?.session?.user?.id}`, itemData);
@@ -156,6 +159,8 @@ const Item = (props) => {
 
     const savePicture = async (e) => {
       e.preventDefault();
+
+      if (loading) return;
 
       const key = itemData.productImageKey
     

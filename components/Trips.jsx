@@ -80,6 +80,8 @@ const Trips = ({ trips, bags, session }) => {
   const createTrip = async (e) => {
     e.preventDefault();
 
+    if (loading) return;
+
     try {
       setLoading(true);
       const newTripDataWithUserId = {

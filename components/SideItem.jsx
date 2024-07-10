@@ -51,6 +51,7 @@ const closePopup = () => {
 const addItemToCategory = async (e) => {
     e.preventDefault()
 
+    if(loading) return 
   
     const itemObj = {userId: itemData.creator, tripId: itemToCategory.tripId, bagId: itemToCategory.bagId, categoryId: itemToCategory.categoryId, 
       name: itemData.name, description: itemData.description, link: itemData.link, priority: itemData.priority, qty: itemData.qty, weight: itemData.weight, wgtOpt: itemData.wgtOpt, worn: itemData.worn}

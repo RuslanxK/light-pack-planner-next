@@ -95,6 +95,8 @@ const Category = (props) => {
 
 
   const removeItems = async () => {
+
+
     try {
       props.loading(true)
       for (const item of checkedItems) {
@@ -174,6 +176,7 @@ const saveItemsOrder = async (updatedItems) => {
 
 
   const addItem =  async () => {
+    
 
     const itemObj = { userId: props.session.user.id, tripId: props.categoryData.tripId, bagId: props.categoryData.bagId, categoryId: props.categoryData._id, name: "new item", qty: 1, weight: 0.1, price: 0.00}
      
@@ -202,6 +205,9 @@ const saveItemsOrder = async (updatedItems) => {
     };
 
     const removeCategory = async () => {
+
+
+      if (loading) return;
 
         try {
 

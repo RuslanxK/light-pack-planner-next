@@ -245,6 +245,9 @@ const InnerBag = ({
   };
 
   const confirmSwitchChange = async () => {
+
+    if (popupLoading) return;
+    
     try {
       setPopupLoading(true);
       await axios.put(`/bags/${bagData.bag._id}/${session?.user.id}`, {
@@ -273,7 +276,11 @@ const InnerBag = ({
   const openRemovePopup = () => setDeletePopupOpen(true);
 
   const updateBag = async (e) => {
+
     e.preventDefault();
+
+    if (popupLoading) return;
+
     try {
       setPopupLoading(true);
       await axios.put(
@@ -290,6 +297,9 @@ const InnerBag = ({
   };
 
   const removeBag = async () => {
+
+    if (popupLoading) return;
+    
     try {
       setPopupLoading(true);
       await axios.delete(`/bags/${bagData.bag._id}/${session?.user?.id}`);
