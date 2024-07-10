@@ -106,11 +106,12 @@ const Settings = ({ session, user }) => {
           },
         });
       }
-
       
+      router.push(`/settings?refreshId=${new Date().getTime()}`)
+
       setMessage("Saved successfully!");
       setTimeout(() => {
-        router.refresh()
+
         setMessage("");
       }, 3000);
     } catch (err) {
