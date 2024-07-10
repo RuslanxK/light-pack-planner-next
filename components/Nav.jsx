@@ -54,7 +54,7 @@ const [ loading, setLoading] = useState(false)
 const [ nestedMenuOpen, setNestedMenuOpen] = useState(false)
 
 
-const profileUrl = session?.user?.profileImageKey ? `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}` : null;
+const profileImageUrl = session?.user?.profileImageKey ? `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}` : null;
 
 
 useEffect(() => {
@@ -267,7 +267,7 @@ const navigateToUrl = (url) => {
 
         <MenuItem>
         <ListItemIcon>
-          <img src={session?.user?.image || profileUrl } alt='user' style={{ borderRadius: "100px", objectFit: "cover", width: "35px", height: "35px", marginRight: "15px" }} />
+          <img src={session?.user?.image || profileImageUrl } alt='user' style={{ borderRadius: "100px", objectFit: "cover", width: "35px", height: "35px", marginRight: "15px" }} />
         </ListItemIcon>
           <ListItemText>{user.username}</ListItemText>
         
@@ -394,7 +394,7 @@ const navigateToUrl = (url) => {
       <Typography variant='span'p={0.2} component="h3" fontWeight="300" color="inherit">{session?.user?.email}</Typography>
     </>
   }>
-     <IconButton sx={{marginTop: "5px"}}><Image src={session?.user?.image || profileUrl } alt='user' style={{ borderRadius: "100%", objectFit: "cover" }} width={35} height={35} /></IconButton>
+     <IconButton sx={{marginTop: "5px"}}><img src={session?.user?.image || profileImageUrl} alt='user' style={{ borderRadius: "100%", objectFit: "cover" }} width={35} height={35} /></IconButton>
      </Tooltip>
       <Typography className='logout' fontSize="15px" onClick={logOut}> <LogoutIcon sx={{fontSize: "17px", marginRight: "5px"}}/> Log out</Typography>
 
