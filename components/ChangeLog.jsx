@@ -32,7 +32,7 @@ const ChangeLog = ({posts}) => {
           Keep track of updates and changes here.
         </Typography>
         <Stack spacing={3}>
-          {sortedPosts.slice(0, visibleEntries).map((entry, index) => (
+          {sortedPosts.length ? sortedPosts.slice(0, visibleEntries).map((entry, index) => (
             <Stack spacing={1} key={index}>
               <Typography component="h6" variant="subtitle1">
                 {entry.title}
@@ -43,9 +43,9 @@ const ChangeLog = ({posts}) => {
               <Typography component="p" variant="body2" mb={1}>
                 {entry.description}
               </Typography>
-              {index < posts.length - 1 && <Divider sx={{ marginY: 1 }} />}
+              {index < posts.length - 1 && <Divider sx={{ marginY: 1 }} /> }
             </Stack>
-          ))}
+          ))  : <Alert severity="info" sx={{width: "100%", mt: 2}}>No changes yet</Alert>}
         </Stack>
         {visibleEntries < posts.length && (
           <Button onClick={handleShowMore} sx={{ marginTop: 2 }}>
