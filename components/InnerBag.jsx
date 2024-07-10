@@ -317,6 +317,9 @@ const InnerBag = ({
     setShowSideBarMobile((prev) => !prev);
   };
 
+
+
+
   const moveCategory = async (fromIndex, toIndex) => {
     try {
       const updatedCategories = [...categoriesData];
@@ -348,16 +351,13 @@ const InnerBag = ({
     }
   };
 
-  const saveCategoriesOrder = async (categories) => {
-    const orderData = categories.map((category) => ({
-      _id: category._id,
-      order: category.order,
-    }));
-
+  const saveCategoriesOrder = async (updatedCategories) => {
     try {
-      await axios.put(`/categories/${bagData.bag._id}/order`, orderData);
+      const arr = { categories: updatedCategories };
+      await axios.put('/categories', arr);
+      console.log("Updated categories order successfully");
     } catch (error) {
-      console.error("Failed to save categories order:", error);
+      console.error('Failed to save categories order:', error);
     }
   };
 

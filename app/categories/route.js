@@ -20,9 +20,11 @@ export const PUT = async (req, res) => {
 
       return new NextResponse('Categories updated successfully', { status: 200 });
     } catch (err) {
+
+      console.log(err)
+
         return new NextResponse("Failed to update categories", { status: 500 });
     }
   
 }
 
-export const revalidate = 0;
