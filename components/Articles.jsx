@@ -39,7 +39,7 @@ const Articles = ({articles}) => {
  Embark on a journey with our backpacking blog, where seasoned adventurers share their tales of triumph, survival, and discovery. <br /> From remote mountain peaks to dense forests, find inspiration for your next expedition.
 </Typography>
 
-{ ArticleBox.length ? null : <Alert severity="info" sx={{width: "100%", mt: 2}}>No articles yet</Alert> }
+{ ArticleBox.length ? null : <Alert severity="info" sx={{ mt: 2}}>No articles yet</Alert> }
 
 </div>
 

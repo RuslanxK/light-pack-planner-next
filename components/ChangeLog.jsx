@@ -45,8 +45,9 @@ const ChangeLog = ({posts}) => {
               </Typography>
               {index < posts.length - 1 && <Divider sx={{ marginY: 1 }} /> }
             </Stack>
-          ))  : <Alert severity="info" sx={{width: "100%", mt: 2}}>No updates yet</Alert>}
+          ))  : <Alert severity="info" sx={{ mt: 2}}>No updates yet</Alert>}
         </Stack>
+
         {visibleEntries < posts.length && (
           <Button onClick={handleShowMore} sx={{ marginTop: 2 }}>
            View Previous Updates
