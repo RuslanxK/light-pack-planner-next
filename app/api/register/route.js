@@ -41,7 +41,7 @@ export const POST = async (req) => {
 
     const signedUrl = await getSignedUrl(s3, putObjectCommand, {
 
-        expiresIn: 60
+        expiresIn: 30
     })
 
 

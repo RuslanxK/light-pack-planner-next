@@ -72,7 +72,7 @@ export const PUT = async (req, { params }) => {
 
   const signedUrl = await getSignedUrl(s3, putObjectCommand, {
 
-    expiresIn: 60
+    expiresIn: 30
 })
 
      await User.save();
