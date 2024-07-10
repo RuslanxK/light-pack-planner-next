@@ -106,10 +106,11 @@ const Settings = ({ session, user }) => {
           },
         });
       }
+
       
-      router.refresh();
       setMessage("Saved successfully!");
       setTimeout(() => {
+        router.refresh()
         setMessage("");
       }, 3000);
     } catch (err) {
