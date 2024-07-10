@@ -133,10 +133,10 @@ const Register = () => {
       let obj = { ...registerData };
   
       if (!registerData.image) {
-        const defaultImageURL = '/default.png';
+        const defaultImageURL = '/default.jpg';
         const defaultImageFile = await fetch(defaultImageURL)
           .then((res) => res.blob())
-          .then((blob) => new File([blob], 'default.png', { type: 'image/png' }));
+          .then((blob) => new File([blob], 'default.jpg', { type: 'image/jpg' }));
   
         obj = { ...registerData, image: defaultImageFile };
       }
@@ -145,6 +145,7 @@ const Register = () => {
   
       if (obj.image) {
         const awsUrl = data.data.signedUrl;
+
         await fetch(awsUrl, {
           method: "PUT",
           body: obj.image,

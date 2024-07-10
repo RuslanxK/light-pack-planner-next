@@ -33,7 +33,7 @@ const ChangeLog = ({posts}) => {
         </Typography>
         <Stack spacing={3}>
           {sortedPosts.slice(0, visibleEntries).map((entry, index) => (
-            <Stack spacing={1}>
+            <Stack spacing={1} key={index}>
               <Typography component="h6" variant="subtitle1">
                 {entry.title}
               </Typography>

@@ -93,10 +93,10 @@ const NewPassword = ({user, err}) => {
 
     <Grid container spacing={2}>
     <Grid item xs={12}>
-    <TextField type="password" sx={{width: "100%"}} required inputProps={{minLength : 10}} label="New Password" name="password" onChange={handleChange} />
+    <TextField type="password" sx={{width: "100%"}} required inputProps={{minLength : 8}} label="New Password" name="password" onChange={handleChange} />
     </Grid>
     <Grid item xs={12}>
-    <TextField type="password" sx={{width: "100%"}} required inputProps={{minLength : 10}} label="Confirm New Password" name="confirmPassword" onChange={handleChange}  />
+    <TextField type="password" sx={{width: "100%"}} required inputProps={{minLength : 8}} label="Confirm New Password" name="confirmPassword" onChange={handleChange}  />
     </Grid>
     <Grid item xs={12}>
     <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Reset Password { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</button>

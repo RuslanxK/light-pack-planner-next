@@ -44,6 +44,8 @@ const Settings = ({ session, user }) => {
     country: user.country || "",
     image: null,
     profileImageUrl,
+    profileImageKey: session?.user?.profileImageKey,
+
   });
   const [savedMessage, setMessage] = useState(null);
   const [error, setError] = useState(null);
@@ -81,21 +83,30 @@ const Settings = ({ session, user }) => {
     }
   };
 
+
   const saveDetails = async () => {
-    setLoading(true);
+
     try {
-      const updatedDetails = { ...userDetails };
-      if (userDetails.image && userDetails.image instanceof File) {
-        const formData = new FormData();
-        formData.append("file", userDetails.image);
-        const uploadResponse = await axios.post("/api/upload", formData, {
+
+      setLoading(true);
+
+      const { image, profileImageUrl, ...updatedDetails } = userDetails;
+  
+       const response = await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
+
+        const url = response.data.signedUrl
+
+      if(userDetails.image) {
+
+        await fetch(url, {
+          method: "PUT",
+          body: userDetails.image,
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": userDetails.image.type,
           },
         });
-        updatedDetails.image = uploadResponse.data.url;
       }
-      await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
+      
       router.refresh();
       setMessage("Saved successfully!");
       setTimeout(() => {
@@ -108,6 +119,7 @@ const Settings = ({ session, user }) => {
       setLoading(false);
     }
   };
+
 
   return (
 

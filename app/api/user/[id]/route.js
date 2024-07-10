@@ -1,6 +1,20 @@
 import user from '../../../../models/user';
 import { connectToDB } from '../../../../utils/database';
 import { NextResponse } from "next/server";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
+
+
+
+const s3 = new S3Client({
+
+  region: process.env.S3_BUCKET_REGION,
+  credentials: {
+
+      accessKeyId: process.env.S3_ACCESS_KEY,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+  }
+})
 
 
 
@@ -35,18 +49,34 @@ export const PUT = async (req, { params }) => {
     if (!User) {
       return new NextResponse('User not found', { status: 404 });
     }
+    
 
-    // Get the entire request body
+  
     const requestBody = await req.text();
     const bodyData = JSON.parse(requestBody);
 
-    // Update User fields using the data from the request body
+
     Object.keys(bodyData).forEach(key => {
       User[key] = bodyData[key];
     });
 
+
+
+    const putObjectCommand = new PutObjectCommand({
+
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: bodyData.profileImageKey
+  })
+
+
+  const signedUrl = await getSignedUrl(s3, putObjectCommand, {
+
+    expiresIn: 60
+})
+
+
     await User.save();
-    return new NextResponse('User is Updated Successfully', { status: 200 });
+    return new NextResponse(JSON.stringify({ message: 'User is updated successfully', signedUrl }), { status: 200 });
   } catch (err) {
     console.error(err);
     return new NextResponse('Failed to update User', { status: 500 });
