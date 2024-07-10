@@ -53,7 +53,8 @@ const [isOpenMenu, setOpenMenu] = useState(false)
 const [ loading, setLoading] = useState(false)
 const [ nestedMenuOpen, setNestedMenuOpen] = useState(false)
 
-const profileUrl =  `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}` 
+
+const profileUrl = session?.user?.profileImageKey ? `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}` : null;
 
 
 useEffect(() => {
