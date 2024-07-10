@@ -359,7 +359,7 @@ const Settings = ({ session, user }) => {
           disableElevation
           onClick={saveDetails}
           disabled={loading}
-          sx={{ padding: "12px", width: "100%", marginTop: "10px"}}>
+          sx={{ padding: "8px", width: "100%", marginTop: "10px"}}>
           Save {loading ? <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> : null }
         </Button>
 
