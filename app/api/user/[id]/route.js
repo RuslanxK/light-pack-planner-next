@@ -61,6 +61,7 @@ export const PUT = async (req, { params }) => {
     });
 
 
+    if(bodyData.profileImageKey) {
 
     const putObjectCommand = new PutObjectCommand({
 
@@ -74,9 +75,13 @@ export const PUT = async (req, { params }) => {
     expiresIn: 60
 })
 
+     await User.save();
+     return new NextResponse(JSON.stringify({ message: 'User is updated successfully', signedUrl }), { status: 200 });
+}
+
 
     await User.save();
-    return new NextResponse(JSON.stringify({ message: 'User is updated successfully', signedUrl }), { status: 200 });
+    return new NextResponse(JSON.stringify({ message: 'User is updated successfully'}), { status: 200 });
   } catch (err) {
     console.error(err);
     return new NextResponse('Failed to update User', { status: 500 });
