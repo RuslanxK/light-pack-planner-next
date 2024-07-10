@@ -1,7 +1,7 @@
 "use client";
 import * as React from 'react';
 import { useState } from 'react';
-import { Stack, IconButton, Typography, Divider, Button, useTheme } from '@mui/material';
+import { Stack, IconButton, Typography, Divider, Button, useTheme, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/navigation';
 
@@ -45,7 +45,7 @@ const ChangeLog = ({posts}) => {
               </Typography>
               {index < posts.length - 1 && <Divider sx={{ marginY: 1 }} /> }
             </Stack>
-          ))  : <Alert severity="info" sx={{width: "100%", mt: 2}}>No changes yet</Alert>}
+          ))  : <Alert severity="info" sx={{width: "100%", mt: 2}}>No updates yet</Alert>}
         </Stack>
         {visibleEntries < posts.length && (
           <Button onClick={handleShowMore} sx={{ marginTop: 2 }}>
