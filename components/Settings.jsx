@@ -106,17 +106,26 @@ const Settings = ({ session, user }) => {
           },
         });
       }
-      
-    
 
       setMessage("Saved successfully!");
+
+    
+      setTimeout(() => {
+
       
+        if(userDetails.image) {
+
+          setLoading(false)
+          window.location.reload()
+      }
+      
+      }, 2000);
+
+
     } catch (err) {
       console.log(err);
       setError("Something went wrong.");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
 
