@@ -72,14 +72,22 @@ const Settings = ({ session, user }) => {
   const handleFileChange = (event) => {
     const { name } = event.target;
     const selectedFile = event.target.files[0];
+    const maxSizeInMB = 2;
+    const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+  
     if (selectedFile) {
-      setUserDetails({
-        ...userDetails,
-        [name]: selectedFile,
-        profileImageUrl: null,
-      });
-      setError("");
-      setMessage("");
+      if (selectedFile.size > maxSizeInBytes) {
+        setError(`File size should not exceed ${maxSizeInMB}MB.`);
+        setMessage(null);
+      } else {
+        setUserDetails((prevData) => ({
+          ...prevData,
+          [name]: selectedFile,
+          profileImageUrl: URL.createObjectURL(selectedFile),
+        }));
+        setError(null);
+        setMessage(null);
+      }
     }
   };
 

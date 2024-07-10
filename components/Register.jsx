@@ -43,8 +43,13 @@ const Register = () => {
   const handleFileChange = (event) => {
     const { name } = event.target;
     const selectedFile = event.target.files[0];
-
+  
     if (selectedFile) {
+      if (selectedFile.size > 2 * 1024 * 1024) {
+        setError("File size should not exceed 2MB.");
+        return;
+      }
+  
       setRegisterData({ ...registerData, [name]: selectedFile });
       setError("");
     }
