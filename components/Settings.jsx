@@ -107,12 +107,14 @@ const Settings = ({ session, user }) => {
         });
       }
       
-      router.push(`/settings?refreshId=${new Date().getTime()}`)
+    
 
       setMessage("Saved successfully!");
       setTimeout(() => {
-
         setMessage("");
+        if(userDetails.image) {
+        window.location.reload()
+        }
       }, 3000);
     } catch (err) {
       console.log(err);
