@@ -105,7 +105,7 @@ const Settings = ({ session, user }) => {
        const url = await response.data.signedUrl
 
 
-      if(url) {
+      if(url.length) {
 
           await fetch(url, {
           method: "PUT",
