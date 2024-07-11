@@ -180,6 +180,7 @@ const Settings = ({ session, user }) => {
           <img
             src={session.user.image}
             alt="Profile"
+            key="session"
             width="100%"
             height="100%"
             style={{ objectFit: "cover", borderRadius: "100px" }}
@@ -191,6 +192,7 @@ const Settings = ({ session, user }) => {
           <img
             src={userDetails.profileImageUrl}
             alt="Profile"
+            key="profile"
             width="100%"
             height="100%"
             style={{ objectFit: "cover", borderRadius: "100px" }}
@@ -212,6 +214,7 @@ const Settings = ({ session, user }) => {
           <img
             src={URL.createObjectURL(userDetails.image)}
             alt="Profile"
+            key="changed"
             width="100%"
             height="100%"
             style={{ objectFit: "cover", borderRadius: "100px" }}
