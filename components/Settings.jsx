@@ -96,14 +96,9 @@ const Settings = ({ session, user }) => {
     try {
       setLoading(true);
       const { image, profileImageUrl, ...updatedDetails } = userDetails;
-  
-      // Make the API call to update user details
       const response = await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
-  
-      // Get the signed URL from the response
       const url = response.data.signedUrl;
   
-      // If there is an image to upload, use the signed URL to upload it
       if (userDetails.image) {
         await fetch(url, {
           method: "PUT",
@@ -113,21 +108,15 @@ const Settings = ({ session, user }) => {
           },
         });
   
-        // Reload the page after the image is uploaded
-        window.location.reload();
-  
-        // Display a success message and stop loading after a short delay
         setMessage("Saved successfully!");
         setTimeout(() => {
           setLoading(false);
         }, 2000);
       } else {
-        // If no image to upload, stop loading immediately
         setLoading(false);
         setMessage("Saved successfully!");
       }
     } catch (error) {
-      // Handle errors and stop loading
       console.error("Error saving details:", error);
       setLoading(false);
       setMessage("Failed to save details. Please try again.");
