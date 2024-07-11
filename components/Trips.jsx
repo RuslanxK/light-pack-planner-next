@@ -43,8 +43,6 @@ const Trips = ({ trips, bags, session }) => {
   const { countryNameArr } = useCountries();
 
 
-  console.log(session.user.image)
-
 
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [newTripData, setNewTripData] = useState({

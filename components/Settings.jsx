@@ -92,21 +92,21 @@ const Settings = ({ session, user }) => {
   };
 
 
+
+
+
   const saveDetails = async () => {
 
     try {
-
       setLoading(true);
-
       const { image, profileImageUrl, ...updatedDetails } = userDetails;
-  
        const response = await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
-
-        const url = await response.data.signedUrl
 
       if(userDetails.image) {
 
-        await fetch(url, {
+        const url = await response.data.signedUrl
+
+       const res =  await fetch(url, {
           method: "PUT",
           body: userDetails.image,
           headers: {
@@ -114,9 +114,11 @@ const Settings = ({ session, user }) => {
           },
         });
 
+        console.log(res)
+
         setMessage("Saved successfully!");
         setTimeout(() => {
-            window.location.reload()
+           router.refresh()
            setLoading(false)
         }, 2000);
       } 
