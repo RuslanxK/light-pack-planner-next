@@ -32,7 +32,7 @@ const Settings = ({ session, user }) => {
 
    
 
-  const profileImageUrl = `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`;
+  const profileImageUrl = `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${session?.user?.profileImageKey}`;
 
   const [userDetails, setUserDetails] = useState({
     username: user.username,
@@ -118,7 +118,7 @@ const Settings = ({ session, user }) => {
 
         setMessage("Saved successfully!");
         setTimeout(() => {
-           router.refresh()
+           window.location.reload()
            setLoading(false)
         }, 2000);
       } 
