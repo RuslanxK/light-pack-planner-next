@@ -102,7 +102,7 @@ const Settings = ({ session, user }) => {
   
        const response = await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
 
-        const url = response.data.signedUrl
+        const url = await response.data.signedUrl
 
       if(userDetails.image) {
 
@@ -113,6 +113,7 @@ const Settings = ({ session, user }) => {
             "Content-Type": userDetails.image.type,
           },
         });
+
       }
 
       setMessage("Saved successfully!");
