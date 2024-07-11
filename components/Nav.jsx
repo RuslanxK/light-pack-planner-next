@@ -54,7 +54,7 @@ const [ loading, setLoading] = useState(false)
 const [ nestedMenuOpen, setNestedMenuOpen] = useState(false)
 
 
-const profileImageUrl = `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${session?.user?.profileImageKey}`;
+const profileImageUrl = `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${user.profileImageKey}`;
 
 
 useEffect(() => {

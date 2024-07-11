@@ -41,8 +41,8 @@ const Settings = ({ session, user }) => {
     activityLevel: user.activityLevel || "",
     country: user.country || "",
     image: null,
-    profileImageUrl: `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${session.user.profileImageKey}`,
-    profileImageKey: session?.user?.profileImageKey,
+    profileImageUrl: `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${user.profileImageKey}`,
+    profileImageKey: user.profileImageKey,
 
   });
   const [savedMessage, setMessage] = useState(null);
@@ -59,8 +59,6 @@ const Settings = ({ session, user }) => {
       [fieldName]: date,
     }));
   };
-
-
 
 
 
@@ -100,7 +98,7 @@ const Settings = ({ session, user }) => {
     try {
       setMessage("");
       setLoading(true);
-      const { image, profileImageUrl, ...updatedDetails } = userDetails;
+      const { image, ...updatedDetails } = userDetails;
       const response = await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
       const url = response.data.signedUrl;
 
