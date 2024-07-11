@@ -184,14 +184,14 @@ const Settings = ({ session, user }) => {
 
         <Fragment>
           <img
-            src={userDetails.profileImageUrl}
+            src={session.user.image ? session.user.image : userDetails.profileImageUrl}
             alt="Profile"
             key="profile"
             width="100%"
             height="100%"
             style={{ objectFit: "cover", borderRadius: "100px" }}
           />
-          <EditIcon
+         {session.user.image ? null :  <EditIcon
             sx={{
               position: "absolute",
               bottom: 0,
@@ -201,16 +201,16 @@ const Settings = ({ session, user }) => {
               fontSize: "20px",
               color: "rgba(255,255, 255, 0.7)",
             }}
-          />
+          />}
         </Fragment>
     
-     <input
+  {  session.user.image ? null : <input
         type="file"
         name="image"
         accept="image/*"
         style={{ display: "none" }}
         onChange={handleFileChange}
-      />
+      /> }
     </Button>
 
 
@@ -346,14 +346,14 @@ const Settings = ({ session, user }) => {
             />
           </Grid>
 
-        <Grid item xs={12} sm={1}>
+        <Grid item xs={12} sm={2}>
         <Button
           variant="contained"
           disableElevation
           onClick={saveDetails}
           disabled={loading}
           sx={{ padding: "8px", width: "100%", marginTop: "10px"}}>
-          Save {loading ? <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> : null }
+          Save Details{loading ? <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> : null }
         </Button>
 
        </Grid>
