@@ -114,7 +114,7 @@ const Settings = ({ session, user }) => {
 
         setMessage("Saved successfully!");
         setTimeout(() => {
-           window.location.reload()
+          
            setLoading(false)
         }, 2000);
       } 
