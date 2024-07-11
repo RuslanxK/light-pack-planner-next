@@ -30,9 +30,7 @@ const Settings = ({ session, user }) => {
   const theme = useTheme();
   const router = useRouter();
 
-   
-
-  const profileImageUrl = `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${session?.user?.profileImageKey}`;
+  
 
   const [userDetails, setUserDetails] = useState({
     username: user.username,
@@ -43,7 +41,7 @@ const Settings = ({ session, user }) => {
     activityLevel: user.activityLevel || "",
     country: user.country || "",
     image: null,
-    profileImageUrl,
+    profileImageUrl: `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${session?.user?.profileImageKey}`,
     profileImageKey: session?.user?.profileImageKey,
 
   });
@@ -94,7 +92,6 @@ const Settings = ({ session, user }) => {
 
 
 
-
   const saveDetails = async () => {
 
     try {
@@ -103,7 +100,6 @@ const Settings = ({ session, user }) => {
        const response = await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
 
        const url = await response.data.signedUrl
-
 
       if(url.length) {
 
@@ -133,12 +129,12 @@ const Settings = ({ session, user }) => {
 
       }
 
-
     } catch (err) {
       console.log(err);
       setError("Something went wrong.");
     } 
   };
+
 
 
   return (
