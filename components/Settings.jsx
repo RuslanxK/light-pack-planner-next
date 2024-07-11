@@ -32,7 +32,7 @@ const Settings = ({ session, user }) => {
 
    
 
-  const profileImageUrl = session?.user?.profileImageKey ? `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}` : null;
+  const profileImageUrl = `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`;
 
   const [userDetails, setUserDetails] = useState({
     username: user.username,
@@ -179,19 +179,7 @@ const Settings = ({ session, user }) => {
         position: "relative", 
       }}
     >
-      {session.user.image ? (
-        <Fragment>
-          <img
-            src={session.user.image}
-            alt="Profile"
-            key="session"
-            width="100%"
-            height="100%"
-            style={{ objectFit: "cover", borderRadius: "100px" }}
-          />
-          
-        </Fragment>
-      ) : userDetails.profileImageUrl ? (
+
         <Fragment>
           <img
             src={userDetails.profileImageUrl}
@@ -213,32 +201,14 @@ const Settings = ({ session, user }) => {
             }}
           />
         </Fragment>
-      ) : (
-        <Fragment>
-          <img
-            src={URL.createObjectURL(userDetails.image)}
-            alt="Profile"
-            key="changed"
-            width="100%"
-            height="100%"
-            style={{ objectFit: "cover", borderRadius: "100px" }}
-          />
-          <EditIcon
-            sx={{
-              position: "absolute",
-              fontSize: "25px",
-              color: "rgba(255, 255, 255, 0.7)",
-            }}
-          />
-        </Fragment>
-      )}
-     { session.user.image ? null : <input
+    
+     <input
         type="file"
         name="image"
         accept="image/*"
         style={{ display: "none" }}
         onChange={handleFileChange}
-      />}
+      />
     </Button>
 
 

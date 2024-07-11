@@ -54,7 +54,7 @@ const [ loading, setLoading] = useState(false)
 const [ nestedMenuOpen, setNestedMenuOpen] = useState(false)
 
 
-const profileImageUrl = session?.user?.profileImageKey ? `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}` : null;
+const profileImageUrl = `${process.env.NEXT_PUBLIC_PROFILE_URL}/${session?.user?.profileImageKey}`;
 
 
 useEffect(() => {
@@ -267,7 +267,7 @@ const navigateToUrl = (url) => {
 
         <MenuItem>
         <ListItemIcon>
-          <img src={session?.user?.image ? session.user.image : profileImageUrl} alt='user' style={{ borderRadius: "100px", objectFit: "cover", width: "35px", height: "35px", marginRight: "15px" }} />
+          <img src={profileImageUrl} alt='user' style={{ borderRadius: "100px", objectFit: "cover", width: "35px", height: "35px", marginRight: "15px" }} />
         </ListItemIcon>
           <ListItemText>{user.username}</ListItemText>
         
