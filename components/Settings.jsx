@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import {
   Typography,
   Stack,
@@ -60,6 +60,10 @@ const Settings = ({ session, user }) => {
     }));
   };
 
+
+
+
+
   const handleChange = (event) => {
     setError(null);
     setMessage(null);
@@ -94,13 +98,12 @@ const Settings = ({ session, user }) => {
 
   const saveDetails = async () => {
     try {
-
-      setMessage("")
+      setMessage("");
       setLoading(true);
       const { image, profileImageUrl, ...updatedDetails } = userDetails;
       const response = await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
       const url = response.data.signedUrl;
-  
+
       if (userDetails.image) {
         await fetch(url, {
           method: "PUT",
@@ -109,17 +112,18 @@ const Settings = ({ session, user }) => {
             "Content-Type": userDetails.image.type,
           },
         });
-  
-        setMessage("Saved successfully!");
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
-      }
 
+        setMessage("Saved successfully!");
+        setUserDetails((prevData) => ({
+          ...prevData,
+          profileImageUrl: URL.createObjectURL(userDetails.image),
+        }));
+      }
+      setLoading(false);
     } catch (error) {
       console.error("Error saving details:", error);
       setLoading(false);
-      setMessage("")
+      setMessage("");
       setError("Failed to save details. Please try again.");
     }
   };
