@@ -107,7 +107,7 @@ const Settings = ({ session, user }) => {
 
       if(url) {
 
-       const res =  await fetch(url, {
+          await fetch(url, {
           method: "PUT",
           body: userDetails.image,
           headers: {
