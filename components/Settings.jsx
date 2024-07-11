@@ -94,6 +94,8 @@ const Settings = ({ session, user }) => {
 
   const saveDetails = async () => {
     try {
+
+      setMessage("")
       setLoading(true);
       const { image, profileImageUrl, ...updatedDetails } = userDetails;
       const response = await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
@@ -112,14 +114,13 @@ const Settings = ({ session, user }) => {
         setTimeout(() => {
           setLoading(false);
         }, 2000);
-      } else {
-        setLoading(false);
-        setMessage("Saved successfully!");
       }
+
     } catch (error) {
       console.error("Error saving details:", error);
       setLoading(false);
-      setMessage("Failed to save details. Please try again.");
+      setMessage("")
+      setError("Failed to save details. Please try again.");
     }
   };
   
