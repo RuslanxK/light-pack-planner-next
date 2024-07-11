@@ -41,7 +41,7 @@ const Settings = ({ session, user }) => {
     activityLevel: user.activityLevel || "",
     country: user.country || "",
     image: null,
-    profileImageUrl: `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${session?.user?.profileImageKey}`,
+    profileImageUrl: `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${session.user.profileImageKey}`,
     profileImageKey: session?.user?.profileImageKey,
 
   });

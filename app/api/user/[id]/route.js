@@ -66,7 +66,8 @@ export const PUT = async (req, { params }) => {
     const putObjectCommand = new PutObjectCommand({
 
       Bucket: process.env.S3_BUCKET_NAME,
-      Key: bodyData.profileImageKey
+      Key: bodyData.profileImageKey,
+      CacheControl: 'no-cache, no-store, must-revalidate',
   })
 
 
