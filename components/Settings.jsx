@@ -112,11 +112,8 @@ const Settings = ({ session, user }) => {
         });
 
         setMessage("Saved successfully!");
-        setUserDetails((prevData) => ({
-          ...prevData,
-          profileImageUrl: URL.createObjectURL(userDetails.image),
-        }));
       }
+
       setLoading(false);
     } catch (error) {
       console.error("Error saving details:", error);

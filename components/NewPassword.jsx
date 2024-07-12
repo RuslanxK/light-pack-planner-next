@@ -53,7 +53,7 @@ const NewPassword = ({user, err}) => {
 
      try {
 
-      const updateUser = { ...user, password: passwords.password, changingPassword: false, passwordResetTokenExpires: null, emailToken: null };
+      const updateUser = { ...user, password: passwords.password, changingPassword: false, passwordResetTokenExpires: null, emailToken: null, verifiedCredentials: true };
 
       setIsLoading(true)
       await axios.put(`/api/userToken/${user.emailToken}`, updateUser)
