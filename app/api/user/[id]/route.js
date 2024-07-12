@@ -75,3 +75,6 @@ export const PUT = async (req, { params }) => {
     return new NextResponse("Failed to update User", { status: 500 });
   }
 };
+
+
+export const revalidate = 0
