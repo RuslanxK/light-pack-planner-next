@@ -92,11 +92,13 @@ const toggleTheme = async () => {
   const newMode = mode === "light" ? "dark" : "light";
   setMode(newMode);
 
-  const obj = {mode: newMode}
+  const formData = new FormData();
+  formData.append("mode", newMode);
+
   try {
 
          setLoading(true)
-         await axios.put(`/api/user/${session?.user.id}`, obj)
+         await axios.put(`/api/user/${session?.user.id}`, formData)
          await refresh()
          setLoading(false)
        }

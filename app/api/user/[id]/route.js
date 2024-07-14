@@ -1,7 +1,7 @@
 import user from "../../../../models/user";
 import { connectToDB } from "../../../../utils/database";
 import { NextResponse } from "next/server";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 const s3 = new S3Client({
   region: process.env.S3_BUCKET_REGION,
@@ -61,6 +61,16 @@ export const PUT = async (req, { params }) => {
       });
 
       await s3.send(putObjectCommand);
+
+      if (User.profileImageKey) {
+        const deleteObjectCommand = new DeleteObjectCommand({
+          Bucket: process.env.S3_BUCKET_NAME,
+          Key: User.profileImageKey,
+        });
+        await s3.send(deleteObjectCommand);
+      }
+
+      
       User.profileImageKey = key;
     }
 

@@ -25,8 +25,9 @@ const VerifiedPage = ({user}) => {
     const fetchData = async () => {
       try {
 
-        const verified = { verifiedCredentials: true }
-        await axios.put(`/api/user/${user._id}`, verified);
+        const formData = new FormData();
+        formData.append("verifiedCredentials", true);
+        await axios.put(`/api/user/${user._id}`, formData);
         router.push('/login'); 
       } catch (error) {
         console.log('Error:', error);

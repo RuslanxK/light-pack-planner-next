@@ -50,9 +50,17 @@ const ResetPassword = () => {
 
      else {
 
-         const updatedUser = { ...foundUser.data, changingPassword: true };
+
+         const formData = new FormData();
+
+         for (const key in foundUser.data) {
+          formData.append(key, foundUser.data[key]);
+        }
+
+        formData.append("changingPassword", true);
+
         
-         await axios.put(`/api/user/${foundUser.data._id}`, updatedUser)
+         await axios.put(`/api/user/${foundUser.data._id}`, formData)
          setError("")
          setSuccess("Please check your email to continue.")
          setIsLoading(false)
