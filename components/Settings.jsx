@@ -98,22 +98,17 @@ const Settings = ({ session, user }) => {
     try {
       setMessage("");
       setLoading(true);
-      const { image, ...updatedDetails } = userDetails;
-      const response = await axios.put(`/api/user/${session?.user.id}`, updatedDetails);
-      const url = response.data.signedUrl;
 
-      if (userDetails.image) {
-        await fetch(url, {
-          method: "PUT",
-          body: userDetails.image,
-          headers: {
-            "Content-Type": userDetails.image.type,
-          },
-        });
-
-        setMessage("Saved successfully!");
+      const formData = new FormData();
+      for (const key in userDetails) {
+        formData.append(key, userDetails[key]);
       }
 
+      const response = await axios.put(`/api/user/${session?.user.id}`, formData);
+
+      console.log(response)
+
+      setMessage("Saved successfully")
       setLoading(false);
     } catch (error) {
       console.error("Error saving details:", error);

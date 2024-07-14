@@ -1,22 +1,13 @@
 import user from "../../../models/user";
 import { connectToDB } from "../../../utils/database";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
-import crypto from "crypto"
-
-
-const generateFileName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex")
-
-const filename = generateFileName();
-
+import bcrypt from "bcrypt";
 
 const s3 = new S3Client({
 
     region: process.env.S3_BUCKET_REGION,
     credentials: {
-
         accessKeyId: process.env.S3_ACCESS_KEY,
         secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
     }
@@ -26,28 +17,13 @@ const s3 = new S3Client({
 export const POST = async (req) => {
 
   try {
+
     await connectToDB();
-    
-    
-    const { username, email, password, repeatedPassword, weightOption, distance, gender, birthdate, activityLevel, country} = await req.json();
+    const formData = await req.formData();
+    const file = formData.getAll('image')[0]
+    const { username, email, password, country, birthdate, gender, distance, weightOption, activityLevel, repeatedPassword } = Object.fromEntries(formData);
 
-
-    const putObjectCommand = new PutObjectCommand({
-
-        Bucket: process.env.S3_BUCKET_NAME,
-        Key: filename
-    })
-
-
-    const signedUrl = await getSignedUrl(s3, putObjectCommand, {
-
-        expiresIn: 30
-    })
-
-
-    
     const exists = await user.findOne({ email });
-
     if (exists) {
       return new NextResponse("Email Already exists", { status: 500 });
     }
@@ -56,20 +32,31 @@ export const POST = async (req) => {
       return new NextResponse("Passwords do not match", { status: 500 });
     }
 
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const key = Date.now().toString() + '-' + file.name;
+
+    const putObjectCommand = new PutObjectCommand({
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: key,
+        Body: buffer,
+        ContentType: file.type
+    })
+
+    await s3.send(putObjectCommand);
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
     let admin = false
-
     if(email === process.env.NEXT_PUBLIC_ADMIN_1_EMAIL || email === process.env.NEXT_PUBLIC_ADMIN_2_EMAIL || email === process.env.NEXT_PUBLIC_ADMIN_3_EMAIL) {
-       
-        admin = true
+      admin = true
     }
 
     const User = new user({ username, email, password: hashedPassword, profileImageKey: putObjectCommand.input.Key, isAdmin: admin, weightOption, distance, gender, birthdate, activityLevel, country});
     await User.save();
-    return new NextResponse(JSON.stringify({User, signedUrl}), { status: 200 });
+    return new NextResponse(JSON.stringify({User}), { status: 200 });
   } catch (error) {
+
+    console.log(error)
+    console.error()
     return new NextResponse("Failed to create user", { status: 500 });
   }
 };

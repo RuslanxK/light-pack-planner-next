@@ -131,46 +131,40 @@ const Register = () => {
 
   const register = async (e) => {
     e.preventDefault();
-  
+
     try {
       setIsLoading(true);
-  
+
       let obj = { ...registerData };
-  
+
+      const formData = new FormData();
+
+      for (const key in obj) {
+        formData.append(key, obj[key]);
+      }
+
       if (!registerData.image) {
         const defaultImageURL = '/default.jpg';
         const defaultImageFile = await fetch(defaultImageURL)
           .then((res) => res.blob())
           .then((blob) => new File([blob], 'default.jpg', { type: 'image/jpg' }));
-  
-        obj = { ...registerData, image: defaultImageFile };
-      }
-  
-      const data = await axios.post("/api/register", obj);
-  
-      if (obj.image) {
-        const awsUrl = data.data.signedUrl;
 
-        await fetch(awsUrl, {
-          method: "PUT",
-          body: obj.image,
-          headers: {
-            "Content-Type": obj.image.type,
-          },
-        });
+          formData.append("image", defaultImageFile);
       }
-  
+
+      const data = await axios.post("/api/register", formData);
+
       const sendTo = { email: registerData.email, id: data.data.User._id };
-  
+
       await axios.post("/api/emailVerify", sendTo);
       localStorage.setItem("registrationSuccess", "true");
-  
+
       router.push("/login");
-  
+
       setIsLoading(false);
     } catch (error) {
       console.error(error);
-  
+
       setIsLoading(false);
       setError(error?.response?.data);
     }
@@ -491,8 +485,8 @@ const Register = () => {
                     <DemoItem>
                       <MobileDatePicker
                         label="Date of birth"
-                        value={registerData.dob || null}
-                        onChange={(date) => handleDateChange(date, "dob")}
+                        value={registerData.birthdate || null}
+                        onChange={(date) => handleDateChange(date, "birthdate")}
                         slotProps={{
                           textField: { fullWidth: true },
                         }}
