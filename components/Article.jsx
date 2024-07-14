@@ -30,13 +30,12 @@ const Article = ({articleData}) => {
 
   return (
 
-    <Stack backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : null } pb={2} borderRadius="7px" boxShadow={theme.boxShadow}  sx={{transition: theme.transition, cursor: "pointer", "&:hover": {boxShadow: theme.boxShadowHover}}} onClick={NavigateToInnerArticle}  onMouseOver={() => setArticleHover(true)} onMouseLeave={() => setArticleHover(false)}>
+    <Stack height="220px" backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : null } borderRadius="7px" boxShadow={theme.boxShadow}  sx={{transition: theme.transition, cursor: "pointer", "&:hover": {boxShadow: theme.boxShadowHover}}} onClick={NavigateToInnerArticle}  onMouseOver={() => setArticleHover(true)} onMouseLeave={() => setArticleHover(false)}>
 
   <img src={`${process.env.NEXT_PUBLIC_ARTICLE_URL}/${articleData.imageKey}`} width="100%" height={150} alt='article'  style={{borderTopRightRadius: "7px", borderTopLeftRadius: "7px", objectFit: "cover"}} />
 
     <Typography backgroundColor={ theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.70)" : "rgba(255, 255, 255, 0.70)"} fontSize="13px" fontWeight="500" sx={{borderTopLeftRadius: "7px", borderBottomRightRadius: "7px"}} p={0.5} position="absolute"> {new Date(articleData.createdAt).toDateString()}</Typography>
-
-      <Typography component="h2" variant='span' pt={1} pl={2} fontWeight="500" fontSize="18px">{truncateTitle(articleData.title)}</Typography>
+      <Typography component="h2" variant='span' pt={0.5} pl={2} fontWeight="500" fontSize="18px">{truncateTitle(articleData.title)}</Typography>
       <Typography component="span" variant='span' pl={2} color="gray">{truncateTitle(articleData.description)} {articleHover ? <IconButton size='small' sx={{marginLeft: "5px"}}><NearMeOutlinedIcon sx={{fontSize: "17px"}} /></IconButton> : null }</Typography>
 
     </Stack>

@@ -24,7 +24,7 @@ const Articles = ({articles}) => {
   return (
     <Container sx={{display: theme.flexBox}} maxWidth={false} disableGutters>
     
-<Stack display={theme.flexBox} justifyContent={theme.start} width={theme.trips.width} minHeight="100vh" pb={5}>
+<Stack display={theme.flexBox}  justifyContent={theme.start} width={theme.trips.width} minHeight="100vh" pb={5}>
 
 
       

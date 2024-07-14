@@ -65,47 +65,44 @@ const AdminSettings = () => {
 
 
 
+  
 
   const addArticle = async (e) => {
-
-    e.preventDefault()
-
-    if(loading) return
-
-
+    e.preventDefault();
+  
+    if (loading) return;
+  
     if (articleData.image && articleData.image.size > 2 * 1024 * 1024) {
       setError("File size exceeds the maximum limit of 2 MB.");
-      return; 
+      return;
     }
-
+  
     try {
-
-      setLoading(true)
-      const data = await axios.post('/api/articles', articleData)
-
-      const awsUrl = data.data.signedUrl
-
-      await fetch(awsUrl, {
-
-        method: "PUT",
-        body: articleData.image,
-        headers: {
+      setLoading(true);
   
-           "Content-Type": articleData.image.type
-        }
-    })
+      var formData = new FormData();
+      formData.append("image", articleData.image);
+      formData.append("title", articleData.title);
+      formData.append("description", articleData.description);
 
-     formRef.current.reset();
-     setSuccess("Uploaded successfully!")
-     setLoading(false)
 
-  }
+        const response = await axios.post('/api/articles', formData);
+
+         console.log(response)
   
-   catch (error) {
+        formRef.current.reset();
+        setSuccess("Uploaded successfully!");
+      
+    } catch (error) {
+      setError(error.message);
+      console.log(error)
+    } finally {
+      setLoading(false);
+    }
+  };
+  
 
-      setError(error.message)
-   }
-}
+
 
 
 const handleChange = (event) => {
