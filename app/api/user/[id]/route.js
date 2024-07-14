@@ -53,6 +53,21 @@ export const PUT = async (req, { params }) => {
       const buffer = Buffer.from(await file.arrayBuffer());
       const key = Date.now().toString() + '-' + file.name;
 
+
+      if (User.profileImageKey) {
+        const deleteObjectCommand = new DeleteObjectCommand({
+          Bucket: process.env.S3_BUCKET_NAME,
+          Key: User.profileImageKey,
+        });
+
+        try {
+          await s3.send(deleteObjectCommand);
+        } catch (deleteError) {
+          console.error('Error deleting previous profile image:', deleteError);
+        }
+      }
+      
+
       const putObjectCommand = new PutObjectCommand({
         Bucket: process.env.S3_BUCKET_NAME,
         Key: key,
@@ -62,15 +77,6 @@ export const PUT = async (req, { params }) => {
 
       await s3.send(putObjectCommand);
 
-      if (User.profileImageKey) {
-        const deleteObjectCommand = new DeleteObjectCommand({
-          Bucket: process.env.S3_BUCKET_NAME,
-          Key: User.profileImageKey,
-        });
-        await s3.send(deleteObjectCommand);
-      }
-
-      
       User.profileImageKey = key;
     }
 
@@ -80,7 +86,7 @@ export const PUT = async (req, { params }) => {
       { status: 200 }
     );
   } catch (err) {
-    console.error(err);
+    console.error('Error updating user:', err);
     return new NextResponse("Failed to update user", { status: 500 });
   }
 };

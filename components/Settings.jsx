@@ -105,6 +105,7 @@ const Settings = ({ session, user }) => {
       }
 
       const response = await axios.put(`/api/user/${session?.user.id}`, formData);
+      router.refresh()
 
       console.log(response)
 
