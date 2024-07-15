@@ -112,7 +112,7 @@ const filteredBags = sortedBags?.slice(0, 4)
 
 
 const bagData = filteredBags?.map((bag) => {
-      return <Stack onClick={() =>  navigateToBag(bag)}> <Typography fontSize="14px" variant='span'component="span" ml={0.8} mb={1}
+      return <Stack key={bag._id} onClick={() =>  navigateToBag(bag)}> <Typography fontSize="14px" variant='span'component="span" ml={0.8} mb={1}
       sx={{ cursor: "pointer" ,"&:hover": { color: theme.green }}} key={bag._id}>{bag?.name?.length > 15 ? `${bag?.name?.substring(0, 15)}...` : bag?.name}</Typography></Stack>
   })
 

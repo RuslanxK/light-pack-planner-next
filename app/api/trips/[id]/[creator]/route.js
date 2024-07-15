@@ -4,7 +4,17 @@ import category from "../../../../../models/categories";
 import item from "../../../../../models/item";
 import { connectToDB } from "../../../../../utils/database";
 import { NextResponse } from "next/server";
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
+
+
+const s3 = new S3Client({
+  region: process.env.S3_BUCKET_REGION,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  },
+});
 
 
 export const GET = async (req, { params }) => {
@@ -59,6 +69,23 @@ export const PUT = async (req, { params }) => {
 export const DELETE = async (req, { params }) => {
   try {
     await connectToDB();
+    
+    const itemsOfTheTrip = await item.find({ tripId: params.id, creator: params.creator });
+
+    const deletePromises = itemsOfTheTrip.map((item) => {
+      if (item.productImageKey) {
+        const deleteObjectCommand = new DeleteObjectCommand({
+          Bucket: process.env.S3_BUCKET_NAME,
+          Key: item.productImageKey,
+        });
+
+        return s3.send(deleteObjectCommand);
+      }
+      return Promise.resolve();
+    });
+
+    await Promise.all(deletePromises);
+
     await trip.findByIdAndDelete({ _id: params.id, creator: params.creator});
     await bag.deleteMany({ tripId: params.id, creator: params.creator});
     await category.deleteMany({ tripId: params.id, creator: params.creator });

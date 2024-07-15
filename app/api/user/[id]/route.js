@@ -30,7 +30,9 @@ export const GET = async (req, { params }) => {
 
 
 export const PUT = async (req, { params }) => {
+
   try {
+
     await connectToDB();
 
     const User = await user.findOne({ _id: params.id });
@@ -41,6 +43,17 @@ export const PUT = async (req, { params }) => {
 
     const formData = await req.formData();
     const file = formData.get("image");
+
+    if (file && file.size > 0) {
+
+    const deleteObjectCommand = new DeleteObjectCommand({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: User.profileImageKey,
+    });
+    
+    await s3.send(deleteObjectCommand)
+
+  }
 
     const userData = Object.fromEntries(formData);
     delete userData.image;
@@ -53,33 +66,20 @@ export const PUT = async (req, { params }) => {
       const buffer = Buffer.from(await file.arrayBuffer());
       const key = Date.now().toString() + '-' + file.name;
 
-
-      if (User.profileImageKey) {
-        const deleteObjectCommand = new DeleteObjectCommand({
+      
+        const putObjectCommand = new PutObjectCommand({
           Bucket: process.env.S3_BUCKET_NAME,
-          Key: User.profileImageKey,
+          Key: key,
+          Body: buffer,
+          ContentType: file.type,
         });
 
-        try {
-          await s3.send(deleteObjectCommand);
-        } catch (deleteError) {
-          console.error('Error deleting previous profile image:', deleteError);
-        }
-      }
+         await s3.send(putObjectCommand);
       
-
-      const putObjectCommand = new PutObjectCommand({
-        Bucket: process.env.S3_BUCKET_NAME,
-        Key: key,
-        Body: buffer,
-        ContentType: file.type,
-      });
-
-      await s3.send(putObjectCommand);
-
       User.profileImageKey = key;
-    }
 
+    }
+       
     await User.save();
     return new NextResponse(
       JSON.stringify({ message: "User is updated successfully" }),
