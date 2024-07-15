@@ -327,13 +327,13 @@ const Settings = ({ session, user }) => {
             />
           </Grid>
 
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12}>
         <Button
           variant="contained"
           disableElevation
           onClick={saveDetails}
           disabled={loading}
-          sx={{ padding: "8px", width: "100%", marginTop: "10px"}}>
+          sx={{ padding: "10px", paddingLeft: "15px", paddingRight: "15px",  marginTop: "10px"}}>
           Save Details{loading ? <CircularProgress color="inherit" size={16} sx={{ marginLeft: "10px" }} /> : null }
         </Button>
 
