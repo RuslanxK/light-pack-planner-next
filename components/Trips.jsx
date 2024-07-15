@@ -42,12 +42,15 @@ const Trips = ({ trips, bags, session }) => {
 
   const { countryNameArr } = useCountries();
 
-
+  
 
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [newTripData, setNewTripData] = useState({
+   const [newTripData, setNewTripData] = useState({
     startDate: dayjs().add(1, "day"),
     endDate: dayjs().add(2, "day"),
+    name: "",
+    distance: "",
+    about: "",
   });
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -77,7 +80,8 @@ const Trips = ({ trips, bags, session }) => {
  
 
   const createTrip = async (e) => {
-    e.preventDefault();
+   
+    e.preventDefault()
 
     if (loading) return;
 
@@ -89,12 +93,16 @@ const Trips = ({ trips, bags, session }) => {
       };
       await axios.post(`/api/trips/new`, newTripDataWithUserId);
       await refresh();
+      e.target.reset()
+
       setPopupOpen(false);
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
+
+
 
   const navigateToLatestBag = () => {
     localStorage.setItem("tripId", trips?.latestBag.tripId);
@@ -331,7 +339,8 @@ const Trips = ({ trips, bags, session }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Autocomplete
-                    onChange={(event, newValue) =>
+                     
+                     onChange={(event, newValue) =>
                       setNewTripData((prevData) => ({
                         ...prevData,
                         name: newValue || "",

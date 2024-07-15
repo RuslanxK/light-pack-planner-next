@@ -36,6 +36,7 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
 const Nav = ({bags, session, user}) => {
 
@@ -121,6 +122,7 @@ const bagData = filteredBags?.map((bag) => {
 
 
 const logOut = () => {
+
   signOut({ callbackUrl: `/login` })
 }
 
@@ -144,7 +146,7 @@ const AccordionSummary = styled((props) => (
   <MuiAccordionSummary {...props} />
 ))(({ theme }) => ({
   "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
+    marginLeft: theme.spacing(0),
   },
 }));
 
@@ -228,6 +230,15 @@ const navigateToUrl = (url) => {
           </ListItemIcon>
           <ListItemText>Articles</ListItemText>
         </MenuItem>
+
+        <MenuItem>
+          <ListItemIcon>
+            <StorefrontOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Shop</ListItemText>
+          <img src='/coming-soon.png' width="80px" height="50px" style={{objectFit: "cover", position: "absolute", left: 105}}/>
+        </MenuItem>
+
 
         <MenuItem onClick={ () => navigateToUrl("/explore")}>
           <ListItemIcon>
@@ -335,6 +346,18 @@ const navigateToUrl = (url) => {
               Articles 
             </Typography>
             <PublicOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
+          </AccordionSummary>
+          
+      
+        </Accordion>
+
+        <Accordion>
+          <AccordionSummary>
+            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+              Shop 
+            </Typography>
+            <img src='/coming-soon.png' width="80px" height="50px" style={{objectFit: "cover", position: "absolute", left: 75, bottom: 0,}}/>
+            <StorefrontOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
           
       

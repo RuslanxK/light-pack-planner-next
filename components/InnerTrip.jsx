@@ -3,7 +3,7 @@
 import { Stack, Typography, IconButton, Autocomplete, TextField, Button, Container, Tooltip, Alert, Grid} from '@mui/material';
 import Bag from './Bag';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import { useRouter } from 'next/navigation';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -40,6 +40,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
   const theme = useTheme();
 
   const { refresh } = useRefresh();
+
 
 
   useEffect(() => {
@@ -93,7 +94,6 @@ const InnerTrip = ({ tripData, trips, session}) => {
 
   const addBag = async (e) => {
     e.preventDefault();
-
     if (loading) return;
     
     try {
@@ -103,6 +103,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
       await axios.post('/bags/new', newTripDataWithUserId);
 
       await refresh()
+      e.target.reset()
       setAddPopupOpen(false);
       setLoading(false)
     } catch (err) {
