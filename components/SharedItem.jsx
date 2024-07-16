@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Select, MenuItem, IconButton, Typography, Tooltip, Link, Dialog, DialogContent, DialogTitle} from '@mui/material'
+import { Stack, Select, MenuItem, IconButton, Typography, Tooltip, Link, Dialog, DialogContent, DialogTitle, useMediaQuery} from '@mui/material'
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import { useTheme } from '@emotion/react';
 import React, { useState } from 'react';
@@ -12,6 +12,7 @@ const SharedItem = (props) => {
   const [picPopupOpen, setPicPopupOpen] = useState(false)
   
     const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const getBackgroundColor = (priority) => {
       switch (priority) {
@@ -84,6 +85,7 @@ const SharedItem = (props) => {
   PaperProps={{
     style: {
       overflow: "hidden",
+      width:  isMobile ? "100%" : "500px"
      
     }
   }}
