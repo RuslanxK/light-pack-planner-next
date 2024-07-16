@@ -35,7 +35,6 @@ const Item = (props) => {
 
     const { refresh } = useRefresh();
 
-
     const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({id: props.itemData.order})
 
     const style = {
@@ -62,9 +61,7 @@ const Item = (props) => {
    }
 
 
-
     const saveItemData =  async () => {
-
       try {
        await axios.put(`/items/${itemData._id}/${props?.session?.user?.id}`, itemData)
       }
@@ -164,13 +161,9 @@ const Item = (props) => {
       try {
 
         setLoading(true)
-
         const formData = new FormData();
         formData.append("image", itemData.image);
-
-        const data = await axios.put(`/items/${itemData._id}/${props?.session?.user?.id}/image`, formData);
-        console.log(data)
-
+        await axios.put(`/items/${itemData._id}/${props?.session?.user?.id}/image`, formData);
         setPicPopupOpen(false);
         setLoading(false)
   
@@ -194,17 +187,13 @@ const Item = (props) => {
 
   return (
 
-    
     <div className="scroll-div" sx={{ overflowX: "scroll"}}  ref={setNodeRef} style={style}>
-        
       <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end} backgroundColor={isDragging  ?  theme.palette.mode === "dark" ? "#5e5d5d" : "#e8e6e6": null } boxShadow={isDragging ? "rgba(0, 0, 0, 0.15) 0px 2px 8px;" : null}>
-
       <IconButton {...attributes} {...listeners} sx={{cursor: "grabbing"}} >
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>
         </IconButton> 
-     
+  
       <Checkbox size="small" sx={{transform: "scale(0.8)", marginBottom: "-4px"}} onChange={updateChecked}  />
-      
       <ItemInput size='small' variant='standard' type="text" placeholder='name' name='name' width='40%' value={itemData.name} onChange={handleChange} onBlur={saveItemData} />
       <ItemInput size='small' variant='standard' type="text" placeholder='note' name='description' width='80%' value={itemData.description} onChange={handleChange} onBlur={saveItemData} />
       <ItemInput size='small' variant='standard' label="$ price" type="number" placeholder='price' name='price' width='15%' value={itemData.price} onChange={handleChange} onBlur={saveItemData} />
@@ -217,9 +206,7 @@ const Item = (props) => {
        <MenuItem sx={{fontSize: "12px"}} value="high">High priority</MenuItem>
       </Select>
  
-
       <Stack display={theme.flexBox} flexDirection="row" justifyContent="space-between" alignItems="space-between">
-
             <Tooltip title="Picture">
               <IconButton onClick={() => setPicPopupOpen(true)}>
                 <ImageOutlinedIcon sx={{ fontSize: "15px", color: itemData.image || itemData.productImageKey ? theme.green : null, '&:hover': { color: theme.green } }} />
@@ -240,13 +227,9 @@ const Item = (props) => {
                 <LinkIcon sx={{ fontSize: "15px", color: itemData.link ? "blue" : null, '&:hover': { color: "blue" } }} />
               </IconButton>
             </Tooltip>
-         
           </Stack>
-
-          </Stack>
+        </Stack>
     
-
-
 
 <MuiPopup isOpen={popupOpen} onClose={closePopup}>
    <form onSubmit={saveLink}>
@@ -267,12 +250,9 @@ const Item = (props) => {
             value={itemData.link}
             onChange={handleChange}
             sx={{ marginBottom: "15px", width: "100%" }} />
-          
           <Button type="submit" sx={{ color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Save {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button> 
       </form>
 </MuiPopup> 
-
-
 
   <MuiPopup isOpen={picPopupOpen} onClose={closePopup}>
     <form onSubmit={savePicture}>
@@ -339,9 +319,6 @@ const Item = (props) => {
       </Stack>
     </form>
   </MuiPopup>
-
-
-
 
 
         </div>
