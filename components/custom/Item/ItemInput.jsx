@@ -36,7 +36,7 @@ const ItemInput = ({
         disableUnderline: true,
         style: {
           width: '100%',
-          color: linkColor ? linkColor : "white",
+          color: theme.palette.mode === "dark" ? "white" : "black",
           fontSize: 12,
           ...rest.InputProps,
         },

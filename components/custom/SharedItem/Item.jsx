@@ -30,7 +30,7 @@ const Item = ({
         style: {
           width: "100%",
           cursor: "pointer",
-          color: linkColor ? linkColor : "white",
+          color: theme.palette.mode === "dark" ? "white" : "black",
           borderBottom:
             theme.palette.mode === "dark"
               ? `1px solid gray`
