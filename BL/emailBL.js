@@ -78,7 +78,6 @@ export const sendEmail = async (recipientEmail, subject, htmlContent) => {
 export const sendReportEmail = async (recipientEmail, subject, htmlContent) => {
   try {
     const transporter = nodemailer.createTransport({
-      service: "gmail",
       host: "smtp.gmail.com",
       port: 587,
       secure: false,
