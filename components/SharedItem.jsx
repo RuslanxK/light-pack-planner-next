@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, TextField, Select, MenuItem, IconButton, Typography, Tooltip, Link, Dialog, DialogContent, DialogTitle} from '@mui/material'
+import { Stack, Select, MenuItem, IconButton, Typography, Tooltip, Link, Dialog, DialogContent, DialogTitle} from '@mui/material'
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import { useTheme } from '@emotion/react';
 import React, { useState } from 'react';
@@ -11,9 +11,7 @@ const SharedItem = (props) => {
 
   const [picPopupOpen, setPicPopupOpen] = useState(false)
   
-
     const theme = useTheme()
-
 
     const getBackgroundColor = (priority) => {
       switch (priority) {
@@ -28,23 +26,14 @@ const SharedItem = (props) => {
 
 
     const closePopup = () => {
-
         setPicPopupOpen(false)
-        
       };
-
 
   return (
 
-    
     <div className="scroll-div">
-    
-      
     <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end}>
-
-
       {props.itemData.productImageKey ? <img src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`} onClick={() => setPicPopupOpen(true)} style={{marginRight: "10px", objectFit: "cover"}} width="50px" height="40px" alt='item'/> : null }
-
       {props.itemData.link ? (
           <Link 
           href={props.itemData.link} 
@@ -59,8 +48,6 @@ const SharedItem = (props) => {
             fontSize: 12, 
             color: theme.palette.info.main, 
             cursor: "pointer",
-          
-        
           }}
         >
           <Item size='small' linkColor={theme.palette.info.main} variant='standard' placeholder='name' name='name' value={props.itemData.name} width="100%" readOnly />
@@ -89,8 +76,7 @@ const SharedItem = (props) => {
               </IconButton>
             </Tooltip>
             </Stack>
-    
-
+  
 {picPopupOpen ? (
   <Dialog
   open={picPopupOpen}
@@ -119,8 +105,6 @@ const SharedItem = (props) => {
  
 </Dialog>
 ) : null}
-
-
 
 
         </div>
