@@ -1,17 +1,17 @@
 import React from 'react'
-import { Stack } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
+import CenteredStack from '../../components/custom/loading/CenteredStack';
 
 
 const Loading = () => {
   return (
-    <Stack display="flex" justifyContent="center" height="100vh" alignItems="center" width="100%">
+    <CenteredStack>
 
     <div className='loading'>
     <CircularProgress color="success" />
     </div>
 
-    </Stack>
+    </CenteredStack>
   )
 }
 
