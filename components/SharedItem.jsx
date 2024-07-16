@@ -44,7 +44,6 @@ const SharedItem = (props) => {
           sx={{ 
             width: '50%', 
             marginRight: "15px", 
-            borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0", 
             fontSize: 12, 
             color: theme.palette.info.main, 
             cursor: "pointer",
@@ -85,21 +84,20 @@ const SharedItem = (props) => {
   PaperProps={{
     style: {
       overflow: "hidden",
-      position: "relative",
-      background: "transparent"
     }
   }}
 >
   <DialogTitle sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-    <IconButton onClick={closePopup} sx={{ zIndex: 1000, color: theme.palette.text.primary}}>
+
+  <IconButton onClick={closePopup} sx={{ zIndex: 1000, color: theme.palette.text.primary}}>
       <CloseIcon />
     </IconButton>
+
   </DialogTitle>
   <DialogContent>
     <img
       src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`}
       alt="item"
-      style={{ width: "100%", maxHeight: "80vh", objectFit: "contain" }}
     />
   </DialogContent>
  
