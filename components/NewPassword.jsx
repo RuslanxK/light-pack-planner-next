@@ -11,18 +11,13 @@ import axios from 'axios';
 
 const NewPassword = ({user, err}) => {
 
-
-
   const [passwords, setPasswords] = useState({})
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState("")
 
-
   const theme = useTheme()
   const router = useRouter();
-
-  
 
   const handleChange = (event) => {
     let { name, value } = event.target;
@@ -31,23 +26,17 @@ const NewPassword = ({user, err}) => {
   };
 
 
-
   useEffect(() => {
-
     if(err) {
-
       router.push("/login")
   }
     
   }, []);
 
 
-
   const handleSubmit =  async (e) => {
      e.preventDefault()
-
       if(passwords.password !== passwords.confirmPassword) {
-
           return setError("Password do not match.")
       }
 
@@ -72,7 +61,6 @@ const NewPassword = ({user, err}) => {
   }
   
 
-
   return (
     <Stack display={theme.flexBox} direction="row" justifyContent={theme.end} sx={{overflowY: "hidden"}}>
       
@@ -80,7 +68,6 @@ const NewPassword = ({user, err}) => {
         <img id="hiking-image" src="/hiking-4.jpg" alt="hiking" width="100%" style={{objectFit: "cover", height:"100vh" }} /> 
         <img id="logo" onClick={() => router.push('/login')} src="/logo.png" alt="logo" width="110px" height="70" style={{ position: "absolute", top: "16px", left: '35px' }}/> 
       </div>
-
 
     <div className="new-password-content">
     <img id="logo-mobile-login" src="/logo.png" alt="logo" width="90px" height="58" style={{ position: "absolute", top: "25px", left: '25px' }}/> 
@@ -104,11 +91,8 @@ const NewPassword = ({user, err}) => {
 
     <Typography component="span" variant="span" width="100%" color="gray" mb={2} ml={2}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>
   
-
     </Grid>
-    
     </form>
-
 
     { error ? <Alert severity="error">{error}</Alert> : null }
     {success ?  <Alert severity="success">{success}</Alert>: null }

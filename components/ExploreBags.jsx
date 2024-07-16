@@ -50,7 +50,7 @@ const ExploreBags = ({ exploreBags }) => {
   }, [exploreBags]);
 
   useEffect(() => {
-    // Populate weightOptions based on selected weightUnitFilter
+    
     const populateWeightOptions = () => {
       if (weightUnitFilter === 'kg') {
         setWeightOptions(['All', '0-5', '5-10', '10-15', '15+']);
@@ -66,7 +66,7 @@ const ExploreBags = ({ exploreBags }) => {
     };
     populateWeightOptions();
 
-    // Reset weight filter if weight unit is set to All
+    
     if (weightUnitFilter === '') {
       setWeightFilter('');
     }

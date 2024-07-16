@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment } from "react";
 import {
   Typography,
   Stack,
@@ -41,13 +41,14 @@ const Settings = ({ session, user }) => {
     activityLevel: user.activityLevel || "",
     country: user.country || "",
     image: null,
-    profileImageUrl: `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${user.profileImageKey}`,
+    profileImageUrl: `${process.env.NEXT_PUBLIC_PROFILE_URL}/${user.profileImageKey}`,
     profileImageKey: user.profileImageKey,
 
   });
   const [savedMessage, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
 
   const { countryNameArr } = useCountries();
 
@@ -119,7 +120,6 @@ const Settings = ({ session, user }) => {
     }
   };
   
-
 
 
   return (
@@ -341,8 +341,7 @@ const Settings = ({ session, user }) => {
           
         </Grid>
 
-      
-
+    
         {savedMessage && (
           <Alert severity="success" sx={{ mt: 2 }}>
             {savedMessage}

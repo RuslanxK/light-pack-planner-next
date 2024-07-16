@@ -1,7 +1,6 @@
 "use client"
 
 import React from 'react'
-import Nav from './Nav'
 import { Container, Typography, Stack, Link } from '@mui/material'
 import { useTheme } from '@emotion/react';
 import { useRouter } from 'next/navigation';

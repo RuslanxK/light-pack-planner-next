@@ -27,9 +27,7 @@ const Bag = ({bagData, trips, session}) => {
   const { refresh } = useRefresh();
 
 
-
   const NavigateToInnerBag = () => {
-
     localStorage.setItem('bagId', bagData._id);
     router.push(`/bag?id=${bagData._id}`)
     
@@ -40,7 +38,6 @@ const Bag = ({bagData, trips, session}) => {
   }
 
   const closePopup = () => {
-
      setIsPopupOpen(false)
   }
 
@@ -49,9 +46,7 @@ const Bag = ({bagData, trips, session}) => {
       e.preventDefault()
 
       if (loading) return;
-
        try {
-
         setLoading(true)
         const BagWithUserId = { ...duplicatedBag, userId: session.user.id};
 
@@ -63,12 +58,11 @@ const Bag = ({bagData, trips, session}) => {
         } catch (err) {
          console.log(err);
        }
-     
   }
+  
 
   const tripOptions = trips?.map((x) => ({ name: x.name, _id: x._id }));
   const isOptionEqualToValue = (option, value) => option._id === value?._id;
-
 
   return ( 
     <Stack backgroundColor={theme.palette.mode === "dark" ? theme.main.darkColor : "#FAFAFA" } onMouseOver={() => setTripHover(true)} onMouseLeave={() => setTripHover(false)} borderRadius={theme.radius} height={theme.bags.height} boxShadow={theme.boxShadow} sx={{cursor: "pointer", transition: theme.transition, '&:hover': {boxShadow: theme.boxShadowHover}}} 

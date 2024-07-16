@@ -15,7 +15,6 @@ import {
   Grid,
   CircularProgress,
   Alert,
-  useMediaQuery,
   IconButton,
 } from "@mui/material";
 import axios from "axios";

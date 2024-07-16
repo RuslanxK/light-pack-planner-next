@@ -19,8 +19,6 @@ const Login = () => {
   const router = useRouter();
 
 
-
-
   useEffect(() => {
     const registrationSuccess = localStorage.getItem('registrationSuccess');
     if (registrationSuccess === 'true') {

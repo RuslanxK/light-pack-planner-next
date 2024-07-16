@@ -49,14 +49,9 @@ const BugReport = ({session}) => {
     }
 
     catch(err) {
-
         setError(err)
-
     }
-    
-    
   };
-
 
 
   return (
@@ -64,9 +59,8 @@ const BugReport = ({session}) => {
       display={theme.flexBox}
       justifyContent={theme.start}
       width={theme.fullWidth}
-      minHeight="100vh"
-      
-    >
+      minHeight="100vh">
+
       <div className="main-info">
         <Stack direction="row" alignItems="center" mb={1}>
           <IconButton
@@ -84,7 +78,6 @@ const BugReport = ({session}) => {
         </Typography>
 
 
-
         <Box sx={{width: "100%"}}>
         <form onSubmit={handleSubmit}>
           <Stack spacing={2} p={4} borderRadius="7px" backgroundColor={ theme.palette.mode === "dark" ? "#171717" : "#FAFAFA"} boxShadow="rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;">
@@ -96,8 +89,7 @@ const BugReport = ({session}) => {
               sx={{background: theme.palette.mode === "dark" ? "#1E1E1E" : "white"}}
               fullWidth
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+              onChange={(e) => setTitle(e.target.value)}/>
           
             <TextField
               label="Content"

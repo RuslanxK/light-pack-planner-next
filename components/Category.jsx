@@ -18,10 +18,7 @@ import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors, closestCor
 import {SortableContext, verticalListSortingStrategy, useSortable} from "@dnd-kit/sortable"
 import CircularProgress from '@mui/material/CircularProgress';
 import useRefresh from './hooks/useRefresh'
-
-
 import { CSS } from "@dnd-kit/utilities";
-
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 const Category = (props) => {
@@ -50,7 +47,6 @@ const Category = (props) => {
   };
 
 
-
   useEffect(() => {
     setItemsData(props.items || []);
   }, [props.items]);
@@ -70,14 +66,10 @@ const Category = (props) => {
     },
   });
 
-
-
   const sensors = useSensors(
     mouseSensor,
     touchSensor,
   );
-
-
 
 
   const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({id: props.categoryData.order})
@@ -89,14 +81,10 @@ const Category = (props) => {
       opacity: isDragging ? 0.5 : 1,
   }
 
-
   const itemsOfCategory = itemsData?.filter((item) => item.categoryId === props.categoryData._id);
 
 
-
   const removeItems = async () => {
-
-
     try {
       props.loading(true)
       for (const item of checkedItems) {
@@ -110,7 +98,6 @@ const Category = (props) => {
       console.error('Failed to delete items:', error);
     }
   };
-
 
 
 
@@ -146,7 +133,6 @@ const Category = (props) => {
   };
 
 
-
   const onDragEnd = (event) => {
     const { active, over } = event;
   
@@ -176,10 +162,7 @@ const saveItemsOrder = async (updatedItems) => {
 
 
   const addItem =  async () => {
-    
-
     const itemObj = { userId: props.session.user.id, tripId: props.categoryData.tripId, bagId: props.categoryData.bagId, categoryId: props.categoryData._id, name: "new item", qty: 1, weight: 0.1, price: 0.00}
-     
     try {
       props.loading(true)
       await axios.post('/items/new', itemObj);

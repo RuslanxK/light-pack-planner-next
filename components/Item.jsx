@@ -18,6 +18,7 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import {useSortable} from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities";
 import useRefresh from './hooks/useRefresh'
+import ItemInput from '../components/custom/Item/ItemInput'
 
 
 const Item = (props) => {
@@ -202,12 +203,13 @@ const Item = (props) => {
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>
         </IconButton> 
      
-      <Checkbox size="small" sx={{transform: "scale(0.8)", marginBottom: "-4px"}} onChange={updateChecked}  /> 
-      <TextField size='small' variant='standard' placeholder='name' name='name' sx={{ width: '40%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.name} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{style: {fontSize: 12}}} onChange={handleChange} onBlur={saveItemData}/>
-      <TextField size='small' variant='standard' placeholder='note' name='description' sx={{ width: '80%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.description} InputLabelProps={{ style : {fontSize: 12}}} inputProps={{style: {fontSize: 12}}} InputProps={{disableUnderline: true}} onChange={handleChange} onBlur={saveItemData} />
-      <TextField size='small' variant='standard' type='number' name='price' label="$ price" step="any" sx={{width: '15%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.price} onChange={handleChange} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{ min: 1, max: 99, style: {fontSize: 12} }} onBlur={saveItemData}/>
-      <TextField size='small' variant='standard' type='number' name='qty' label="qty" sx={{width: '15%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.qty} onChange={handleChange} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{ min: 1, max: 99, style: {fontSize: 12} }} />
-      <TextField size='small' variant='standard' type='number' name='weight' label='weight' sx={{width: '15%', marginRight: "10px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={itemData.weight} onChange={handleChange} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true}} inputProps={{ min: 0.1, max: 99, style: {fontSize: 12} }} />
+      <Checkbox size="small" sx={{transform: "scale(0.8)", marginBottom: "-4px"}} onChange={updateChecked}  />
+      
+      <ItemInput size='small' variant='standard' type="text" placeholder='name' name='name' width='40%' value={itemData.name} onChange={handleChange} onBlur={saveItemData} />
+      <ItemInput size='small' variant='standard' type="text" placeholder='note' name='description' width='80%' value={itemData.description} onChange={handleChange} onBlur={saveItemData} />
+      <ItemInput size='small' variant='standard' label="$ price" type="number" placeholder='price' name='price' width='15%' value={itemData.price} onChange={handleChange} onBlur={saveItemData} />
+      <ItemInput size='small' variant='standard' label="qty" type="number" placeholder='qty' name='qty' width='15%' value={itemData.qty} onChange={handleChange} onBlur={saveItemData} />
+      <ItemInput size='small' variant='standard' label="weight" type="number" placeholder='weight' name='weight' width='15%' value={itemData.weight} onChange={handleChange} onBlur={saveItemData} />
        <Typography fontSize="12px" variant='span' component="span" border="1px solid gray" borderRadius="3px" padding="7px">{props?.session?.user?.weightOption}</Typography>
       <Select size='small' variant='outlined' name='priority' sx={{width: '15%', fontSize: "12px",  marginRight: "10px", marginLeft: "15px", backgroundColor: getBackgroundColor(itemData.priority)}} value={itemData.priority} onChange={handleChange} onBlur={saveItemData}>  
        <MenuItem sx={{fontSize: "12px"}} value="low">Low priority</MenuItem>

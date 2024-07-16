@@ -13,21 +13,13 @@ const Articles = ({articles}) => {
   const theme = useTheme()
   const router = useRouter();
 
-
   const ArticleBox = articles.map((article) => {
-
        return <Article key={article._id} articleData={article} />
   })
 
-
-
   return (
-    <Container sx={{display: theme.flexBox}} maxWidth={false} disableGutters>
-    
+<Container sx={{display: theme.flexBox}} maxWidth={false} disableGutters>
 <Stack display={theme.flexBox}  justifyContent={theme.start} width={theme.trips.width} minHeight="100vh" pb={5}>
-
-
-      
 <div className="main-info">
 <Stack direction="row" alignItems="center" mb={1}>
 <IconButton sx={{marginRight: "5px"}} onClick={() => router.push('/')}><ArrowBackIcon /></IconButton>
@@ -43,18 +35,10 @@ const Articles = ({articles}) => {
 
 </div>
 
-
     <div className="boxes">
-    
     {ArticleBox}
-   
-
     </div>
-
-    
-
     </Stack>
-      
       </Container>
   )
 }

@@ -25,7 +25,6 @@ const AdminSettings = () => {
   const formRef = useRef(null);
   const formRefChangeLog = useRef(null);
 
-
   const [articleData, setArticleData] = useState({})
   const [changelogData, setChangeLogData]= useState({})
   const [error, setError] = useState("")
@@ -36,42 +35,29 @@ const AdminSettings = () => {
   const [loadingChangeLog, setLoadingChangeLog] = useState(false)
 
 
-
-
   const addToChangeLog = async (e) => {
 
       e.preventDefault()
 
       if(loading) return
-
-
-      console.log(changelogData)
-
+    
       try {
         setLoadingChangeLog(true)
         await axios.post('/api/changelog', changelogData)
         formRefChangeLog.current.reset();
         setSuccessChangeLog("Uploaded successfully!")
         setLoadingChangeLog(false)
-  
     }
     
      catch (error) {
-  
         setErrorChangeLog(error.message)
      }
-
   }
 
 
-
-  
-
   const addArticle = async (e) => {
     e.preventDefault();
-  
     if (loading) return;
-  
     if (articleData.image && articleData.image.size > 2 * 1024 * 1024) {
       setError("File size exceeds the maximum limit of 2 MB.");
       return;
@@ -85,11 +71,7 @@ const AdminSettings = () => {
       formData.append("title", articleData.title);
       formData.append("description", articleData.description);
 
-
-        const response = await axios.post('/api/articles', formData);
-
-         console.log(response)
-  
+        await axios.post('/api/articles', formData);
         formRef.current.reset();
         setSuccess("Uploaded successfully!");
       
@@ -101,9 +83,6 @@ const AdminSettings = () => {
     }
   };
   
-
-
-
 
 const handleChange = (event) => {
 
@@ -132,8 +111,6 @@ const handleChangeLog = (event) => {
     setSuccess("")
   }
 };
-
-
 
 
 
