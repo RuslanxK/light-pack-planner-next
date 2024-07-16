@@ -98,6 +98,7 @@ const SharedItem = (props) => {
     <img
       src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`}
       alt="item"
+      style={{width: "100%", height: "100%", objectFit: "contain"}}
     />
   </DialogContent>
  
