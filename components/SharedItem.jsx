@@ -5,6 +5,7 @@ import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import { useTheme } from '@emotion/react';
 import React, { useState } from 'react';
 import CloseIcon from "@mui/icons-material/Close";
+import Item from './custom/SharedItem/Item';
 
 const SharedItem = (props) => {
 
@@ -50,57 +51,38 @@ const SharedItem = (props) => {
           target="_blank" 
           rel="noopener" 
           underline="none" 
+          cursor="pointer"
           sx={{ 
             width: '50%', 
             marginRight: "15px", 
             borderBottom: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #C0C0C0", 
             fontSize: 12, 
             color: theme.palette.info.main, 
-            '&:hover': {
-              color: theme.palette.primary.main,
-              cursor: 'pointer'
-            } 
+            cursor: "pointer",
+          
+        
           }}
         >
-          <TextField 
-            size='small' 
-            variant='standard' 
-            placeholder='name' 
-            name='name' 
-            sx={{  
-              width: '100%', 
-              borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0", 
-              '& .MuiInputBase-input': {
-                fontSize: 12,
-                color: theme.palette.info.main,
-                '&:hover': {
-                  color: theme.palette.primary.main,
-                  cursor: 'pointer'
-                }
-              }
-            }} 
-            value={props.itemData.name} 
-            InputLabelProps={{ style: { fontSize: 12 } }} 
-            InputProps={{ disableUnderline: true, readOnly: true }} 
-          />
+          <Item size='small' linkColor={theme.palette.info.main} variant='standard' placeholder='name' name='name' value={props.itemData.name} width="100%" readOnly />
+
         </Link>
         ) : (
-          <TextField size='small' variant='standard' placeholder='name' name='name' sx={{ width: '50%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0" }} value={props.itemData.name} InputLabelProps={{ style: { fontSize: 12 } }} InputProps={{ disableUnderline: true, readOnly: true }} inputProps={{ style: { fontSize: 12 } }} />
+          <Item size='small' variant='standard' placeholder='name' name='name' value={props.itemData.name} readOnly width="50%" />
         )}
-      <TextField size='small' variant='standard' placeholder='note' name='description' sx={{ width: '100%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={props.itemData.description} InputLabelProps={{style : {fontSize: 12}}} inputProps={{readOnly: true, style: {fontSize: 12}}} InputProps={{disableUnderline: true}} />
-      <TextField size='small' variant='standard' type='number' name='price' label="$ price" step="any" sx={{width: '12%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={props.itemData.price} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true, readOnly: true}} inputProps={{ min: 1, max: 99, style: {fontSize: 12} }} />
-      <TextField size='small' variant='standard' type='number' name='qty' label="qty" sx={{width: '12%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={props.itemData.qty} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true, readOnly: true}} inputProps={{ min: 1, max: 99, style: {fontSize: 12} }} />
-      <TextField size='small' variant='standard' type='number' name='weight' label='weight' sx={{width: '12%', marginRight: "15px", borderBottom: theme.palette.mode === "dark" ? `1px solid gray` : "1px solid #C0C0C0"}} value={props.itemData.weight} InputLabelProps={{ style : {fontSize: 12}}} InputProps={{disableUnderline: true, readOnly: true}} inputProps={{ min: 0.1, max: 99, style: {fontSize: 12} }} />
+        
+        <Item size='small' variant='standard' placeholder='note' name='description' value={props.itemData.description} readOnly width="100%" />
+        <Item size='small' variant='standard' placeholder='price' name='price' label="$ price" value={props.itemData.price} readOnly width="12%" />
+        <Item size='small' variant='standard' placeholder='qty' name='qty' label="qty" value={props.itemData.qty} readOnly width="12%" />
+        <Item size='small' variant='standard' placeholder='weight' name='weight' label="weight" value={props.itemData.weight} readOnly width="12%" />
+
        <Typography fontSize="12px" variant='span' component="span" border="1px solid gray" borderRadius="3px" padding="7px">{props?.weightOption}</Typography>
 
-      
       <Select size='small' variant='outlined' disabled name='priority' sx={{width: '15%', fontSize: "12px",  marginRight: "15px", marginLeft: "15px", backgroundColor: getBackgroundColor(props.itemData.priority)}} value={props.itemData.priority}>  
        <MenuItem sx={{fontSize: "12px"}} value="low">Low priority</MenuItem>
        <MenuItem sx={{fontSize: "12px"}} value="medium">Med priority</MenuItem>
        <MenuItem sx={{fontSize: "12px"}} value="high">High priority</MenuItem>
       </Select>
       
-          
             <Tooltip title={ props.itemData.worn ? "I wear it" : null }>
               <IconButton>
                 <NordicWalkingIcon sx={{ fontSize: "14px", color: props.itemData.worn ? theme.green : null, '&:hover': { color: theme.green } }} />

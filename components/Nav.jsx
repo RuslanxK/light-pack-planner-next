@@ -4,10 +4,6 @@ import { Stack, Typography, IconButton, Switch, Divider } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
-import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import { styled } from "@mui/material/styles";
 import { Fragment, useState, useEffect, useRef} from 'react';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import HikingOutlinedIcon from "@mui/icons-material/HikingOutlined";
@@ -18,7 +14,8 @@ import { Tooltip } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { usePathname } from "next/navigation"
 import { disableNavBar } from "../utils/disableNavBar"
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';import axios from 'axios';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import axios from 'axios';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -30,13 +27,15 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ReportIcon from '@mui/icons-material/Report';
 import useRefresh from './hooks/useRefresh'
 import CircularProgress from '@mui/material/CircularProgress';
-
 import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+import { Accordion, AccordionSummary, AccordionDetails, StyledTypography } from './custom/Nav/StyledAccordion.jsx';
+
+
 
 const Nav = ({bags, session, user}) => {
 
@@ -48,44 +47,39 @@ const path = usePathname()
 
 const menuRef = useRef(null);
 
-
 const [mode, setMode] = useState(user.mode);
 const [isOpenMenu, setOpenMenu] = useState(false)
 const [ loading, setLoading] = useState(false)
 const [ nestedMenuOpen, setNestedMenuOpen] = useState(false)
+const [expanded, setExpanded] = useState("panel1");
 
-
-const profileImageUrl = `https://light-pack-planner.s3.eu-north-1.amazonaws.com/${user.profileImageKey}`;
+const profileImageUrl = `${process.env.NEXT_PUBLIC_PROFILE_URL}/${user.profileImageKey}`;
 
 
 useEffect(() => {
-
   setMode(user.mode)
-  
 }, [user.mode]);
 
 
 const handleMenuClick = () => {
-  
     setNestedMenuOpen(!nestedMenuOpen)
 };
 
 
-
 useEffect(() => {
+
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setOpenMenu(false);
     }
   };
-
   document.addEventListener('mousedown', handleClickOutside);
 
   return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
+ document.removeEventListener('mousedown', handleClickOutside);
+
   };
 }, []);
-
 
 
 const toggleTheme = async () => {
@@ -118,46 +112,9 @@ const bagData = filteredBags?.map((bag) => {
   })
 
 
-
-
-
 const logOut = () => {
-
   signOut({ callbackUrl: `/login` })
 }
-
-
-const [expanded, setExpanded] = useState("panel1");
-
-const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #F2F2F2",
-  background: "none",
-  borderRight: "0px",
-  borderLeft: "0px",
-  "&:not(:last-child)": { borderBottom: 0 },
-  "&::before": {
-    display: "none",
-  },
-}));
-
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary {...props} />
-))(({ theme }) => ({
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(0),
-  },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  borderTop: theme.palette.mode === "dark" ? `1px solid ${theme.main.darkColor}` : "1px solid #F2F2F2",
-  display: theme.flexBox,
-  flexDirection: "column",
-  alignItems: theme.start,
- 
-}));
-
 
 
 const handleChange = (panel) => (event, newExpanded) => {
@@ -166,7 +123,6 @@ const handleChange = (panel) => (event, newExpanded) => {
 
 
 const navigateToBag = (bag) => {
-
      setOpenMenu(false)
      localStorage.setItem('tripId', bag.tripId);
      localStorage.setItem('bagId', bag._id);
@@ -175,31 +131,24 @@ const navigateToBag = (bag) => {
 
 
 const navigateToUrl = (url) => {
-
     setOpenMenu(false)
     router.push(url)
 }
 
 
   return (
-
     <Fragment>
 
-
-
-{loading ? <div className='loading-overlay' style={{ background: theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.15)"}}> {<CircularProgress color="success" />}</div> : null }
-
+    {loading ? <div className='loading-overlay' style={{ background: theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.15)"}}> {<CircularProgress color="success" />}</div> : null }
     <>
     {!disableNavBar.includes(path) && (
-   
     <Fragment>
-
-      <div className='nav-mobile'>
+      <nav className='nav-mobile'>
 
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
       <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? <CloseIcon /> : <MenuIcon />  }</IconButton>
-
       {isOpenMenu ? <Paper ref={menuRef} elevation={2} sx={{ width: "90%", maxWidth: '100%', position: "absolute", marginLeft: "auto", marginRight: "auto", top: 90, left: 0, right: 0,  zIndex: "9999", background: theme.palette.mode === "dark" ? "#171717" : "#f0f0f0"  }}>
+      
       <MenuList>
         <MenuItem onClick={ () => navigateToUrl("/")}>
           <ListItemIcon>
@@ -302,14 +251,13 @@ const navigateToUrl = (url) => {
           </Stack>
          
 
-
       
       </MenuList>
     </Paper> : null }
           
-      </div>
+      </nav>
 
-    <div className="nav" style={{background: theme.palette.mode === "dark" ? "#171717" : "#fafafa"}}>
+    <nav className="nav" style={{background: theme.palette.mode === "dark" ? "#171717" : "#fafafa"}}>
     <Stack  width={theme.nav.width} display={theme.flexBox}  height={theme.nav.height}> 
     <Stack position={theme.nav.fixed} justifyContent="space-between" height={theme.nav.height} borderRight={theme.palette.mode === "dark" ? `2px solid ${theme.main.darkColor}` : "1px solid #F2F2F2"} width={theme.nav.width}>
     <Stack>
@@ -342,78 +290,70 @@ const navigateToUrl = (url) => {
 
         <Accordion>
           <AccordionSummary aria-controls="panel3d-content" id="panel3d-header" onClick={() => router.push("/articles")}>
-            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+            <StyledTypography>
               Articles 
-            </Typography>
+            </StyledTypography>
             <PublicOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
-          
-      
         </Accordion>
 
         <Accordion>
           <AccordionSummary>
-            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+            <StyledTypography>
               Shop 
-            </Typography>
+            </StyledTypography>
             <img src='/coming-soon.png' width="80px" height="50px" style={{objectFit: "cover", position: "absolute", left: 75, bottom: 0,}}/>
             <StorefrontOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
-          
-      
         </Accordion>
 
         <Accordion>
           <AccordionSummary aria-controls="panel3d-content" id="panel3d-header" onClick={() => router.push("/explore")}>
-            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+            <StyledTypography>
              Explore Bags
-            </Typography>
+            </StyledTypography>
             <StarOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
         </Accordion>
 
         <Accordion onClick={() => router.push('/settings')}>
           <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+          <StyledTypography>
               Settings 
-            </Typography>
+            </StyledTypography>
             <SettingsOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
         </Accordion>
 
         <Accordion onClick={() => router.push('/changelog')}>
           <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+            <StyledTypography>
               Changelog 
-            </Typography>
+            </StyledTypography>
             <NotificationImportantIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
         </Accordion>
 
-
         <Accordion onClick={() => router.push('/bug-report')}>
           <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+            <StyledTypography>
              Bug Report
-            </Typography>
+            </StyledTypography>
             <ReportIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
         </Accordion>
 
         { session.user.isAdmin ? <Accordion onClick={() => router.push('/admin')}>
           <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between, alignItems: theme.contentCenter, "&:hover": { color: theme.green },}}>
+            <StyledTypography>
              Admin Settings
-            </Typography>
+            </StyledTypography>
             <AdminPanelSettingsIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
         </Accordion> : null }
 
-
         {session && session?.user ? (
          <Stack display={theme.flexBox} pb={1} mt={1} alignItems={theme.center}>
-
-
 
     <Tooltip title={<><Typography p={0.2} variant='span' component="h3" fontWeight="300" color="inherit">{user.username}</Typography>
       <Typography variant='span'p={0.2} component="h3" fontWeight="300" color="inherit">{session?.user?.email}</Typography>
@@ -423,18 +363,15 @@ const navigateToUrl = (url) => {
      </Tooltip>
       <Typography className='logout' fontSize="15px" onClick={logOut}> <LogoutIcon sx={{fontSize: "17px", marginRight: "5px"}}/> Log out</Typography>
 
-
-     </Stack>
-     
+     </Stack> 
 ) : null}
-
 
       </Stack>
        <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mb={1}><LightModeIcon sx={{color: "#4a4a4a", marginRight: "5px"}}/> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <DarkModeIcon sx={{color: "#4a4a4a", marginLeft: "5px"}}/></Stack>
         </Stack>
     
     </Stack>
-    </div>
+    </nav>
 
     </Fragment>
         
