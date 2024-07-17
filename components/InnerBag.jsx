@@ -370,7 +370,7 @@ const InnerBag = ({
             background:
               theme.palette.mode === "dark"
                 ? "rgba(0, 0, 0, 0.5)"
-                : "rgba(0, 0, 0, 0.15)",
+                : "rgba(0, 0, 0, 0.25)",
           }}
         >
           {" "}

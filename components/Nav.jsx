@@ -139,7 +139,7 @@ const navigateToUrl = (url) => {
   return (
     <Fragment>
 
-    {loading ? <div className='loading-overlay' style={{ background: theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.15)"}}> {<CircularProgress color="success" />}</div> : null }
+    {loading ? <div className='loading-overlay' style={{ background: theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.25)"}}> {<CircularProgress color="success" />}</div> : null }
     <>
     {!disableNavBar.includes(path) && (
     <Fragment>
