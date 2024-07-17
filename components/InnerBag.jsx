@@ -86,7 +86,6 @@ const InnerBag = ({
 
   const { refresh } = useRefresh();
 
-
   const nameRef = useRef(null); 
   const goalRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -96,7 +95,7 @@ const InnerBag = ({
     
   };
 
-  
+
   useEffect(() => {
     setCurrentUrl(window.location.origin);
   }, []);
@@ -671,7 +670,7 @@ const InnerBag = ({
                                   mr={1}
                                   sx={{ borderRadius: "50%" }}
                                 ></Stack>
-                                {row.label}
+                               {row.label.length > 15 ? `${row.label.substring(0, 15)}...` : row.label}
                               </Stack>
                             </TableCell>
                             <TableCell align="right">
