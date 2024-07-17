@@ -30,7 +30,7 @@ import { DatePicker } from "@mui/x-date-pickers-pro";
 import dayjs from "dayjs";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
-import { useState } from "react";
+import { useState, useMemo, useRef } from "react";
 import useRefresh from "./hooks/useRefresh";
 import useCountries from './hooks/useCountries'
 
@@ -42,38 +42,40 @@ const Trips = ({ trips, bags, session }) => {
 
   const { countryNameArr } = useCountries();
 
-  
 
   const [isPopupOpen, setPopupOpen] = useState(false);
-   const [newTripData, setNewTripData] = useState({
-    startDate: dayjs().add(1, "day"),
-    endDate: dayjs().add(2, "day"),
-    name: "",
-    distance: "",
-    about: "",
-  });
+
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { refresh } = useRefresh();
 
+  const nameRef = useRef();
+  const distanceRef = useRef();
+  const aboutRef = useRef();
+  const startDateRef = useRef(dayjs().add(1, "day"));
+  const endDateRef = useRef(dayjs().add(2, "day"));
 
-  const filteredTrips = trips?.tripsWithPictures
-    .filter((trip) =>
-      trip.name.toLowerCase().includes(searchInput.toLowerCase())
-    )
-    .sort((a, b) => {
-      const aStartDate = new Date(a.startDate);
-      const bStartDate = new Date(b.startDate);
-      const aEndDate = new Date(a.endDate);
-      const bEndDate = new Date(b.endDate);
-      if (aStartDate < bStartDate) return 1;
-      if (aStartDate > bStartDate) return -1;
-      if (aEndDate < bEndDate) return 1;
-      if (aEndDate > bEndDate) return -1;
-      return 0;
-    })
-    .map((trip) => <Trip key={trip._id} tripData={trip} />);
+
+  const filteredTrips = useMemo(() => {
+    return trips?.tripsWithPictures
+      .filter((trip) =>
+        trip.name.toLowerCase().includes(searchInput.toLowerCase())
+      )
+      .sort((a, b) => {
+        const aStartDate = new Date(a.startDate);
+        const bStartDate = new Date(b.startDate);
+        const aEndDate = new Date(a.endDate);
+        const bEndDate = new Date(b.endDate);
+        if (aStartDate < bStartDate) return 1;
+        if (aStartDate > bStartDate) return -1;
+        if (aEndDate < bEndDate) return 1;
+        if (aEndDate > bEndDate) return -1;
+        return 0;
+      })
+      .map((trip) => <Trip key={trip._id} tripData={trip} />);
+  }, [trips, searchInput]);
+
 
   const itemsTotal = trips?.totalItems?.reduce((acc, item) => acc + item.qty,0);
 
@@ -87,13 +89,23 @@ const Trips = ({ trips, bags, session }) => {
 
     try {
       setLoading(true);
-      const newTripDataWithUserId = {
-        ...newTripData,
+
+      const newTripData = {
+        startDate: startDateRef.current,
+        endDate: endDateRef.current,
+        name: nameRef.current.value,
+        distance: distanceRef.current.value,
+        about: aboutRef.current.value,
         userId: session?.user?.id,
       };
-      await axios.post(`/api/trips/new`, newTripDataWithUserId);
+
+     
+      await axios.post(`/api/trips/new`, newTripData);
       await refresh();
-      e.target.reset()
+    
+      nameRef.current.value = null,
+      distanceRef.current.value = null,
+      aboutRef.current.value = null
 
       setPopupOpen(false);
       setLoading(false);
@@ -101,6 +113,7 @@ const Trips = ({ trips, bags, session }) => {
       console.log(err);
     }
   };
+
 
 
 
@@ -117,14 +130,7 @@ const Trips = ({ trips, bags, session }) => {
     setLoading(false);
   };
 
-  const handleDateChange = (date, fieldName) => {
-    setNewTripData((prevData) => ({ ...prevData, [fieldName]: date }));
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setNewTripData({ ...newTripData, [name]: value });
-  };
+  
 
   return (
     <Box width="100%">
@@ -340,15 +346,12 @@ const Trips = ({ trips, bags, session }) => {
                 <Grid item xs={12} sm={6}>
                   <Autocomplete
                      
-                     onChange={(event, newValue) =>
-                      setNewTripData((prevData) => ({
-                        ...prevData,
-                        name: newValue || "",
-                      }))
-                    }
+                     onChange={(event, newValue) => {
+                     nameRef.current.value = newValue || ""
+                    }}
                     options={countryNameArr || []}
                     renderInput={(params) => (
-                      <TextField required {...params} label="Destination" />
+                      <TextField required {...params} label="Destination"  inputRef={nameRef} />
                     )}
                     sx={{ width: "100%" }}
                   />
@@ -359,7 +362,7 @@ const Trips = ({ trips, bags, session }) => {
                     type="number"
                     name="distance"
                     required
-                    onChange={handleChange}
+                    inputRef={distanceRef}
                     sx={{ width: "100%" }}
                     inputProps={{ min: 1, max: 999999 }}
                   />
@@ -369,7 +372,7 @@ const Trips = ({ trips, bags, session }) => {
                     multiline
                     label="Description"
                     name="about"
-                    onChange={handleChange}
+                    inputRef={aboutRef}
                     sx={{ width: "100%" }}
                     inputProps={{ maxLength: 300 }}
                   />
@@ -379,7 +382,7 @@ const Trips = ({ trips, bags, session }) => {
                     <DatePicker
                       label="Start Date"
                       name="startDate"
-                      onChange={(date) => handleDateChange(date, "startDate")}
+                      onChange={(date) => (startDateRef.current = date)}
                       sx={{ width: "100%" }}
                       defaultValue={dayjs().add(1, "day")}
                     />
@@ -390,10 +393,10 @@ const Trips = ({ trips, bags, session }) => {
                     <DatePicker
                       label="End Date"
                       name="endDate"
-                      onChange={(date) => handleDateChange(date, "endDate")}
+                      onChange={(date) => (endDateRef.current = date)}
                       sx={{ width: "100%" }}
                       defaultValue={dayjs().add(2, "day")}
-                      minDate={newTripData.startDate}
+                      minDate={startDateRef.current}
                     />
                   </LocalizationProvider>
                 </Grid>

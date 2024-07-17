@@ -3,7 +3,7 @@
 import { Stack, Typography, IconButton, Autocomplete, TextField, Button, Container, Tooltip, Alert, Grid} from '@mui/material';
 import Bag from './Bag';
 import axios from 'axios';
-import { useState, useEffect} from 'react';
+import { useState, useEffect, useMemo} from 'react';
 import { useRouter } from 'next/navigation';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -172,9 +172,12 @@ const InnerTrip = ({ tripData, trips, session}) => {
   const countriesArr = countries?.map((x) => x.name);
   const countryNameArr = countriesArr?.map((x) => x.common);
 
-  const filteredBags = tripData?.bags?.filter((bag) =>
-    bag.name.toLowerCase().includes(searchInput.toLowerCase())
-  );
+  const filteredBags = useMemo(() => {
+    return tripData?.bags?.filter((bag) =>
+      bag.name.toLowerCase().includes(searchInput.toLowerCase())
+    );
+  }, [tripData?.bags, searchInput]);
+  
 
   const bags = filteredBags.map((bag) => <Bag key={bag._id} bagData={bag} trips={trips} session={session} />);
 

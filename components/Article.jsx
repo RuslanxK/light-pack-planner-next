@@ -38,4 +38,4 @@ const Article = ({articleData}) => {
   )
 }
 
-export default Article
+export default React.memo(Article)

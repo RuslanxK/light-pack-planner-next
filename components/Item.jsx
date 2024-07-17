@@ -5,7 +5,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useTheme } from '@emotion/react';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import MuiPopup from './custom/MuiPopup';
@@ -27,11 +27,15 @@ const Item = (props) => {
   const [picPopupOpen, setPicPopupOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showEditIcon, setShowEditIcon] = useState(false)
+  const [linkValue, setLinkValue] = useState(props.itemData.link || '');
   const [itemData, setItem] = useState({ userId: props.itemData.creator, _id: props.itemData._id, tripId: props.itemData.tripId, bagId: props.itemData.bagId, categoryId: props.itemData.categoryId, name: props.itemData.name, 
-    priority: props.itemData.priority, description: props.itemData.description || '',  qty: +props.itemData.qty || 1, weight: +props.itemData.weight || 0.1, link: props.itemData.link, worn: props.itemData.worn, productImageKey: props.itemData.productImageKey, image: null, price: props.itemData.price || 0,});
+    priority: props.itemData.priority, description: props.itemData.description || '',  qty: +props.itemData.qty || 1, weight: +props.itemData.weight || 0.1,  worn: props.itemData.worn, productImageKey: props.itemData.productImageKey, image: null, price: props.itemData.price || 0,});
 
     const theme = useTheme()
     const router = useRouter();
+
+    const inputRef = useRef(null);
+
 
     const { refresh } = useRefresh();
 
@@ -140,9 +144,13 @@ const Item = (props) => {
 
       if (loading) return;
 
+      const link = { link: inputRef.current.value };
+
+
       try {
         setLoading(true)
-        await axios.put(`/items/${itemData._id}/${props?.session?.user?.id}`, itemData);
+        await axios.put(`/items/${itemData._id}/${props?.session?.user?.id}`, link);
+        setLinkValue(link.link);
         setPopupOpen(false)
         setLoading(false)
         
@@ -224,7 +232,7 @@ const Item = (props) => {
             </Tooltip>
             <Tooltip title="Link">
               <IconButton onClick={() => setPopupOpen(true)}>
-                <LinkIcon sx={{ fontSize: "15px", color: itemData.link ? "blue" : null, '&:hover': { color: "blue" } }} />
+                <LinkIcon sx={{ fontSize: "15px", color: linkValue  ? theme.palette.primary.main : null, '&:hover': { color: theme.palette.primary.dark } }} />
               </IconButton>
             </Tooltip>
           </Stack>
@@ -247,8 +255,8 @@ const Item = (props) => {
             name="link"
             label="Link"
             variant="outlined"
-            value={itemData.link}
-            onChange={handleChange}
+            inputRef={inputRef}
+            defaultValue={props.itemData.link}
             sx={{ marginBottom: "15px", width: "100%" }} />
           <Button type="submit" sx={{ color: theme.palette.mode === "dark" ? "white" : null, width: "100%", fontWeight: "500", backgroundColor: theme.green}} variant="contained" disableElevation>Save {loading ?  <CircularProgress color="inherit" size={16} sx={{marginLeft: "10px"}} /> : null}</Button> 
       </form>

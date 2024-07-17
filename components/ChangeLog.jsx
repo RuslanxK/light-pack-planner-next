@@ -1,11 +1,10 @@
 "use client";
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState, useMemo} from 'react';
 import { Stack, IconButton, Typography, Divider, Button, useTheme, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/navigation';
 
-const ChangeLog = ({posts}) => {
+const ChangeLog = React.memo(({posts}) => {
   const theme = useTheme();
   const router = useRouter();
   const [visibleEntries, setVisibleEntries] = useState(7);
@@ -14,7 +13,10 @@ const ChangeLog = ({posts}) => {
     setVisibleEntries((prev) => Math.min(prev + 7, posts.length));
   };
 
-  const sortedPosts = [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const sortedPosts = useMemo(() => {
+    return [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }, [posts]);
+
 
 
   return (
@@ -56,6 +58,6 @@ const ChangeLog = ({posts}) => {
       </div>
     </Stack>
   );
-};
+});
 
 export default ChangeLog;

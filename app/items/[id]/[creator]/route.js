@@ -18,15 +18,16 @@ export const PUT = async (req, { params }) => {
   try {
     await connectToDB();
    
-    const Item = await item.findOne({ _id: params.id, creator: params.creator});
+    const Item = await item.findOne({ _id: params.id, creator: params.creator });
 
     if (!Item) {
       return new NextResponse('Item not found', { status: 404 });
     }
 
-    const { tripId, bagId, categoryId, name, priority, description, qty, weight, link, worn, price } = await req.json();
-
-    Object.assign(Item, { tripId, bagId, categoryId, name, priority, description, qty, weight, link, worn, price});
+    const updateData = await req.json();
+    Object.keys(updateData).forEach(key => {
+      Item[key] = updateData[key];
+    });
 
     await Item.save();
     return new NextResponse(JSON.stringify(Item), { status: 200 });
@@ -34,6 +35,7 @@ export const PUT = async (req, { params }) => {
     return new NextResponse('Failed to update item', { status: 500 });
   }
 };
+
 
 
 

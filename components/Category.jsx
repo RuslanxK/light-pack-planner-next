@@ -3,13 +3,12 @@
 import { Stack, Typography, IconButton, Button, TextField, Tooltip} from "@mui/material";
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
 import Item from './Item'
 import axios from "axios";
-import React, {useRef} from "react";
+import React, {useRef, useState, useEffect} from "react";
 import MuiPopup from "./custom/MuiPopup";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
@@ -285,4 +284,4 @@ const saveItemsOrder = async (updatedItems) => {
   );
 };
 
-export default Category;
+export default React.memo(Category);
