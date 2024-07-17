@@ -9,7 +9,7 @@ import { useTheme } from '@emotion/react';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
 import Item from './Item'
 import axios from "axios";
-import React from "react";
+import React, {useRef} from "react";
 import MuiPopup from "./custom/MuiPopup";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
@@ -28,12 +28,12 @@ const Category = (props) => {
 
   const [showItems, setShowItems] = useState(true);
   const [removePopupOpen ,setRemovePopupOpen] = useState(false)
-  const [updatedCategory, setUpdatedCategory] = useState({name: props?.categoryData?.name})
   const [itemsData, setItemsData] = useState(props.items || []);
   const [checkedItems, setCheckedItems] = useState([]);
   const [loading, setLoading] = useState(false);
   
   const { refresh } = useRefresh();
+  const inputRef = useRef(null);
 
 
   const handleUpdateChecked = (id, checked) => {
@@ -208,14 +208,12 @@ const saveItemsOrder = async (updatedItems) => {
     }
 
 
-    const handleChange = (e) => {
-      setUpdatedCategory({ name: e.target.value });
-    };
-  
+    
 
      const saveCategoryName = async () => {
        
       try {
+        const updatedCategory = { name: inputRef.current.value };
         await axios.put(`/categories/${props.categoryData._id}/${props?.session?.user?.id}`, updatedCategory);
         router.refresh();
       }
@@ -227,22 +225,17 @@ const saveItemsOrder = async (updatedItems) => {
 
   return (
     <Stack width={theme.category.width}  display={theme.flexBox} mb={2}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#FAFAFA" } ref={setNodeRef} style={style} boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px">
-
-  
       <Stack display={theme.flexBox} direction="row" pt={0.8} pb={0.3}>
-
-
       <Stack display="flex" direction="row" alignItems="center" justifyContent="center" width="100%" >
       <IconButton {...attributes} {...listeners} sx={{cursor: "grabbing"}} >
           <DragIndicatorIcon sx={{fontSize: "15px"}}/>
         </IconButton> 
  
-      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "5px"}} value={updatedCategory.name}
-      inputProps={{maxLength: 94, style: {fontSize: 13 }}} InputProps={{ disableUnderline: true }} onChange={handleChange} onBlur={saveCategoryName} />
+      <TextField size="small" placeholder="Category name" variant="standard" name="name" sx={{width: "100%", paddingLeft: "5px"}} defaultValue={props?.categoryData?.name}
+      inputProps={{maxLength: 94, style: {fontSize: 13 }}} InputProps={{ disableUnderline: true }} inputRef={inputRef} onBlur={saveCategoryName} />
       </Stack>
   
       
-  
       <Stack display={theme.flexBox} direction="row" >
     { checkedItems.length ? <Tooltip title="Delete items"><IconButton onClick={removeItems}><DeleteOutlinedIcon sx={{ fontSize: "18px", '&:hover':{color: "red"}}} /> </IconButton> </Tooltip> : null }
      <Tooltip title="Delete category"><IconButton onClick={openPopup}><FolderDeleteOutlinedIcon sx={{ fontSize: "18px", '&:hover':{color: "red"}}} /> </IconButton> </Tooltip>
@@ -250,14 +243,9 @@ const saveItemsOrder = async (updatedItems) => {
        </Stack>
 
        </Stack>
-
-
        <DndContext collisionDetection={closestCorners} onDragEnd={onDragEnd} sensors={sensors} id="builder-dnd">
-
       {showItems && (
         <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pt={0.5} pb={1} borderTop="1px solid gray" width="100%" height={theme.auto}>
-
-        
 
         <SortableContext items={itemsOfCategory.map(item => item.order)} strategy={verticalListSortingStrategy}>
           {itemsOfCategory.sort((a, b) => a.order - b.order).map((item, index) => (
@@ -267,15 +255,12 @@ const saveItemsOrder = async (updatedItems) => {
         </SortableContext>
     
 
-       
-
         <Typography variant="span" component="span" pt={1.5} pb={0.5} pl={0.5} fontSize="12px" display={theme.flexBox} width="145px" flexDirection="row"
            sx={{cursor: 'pointer',marginLeft: "7px", '&:hover': { textDecoration: 'underline', color: theme.green}}} onClick={addItem}>Add new item <PlusOneIcon sx={{ fontSize: "13px", marginLeft: "3px"}}/></Typography>
         </Stack>
       )}
 
      </DndContext>
-
 
 
  <MuiPopup isOpen={removePopupOpen} onClose={closePopup}>

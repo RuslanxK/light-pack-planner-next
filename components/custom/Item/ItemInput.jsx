@@ -13,7 +13,10 @@ const ItemInput = ({
   linkColor,
   onChange,
   onBlur,
+  ref,
   ...rest
+  
+  
 }) => {
   const theme = useTheme();
 
@@ -21,6 +24,7 @@ const ItemInput = ({
     <TextField
       size={size}
       type={type}
+      inputRef={ref}
       variant={variant}
       placeholder={placeholder}
       name={name}

@@ -24,7 +24,7 @@ import Category from "../components/Category";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment, useRef} from "react";
 import { useTheme } from "@emotion/react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MuiPopup from "./custom/MuiPopup";
@@ -71,12 +71,6 @@ const InnerBag = ({
 
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
-  const [editedBag, setEditedBag] = useState({
-    tripId: bagData?.bag?.tripId,
-    name: bagData?.bag?.name,
-    goal: bagData?.bag?.goal,
-    description: bagData?.bag?.description,
-  });
   const [showSideBarMobile, setShowSideBarMobile] = useState(false);
   const [showSideBarDesktop, setShowSideBarDesktop] = useState(true);
   const [categoriesData, setCategoriesData] = useState(bagData?.categories);
@@ -86,24 +80,23 @@ const InnerBag = ({
   const [showSwitchMessage, setShowSwitchMessage] = useState(false);
   const [shareLinkOpen, setShareLinkOpen] = useState(false);
   const [currentUrl, setCurrentUrl] = useState("");
-  const [copied, setCopied] = useState("");
   const [switchChecked, setSwitchChecked] = useState(
     bagData?.bag?.exploreBags || false
   );
 
   const { refresh } = useRefresh();
 
+
+  const nameRef = useRef(null); 
+  const goalRef = useRef(null);
+  const descriptionRef = useRef(null);
+
   const copyToClipboard = () => {
-    navigator.clipboard
-      .writeText(`${currentUrl}/share?id=${bagData.bag._id}`)
-      .then(() => {
-        setCopied("Text copied to clipboard");
-      })
-      .catch((err) => {
-        console.error("Failed to copy text: ", err);
-      });
+    navigator.clipboard.writeText(`${currentUrl}/share?id=${bagData.bag._id}`)
+    
   };
 
+  
   useEffect(() => {
     setCurrentUrl(window.location.origin);
   }, []);
@@ -149,10 +142,7 @@ const InnerBag = ({
 
   const sensors = useSensors(mouseSensor, touchSensor);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setEditedBag((prev) => ({ ...prev, [name]: value }));
-  };
+ 
 
   const allBagsItems = items.map((item) => (
     <SideItem
@@ -275,26 +265,31 @@ const InnerBag = ({
 
   const openRemovePopup = () => setDeletePopupOpen(true);
 
+
+
   const updateBag = async (e) => {
 
     e.preventDefault();
 
     if (popupLoading) return;
 
+    const updatedBag = { tripId: bagData?.bag?.tripId, name: nameRef.current.value, goal: goalRef.current.value, description: descriptionRef.current.value};
+
     try {
       setPopupLoading(true);
-      await axios.put(
-        `/bags/${bagData.bag._id}/${session?.user?.id}`,
-        editedBag
-      );
+      await axios.put(`/bags/${bagData.bag._id}/${session?.user?.id}`, updatedBag);
       await refresh();
-      closePopup();
+      setPopupOpen(false);
     } catch (error) {
       console.log(error);
     } finally {
       setPopupLoading(false);
     }
   };
+
+
+
+
 
   const removeBag = async () => {
 
@@ -320,6 +315,7 @@ const InnerBag = ({
 
 
 
+
   const moveCategory = async (fromIndex, toIndex) => {
     try {
       const updatedCategories = [...categoriesData];
@@ -338,6 +334,8 @@ const InnerBag = ({
     }
   };
 
+
+
   const onDragEnd = (event) => {
     const { active, over } = event;
     if (active.id !== over.id) {
@@ -351,6 +349,8 @@ const InnerBag = ({
     }
   };
 
+
+
   const saveCategoriesOrder = async (updatedCategories) => {
     try {
       const arr = { categories: updatedCategories };
@@ -360,6 +360,7 @@ const InnerBag = ({
       console.error('Failed to save categories order:', error);
     }
   };
+
 
   return (
     <Fragment>
@@ -984,9 +985,9 @@ const InnerBag = ({
                     label="Bag name"
                     name="name"
                     required
-                    onChange={handleChange}
+                    inputRef={nameRef}
                     sx={{ width: "100%" }}
-                    value={editedBag.name}
+                    defaultValue={bagData.bag.name}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -995,9 +996,10 @@ const InnerBag = ({
                     type="number"
                     required
                     name="goal"
-                    onChange={handleChange}
+                    inputRef={goalRef}
+                    defaultValue={bagData.bag.goal}
                     sx={{ width: "100%" }}
-                    value={editedBag.goal}
+                    
                     inputProps={{ min: 1 }}
                   />
                 </Grid>
@@ -1006,9 +1008,9 @@ const InnerBag = ({
                     multiline
                     label="Description"
                     name="description"
-                    onChange={handleChange}
+                    inputRef={descriptionRef}
                     sx={{ width: "100%" }}
-                    value={editedBag.description}
+                    defaultValue={bagData.bag.description}
                   />
                 </Grid>
                 <Grid item xs={12}>
