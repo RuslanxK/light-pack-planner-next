@@ -19,7 +19,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import useRefresh from './hooks/useRefresh'
 import { CSS } from "@dnd-kit/utilities";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { List } from "react-virtualized";
+import { FixedSizeList } from "react-window";
+
 
 const Category = (props) => {
 
@@ -40,9 +41,7 @@ const Category = (props) => {
   const itemsOfCategory = useMemo(() => {
     return itemsData.filter((item) => item.categoryId === props.categoryData._id).sort((a, b) => a.order - b.order);
   }, [itemsData, props.categoryData._id]);
-
-
-
+  
 
  
 
