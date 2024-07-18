@@ -102,10 +102,7 @@ const Trips = ({ trips, bags, session }) => {
      
       await axios.post(`/api/trips/new`, newTripData);
       await refresh();
-    
-      nameRef.current.value = null,
-      distanceRef.current.value = null,
-      aboutRef.current.value = null
+      e.target.reset()
 
       setPopupOpen(false);
       setLoading(false);

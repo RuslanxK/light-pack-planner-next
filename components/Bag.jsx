@@ -26,11 +26,9 @@ const Bag = ({bagData, trips, session}) => {
 
   const { refresh } = useRefresh();
 
-
   const NavigateToInnerBag = () => {
     localStorage.setItem('bagId', bagData._id);
     router.push(`/bag?id=${bagData._id}`)
-    
   }
 
   const openPopup = () => {
@@ -41,10 +39,8 @@ const Bag = ({bagData, trips, session}) => {
      setIsPopupOpen(false)
   }
 
-
   const duplicateBag =  async (e) => {
       e.preventDefault()
-
       if (loading) return;
        try {
         setLoading(true)

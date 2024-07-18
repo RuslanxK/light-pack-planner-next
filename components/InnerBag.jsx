@@ -24,7 +24,7 @@ import Category from "../components/Category";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, Fragment, useRef} from "react";
+import { useState, useEffect, Fragment, useRef, useMemo} from "react";
 import { useTheme } from "@emotion/react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MuiPopup from "./custom/MuiPopup";
@@ -140,6 +140,12 @@ const InnerBag = ({
   });
 
   const sensors = useSensors(mouseSensor, touchSensor);
+
+
+
+  const sortedCategoriesData = useMemo(() => {
+    return categoriesData.sort((a, b) => a.order - b.order);
+  }, [categoriesData]);
 
  
 
@@ -354,7 +360,7 @@ const InnerBag = ({
     try {
       const arr = { categories: updatedCategories };
       await axios.put('/categories', arr);
-      console.log("Updated categories order successfully");
+     
     } catch (error) {
       console.error('Failed to save categories order:', error);
     }
@@ -807,29 +813,27 @@ const InnerBag = ({
                 </Alert>
               )}
 
-              <DndContext
-                collisionDetection={closestCorners}
-                onDragEnd={onDragEnd}
-                sensors={sensors}
-                id="builder-dnd"
-              >
-                <SortableContext
-                  items={categoriesData.map((category) => category.order)}
-                  strategy={verticalListSortingStrategy}
-                >
-                  {categoriesData
-                    .sort((a, b) => a.order - b.order)
-                    .map((category, index) => (
-                      <Category
-                        key={category._id}
-                        categoryData={category}
-                        items={bagData?.items}
-                        session={session}
-                        loading={(value) => setLoading(value)}
-                      />
-                    ))}
-                </SortableContext>
-              </DndContext>
+<DndContext
+      collisionDetection={closestCorners}
+      onDragEnd={onDragEnd}
+      sensors={sensors}
+      id="builder-dnd"
+    >
+      <SortableContext
+        items={sortedCategoriesData.map((category) => category.order)}
+        strategy={verticalListSortingStrategy}
+      >
+        {sortedCategoriesData.map((category) => (
+          <Category
+            key={category._id}
+            categoryData={category}
+            items={bagData?.items}
+            session={session}
+            loading={(value) => setLoading(value)}
+          />
+        ))}
+      </SortableContext>
+    </DndContext>
             </div>
           </Stack>
 

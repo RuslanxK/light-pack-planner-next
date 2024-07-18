@@ -54,6 +54,8 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18",
     "react-portal": "^4.2.2",
+    "react-virtualized": "^9.22.5",
+    "react-window": "^1.8.10",
     "readable-stream": "^4.5.2",
     "ua-parser-js": "^1.0.37",
     "universal-cookie": "^7.0.2",

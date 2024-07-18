@@ -3,7 +3,7 @@
 import { Stack, Typography, IconButton, Autocomplete, TextField, Button, Container, Tooltip, Alert, Grid} from '@mui/material';
 import Bag from './Bag';
 import axios from 'axios';
-import { useState, useEffect, useMemo} from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -31,8 +31,6 @@ const InnerTrip = ({ tripData, trips, session}) => {
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
   const [countries, setCounties] = useState([]);
   const [isAddPopupOpen, setAddPopupOpen] = useState(false);
-  const [editedTrip, setEditedTrip] = useState({ name: tripData?.trip?.name, about: tripData?.trip?.about, distance: tripData?.trip?.distance, startDate: dayjs(tripData?.trip?.startDate), endDate: dayjs(tripData?.trip?.endDate) });
-  const [newBag, setNewBag] = useState({});
   const [searchInput, setSearchInput] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -41,6 +39,16 @@ const InnerTrip = ({ tripData, trips, session}) => {
 
   const { refresh } = useRefresh();
 
+  const nameRef = useRef();
+  const goalRef = useRef();
+  const descriptionRef = useRef();
+
+
+  const destinationRef = useRef();
+  const distanceRef = useRef();
+  const aboutRef = useRef();
+  const startDateRef = useRef(dayjs(tripData?.trip?.startDate));
+  const endDateRef = useRef(dayjs(tripData?.trip?.endDate));
 
 
   useEffect(() => {
@@ -74,23 +82,8 @@ const InnerTrip = ({ tripData, trips, session}) => {
     return null;
   };
 
-  const handleChange = (event) => {
+ 
 
-    let { name, value } = event.target;
-    setEditedTrip({ ...editedTrip, [name]: value });
-  };
-
-  const handleBagChange = (event) => {
-    let { name, value } = event.target;
-    setNewBag({ ...newBag, [name]: value });
-  };
-
-  const handleDateChange = (date, fieldName) => {
-    setEditedTrip((prevData) => ({
-      ...prevData,
-      [fieldName]: date,
-    }));
-  };
 
   const addBag = async (e) => {
     e.preventDefault();
@@ -99,8 +92,10 @@ const InnerTrip = ({ tripData, trips, session}) => {
     try {
 
       setLoading(true)
-      const newTripDataWithUserId = { ...newBag, tripId: tripData?.trip?._id, userId: session?.user?.id };
-      await axios.post('/bags/new', newTripDataWithUserId);
+
+      const newBag = { name: nameRef.current.value, goal: goalRef.current.value, description: descriptionRef.current.value, tripId: tripData?.trip?._id, userId: session?.user?.id };
+      
+      await axios.post('/bags/new', newBag);
 
       await refresh()
       e.target.reset()
@@ -120,7 +115,16 @@ const InnerTrip = ({ tripData, trips, session}) => {
     try {
 
       setLoading(true)
-      await axios.put(`/api/trips/${tripData.trip._id}/${session?.user?.id}`, editedTrip);
+
+      const updatedTrip = {
+        name: destinationRef.current.value,
+        distance: distanceRef.current.value,
+        about: aboutRef.current.value,
+        startDate: startDateRef.current,
+        endDate: endDateRef.current,
+      };
+
+      await axios.put(`/api/trips/${tripData.trip._id}/${session?.user?.id}`, updatedTrip);
       await refresh()
       setPopupOpen(false);
       setLoading(false)
@@ -285,7 +289,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
             label="Name"
             name="name"
             required
-            onChange={handleBagChange}
+            inputRef={nameRef}
             sx={{ width: "100%"}}
             inputProps={{ maxLength: 26 }}
           />
@@ -295,8 +299,8 @@ const InnerTrip = ({ tripData, trips, session}) => {
             label={`Weight Goal (${session?.user?.weightOption})`}
             type="number"
             required
+            inputRef={goalRef}
             name="goal"
-            onChange={handleBagChange}
             sx={{ width: "100%"}}
             inputProps={{ min: 1 }}
           />
@@ -306,7 +310,7 @@ const InnerTrip = ({ tripData, trips, session}) => {
             multiline
             label="Description"
             name="description"
-            onChange={handleBagChange}
+            inputRef={descriptionRef}
             sx={{ width: "100%" }}
             inputProps={{ maxLength: 200 }}
           />
@@ -351,10 +355,12 @@ const InnerTrip = ({ tripData, trips, session}) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
-            onChange={(event, newValue) => setEditedTrip((prevData) => ({ ...prevData, name: newValue || '' }))}
-            value={countryNameArr?.includes(editedTrip.name) ? editedTrip.name : null}
+            onChange={(event, newValue) => {
+              destinationRef.current.value = newValue
+            }}
+            defaultValue={countryNameArr?.includes(tripData.trip.name) ? tripData.trip.name : null}
             options={countryNameArr || []}
-            renderInput={(params) => <TextField required {...params} label="Destination" />}
+            renderInput={(params) => <TextField required {...params} label="Destination" inputRef={destinationRef} />}
             sx={{ width: "100%" }}
           />
         </Grid>
@@ -362,9 +368,9 @@ const InnerTrip = ({ tripData, trips, session}) => {
           <TextField
             label={`Distance (${session?.user?.distance})`}
             type="number"
-            value={editedTrip.distance}
             name="distance"
-            onChange={handleChange}
+            inputRef={distanceRef} 
+            defaultValue={tripData?.trip?.distance}
             sx={{ width: "100%" }}
             inputProps={{ min: 1, max: 999999 }}
           />
@@ -374,8 +380,8 @@ const InnerTrip = ({ tripData, trips, session}) => {
             multiline
             label="Trip Description"
             name="about"
-            value={editedTrip.about}
-            onChange={handleChange}
+            inputRef={aboutRef}
+            defaultValue={tripData?.trip?.about}
             sx={{ width: "100%" }}
             inputProps={{ maxLength: 300 }}
           />
@@ -385,8 +391,8 @@ const InnerTrip = ({ tripData, trips, session}) => {
             <DatePicker
               label="Start date"
               name="startDate"
-              value={editedTrip.startDate || null}
-              onChange={(date) => handleDateChange(date, "startDate")}
+              value={startDateRef.current} 
+              onChange={(date) => startDateRef.current = date}
               sx={{ width: "100%" }}
             />
           </LocalizationProvider>
@@ -396,10 +402,10 @@ const InnerTrip = ({ tripData, trips, session}) => {
             <DatePicker
               label="End date"
               name="endDate"
-              onChange={(date) => handleDateChange(date, "endDate")}
-              value={editedTrip.endDate || null}
+              value={endDateRef.current} 
+              onChange={(date) => endDateRef.current = date}
               sx={{ width: "100%" }}
-              minDate={editedTrip.startDate || null}
+              minDate={startDateRef.current || null}
             />
           </LocalizationProvider>
         </Grid>

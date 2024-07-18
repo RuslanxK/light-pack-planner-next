@@ -8,7 +8,7 @@ import { useTheme } from '@emotion/react';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
 import Item from './Item'
 import axios from "axios";
-import React, {useRef, useState, useEffect} from "react";
+import React, {useRef, useState, useEffect, useMemo} from "react";
 import MuiPopup from "./custom/MuiPopup";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
@@ -19,6 +19,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import useRefresh from './hooks/useRefresh'
 import { CSS } from "@dnd-kit/utilities";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import { List } from "react-virtualized";
 
 const Category = (props) => {
 
@@ -33,6 +34,17 @@ const Category = (props) => {
   
   const { refresh } = useRefresh();
   const inputRef = useRef(null);
+
+
+
+  const itemsOfCategory = useMemo(() => {
+    return itemsData.filter((item) => item.categoryId === props.categoryData._id).sort((a, b) => a.order - b.order);
+  }, [itemsData, props.categoryData._id]);
+
+
+
+
+ 
 
 
   const handleUpdateChecked = (id, checked) => {
@@ -80,7 +92,6 @@ const Category = (props) => {
       opacity: isDragging ? 0.5 : 1,
   }
 
-  const itemsOfCategory = itemsData?.filter((item) => item.categoryId === props.categoryData._id);
 
 
   const removeItems = async () => {
@@ -207,8 +218,6 @@ const saveItemsOrder = async (updatedItems) => {
     }
 
 
-    
-
      const saveCategoryName = async () => {
        
       try {
@@ -247,10 +256,15 @@ const saveItemsOrder = async (updatedItems) => {
         <Stack sx={{ borderBottomRightRadius: theme.radius, borderBottomLeftRadius: theme.radius}} pt={0.5} pb={1} borderTop="1px solid gray" width="100%" height={theme.auto}>
 
         <SortableContext items={itemsOfCategory.map(item => item.order)} strategy={verticalListSortingStrategy}>
-          {itemsOfCategory.sort((a, b) => a.order - b.order).map((item, index) => (
-                <Item key={item._id} itemData={item} session={props.session}  onUpdateChecked={handleUpdateChecked} loading={(value) => props.loading(value)} />
-                ))}
+     
+    
 
+        {itemsOfCategory.map((item, index) => (
+
+                <Item key={item._id} itemData={item} session={props.session}  onUpdateChecked={handleUpdateChecked} loading={(value) => props.loading(value)} />
+            ))}
+
+       
         </SortableContext>
     
 
