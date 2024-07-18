@@ -19,7 +19,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import useRefresh from './hooks/useRefresh'
 import { CSS } from "@dnd-kit/utilities";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { FixedSizeList } from "react-window";
 
 
 const Category = (props) => {
@@ -112,33 +111,31 @@ const Category = (props) => {
 
 
   const moveItem = async (fromIndex, toIndex) => {
-
     try {
-    
-    const updatedItems = [...itemsData];
+      const updatedItems = [...itemsData];
+      const draggedItem = itemsOfCategory[fromIndex];
+      const remainingItems = itemsOfCategory.filter((item, index) => index !== fromIndex);
 
-    const itemsOfCategory = updatedItems.filter((item) => item.categoryId === props.categoryData._id);
+      const reorderedItems = [...remainingItems.slice(0, toIndex), draggedItem, ...remainingItems.slice(toIndex)];
 
-    const movedItem = itemsOfCategory[fromIndex];
+      const updatedItemsData = updatedItems.map((item) => {
+        if (item.categoryId === props.categoryData._id) {
+          const index = reorderedItems.findIndex((reorderedItem) => reorderedItem._id === item._id);
+          if (index !== -1) {
+            return {
+              ...item,
+              order: index + 1
+            };
+          }
+        }
+        return item;
+      });
 
-    itemsOfCategory.splice(fromIndex, 1);
-    itemsOfCategory.splice(toIndex, 0,  movedItem);
-
-    const reorderedItems = itemsOfCategory.map((item, index) => ({
-      ...item,
-      order: index + 1
-    }));
-
-    setItemsData(reorderedItems); 
-
-    await saveItemsOrder(reorderedItems);
-
-  } 
-
-  catch (error) {
-    console.error('Failed to move item:', error);
-  }
-
+      setItemsData(updatedItemsData);
+      await saveItemsOrder(updatedItemsData);
+    } catch (error) {
+      console.error('Failed to move item:', error);
+    }
   };
 
 
