@@ -150,15 +150,18 @@ const InnerBag = ({
 
  
 
-  const allBagsItems = items.map((item) => (
-    <SideItem
-      key={item._id}
-      itemData={item}
-      color="white"
-      categoryData={bagData?.categories}
-      update={refresh}
-    />
-  ));
+  const allBagsItems = useMemo(() => {
+    return items.map((item) => (
+      <SideItem
+        key={item._id}
+        itemData={item}
+        color="white"
+        categoryData={bagData?.categories}
+        update={refresh}
+      />
+    ));
+  }, [items, bagData?.categories, refresh]);
+  
 
   const TOTAL =
     categoryWeightsArr?.categoriesTotalWeight?.reduce(
@@ -213,7 +216,6 @@ const InnerBag = ({
       setLoading(false);
     }
   };
-
   
 
   const handleSwitchChange = (e) => {
