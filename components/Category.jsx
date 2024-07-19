@@ -31,7 +31,8 @@ const Category = (props) => {
   const [itemsData, setItemsData] = useState(props.items || []);
   const [checkedItems, setCheckedItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+  const [deleting, setDeleting] = useState(false);
+
   const { refresh } = useRefresh();
   const inputRef = useRef(null);
 
@@ -88,6 +89,8 @@ const Category = (props) => {
       transition,
       transform: CSS.Translate.toString(transform),
       opacity: isDragging ? 0.5 : 1,
+      transition: deleting ? "opacity 0.5s ease" : transition,
+      opacity: deleting ? 0.2 : isDragging ? 0.5 : 1,
   }
 
 
@@ -201,6 +204,7 @@ const saveItemsOrder = async (updatedItems) => {
         try {
 
           setLoading(true)
+          setDeleting(true);
           const categoryId = props.categoryData._id;
           await axios.delete(`/categories/${categoryId}/${props?.session?.user?.id}`);
           await refresh();

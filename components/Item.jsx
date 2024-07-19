@@ -26,6 +26,7 @@ const Item = (props) => {
   const [popupOpen, setPopupOpen] = useState(false)
   const [picPopupOpen, setPicPopupOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [deleting, setDeleting] = useState(false);
   const [showEditIcon, setShowEditIcon] = useState(false)
   const [linkValue, setLinkValue] = useState(props.itemData.link || '');
   const [itemData, setItem] = useState({ userId: props.itemData.creator, _id: props.itemData._id, tripId: props.itemData.tripId, bagId: props.itemData.bagId, categoryId: props.itemData.categoryId, name: props.itemData.name, 
@@ -46,6 +47,7 @@ const Item = (props) => {
       transition,
       transform: CSS.Translate.toString(transform),
       opacity: isDragging ? 0.9 : 1,
+      backgroundColor: deleting  ?  theme.palette.mode === "dark" ? "#5e5d5d" : "#e3e3e3": null 
   }
 
 
@@ -59,6 +61,7 @@ const Item = (props) => {
 
    const updateChecked = async (e) => {
 
+    setDeleting(!deleting)
     setItem({...itemData, checked: e.target.checked})
     props.onUpdateChecked(itemData._id, e.target.checked);
          
@@ -196,7 +199,7 @@ const Item = (props) => {
   return (
 
     <div className="scroll-div" sx={{ overflowX: "scroll"}}  ref={setNodeRef} style={style}>
-      <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end} backgroundColor={isDragging  ?  theme.palette.mode === "dark" ? "#5e5d5d" : "#e8e6e6": null } boxShadow={isDragging ? "rgba(0, 0, 0, 0.15) 0px 2px 8px;" : null}>
+      <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end} backgroundColor={isDragging  ?  theme.palette.mode === "dark" ? "#5e5d5d" : "#e3e3e3": null } >
       <IconButton {...attributes} {...listeners} sx={{cursor: "grabbing"}} >
           <DragIndicatorIcon sx={{fontSize: "14px"}}/>
         </IconButton> 
