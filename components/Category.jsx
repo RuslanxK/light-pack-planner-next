@@ -71,7 +71,7 @@ const Category = (props) => {
   const touchSensor = useSensor(TouchSensor, {
     
     activationConstraint: {
-      delay: 250,
+      delay: 100,
       tolerance: 5,
     },
   });

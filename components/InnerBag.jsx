@@ -100,6 +100,7 @@ const InnerBag = ({
     setCurrentUrl(window.location.origin);
   }, []);
 
+
   useEffect(() => {
     if (bagData?.totalBagWeight === 0 && switchChecked) {
       const switchOff = async () => {
@@ -134,7 +135,7 @@ const InnerBag = ({
   });
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
-      delay: 250,
+      delay: 100,
       tolerance: 5,
     },
   });
@@ -170,6 +171,7 @@ const InnerBag = ({
     return `${(percent * 100).toFixed(1)}%`;
   };
 
+
   const categoryTableData = categoryPieChartData.map((category) => ({
     id: category.id,
     value: category.value,
@@ -192,6 +194,7 @@ const InnerBag = ({
     return color;
   }
 
+
   const addCategory = async () => {
     const newCategory = {
       userId: session?.user?.id,
@@ -210,6 +213,8 @@ const InnerBag = ({
       setLoading(false);
     }
   };
+
+  
 
   const handleSwitchChange = (e) => {
     if (bagData?.totalBagWeight === 0) {
@@ -238,6 +243,8 @@ const InnerBag = ({
       switchOff();
     }
   };
+
+
 
   const confirmSwitchChange = async () => {
 
@@ -269,6 +276,7 @@ const InnerBag = ({
   };
 
   const openRemovePopup = () => setDeletePopupOpen(true);
+
 
 
 
@@ -316,7 +324,6 @@ const InnerBag = ({
   const showHideSideBar = () => {
     setShowSideBarMobile((prev) => !prev);
   };
-
 
 
 
@@ -1028,7 +1035,7 @@ const InnerBag = ({
                     variant="contained"
                     disableElevation
                   >
-                    Update{" "}
+                    Update
                     {popupLoading && (
                       <CircularProgress
                         color="inherit"

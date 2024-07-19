@@ -47,7 +47,7 @@ const Item = (props) => {
       transition,
       transform: CSS.Translate.toString(transform),
       opacity: isDragging ? 0.9 : 1,
-      backgroundColor: deleting  ?  theme.palette.mode === "dark" ? "#5e5d5d" : "#e3e3e3": null 
+      backgroundColor: deleting  ?  theme.palette.mode === "dark" ? "#404040" : "#e3e3e3": null 
   }
 
 
