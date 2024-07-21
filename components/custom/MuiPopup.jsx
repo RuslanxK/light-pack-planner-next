@@ -11,11 +11,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const MuiPopup = ({isOpen, onClose, children}) => {
   return (
-    <Dialog open={isOpen} onClose={onClose} TransitionComponent={Transition} sx={{
+    <Dialog open={isOpen} disableScrollLock onClose={onClose} TransitionComponent={Transition} sx={{
       "& .MuiDialog-container": {
         "& .MuiPaper-root": {
           width: "100%",
           margin: "10px"
+          
         },
       },
     }}>
