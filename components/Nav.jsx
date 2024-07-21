@@ -153,7 +153,7 @@ const navigateToUrl = (url) => {
       <Stack ref={menuRef}>
       
       <MenuList>
-      <Stack alignItems="flex-end" mr={1}><IconButton onClick={() => setOpenMenu(false)}><CloseIcon/></IconButton></Stack>
+      <Stack alignItems="flex-end"><IconButton onClick={() => setOpenMenu(false)}><CloseIcon/></IconButton></Stack>
         <MenuItem onClick={ () => navigateToUrl("/")}>
           <ListItemIcon>
             <WindowOutlinedIcon fontSize="small" />
