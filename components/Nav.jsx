@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Typography, IconButton, Switch, Divider } from '@mui/material'
+import { Stack, Typography, IconButton, Switch, Divider, Dialog } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@emotion/react';
@@ -146,10 +146,15 @@ const navigateToUrl = (url) => {
       <nav className='nav-mobile'>
 
       <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
-      <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? <CloseIcon /> : <MenuIcon />  }</IconButton>
-      {isOpenMenu ? <Paper ref={menuRef} elevation={2} sx={{ width: "90%", maxWidth: '100%', position: "absolute", marginLeft: "auto", marginRight: "auto", top: 90, left: 0, right: 0,  zIndex: "9999", background: theme.palette.mode === "dark" ? "#171717" : "#f0f0f0"  }}>
+      <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? null : <MenuIcon /> }</IconButton>
+      
+      
+      <Dialog open={isOpenMenu} onClose={() => setOpenMenu(false)} fullWidth maxWidth="xs">
+      
+      <Stack ref={menuRef}>
       
       <MenuList>
+      <Stack alignItems="flex-end" mr={1}><IconButton onClick={() => setOpenMenu(false)}><CloseIcon/></IconButton></Stack>
         <MenuItem onClick={ () => navigateToUrl("/")}>
           <ListItemIcon>
             <WindowOutlinedIcon fontSize="small" />
@@ -163,7 +168,7 @@ const navigateToUrl = (url) => {
           </ListItemIcon>
           <ListItemText>Recent Bags</ListItemText>
           <ListItemIcon>
-            { nestedMenuOpen ?  <ArrowDropUpIcon fontSize='small' /> : <ArrowDropDownIcon fontSize="small" /> }
+            { nestedMenuOpen ?  <IconButton><ArrowDropUpIcon fontSize='small' /></IconButton> : <IconButton><ArrowDropDownIcon fontSize="small" /></IconButton> }
           </ListItemIcon>
         </MenuItem>
 
@@ -244,8 +249,8 @@ const navigateToUrl = (url) => {
           </Stack>
 
           <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{width: "50%"}} onClick={logOut}>
-          <IconButton><LogoutIcon sx={{fontSize: "17px"}}/></IconButton>
-          <Typography className='logout' fontSize="15px"> Log out</Typography>
+          <IconButton><LogoutIcon sx={{fontSize: "15px"}}/></IconButton>
+          <Typography className='logout' fontSize="15px" sx={{marginLeft: "5px"}}>Log out</Typography>
           </Stack>
           </MenuItem>
           </Stack>
@@ -253,7 +258,8 @@ const navigateToUrl = (url) => {
 
       
       </MenuList>
-    </Paper> : null }
+    </Stack> 
+    </Dialog> 
           
       </nav>
 
