@@ -27,14 +27,13 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ReportIcon from '@mui/icons-material/Report';
 import useRefresh from './hooks/useRefresh'
 import CircularProgress from '@mui/material/CircularProgress';
-import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import { Accordion, AccordionSummary, AccordionDetails, StyledTypography } from './custom/Nav/StyledAccordion.jsx';
-
+import MuiPopup from './custom/MuiPopup';
 
 
 const Nav = ({bags, session, user}) => {
@@ -149,7 +148,7 @@ const navigateToUrl = (url) => {
       <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? null : <MenuIcon /> }</IconButton>
       
       
-      <Dialog open={isOpenMenu} onClose={() => setOpenMenu(false)} fullWidth maxWidth="xs">
+      <MuiPopup isOpen={isOpenMenu} onClose={() => setOpenMenu(false)}>
       
       <Stack ref={menuRef}>
       
@@ -259,7 +258,7 @@ const navigateToUrl = (url) => {
       
       </MenuList>
     </Stack> 
-    </Dialog> 
+    </MuiPopup> 
           
       </nav>
 
