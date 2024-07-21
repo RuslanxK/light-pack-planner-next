@@ -185,7 +185,7 @@ const navigateToUrl = (url) => {
             <StorefrontOutlinedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Shop</ListItemText>
-          <Image src='/coming-soon.png' width="80px" height="50px" style={{objectFit: "cover", position: "absolute", left: 105}}/>
+          <Image src='/coming-soon.png' width={80} height={50} style={{objectFit: "cover", position: "absolute", left: 105}}/>
         </MenuItem>
 
 
@@ -229,7 +229,7 @@ const navigateToUrl = (url) => {
 
         <MenuItem>
         <ListItemIcon>
-          <Image src={session.user.image ? session.user.image : profileImageUrl} alt='user' style={{ borderRadius: "100px", objectFit: "cover", width: "35px", height: "35px", marginRight: "15px" }} />
+          <Image width={35} height={35} src={session.user.image ? session.user.image : profileImageUrl} alt='user' style={{ borderRadius: "100px", objectFit: "cover", marginRight: "15px" }} />
         </ListItemIcon>
           <ListItemText>{user.username}</ListItemText>
         
