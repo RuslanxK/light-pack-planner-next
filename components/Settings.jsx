@@ -24,6 +24,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import useCountries from "./hooks/useCountries";
+import Image from "next/image";
 
 
 const Settings = ({ session, user }) => {
@@ -164,12 +165,12 @@ const Settings = ({ session, user }) => {
     >
 
         <Fragment>
-          <img
+          <Image
             src={session.user.image ? session.user.image : userDetails.profileImageUrl}
             alt="Profile"
             key="profile"
-            width="100%"
-            height="100%"
+            width={105}
+            height={105}
             style={{ objectFit: "cover", borderRadius: "100px" }}
           />
          {session.user.image ? null :  <EditIcon

@@ -185,7 +185,7 @@ const navigateToUrl = (url) => {
             <StorefrontOutlinedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Shop</ListItemText>
-          <img src='/coming-soon.png' width="80px" height="50px" style={{objectFit: "cover", position: "absolute", left: 105}}/>
+          <Image src='/coming-soon.png' width="80px" height="50px" style={{objectFit: "cover", position: "absolute", left: 105}}/>
         </MenuItem>
 
 
@@ -229,7 +229,7 @@ const navigateToUrl = (url) => {
 
         <MenuItem>
         <ListItemIcon>
-          <img src={session.user.image ? session.user.image : profileImageUrl} alt='user' style={{ borderRadius: "100px", objectFit: "cover", width: "35px", height: "35px", marginRight: "15px" }} />
+          <Image src={session.user.image ? session.user.image : profileImageUrl} alt='user' style={{ borderRadius: "100px", objectFit: "cover", width: "35px", height: "35px", marginRight: "15px" }} />
         </ListItemIcon>
           <ListItemText>{user.username}</ListItemText>
         
@@ -302,7 +302,7 @@ const navigateToUrl = (url) => {
             <StyledTypography>
               Shop 
             </StyledTypography>
-            <img src='/coming-soon.png' width="80px" height="50px" style={{objectFit: "cover", position: "absolute", left: 75, bottom: 0,}}/>
+            <Image src='/coming-soon.png' width={80} height={50} style={{objectFit: "cover", position: "absolute", left: 75, bottom: 0,}}/>
             <StorefrontOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
           </AccordionSummary>
         </Accordion>
@@ -359,7 +359,7 @@ const navigateToUrl = (url) => {
       <Typography variant='span'p={0.2} component="h3" fontWeight="300" color="inherit">{session?.user?.email}</Typography>
     </>
   }>
-     <IconButton sx={{marginTop: "5px"}}><img src={session.user.image ? session.user.image : profileImageUrl} alt='user' style={{ borderRadius: "100%", objectFit: "cover" }} width={35} height={35} /></IconButton>
+     <IconButton sx={{marginTop: "5px"}}><Image src={session.user.image ? session.user.image : profileImageUrl} alt='user' style={{ borderRadius: "100%", objectFit: "cover" }} width={35} height={35} /></IconButton>
      </Tooltip>
       <Typography className='logout' fontSize="15px" onClick={logOut}> <LogoutIcon sx={{fontSize: "17px", marginRight: "5px"}}/> Log out</Typography>
 

@@ -19,6 +19,7 @@ import {useSortable} from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities";
 import useRefresh from './hooks/useRefresh'
 import ItemInput from '../components/custom/Item/ItemInput'
+import Image from 'next/image';
 
 
 const Item = (props) => {
@@ -295,10 +296,11 @@ const Item = (props) => {
 >
   {itemData.productImageKey || itemData.image ? (
     <>
-      <img
-        width="100%"
-        height="300px"
-        style={{ objectFit: "contain" }}
+      <Image
+        width={0}
+        height={300}
+        sizes="100vw"
+        style={{ width: '100%', objectFit: "contain" }}
         src={itemData.image ? URL.createObjectURL(itemData.image) : `${process.env.NEXT_PUBLIC_PROFILE_URL}/${itemData.productImageKey}`}
       />
 

@@ -6,6 +6,7 @@ import { useTheme } from '@emotion/react';
 import React, { useState } from 'react';
 import CloseIcon from "@mui/icons-material/Close";
 import Item from './custom/SharedItem/Item';
+import Image from 'next/image';
 
 const SharedItem = (props) => {
 
@@ -34,7 +35,7 @@ const SharedItem = (props) => {
 
     <div className="scroll-div">
     <Stack mb={0.5} pb={0.5} flexDirection="row" justifyContent={theme.between} alignItems={theme.end}>
-      {props.itemData.productImageKey ? <img src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`} onClick={() => setPicPopupOpen(true)} style={{marginRight: "10px", objectFit: "cover"}} width="50px" height="40px" alt='item'/> : null }
+      {props.itemData.productImageKey ? <Image src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`} onClick={() => setPicPopupOpen(true)} style={{marginRight: "10px", objectFit: "cover"}} width={50} height={40} alt='item'/> : null }
       {props.itemData.link ? (
           <Link 
           href={props.itemData.link} 
@@ -98,10 +99,13 @@ const SharedItem = (props) => {
 
   </DialogTitle>
   <DialogContent>
-    <img
+    <Image
       src={`${process.env.NEXT_PUBLIC_PROFILE_URL}/${props.itemData.productImageKey}`}
       alt="item"
-      style={{width: "100%", height: "300px", objectFit: "contain"}}
+      width={0}
+      height={300}
+      sizes="100vw"
+      style={{width: "100%", objectFit: "contain"}}
     />
   </DialogContent>
  

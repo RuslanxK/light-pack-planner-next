@@ -4,6 +4,7 @@ import React from 'react'
 import { Container, Typography, Stack, Link } from '@mui/material'
 import { useTheme } from '@emotion/react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 
 const InnerArticle = ({articleData}) => {
@@ -17,7 +18,7 @@ const InnerArticle = ({articleData}) => {
 
         <Stack display={theme.flexBox} justifyContent={theme.start} width={theme.trips.width} pb={7} minHeight="100vh">
 
-        <img src={`${process.env.NEXT_PUBLIC_ARTICLE_URL}/${articleData.imageKey}`} height="350px" style={{objectFit: "cover"}} alt='article' />
+        <Image src={`${process.env.NEXT_PUBLIC_ARTICLE_URL}/${articleData.imageKey}`} height={350} width={0} sizes="100vw" style={{objectFit: "cover", width: '100%'}} alt='article' />
 
         <div className="main-info">
 

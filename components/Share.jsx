@@ -30,6 +30,7 @@ import BackpackOutlinedIcon from "@mui/icons-material/BackpackOutlined";
 import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 
 import axios from "axios";
+import Image from "next/image";
 
 const Share = ({ bagData, user, session, itemsTotal, categoryPieChartData, categoryWeightsArr}) => {
   const router = useRouter();
@@ -195,7 +196,7 @@ const Share = ({ bagData, user, session, itemsTotal, categoryPieChartData, categ
               justifyContent="space-between"
               alignItems="center"
             >
-              <img
+              <Image
                 id="share-logo"
                 src={
                   theme.palette.mode === "dark"

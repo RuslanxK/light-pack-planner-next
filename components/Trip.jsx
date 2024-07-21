@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useTheme } from '@mui/material/styles'
 import NearMeOutlinedIcon from '@mui/icons-material/NearMeOutlined'
 import dayjs from 'dayjs'
+import Image from 'next/image'
 
 const Trip = ({ tripData }) => {
   const [tripHover, setTripHover] = useState(false)
@@ -43,12 +44,15 @@ const Trip = ({ tripData }) => {
         '&:hover': { boxShadow: theme.boxShadowHover },
       }}
     >
-      <img
+      <Image
         src={tripData?.url || './default.png'}
-        width="100%"
+
+        width={0}
+        sizes="100vw"
         height={150}
         alt="trip"
         style={{
+          width: '100%',
           borderTopLeftRadius: theme.trips.borderLeft,
           borderTopRightRadius: theme.trips.borderRight,
           objectFit: theme.cover,
