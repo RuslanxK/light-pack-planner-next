@@ -32,16 +32,14 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 import { useState, useMemo, useRef } from "react";
 import useRefresh from "./hooks/useRefresh";
-import useCountries from './hooks/useCountries'
-
+import useCountries from "./hooks/useCountries";
+import Image from "next/image";
 
 const Trips = ({ trips, bags, session }) => {
-
   const theme = useTheme();
   const router = useRouter();
 
   const { countryNameArr } = useCountries();
-
 
   const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -55,7 +53,6 @@ const Trips = ({ trips, bags, session }) => {
   const aboutRef = useRef();
   const startDateRef = useRef(dayjs().add(1, "day"));
   const endDateRef = useRef(dayjs().add(2, "day"));
-
 
   const filteredTrips = useMemo(() => {
     return trips?.tripsWithPictures
@@ -76,14 +73,13 @@ const Trips = ({ trips, bags, session }) => {
       .map((trip) => <Trip key={trip._id} tripData={trip} />);
   }, [trips, searchInput]);
 
-
-  const itemsTotal = trips?.totalItems?.reduce((acc, item) => acc + item.qty,0);
-
- 
+  const itemsTotal = trips?.totalItems?.reduce(
+    (acc, item) => acc + item.qty,
+    0
+  );
 
   const createTrip = async (e) => {
-   
-    e.preventDefault()
+    e.preventDefault();
 
     if (loading) return;
 
@@ -99,10 +95,9 @@ const Trips = ({ trips, bags, session }) => {
         userId: session?.user?.id,
       };
 
-     
       await axios.post(`/api/trips/new`, newTripData);
       await refresh();
-      e.target.reset()
+      e.target.reset();
 
       setPopupOpen(false);
       setLoading(false);
@@ -110,9 +105,6 @@ const Trips = ({ trips, bags, session }) => {
       console.log(err);
     }
   };
-
-
-
 
   const navigateToLatestBag = () => {
     localStorage.setItem("tripId", trips?.latestBag.tripId);
@@ -126,8 +118,6 @@ const Trips = ({ trips, bags, session }) => {
     setPopupOpen(false);
     setLoading(false);
   };
-
-  
 
   return (
     <Box width="100%">
@@ -148,7 +138,10 @@ const Trips = ({ trips, bags, session }) => {
                 fontSize="20px"
                 mb={0.5}
               >
-                Welcome, { session.user.isAdmin ?  "Admin" + " " + session.user.username.split(" ")[0] :  session.user.username.split(" ")[0] }
+                Welcome,{" "}
+                {session.user.isAdmin
+                  ? "Admin" + " " + session.user.username.split(" ")[0]
+                  : session.user.username.split(" ")[0]}
               </Typography>
               <Typography component="p" variant="p" mb={2.5}>
                 The journey of a thousand miles begins with a single step.
@@ -199,7 +192,7 @@ const Trips = ({ trips, bags, session }) => {
             alignItems={theme.center}
             height={theme.trips.height}
             borderRadius={theme.radius}
-            backgroundColor={ theme.palette.mode === "dark" ? null : "#FAFAFA"}
+            backgroundColor={theme.palette.mode === "dark" ? null : "#FAFAFA"}
             sx={{ cursor: "pointer" }}
             onClick={openPopup}
           >
@@ -325,104 +318,125 @@ const Trips = ({ trips, bags, session }) => {
           </div>
         )}
 
-      
-          <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
-            <form onSubmit={createTrip}>
-              <Grid container spacing={2}>
-                <Grid item xs={11}>
-                  <Typography variant="h6" component="h2" mb={0.5}>
-                    Plan Your Adventure
-                  </Typography>
-                  <Typography variant="span" component="span" mb={3}>
-                    Fill in the details below to create a new trip
-                  </Typography>
-                </Grid>
-                <Grid item xs={1}>
-                 <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Autocomplete
-                     
-                     onChange={(event, newValue) => {
-                     nameRef.current.value = newValue || ""
-                    }}
-                    options={countryNameArr || []}
-                    renderInput={(params) => (
-                      <TextField required {...params} label="Destination"  inputRef={nameRef} />
-                    )}
-                    sx={{ width: "100%" }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label={`Distance (${session?.user?.distance})`}
-                    type="number"
-                    name="distance"
-                    required
-                    inputRef={distanceRef}
-                    sx={{ width: "100%" }}
-                    inputProps={{ min: 1, max: 999999 }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    multiline
-                    label="Description"
-                    name="about"
-                    inputRef={aboutRef}
-                    sx={{ width: "100%" }}
-                    inputProps={{ maxLength: 300 }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Start Date"
-                      name="startDate"
-                      onChange={(date) => (startDateRef.current = date)}
-                      sx={{ width: "100%" }}
-                      defaultValue={dayjs().add(1, "day")}
-                    />
-                  </LocalizationProvider>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="End Date"
-                      name="endDate"
-                      onChange={(date) => (endDateRef.current = date)}
-                      sx={{ width: "100%" }}
-                      defaultValue={dayjs().add(2, "day")}
-                      minDate={startDateRef.current}
-                    />
-                  </LocalizationProvider>
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    type="submit"
-                    sx={{
-                      width: "100%",
-                      fontWeight: "500",
-                      backgroundColor: theme.green,
-                      color: theme.palette.mode === "dark" ? "white" : null,
-                    }}
-                    variant="contained"
-                    disableElevation
-                  >
-                    Plan Trip{" "}
-                    {loading && (
-                      <CircularProgress
-                        color="inherit"
-                        size={16}
-                        sx={{ marginLeft: "10px" }}
-                      />
-                    )}
-                  </Button>
-                </Grid>
+
+        <Stack justifyContent="center" alignItems="center">
+        <Image src="/bag.jpg" width={300} height={400} />
+
+        <Button
+          sx={{marginTop: "10px"}}
+          variant="contained"
+          onClick={() =>
+            window.open(
+              "https://www.amazon.com/Waterproof-Lightweight-Backpack-Frameless-Mountaineering/dp/B07R3B64PS?_encoding=UTF8&pd_rd_w=7Jw0L&content-id=amzn1.sym.6e2b5bb7-a549-448f-a0f0-86f862226b58%3Aamzn1.symc.d10b1e54-47e4-4b2a-b42d-92fe6ebbe579&pf_rd_p=6e2b5bb7-a549-448f-a0f0-86f862226b58&pf_rd_r=289F0JHZM68QKXVKHQMG&pd_rd_wg=focoQ&pd_rd_r=589efeeb-4626-4505-9092-2e0e090cdd20&th=1&linkCode=ll1&tag=bagsapp-20&linkId=218c65a73bcb30d80f827d19e45f7ee7&language=en_US&ref_=as_li_ss_tl",
+              "_blank"
+            )
+          }
+        >
+          Order Now
+        </Button>
+
+        </Stack>
+
+        <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
+          <form onSubmit={createTrip}>
+            <Grid container spacing={2}>
+              <Grid item xs={11}>
+                <Typography variant="h6" component="h2" mb={0.5}>
+                  Plan Your Adventure
+                </Typography>
+                <Typography variant="span" component="span" mb={3}>
+                  Fill in the details below to create a new trip
+                </Typography>
               </Grid>
-            </form>
-          </MuiPopup>
-     
+              <Grid item xs={1}>
+                <CloseIcon onClick={closePopup} sx={{ cursor: "pointer" }} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  onChange={(event, newValue) => {
+                    nameRef.current.value = newValue || "";
+                  }}
+                  options={countryNameArr || []}
+                  renderInput={(params) => (
+                    <TextField
+                      required
+                      {...params}
+                      label="Destination"
+                      inputRef={nameRef}
+                    />
+                  )}
+                  sx={{ width: "100%" }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label={`Distance (${session?.user?.distance})`}
+                  type="number"
+                  name="distance"
+                  required
+                  inputRef={distanceRef}
+                  sx={{ width: "100%" }}
+                  inputProps={{ min: 1, max: 999999 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  multiline
+                  label="Description"
+                  name="about"
+                  inputRef={aboutRef}
+                  sx={{ width: "100%" }}
+                  inputProps={{ maxLength: 300 }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Start Date"
+                    name="startDate"
+                    onChange={(date) => (startDateRef.current = date)}
+                    sx={{ width: "100%" }}
+                    defaultValue={dayjs().add(1, "day")}
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="End Date"
+                    name="endDate"
+                    onChange={(date) => (endDateRef.current = date)}
+                    sx={{ width: "100%" }}
+                    defaultValue={dayjs().add(2, "day")}
+                    minDate={startDateRef.current}
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  sx={{
+                    width: "100%",
+                    fontWeight: "500",
+                    backgroundColor: theme.green,
+                    color: theme.palette.mode === "dark" ? "white" : null,
+                  }}
+                  variant="contained"
+                  disableElevation
+                >
+                  Plan Trip{" "}
+                  {loading && (
+                    <CircularProgress
+                      color="inherit"
+                      size={16}
+                      sx={{ marginLeft: "10px" }}
+                    />
+                  )}
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </MuiPopup>
       </Stack>
     </Box>
   );
