@@ -1,392 +1,656 @@
-"use client"
+"use client";
 
-import { Stack, Typography, IconButton, Switch, Divider, Dialog } from '@mui/material'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation';
-import { useTheme } from '@emotion/react';
-import { Fragment, useState, useEffect, useRef} from 'react';
-import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
+import {
+  Stack,
+  Typography,
+  IconButton,
+  Switch,
+  Divider,
+  Dialog,
+} from "@mui/material";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useTheme } from "@emotion/react";
+import { Fragment, useState, useEffect, useRef } from "react";
+import WindowOutlinedIcon from "@mui/icons-material/WindowOutlined";
 import HikingOutlinedIcon from "@mui/icons-material/HikingOutlined";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { signOut } from "next-auth/react"
-import { Tooltip } from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { usePathname } from "next/navigation"
-import { disableNavBar } from "../utils/disableNavBar"
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import axios from 'axios';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
-import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ReportIcon from '@mui/icons-material/Report';
-import useRefresh from './hooks/useRefresh'
-import CircularProgress from '@mui/material/CircularProgress';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
-import { Accordion, AccordionSummary, AccordionDetails, StyledTypography } from './custom/Nav/StyledAccordion.jsx';
-import MuiPopup from './custom/MuiPopup';
+import { signOut } from "next-auth/react";
+import { Tooltip } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { usePathname } from "next/navigation";
+import { disableNavBar } from "../utils/disableNavBar";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import axios from "axios";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
+import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ReportIcon from "@mui/icons-material/Report";
+import useRefresh from "./hooks/useRefresh";
+import CircularProgress from "@mui/material/CircularProgress";
+import MenuList from "@mui/material/MenuList";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  StyledTypography,
+} from "./custom/Nav/StyledAccordion.jsx";
+import MuiPopup from "./custom/MuiPopup";
 
+const Nav = ({ bags, session, user }) => {
+  const { refresh } = useRefresh();
 
-const Nav = ({bags, session, user}) => {
+  const theme = useTheme();
+  const router = useRouter();
+  const path = usePathname();
 
-const { refresh } = useRefresh();
+  const menuRef = useRef(null);
 
-const theme = useTheme()
-const router = useRouter()
-const path = usePathname()
+  const [mode, setMode] = useState(user.mode);
+  const [isOpenMenu, setOpenMenu] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [nestedMenuOpen, setNestedMenuOpen] = useState(false);
+  const [expanded, setExpanded] = useState("panel1");
 
-const menuRef = useRef(null);
+  const profileImageUrl = `${process.env.NEXT_PUBLIC_PROFILE_URL}/${user.profileImageKey}`;
 
-const [mode, setMode] = useState(user.mode);
-const [isOpenMenu, setOpenMenu] = useState(false)
-const [ loading, setLoading] = useState(false)
-const [ nestedMenuOpen, setNestedMenuOpen] = useState(false)
-const [expanded, setExpanded] = useState("panel1");
+  useEffect(() => {
+    setMode(user.mode);
+  }, [user.mode]);
 
-const profileImageUrl = `${process.env.NEXT_PUBLIC_PROFILE_URL}/${user.profileImageKey}`;
+  const handleMenuClick = () => {
+    setNestedMenuOpen(!nestedMenuOpen);
+  };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpenMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
 
-useEffect(() => {
-  setMode(user.mode)
-}, [user.mode]);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
+  const toggleTheme = async () => {
+    const newMode = mode === "light" ? "dark" : "light";
+    setMode(newMode);
 
-const handleMenuClick = () => {
-    setNestedMenuOpen(!nestedMenuOpen)
-};
+    const formData = new FormData();
+    formData.append("mode", newMode);
 
-
-useEffect(() => {
-
-  const handleClickOutside = (event) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setOpenMenu(false);
+    try {
+      setLoading(true);
+      await axios.put(`/api/user/${session?.user.id}`, formData);
+      await refresh();
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
     }
   };
-  document.addEventListener('mousedown', handleClickOutside);
 
-  return () => {
- document.removeEventListener('mousedown', handleClickOutside);
+  const sortedBags = bags?.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  const filteredBags = sortedBags?.slice(0, 4);
 
+  const bagData = filteredBags?.map((bag) => {
+    return (
+      <Stack key={bag._id} onClick={() => navigateToBag(bag)}>
+        {" "}
+        <Typography
+          fontSize="14px"
+          variant="span"
+          component="span"
+          ml={0.8}
+          mb={1}
+          sx={{ cursor: "pointer", "&:hover": { color: theme.green } }}
+          key={bag._id}
+        >
+          {bag?.name?.length > 15
+            ? `${bag?.name?.substring(0, 15)}...`
+            : bag?.name}
+        </Typography>
+      </Stack>
+    );
+  });
+
+  const logOut = () => {
+    signOut({ callbackUrl: `/login` });
   };
-}, []);
 
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
-const toggleTheme = async () => {
-      
-  const newMode = mode === "light" ? "dark" : "light";
-  setMode(newMode);
+  const navigateToBag = (bag) => {
+    setOpenMenu(false);
+    localStorage.setItem("tripId", bag.tripId);
+    localStorage.setItem("bagId", bag._id);
+    router.push(`/bag?id=${bag._id}`);
+  };
 
-  const formData = new FormData();
-  formData.append("mode", newMode);
-
-  try {
-
-         setLoading(true)
-         await axios.put(`/api/user/${session?.user.id}`, formData)
-         await refresh()
-         setLoading(false)
-       }
-         catch(err) {
-           console.log(err)
-       }
-};
-
-const sortedBags = bags?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-const filteredBags = sortedBags?.slice(0, 4)
-
-
-const bagData = filteredBags?.map((bag) => {
-      return <Stack key={bag._id} onClick={() =>  navigateToBag(bag)}> <Typography fontSize="14px" variant='span'component="span" ml={0.8} mb={1}
-      sx={{ cursor: "pointer" ,"&:hover": { color: theme.green }}} key={bag._id}>{bag?.name?.length > 15 ? `${bag?.name?.substring(0, 15)}...` : bag?.name}</Typography></Stack>
-  })
-
-
-const logOut = () => {
-  signOut({ callbackUrl: `/login` })
-}
-
-
-const handleChange = (panel) => (event, newExpanded) => {
-  setExpanded(newExpanded ? panel : false);
-};
-
-
-const navigateToBag = (bag) => {
-     setOpenMenu(false)
-     localStorage.setItem('tripId', bag.tripId);
-     localStorage.setItem('bagId', bag._id);
-     router.push(`/bag?id=${bag._id}`)
-}
-
-
-const navigateToUrl = (url) => {
-    setOpenMenu(false)
-    router.push(url)
-}
-
+  const navigateToUrl = (url) => {
+    setOpenMenu(false);
+    router.push(url);
+  };
 
   return (
     <Fragment>
-
-    {loading ? <div className='loading-overlay' style={{ background: theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.25)"}}> {<CircularProgress color="success" />}</div> : null }
-    <>
-    {!disableNavBar.includes(path) && (
-    <Fragment>
-      <nav className='nav-mobile'>
-
-      <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70} onClick={() => router.push('/')}/>
-      <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>{ isOpenMenu ? null : <MenuIcon /> }</IconButton>
-      
-      
-      <MuiPopup isOpen={isOpenMenu} onClose={() => setOpenMenu(false)}>
-      
-      <Stack ref={menuRef}>
-      
-      <MenuList>
-      <Stack alignItems="flex-end"><IconButton onClick={() => setOpenMenu(false)}><CloseIcon/></IconButton></Stack>
-        <MenuItem onClick={ () => navigateToUrl("/")}>
-          <ListItemIcon>
-            <WindowOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Home</ListItemText>
-        </MenuItem>
-
-        <MenuItem onClick={handleMenuClick}>
-          <ListItemIcon>
-            <HikingOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Recent Bags</ListItemText>
-          <ListItemIcon>
-            { nestedMenuOpen ?  <IconButton><ArrowDropUpIcon fontSize='small' /></IconButton> : <IconButton><ArrowDropDownIcon fontSize="small" /></IconButton> }
-          </ListItemIcon>
-        </MenuItem>
-
-       
-       {  nestedMenuOpen ?  <MenuItem>
-           <Stack ml={4}>{bagData.length ? bagData : "No bags yet"}</Stack>
-         </MenuItem> :  null }
-        
-    
-        <MenuItem onClick={ () => navigateToUrl("/articles")}>
-          <ListItemIcon>
-            <PublicOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Articles</ListItemText>
-        </MenuItem>
-
-        <MenuItem>
-          <ListItemIcon>
-            <StorefrontOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Shop</ListItemText>
-          <Image src='/coming-soon.png' width={80} height={50} style={{objectFit: "cover", position: "absolute", left: 105}}/>
-        </MenuItem>
-
-
-        <MenuItem onClick={ () => navigateToUrl("/explore")}>
-          <ListItemIcon>
-            <StarOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Explore Bags</ListItemText>
-        </MenuItem>
-
-        <MenuItem onClick={ () => navigateToUrl("/settings")}>
-          <ListItemIcon>
-            <SettingsOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Settings</ListItemText>
-        </MenuItem>
-
-        <MenuItem onClick={ () => navigateToUrl("/changelog")}>
-          <ListItemIcon>
-            <NotificationImportantIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Changelog</ListItemText>
-        </MenuItem>
-
-        <MenuItem onClick={ () => navigateToUrl("/bug-report")}>
-          <ListItemIcon>
-            <ReportIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Bug Report</ListItemText>
-        </MenuItem>
-
-       { session.user.isAdmin ? <MenuItem onClick={ () => navigateToUrl("/admin")}>
-          <ListItemIcon>
-            <AdminPanelSettingsIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Admin Settings</ListItemText>
-        </MenuItem> : null }
-        <Divider />
-
-        
-
-        <MenuItem>
-        <ListItemIcon>
-          <Image width={35} height={35} src={session.user.image ? session.user.image : profileImageUrl} alt='user' style={{ borderRadius: "100px", objectFit: "cover", marginRight: "15px" }} />
-        </ListItemIcon>
-          <ListItemText>{user.username}</ListItemText>
-        
-        </MenuItem>
-
-        <Divider />
-        
-         <Stack display="flex" direction="row" justifyContent="space-between" alignItems="center">
-         <MenuItem sx={{width: "100%"}}>
-          <Stack direction="row" alignItems="center" sx={{width: "50%"}} justifyContent="flex-start">
-          <LightModeIcon sx={{color: "#4a4a4a", marginRight: "5px"}}/> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <DarkModeIcon sx={{color: "#4a4a4a", marginLeft: "5px"}}/> 
-          </Stack>
-
-          <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{width: "50%"}} onClick={logOut}>
-          <IconButton><LogoutIcon sx={{fontSize: "15px"}}/></IconButton>
-          <Typography className='logout' fontSize="15px" sx={{marginLeft: "5px"}}>Log out</Typography>
-          </Stack>
-          </MenuItem>
-          </Stack>
-         
-
-      
-      </MenuList>
-    </Stack> 
-    </MuiPopup> 
-          
-      </nav>
-
-    <nav className="nav" style={{background: theme.palette.mode === "dark" ? "#171717" : "#fafafa"}}>
-    <Stack  width={theme.nav.width} display={theme.flexBox}  height={theme.nav.height}> 
-    <Stack position={theme.nav.fixed} justifyContent="space-between" height={theme.nav.height} borderRight={theme.palette.mode === "dark" ? `2px solid ${theme.main.darkColor}` : "1px solid #F2F2F2"} width={theme.nav.width}>
-    <Stack>
-    <Stack margin="0 auto" pt={2} pb={2} onClick={() => router.push('/')}>
-    <Image src={ theme.palette.mode === "dark" ? "/white-logo.png" : "/logo.png"} alt='Light Pack - Planner' width={110} height={70}/>
-    </Stack> 
-
-    <Accordion expanded={expanded === "panel1"} onChange={handleChange("panel1")} onClick={() => router.push("/")}>
-          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Typography fontSize="14px" variant='span' width="100%" sx={{ display: theme.flexBox, justifyContent: theme.between,"&:hover": { color: theme.green }}}>
-              Home 
-            </Typography>
-            <WindowOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
-          </AccordionSummary>
-        </Accordion>
-        <Accordion
-          expanded={expanded === "panel2"}
-          onChange={handleChange("panel2")}
+      {loading ? (
+        <div
+          className="loading-overlay"
+          style={{
+            background:
+              theme.palette.mode === "dark"
+                ? "rgba(0, 0, 0, 0.5)"
+                : "rgba(0, 0, 0, 0.25)",
+          }}
         >
-          <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-            <Typography fontSize="14px" variant='span' width={theme.fullWidth} sx={{ display: theme.flexBox, justifyContent: theme.between, "&:hover": { color: theme.green }, }} >
-              <Stack direction="row">Recent Bags { expanded === "panel2" ? <ArrowDropUpIcon sx={{marginLeft: "3px"}}/> : <ArrowDropDownIcon sx={{marginLeft: "3px"}}/> }</Stack>
-            </Typography>
-            <HikingOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
-          </AccordionSummary>
-          <AccordionDetails>
-            {bagData?.length > 0 ? ( bagData) : ( <Typography component="p" fontSize="13px" ml={1}> No bags yet</Typography> )}
-          </AccordionDetails>
-        </Accordion>
+          {" "}
+          {<CircularProgress color="success" />}
+        </div>
+      ) : null}
+      <>
+        {!disableNavBar.includes(path) && (
+          <Fragment>
+            <nav className="nav-mobile">
+              <Image
+                src={
+                  theme.palette.mode === "dark"
+                    ? "/white-logo.png"
+                    : "/logo.png"
+                }
+                alt="Light Pack - Planner"
+                width={110}
+                height={70}
+                onClick={() => router.push("/")}
+              />
+              <IconButton onClick={() => setOpenMenu(!isOpenMenu)}>
+                {isOpenMenu ? null : <MenuIcon />}
+              </IconButton>
 
-        <Accordion>
-          <AccordionSummary aria-controls="panel3d-content" id="panel3d-header" onClick={() => router.push("/articles")}>
-            <StyledTypography>
-              Articles 
-            </StyledTypography>
-            <PublicOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
-          </AccordionSummary>
-        </Accordion>
+              <MuiPopup isOpen={isOpenMenu} onClose={() => setOpenMenu(false)}>
+                <Stack ref={menuRef}>
+                  <MenuList>
+                    <Stack alignItems="flex-end">
+                      <IconButton onClick={() => setOpenMenu(false)}>
+                        <CloseIcon />
+                      </IconButton>
+                    </Stack>
+                    <MenuItem onClick={() => navigateToUrl("/")}>
+                      <ListItemIcon>
+                        <WindowOutlinedIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Home</ListItemText>
+                    </MenuItem>
 
-        <Accordion>
-          <AccordionSummary>
-            <StyledTypography>
-              Shop 
-            </StyledTypography>
-            <Image src='/coming-soon.png' width={80} height={50} style={{objectFit: "cover", position: "absolute", left: 75, bottom: 0,}}/>
-            <StorefrontOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
-          </AccordionSummary>
-        </Accordion>
+                    <MenuItem onClick={handleMenuClick}>
+                      <ListItemIcon>
+                        <HikingOutlinedIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Recent Bags</ListItemText>
+                      <ListItemIcon>
+                        {nestedMenuOpen ? (
+                          <IconButton>
+                            <ArrowDropUpIcon fontSize="small" />
+                          </IconButton>
+                        ) : (
+                          <IconButton>
+                            <ArrowDropDownIcon fontSize="small" />
+                          </IconButton>
+                        )}
+                      </ListItemIcon>
+                    </MenuItem>
 
-        <Accordion>
-          <AccordionSummary aria-controls="panel3d-content" id="panel3d-header" onClick={() => router.push("/explore")}>
-            <StyledTypography>
-             Explore Bags
-            </StyledTypography>
-            <StarOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
-          </AccordionSummary>
-        </Accordion>
+                    {nestedMenuOpen ? (
+                      <MenuItem>
+                        <Stack ml={4}>
+                          {bagData.length ? bagData : "No bags yet"}
+                        </Stack>
+                      </MenuItem>
+                    ) : null}
 
-        <Accordion onClick={() => router.push('/settings')}>
-          <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-          <StyledTypography>
-              Settings 
-            </StyledTypography>
-            <SettingsOutlinedIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
-          </AccordionSummary>
-        </Accordion>
+                    <MenuItem onClick={() => navigateToUrl("/articles")}>
+                      <ListItemIcon>
+                        <PublicOutlinedIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Articles</ListItemText>
+                    </MenuItem>
 
-        <Accordion onClick={() => router.push('/changelog')}>
-          <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-            <StyledTypography>
-              Changelog 
-            </StyledTypography>
-            <NotificationImportantIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
-          </AccordionSummary>
-        </Accordion>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <StorefrontOutlinedIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Shop</ListItemText>
+                      <Image
+                        src="/coming-soon.png"
+                        width={80}
+                        height={50}
+                        style={{
+                          objectFit: "cover",
+                          position: "absolute",
+                          left: 105,
+                        }}
+                      />
+                    </MenuItem>
 
-        <Accordion onClick={() => router.push('/bug-report')}>
-          <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-            <StyledTypography>
-             Bug Report
-            </StyledTypography>
-            <ReportIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
-          </AccordionSummary>
-        </Accordion>
+                    <MenuItem onClick={() => navigateToUrl("/explore")}>
+                      <ListItemIcon>
+                        <StarOutlinedIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Explore Bags</ListItemText>
+                    </MenuItem>
 
-        { session.user.isAdmin ? <Accordion onClick={() => router.push('/admin')}>
-          <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-            <StyledTypography>
-             Admin Settings
-            </StyledTypography>
-            <AdminPanelSettingsIcon sx={{fontSize: "20px", color: "#4a4a4a"}} />
-          </AccordionSummary>
-        </Accordion> : null }
+                    <MenuItem onClick={() => navigateToUrl("/settings")}>
+                      <ListItemIcon>
+                        <SettingsOutlinedIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Settings</ListItemText>
+                    </MenuItem>
 
-        {session && session?.user ? (
-         <Stack display={theme.flexBox} pb={1} mt={1} alignItems={theme.center}>
+                    <MenuItem onClick={() => navigateToUrl("/changelog")}>
+                      <ListItemIcon>
+                        <NotificationImportantIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Changelog</ListItemText>
+                    </MenuItem>
 
-    <Tooltip title={<><Typography p={0.2} variant='span' component="h3" fontWeight="300" color="inherit">{user.username}</Typography>
-      <Typography variant='span'p={0.2} component="h3" fontWeight="300" color="inherit">{session?.user?.email}</Typography>
-    </>
-  }>
-     <IconButton sx={{marginTop: "5px"}}><Image src={session.user.image ? session.user.image : profileImageUrl} alt='user' style={{ borderRadius: "100%", objectFit: "cover" }} width={35} height={35} /></IconButton>
-     </Tooltip>
-      <Typography className='logout' fontSize="15px" onClick={logOut}> <LogoutIcon sx={{fontSize: "17px", marginRight: "5px"}}/> Log out</Typography>
+                    <MenuItem onClick={() => navigateToUrl("/bug-report")}>
+                      <ListItemIcon>
+                        <ReportIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Bug Report</ListItemText>
+                    </MenuItem>
 
-     </Stack> 
-) : null}
+                    {session.user.isAdmin ? (
+                      <MenuItem onClick={() => navigateToUrl("/admin")}>
+                        <ListItemIcon>
+                          <AdminPanelSettingsIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>Admin Settings</ListItemText>
+                      </MenuItem>
+                    ) : null}
+                    <Divider />
 
-      </Stack>
-       <Stack display="flex" direction="row" justifyContent="center" alignItems="center" mb={1}><LightModeIcon sx={{color: "#4a4a4a", marginRight: "5px"}}/> <Switch onChange={toggleTheme} checked={mode === "dark"} />  <DarkModeIcon sx={{color: "#4a4a4a", marginLeft: "5px"}}/></Stack>
-        </Stack>
-    
-    </Stack>
-    </nav>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Image
+                          width={35}
+                          height={35}
+                          src={
+                            session.user.image
+                              ? session.user.image
+                              : profileImageUrl
+                          }
+                          alt="user"
+                          style={{
+                            borderRadius: "100px",
+                            objectFit: "cover",
+                            marginRight: "15px",
+                          }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText>{user.username}</ListItemText>
+                    </MenuItem>
 
-    </Fragment>
-        
-      )}
+                    <Divider />
+
+                    <Stack
+                      display="flex"
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <MenuItem sx={{ width: "100%" }}>
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          sx={{ width: "50%" }}
+                          justifyContent="flex-start"
+                        >
+                          <LightModeIcon
+                            sx={{ color: "#949494", marginRight: "5px" }}
+                          />{" "}
+                          <Switch
+                            onChange={toggleTheme}
+                            checked={mode === "dark"}
+                          />{" "}
+                          <DarkModeIcon
+                            sx={{ color: "#949494", marginLeft: "5px" }}
+                          />
+                        </Stack>
+
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          justifyContent="flex-end"
+                          sx={{ width: "50%" }}
+                          onClick={logOut}
+                        >
+                          <IconButton>
+                            <LogoutIcon sx={{ fontSize: "15px" }} />
+                          </IconButton>
+                          <Typography
+                            className="logout"
+                            fontSize="15px"
+                            sx={{ marginLeft: "5px" }}
+                          >
+                            Log out
+                          </Typography>
+                        </Stack>
+                      </MenuItem>
+                    </Stack>
+                  </MenuList>
+                </Stack>
+              </MuiPopup>
+            </nav>
+
+            <nav
+              className="nav"
+              style={{
+                background:
+                  theme.palette.mode === "dark" ? "#171717" : "#fafafa",
+              }}
+            >
+              <Stack
+                width={theme.nav.width}
+                display={theme.flexBox}
+                height={theme.nav.height}
+              >
+                <Stack
+                  position={theme.nav.fixed}
+                  justifyContent="space-between"
+                  height={theme.nav.height}
+                  borderRight={
+                    theme.palette.mode === "dark"
+                      ? `2px solid ${theme.main.darkColor}`
+                      : "1px solid #F2F2F2"
+                  }
+                  width={theme.nav.width}
+                >
+                  <Stack>
+                    <Stack
+                      margin="0 auto"
+                      pt={2}
+                      pb={2}
+                      onClick={() => router.push("/")}
+                    >
+                      <Image
+                        src={
+                          theme.palette.mode === "dark"
+                            ? "/white-logo.png"
+                            : "/logo.png"
+                        }
+                        alt="Light Pack - Planner"
+                        width={110}
+                        height={70}
+                      />
+                    </Stack>
+
+                    <Accordion
+                      expanded={expanded === "panel1"}
+                      onChange={handleChange("panel1")}
+                      onClick={() => router.push("/")}
+                    >
+                      <AccordionSummary
+                        aria-controls="panel1d-content"
+                        id="panel1d-header"
+                      >
+                        <Typography
+                          fontSize="14px"
+                          variant="span"
+                          width="100%"
+                          sx={{
+                            display: theme.flexBox,
+                            justifyContent: theme.between,
+                            "&:hover": { color: theme.green },
+                          }}
+                        >
+                          Home
+                        </Typography>
+                        <WindowOutlinedIcon
+                          sx={{ fontSize: "20px", color: "#4a4a4a" }}
+                        />
+                      </AccordionSummary>
+                    </Accordion>
+                    <Accordion
+                      expanded={expanded === "panel2"}
+                      onChange={handleChange("panel2")}
+                    >
+                      <AccordionSummary
+                        aria-controls="panel2d-content"
+                        id="panel2d-header"
+                      >
+                        <Typography
+                          fontSize="14px"
+                          variant="span"
+                          width={theme.fullWidth}
+                          sx={{
+                            display: theme.flexBox,
+                            justifyContent: theme.between,
+                            "&:hover": { color: theme.green },
+                          }}
+                        >
+                          <Stack direction="row">
+                            Recent Bags{" "}
+                            {expanded === "panel2" ? (
+                              <ArrowDropUpIcon sx={{ marginLeft: "3px" }} />
+                            ) : (
+                              <ArrowDropDownIcon sx={{ marginLeft: "3px" }} />
+                            )}
+                          </Stack>
+                        </Typography>
+                        <HikingOutlinedIcon
+                          sx={{ fontSize: "20px", color: "#4a4a4a" }}
+                        />
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        {bagData?.length > 0 ? (
+                          bagData
+                        ) : (
+                          <Typography component="p" fontSize="13px" ml={1}>
+                            {" "}
+                            No bags yet
+                          </Typography>
+                        )}
+                      </AccordionDetails>
+                    </Accordion>
+
+                    <Accordion>
+                      <AccordionSummary
+                        aria-controls="panel3d-content"
+                        id="panel3d-header"
+                        onClick={() => router.push("/articles")}
+                      >
+                        <StyledTypography>Articles</StyledTypography>
+                        <PublicOutlinedIcon
+                          sx={{ fontSize: "20px", color: "#4a4a4a" }}
+                        />
+                      </AccordionSummary>
+                    </Accordion>
+
+                    <Accordion>
+                      <AccordionSummary>
+                        <StyledTypography>Shop</StyledTypography>
+                        <Image
+                          src="/coming-soon.png"
+                          width={80}
+                          height={50}
+                          style={{
+                            objectFit: "cover",
+                            position: "absolute",
+                            left: 75,
+                            bottom: 0,
+                          }}
+                        />
+                        <StorefrontOutlinedIcon
+                          sx={{ fontSize: "20px", color: "#4a4a4a" }}
+                        />
+                      </AccordionSummary>
+                    </Accordion>
+
+                    <Accordion>
+                      <AccordionSummary
+                        aria-controls="panel3d-content"
+                        id="panel3d-header"
+                        onClick={() => router.push("/explore")}
+                      >
+                        <StyledTypography>Explore Bags</StyledTypography>
+                        <StarOutlinedIcon
+                          sx={{ fontSize: "20px", color: "#4a4a4a" }}
+                        />
+                      </AccordionSummary>
+                    </Accordion>
+
+                    <Accordion onClick={() => router.push("/settings")}>
+                      <AccordionSummary
+                        aria-controls="panel4d-content"
+                        id="panel4d-header"
+                      >
+                        <StyledTypography>Settings</StyledTypography>
+                        <SettingsOutlinedIcon
+                          sx={{ fontSize: "20px", color: "#4a4a4a" }}
+                        />
+                      </AccordionSummary>
+                    </Accordion>
+
+                    <Accordion onClick={() => router.push("/changelog")}>
+                      <AccordionSummary
+                        aria-controls="panel4d-content"
+                        id="panel4d-header"
+                      >
+                        <StyledTypography>Changelog</StyledTypography>
+                        <NotificationImportantIcon
+                          sx={{ fontSize: "20px", color: "#4a4a4a" }}
+                        />
+                      </AccordionSummary>
+                    </Accordion>
+
+                    <Accordion onClick={() => router.push("/bug-report")}>
+                      <AccordionSummary
+                        aria-controls="panel4d-content"
+                        id="panel4d-header"
+                      >
+                        <StyledTypography>Bug Report</StyledTypography>
+                        <ReportIcon
+                          sx={{ fontSize: "20px", color: "#4a4a4a" }}
+                        />
+                      </AccordionSummary>
+                    </Accordion>
+
+                    {session.user.isAdmin ? (
+                      <Accordion onClick={() => router.push("/admin")}>
+                        <AccordionSummary
+                          aria-controls="panel4d-content"
+                          id="panel4d-header"
+                        >
+                          <StyledTypography>Admin Settings</StyledTypography>
+                          <AdminPanelSettingsIcon
+                            sx={{ fontSize: "20px", color: "#4a4a4a" }}
+                          />
+                        </AccordionSummary>
+                      </Accordion>
+                    ) : null}
+
+                    {session && session?.user ? (
+                      <Stack
+                        display={theme.flexBox}
+                        pb={1}
+                        mt={1}
+                        alignItems={theme.center}
+                      >
+                        <Tooltip
+                          title={
+                            <>
+                              <Typography
+                                p={0.2}
+                                variant="span"
+                                component="h3"
+                                fontWeight="300"
+                                color="inherit"
+                              >
+                                {user.username}
+                              </Typography>
+                              <Typography
+                                variant="span"
+                                p={0.2}
+                                component="h3"
+                                fontWeight="300"
+                                color="inherit"
+                              >
+                                {session?.user?.email}
+                              </Typography>
+                            </>
+                          }
+                        >
+                          <IconButton sx={{ marginTop: "5px" }}>
+                            <Image
+                              src={
+                                session.user.image
+                                  ? session.user.image
+                                  : profileImageUrl
+                              }
+                              alt="user"
+                              style={{
+                                borderRadius: "100%",
+                                objectFit: "cover",
+                              }}
+                              width={35}
+                              height={35}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                        <Typography
+                          className="logout"
+                          fontSize="15px"
+                          onClick={logOut}
+                        >
+                          {" "}
+                          <LogoutIcon
+                            sx={{ fontSize: "17px", marginRight: "5px" }}
+                          />{" "}
+                          Log out
+                        </Typography>
+                      </Stack>
+                    ) : null}
+                  </Stack>
+                  <Stack
+                    display="flex"
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    mb={1}
+                  >
+                    <LightModeIcon
+                      sx={{ color: "#4a4a4a", marginRight: "5px" }}
+                    />{" "}
+                    <Switch onChange={toggleTheme} checked={mode === "dark"} />{" "}
+                    <DarkModeIcon
+                      sx={{ color: "#4a4a4a", marginLeft: "5px" }}
+                    />
+                  </Stack>
+                </Stack>
+              </Stack>
+            </nav>
+          </Fragment>
+        )}
       </>
+    </Fragment>
+  );
+};
 
-      </Fragment>
-   )
-   
-}
-
-
-export default Nav
+export default Nav;
