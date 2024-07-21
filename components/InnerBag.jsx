@@ -406,13 +406,13 @@ const InnerBag = ({
                 position: "fixed",
                 bottom: "0px",
                 left: "0px",
-                backgroundColor: theme.palette.success.light,
+                backgroundColor: "gray",
                 color: "white",
                 "&:hover": {
-                  backgroundColor: theme.palette.success.light,
+                  backgroundColor: "gray" 
                 },
                 "&:active": {
-                  backgroundColor: theme.palette.success.light,
+                  backgroundColor: "gray" ,
                 },
               }}
             >
@@ -437,13 +437,13 @@ const InnerBag = ({
               position: "fixed",
               bottom: "0px",
               left: items?.length ? "20%" : "0%",
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: "#707070",
               color: "white",
               "&:hover": {
-                backgroundColor: theme.palette.primary.light,
+                backgroundColor: "#707070",
               },
               "&:active": {
-                backgroundColor: theme.palette.primary.light,
+                backgroundColor: "#707070"
               },
             }}
           >
@@ -462,13 +462,13 @@ const InnerBag = ({
               position: "fixed",
               bottom: "0px",
               left: items?.length ? "40%" : "40%",
-              backgroundColor: theme.palette.secondary.light,
+              backgroundColor: "#4a4a4a",
               color: "white",
               "&:hover": {
-                backgroundColor: theme.palette.secondary.light,
+                backgroundColor: "#4a4a4a"
               },
               "&:active": {
-                backgroundColor: theme.palette.secondary.light,
+                backgroundColor: "#4a4a4a"
               },
             }}
           >
