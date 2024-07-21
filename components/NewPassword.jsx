@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, TextField, Typography, Grid} from '@mui/material'
+import { Stack, TextField, Typography, Grid, Button} from '@mui/material'
 import { useTheme } from '@emotion/react';
 import { Fragment, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -86,7 +86,7 @@ const NewPassword = ({user, err}) => {
     <TextField type="password" sx={{width: "100%"}} required inputProps={{minLength : 8}} label="Confirm New Password" name="confirmPassword" onChange={handleChange}  />
     </Grid>
     <Grid item xs={12}>
-    <button type='submit' className="login-button-regular" style={{display: "flex", justifyContent: "center"}}>Reset Password { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</button>
+    <Button type='submit' fullWidth variant='contained' disableElevation sx={{p: "12px", mb: 1.5}}>Reset Password { isLoading ? <CircularProgress color="inherit" size={20} sx={{marginLeft: "15px"}} /> : null }</Button>
     </Grid>
 
     <Typography component="span" variant="span" width="100%" color="gray" mb={2} ml={2}>Remember password? <Typography onClick={() => router.push("/login")} component="span" variant="span" color="#2d7fb5" sx={{cursor: "pointer"}}>Login</Typography></Typography>

@@ -13,7 +13,6 @@ import {
   InputLabel,
   FormControl,
   Grid,
-  CircularProgress,
   Alert,
   IconButton,
 } from "@mui/material";
@@ -25,6 +24,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import useCountries from "./hooks/useCountries";
+import Btn from "./custom/button/Btn";
+import Image from "next/image";
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({});
@@ -177,33 +178,36 @@ const Register = () => {
       direction="row"
       justifyContent={theme.end}
       sx={{ overflowY: "hidden" }}
+      width="100%"
     >
       <div className="login-img">
-        <img
+        <Image
           id="hiking-image"
           src="/hiking-2.jpg"
           alt="hiking"
-          width="100%"
-          style={{ objectFit: "cover", height: "100vh" }}
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: '100%', height: '100%', objectFit: "cover" }}
         />
-        <img
+        <Image
           id="logo"
           onClick={() => router.push("/login")}
           src="/logo.png"
           alt="logo"
-          width="110px"
-          height="70"
+          width={110}
+          height={70}
           style={{ position: "absolute", top: "16px", left: "35px" }}
         />
       </div>
 
       <div className="register-content">
-        <img
+        <Image
           id="logo-mobile-login"
           src="/logo.png"
           alt="logo"
-          width="90px"
-          height="58"
+          width={90}
+          height={58}
           style={{ position: "absolute", top: "25px", left: "25px" }}
         />
         <div
@@ -276,16 +280,9 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button
-                    fullWidth
-                    sx={{ padding: "12px" }}
-                    disableElevation
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                  >
-                    Next {isLoading ? <CircularProgress color="inherit" size={20} sx={{ marginLeft: "15px" }} /> : null}
-                  </Button>
+
+                <Btn text="Next" type={"button"} isLoading={isLoading} variant="contained" onClick={handleNext} />
+          
                 </Grid>
               </Grid>
             )}
@@ -319,27 +316,10 @@ const Register = () => {
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <Button
-                    fullWidth
-                    sx={{ padding: "12px" }}
-                    variant="outlined"
-                    color="primary"
-                    onClick={handleBack}
-                  >
-                    Back
-                  </Button>
+                <Btn text="Back" type={"button"} variant={"outlined"}  onClick={handleBack} />
                 </Grid>
                 <Grid item xs={6}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    sx={{ padding: "12px" }}
-                    disableElevation
-                    onClick={handleNext}
-                  >
-                    Next
-                  </Button>
+                <Btn text="Next" type={"button"} variant={"contained"}  onClick={handleNext} />
                 </Grid>
               </Grid>
             )}
@@ -430,27 +410,10 @@ const Register = () => {
       </Button>
     </Grid>
     <Grid item xs={6}>
-      <Button
-        fullWidth
-        variant="outlined"
-        color="primary"
-        onClick={handleBack}
-        sx={{ padding: "12px" }}
-      >
-        Back
-      </Button>
+    <Btn text="Back" type={"button"} variant={"outlined"}  onClick={handleBack} />
     </Grid>
     <Grid item xs={6}>
-      <Button
-        fullWidth
-        variant="contained"
-        color="primary"
-        sx={{ padding: "12px" }}
-        disableElevation
-        onClick={handleNext}
-      >
-        Next
-      </Button>
+     <Btn text="Next" type={"button"} variant={"contained"}  onClick={handleNext} />
     </Grid>
   </Grid>
 )}
@@ -562,27 +525,10 @@ const Register = () => {
               
               
                 <Grid item xs={12}>
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    color="primary"
-                    sx={{padding: "12px"}}
-                    onClick={handleBack}
-                  >
-                    Back
-                  </Button>
+                <Btn text="Back" type={"button"} variant={"outlined"}  onClick={handleBack} />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button
-                    fullWidth
-                    type="submit"
-                    variant="contained"
-                    sx={{padding: "12px"}}
-                    disableElevation
-                    color="primary"
-                  >
-                   Register {isLoading ? <CircularProgress color="inherit" size={20} sx={{ marginLeft: "15px" }} /> : null}
-                  </Button>
+                <Btn text="Register" type={"submit"} isLoading={isLoading} variant={"contained"}  onClick={register} />
                 </Grid>
               </Grid>
             )}

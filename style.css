@@ -41,11 +41,6 @@ html, body {
   
 }
 
-span.MuiBadge-badge {
-  transform: scale(0.75);
-  margin-right: -5px;
-  margin-top: -5px;
-}
 
 .login-text {
   margin-bottom: 20px;
@@ -101,66 +96,8 @@ span.MuiBadge-badge {
   }
 }
 
-#google_translate_element div {
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  border-radius: 4px;
-  border-color: white !important;
-  padding-left: 3px;
-  padding-right: 3px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  font-size: 12px;
-  width: 160px;
-  display: flex;
-  justify-content: center;
-}
 
-.login-button,
-.login-button-regular {
-  padding: 12px;
-  width: 100%;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 12px;
-  border-radius: 5px;
-  border: 1px solid #dadada;
-  background-color: white;
-}
 
-.login-button:hover {
-  border: 1px solid black;
-}
-
-.login-button-regular {
-  background-color: #00ac1c;
-  color: white;
-  border: #00ac1c;
-  padding: 12px;
-}
-
-.login-button-regular:hover {
-  background-color: #08ca28;
-}
-
-.premium {
-  margin-right: 25px;
-  margin-left: 25px;
-  margin-top: 10px;
-  padding: 9px;
-  border-radius: 3px;
-  font-size: 12px;
-  background-color: rgb(133, 133, 133);
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.premium:hover {
-  background-color: rgb(104, 104, 104);
-}
 
 .logout {
   background: none;
@@ -281,7 +218,6 @@ span.MuiBadge-badge {
   margin-top: 20px;
   
 }
-
 
 
 

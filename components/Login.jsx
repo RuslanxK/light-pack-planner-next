@@ -1,12 +1,13 @@
 "use client";
 
-import { Stack, TextField, Typography, Grid } from "@mui/material";
+import { Stack, TextField, Typography, Grid, Button} from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+import Image from "next/image";
+import Btn from '../components/custom/button/Btn'
 
 
 const Login = () => {
@@ -75,30 +76,33 @@ const Login = () => {
       width="100%"
     >
       <div className="login-img">
-        <img
+        <Image
           id="hiking-image"
           src="/hiking.png"
           alt="hiking"
-          width="100%"
-          style={{ objectFit: "cover", height: "100vh" }}
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: '100%', height: 'auto' }}
+        
         />
-        <img
+        <Image
           id="logo"
           src="/logo.png"
           alt="logo"
-          width="110px"
-          height="70"
+          width={110}
+          height={70}
           style={{ position: "absolute", top: "16px", left: "35px" }}
         />
       </div>
 
       <div className="login-content">
-        <img
+        <Image
           id="logo-mobile-login"
           src="/logo.png"
           alt="logo"
-          width="90px"
-          height="58"
+          width={90}
+          height={58}
           style={{ position: "absolute", top: "25px", left: "25px" }}
         />
         <div className="login-form" style={{backgroundColor: theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : null}}>
@@ -133,20 +137,8 @@ const Login = () => {
                 />
               </Grid>
             </Grid>
-            <button
-              type="submit"
-              className="login-button-regular"
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              Log in
-              {isLoading ? (
-                <CircularProgress
-                  color="inherit"
-                  size={20}
-                  sx={{ marginLeft: "15px" }}
-                />
-              ) : null}
-            </button>
+
+            <Btn text="Login" type={"submit"} isLoading={isLoading} variant="contained" color={theme.green} />
 
             <Stack mb={1.5}>
           <Typography
@@ -154,7 +146,7 @@ const Login = () => {
               variant="span"
               width="100%"
               color="#2d7fb5"
-              sx={{ cursor: "pointer" }}
+              sx={{ cursor: "pointer", mt: 1.5 }}
               onClick={() => router.push("/reset-password")}>
              Forgot your password?
             </Typography>
@@ -162,7 +154,7 @@ const Login = () => {
           
           </form>
 
-          <button className="login-button" onClick={loginWithGoogle}>
+          <Button variant="outlined" sx={{p: "12px", mb: 1.5}} onClick={loginWithGoogle}>
             <Stack
               width="235px"
               margin="0 auto"
@@ -170,15 +162,16 @@ const Login = () => {
               direction="row"
               alignItems={theme.center}
             >
-              <img
+              <Image
                 src="/google.png"
-                width="23px"
+                width={23}
+                height={23}
                 style={{ marginRight: "15px" }}
                 alt="google"
               />
               Continue with Google
             </Stack>
-          </button>
+          </Button>
           
           
           <Typography
@@ -193,7 +186,6 @@ const Login = () => {
             <Typography
               onClick={() => router.push("/register")}
               component="span"
-              
               variant="span"
               color="#2d7fb5"
               sx={{ cursor: "pointer", marginLeft: "3px" }}
