@@ -406,13 +406,13 @@ const InnerBag = ({
                 position: "fixed",
                 bottom: "0px",
                 left: "0px",
-                backgroundColor: "gray",
+                backgroundColor: theme.palette.mode === "dark" ? "gray" : theme.palette.success.light,
                 color: "white",
                 "&:hover": {
-                  backgroundColor: "gray" 
+                  backgroundColor: theme.palette.mode === "dark" ? "gray" : theme.palette.success.light,
                 },
                 "&:active": {
-                  backgroundColor: "gray" ,
+                  backgroundColor: theme.palette.mode === "dark" ? "gray" : theme.palette.success.light,
                 },
               }}
             >
@@ -437,13 +437,13 @@ const InnerBag = ({
               position: "fixed",
               bottom: "0px",
               left: items?.length ? "20%" : "0%",
-              backgroundColor: "#707070",
+              backgroundColor: theme.palette.mode === "dark" ? "#707070" : theme.palette.primary.light,
               color: "white",
               "&:hover": {
-                backgroundColor: "#707070",
+                backgroundColor: theme.palette.mode === "dark" ? "#707070" : theme.palette.primary.light,
               },
               "&:active": {
-                backgroundColor: "#707070"
+                backgroundColor: theme.palette.mode === "dark" ? "#707070" : theme.palette.primary.light,
               },
             }}
           >
@@ -462,13 +462,13 @@ const InnerBag = ({
               position: "fixed",
               bottom: "0px",
               left: items?.length ? "40%" : "40%",
-              backgroundColor: "#4a4a4a",
+              backgroundColor: theme.palette.mode === "dark" ? "#4a4a4a" : theme.palette.secondary.light,
               color: "white",
               "&:hover": {
-                backgroundColor: "#4a4a4a"
+                backgroundColor: theme.palette.mode === "dark" ? "#4a4a4a" : theme.palette.secondary.light,
               },
               "&:active": {
-                backgroundColor: "#4a4a4a"
+                backgroundColor: theme.palette.mode === "dark" ? "#4a4a4a" : theme.palette.secondary.light,
               },
             }}
           >
