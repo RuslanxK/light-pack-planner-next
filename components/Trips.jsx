@@ -54,6 +54,12 @@ const Trips = ({ trips, bags, session }) => {
   const startDateRef = useRef(dayjs().add(1, "day"));
   const endDateRef = useRef(dayjs().add(2, "day"));
 
+
+  const link_1 = 'https://www.amazon.com/Camping-Tactical-Multifunction-Utensils-Backpacking/dp/B0BYMWQQ3N?crid=IJ14QNAV7MIT&dib=eyJ2IjoiMSJ9.wCIj4bJMVp-Y_esCovAK94yQ4pleScOu5a3Keq5HCt1BzRtjayJ_snQsOsospzAC_k2LlNW8fPRbcQJuROFf2xg4ph9-nH8uaZI2Op5PWj7TOHsliDRS3gJbN3IlkyiLRoU06sXYwV9qAUwlXABmDH8EVM7j_ahWZmx4sBfBLZ64nu8UuRr5hJrrC_5RqPaX0uyuU0NAl11z5vFHmU92uCXl3TTTU66tcoDLIodpzyz6ca1yyC0S-AEwyRILItIQPwf165MDM8ptaAkK6AbUrjwTL499lm7ST71mB00N4J8.9F2PQ7gTjj2tO5_J4NaT4Dj6yQ7vzlMtxRmk14KUovk&dib_tag=se&keywords=hiking&qid=1722162619&sprefix=hikin%2Caps%2C208&sr=8-16&linkCode=ll1&tag=bagsapp-20&linkId=afac49362e71a2ce2042d0b682368c84&language=en_US&ref_=as_li_ss_tl'
+
+  const link_2 = 'https://www.amazon.com/Mozeat-Lens-Keychain-Whistle-Aluminum/dp/B0CJ2TB3TT?crid=IJ14QNAV7MIT&dib=eyJ2IjoiMSJ9.wCIj4bJMVp-Y_esCovAK94yQ4pleScOu5a3Keq5HCt1BzRtjayJ_snQsOsospzAC_k2LlNW8fPRbcQJuROFf2xg4ph9-nH8uaZI2Op5PWj7TOHsliDRS3gJbN3IlkyiLRoU06sXYwV9qAUwlXABmDH8EVM7j_ahWZmx4sBfBLZ64nu8UuRr5hJrrC_5RqPaX0uyuU0NAl11z5vFHmU92uCXl3TTTU66tcoDLIodpzyz6ca1yyC0S-AEwyRILItIQPwf165MDM8ptaAkK6AbUrjwTL499lm7ST71mB00N4J8.9F2PQ7gTjj2tO5_J4NaT4Dj6yQ7vzlMtxRmk14KUovk&dib_tag=se&keywords=hiking&qid=1722162619&sprefix=hikin%2Caps%2C208&sr=8-19&linkCode=ll1&tag=bagsapp-20&linkId=2ff8c56cbf4a5d563a5a68e1127e3864&language=en_US&ref_=as_li_ss_tl'
+  const link_3 = 'https://www.amazon.com/Maiyifu-GJ-Lightweight-Multi-Pockets-Trousers-Sweatpants/dp/B0CXM62G3D?crid=IJ14QNAV7MIT&dib=eyJ2IjoiMSJ9.wCIj4bJMVp-Y_esCovAK94yQ4pleScOu5a3Keq5HCt1BzRtjayJ_snQsOsospzAC_k2LlNW8fPRbcQJuROFf2xg4ph9-nH8uaZI2Op5PWj7TOHsliDRS3gJbN3IlkyiLRoU06sXYwV9qAUwlXABmDH8EVM7j_ahWZmx4sBfBLZ64nu8UuRr5hJrrC_5RqPaX0uyuU0NAl11z5vFHmU92uCXl3TTTU66tcoDLIodpzyz6ca1yyC0S-AEwyRILItIQPwf165MDM8ptaAkK6AbUrjwTL499lm7ST71mB00N4J8.9F2PQ7gTjj2tO5_J4NaT4Dj6yQ7vzlMtxRmk14KUovk&dib_tag=se&keywords=hiking&qid=1722162619&sprefix=hikin%2Caps%2C208&sr=8-18&linkCode=ll1&tag=bagsapp-20&linkId=0b70cfae2e921156424e5a2fa87d2afb&language=en_US&ref_=as_li_ss_tl'
+
   const filteredTrips = useMemo(() => {
     return trips?.tripsWithPictures
       .filter((trip) =>
@@ -319,6 +325,56 @@ const Trips = ({ trips, bags, session }) => {
         )}
 
 
+        <Stack direction="row" justifyContent="center">
+
+        <Stack justifyContent="center" alignItems="center" m={2}>
+        <Image src="/flatware.jpg" width={100} height={150} />
+
+        <Button
+          sx={{marginTop: "10px"}}
+          variant="contained"
+          onClick={() =>
+            window.open(link_1,"_blank")
+          }
+        >
+          Order Now
+        </Button>
+
+        </Stack>
+
+        
+        <Stack justifyContent="center" alignItems="center" m={2}>
+        <Image src="/whistle.jpg" width={100} height={150} />
+
+        <Button
+          sx={{marginTop: "10px"}}
+          variant="contained"
+          onClick={() =>
+            window.open(link_2,"_blank")
+          }
+        >
+          Order Now
+        </Button>
+
+        </Stack>
+
+        
+        <Stack justifyContent="center" alignItems="center" m={2}>
+        <Image src="/pants.jpg" width={100} height={150} />
+
+        <Button
+          sx={{marginTop: "10px"}}
+          variant="contained"
+          onClick={() =>
+            window.open(link_3,"_blank")
+          }
+        >
+          Order Now
+        </Button>
+
+        </Stack>
+
+        </Stack>
 
         <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
           <form onSubmit={createTrip}>
