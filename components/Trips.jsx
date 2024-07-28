@@ -319,23 +319,6 @@ const Trips = ({ trips, bags, session }) => {
         )}
 
 
-        <Stack justifyContent="center" alignItems="center">
-        <Image src="/bag.jpg" width={300} height={400} />
-
-        <Button
-          sx={{marginTop: "10px"}}
-          variant="contained"
-          onClick={() =>
-            window.open(
-              "https://www.amazon.com/Waterproof-Lightweight-Backpack-Frameless-Mountaineering/dp/B07R3B64PS?_encoding=UTF8&pd_rd_w=7Jw0L&content-id=amzn1.sym.6e2b5bb7-a549-448f-a0f0-86f862226b58%3Aamzn1.symc.d10b1e54-47e4-4b2a-b42d-92fe6ebbe579&pf_rd_p=6e2b5bb7-a549-448f-a0f0-86f862226b58&pf_rd_r=289F0JHZM68QKXVKHQMG&pd_rd_wg=focoQ&pd_rd_r=589efeeb-4626-4505-9092-2e0e090cdd20&th=1&linkCode=ll1&tag=bagsapp-20&linkId=218c65a73bcb30d80f827d19e45f7ee7&language=en_US&ref_=as_li_ss_tl",
-              "_blank"
-            )
-          }
-        >
-          Order Now
-        </Button>
-
-        </Stack>
 
         <MuiPopup isOpen={isPopupOpen} onClose={closePopup}>
           <form onSubmit={createTrip}>
