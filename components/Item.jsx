@@ -300,6 +300,7 @@ const Item = (props) => {
         width={0}
         height={300}
         sizes="100vw"
+        alt='product'
         style={{ width: '100%', objectFit: "contain" }}
         src={itemData.image ? URL.createObjectURL(itemData.image) : `${process.env.NEXT_PUBLIC_PROFILE_URL}/${itemData.productImageKey}`}
       />

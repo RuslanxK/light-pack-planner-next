@@ -328,7 +328,7 @@ const Trips = ({ trips, bags, session }) => {
         <Stack direction="row" justifyContent="center">
 
         <Stack justifyContent="center" alignItems="center" m={2}>
-        <Image src="/flatware.jpg" width={100} height={150} />
+        <Image src="/flatware.jpg" width={100} height={150} alt="flatware" />
 
         <Button
           sx={{marginTop: "10px"}}
@@ -344,7 +344,7 @@ const Trips = ({ trips, bags, session }) => {
 
         
         <Stack justifyContent="center" alignItems="center" m={2}>
-        <Image src="/whistle.jpg" width={100} height={150} />
+        <Image src="/whistle.jpg" width={100} height={150} alt="whistle"/>
 
         <Button
           sx={{marginTop: "10px"}}
@@ -360,7 +360,7 @@ const Trips = ({ trips, bags, session }) => {
 
         
         <Stack justifyContent="center" alignItems="center" m={2}>
-        <Image src="/pants.jpg" width={100} height={150} />
+        <Image src="/pants.jpg" width={100} height={150} alt="pants"/>
 
         <Button
           sx={{marginTop: "10px"}}

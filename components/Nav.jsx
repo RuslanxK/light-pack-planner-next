@@ -238,6 +238,7 @@ const Nav = ({ bags, session, user }) => {
                       <ListItemText>Shop</ListItemText>
                       <Image
                         src="/coming-soon.png"
+                        alt="coming-soon"
                         width={80}
                         height={50}
                         style={{
@@ -489,6 +490,7 @@ const Nav = ({ bags, session, user }) => {
                         <Image
                           src="/coming-soon.png"
                           width={80}
+                          alt="coming-soon"
                           height={50}
                           style={{
                             objectFit: "cover",

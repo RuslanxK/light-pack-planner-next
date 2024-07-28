@@ -3,6 +3,7 @@
 
 const nextConfig = {
   experimental: {
+    reactCompiler: true,
     serverComponentsExternalPackages: ["mongoose"],
     optimizePackageImports: ['package-name'],
   },
