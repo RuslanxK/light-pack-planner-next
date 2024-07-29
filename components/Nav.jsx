@@ -112,10 +112,9 @@ const Nav = ({ bags, session, user }) => {
       <Stack key={bag._id} onClick={() => navigateToBag(bag)}>
         {" "}
         <Typography
-          fontSize="14px"
+          fontSize="15px"
           variant="span"
           component="span"
-          ml={0.8}
           mb={1}
           sx={{ cursor: "pointer", "&:hover": { color: theme.green } }}
           key={bag._id}
@@ -217,11 +216,12 @@ const Nav = ({ bags, session, user }) => {
                     </MenuItem>
 
                     {nestedMenuOpen ? (
-                      <MenuItem>
-                        <Stack ml={4}>
-                          {bagData.length ? bagData : "No bags yet"}
+                      
+                        <Stack>
+                          {bagData.length ? filteredBags.map((bag) => {
+                               return <MenuItem key={bag._id}>{bag.name}</MenuItem>
+                          }) : "No bags yet"}
                         </Stack>
-                      </MenuItem>
                     ) : null}
 
                     <MenuItem onClick={() => navigateToUrl("/articles")}>
@@ -463,7 +463,7 @@ const Nav = ({ bags, session, user }) => {
                         {bagData?.length > 0 ? (
                           bagData
                         ) : (
-                          <Typography component="p" fontSize="13px" ml={1}>
+                          <Typography component="p" fontSize="15px">
                             {" "}
                             No bags yet
                           </Typography>
