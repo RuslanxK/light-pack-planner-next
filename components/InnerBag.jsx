@@ -24,7 +24,7 @@ import Category from "../components/Category";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, Fragment, useRef, useMemo} from "react";
+import { useState, useEffect, Fragment, useRef, useMemo, useCallback} from "react";
 import { useTheme } from "@emotion/react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MuiPopup from "./custom/MuiPopup";
@@ -216,6 +216,7 @@ const InnerBag = ({
       setLoading(false);
     }
   };
+
   
 
   const handleSwitchChange = (e) => {
@@ -248,6 +249,7 @@ const InnerBag = ({
 
 
 
+
   const confirmSwitchChange = async () => {
 
     if (popupLoading) return;
@@ -266,6 +268,8 @@ const InnerBag = ({
       setConfirmPopupOpen(false);
     }
   };
+
+
 
   const openPopup = () => setPopupOpen(true);
 
@@ -350,7 +354,8 @@ const InnerBag = ({
 
 
 
-  const onDragEnd = (event) => {
+  const onDragEnd = useCallback((event) => {
+
     const { active, over } = event;
     if (active.id !== over.id) {
       const fromIndex = categoriesData.findIndex(
@@ -361,7 +366,7 @@ const InnerBag = ({
       );
       moveCategory(fromIndex, toIndex);
     }
-  };
+  }, [sortedCategoriesData, moveCategory]);
 
 
 
@@ -374,6 +379,11 @@ const InnerBag = ({
       console.error('Failed to save categories order:', error);
     }
   };
+
+
+  const handleLoading = useCallback((value) => {
+    setLoading(value);
+  }, []);
 
 
   return (
@@ -838,7 +848,7 @@ const InnerBag = ({
             categoryData={category}
             items={bagData?.items}
             session={session}
-            loading={(value) => setLoading(value)}
+            loading={(value) => handleLoading(value)}
           />
         ))}
       </SortableContext>

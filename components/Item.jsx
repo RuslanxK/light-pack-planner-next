@@ -5,7 +5,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useTheme } from '@emotion/react';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback} from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import MuiPopup from './custom/MuiPopup';
@@ -60,13 +60,20 @@ const Item = (props) => {
    };
 
 
-   const updateChecked = async (e) => {
+   const memoizedLoading = useCallback((status) => {
+    props.loading(status);
+  }, [props.loading]);
 
-    setDeleting(!deleting)
-    setItem({...itemData, checked: e.target.checked})
-    props.onUpdateChecked(itemData._id, e.target.checked);
-         
-   }
+
+   const updateChecked = useCallback(
+    async (e) => {
+      setDeleting(!deleting);
+      setItem({ ...itemData, checked: e.target.checked });
+      props.onUpdateChecked(itemData._id, e.target.checked);
+    },
+    [deleting, itemData, props]
+  );
+
 
 
     const saveItemData =  async () => {
@@ -113,10 +120,10 @@ const Item = (props) => {
       setItem((prevItemData) => ({ ...prevItemData, worn: !prevItemData.worn }));
       try {
 
-        props.loading(true)
+        memoizedLoading(true)
         await axios.put(`/items/${itemData._id}/${props?.session?.user?.id}`, { ...itemData, worn: !itemData.worn });
         await refresh();
-        props.loading(false)
+        memoizedLoading(false)
       }
        catch (error) {
             console.log(error)
@@ -129,10 +136,10 @@ const Item = (props) => {
     const duplicatedItem = { ...itemData };
     delete duplicatedItem._id;
     try {
-      props.loading(true)
+      memoizedLoading(true)
       await axios.post('/items/new', duplicatedItem);
      await refresh();
-     props.loading(false)
+     memoizedLoading(false)
     }
      catch (error) {
           console.log(error)
@@ -298,10 +305,10 @@ const Item = (props) => {
     <>
       <Image
         width={0}
-        height={300}
+        height={0}
         sizes="100vw"
         alt='product'
-        style={{ width: '100%', objectFit: "contain" }}
+        style={{ width: '100%', height: "300px", objectFit: "contain" }}
         src={itemData.image ? URL.createObjectURL(itemData.image) : `${process.env.NEXT_PUBLIC_PROFILE_URL}/${itemData.productImageKey}`}
       />
 

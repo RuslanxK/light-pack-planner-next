@@ -8,7 +8,7 @@ import { useTheme } from '@emotion/react';
 import PlusOneIcon from '@mui/icons-material/PlusOne';
 import Item from './Item'
 import axios from "axios";
-import React, {useRef, useState, useEffect, useMemo} from "react";
+import React, {useRef, useState, useEffect, useMemo, useCallback} from "react";
 import MuiPopup from "./custom/MuiPopup";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
@@ -45,16 +45,16 @@ const Category = (props) => {
 
  
 
+  const handleUpdateChecked = useCallback((id, checked) => {
 
-  const handleUpdateChecked = (id, checked) => {
-    setCheckedItems(prevItems => {
+    setCheckedItems((prevItems) => {
       if (checked) {
         return [...prevItems, { id, checked }];
       } else {
-        return prevItems.filter(item => item.id !== id);
+        return prevItems.filter((item) => item.id !== id);
       }
     });
-  };
+  }, []);
 
 
   useEffect(() => {
@@ -97,12 +97,12 @@ const Category = (props) => {
 
   const removeItems = async () => {
     try {
-      props.loading(true)
+      handleLoading(true)
       for (const item of checkedItems) {
         await axios.delete(`/items/${item.id}/${props.session.user.id}`);
       }
       await refresh();
-      props.loading(false)
+      handleLoading(false)
       setCheckedItems([]); 
       
     } catch (error) {
@@ -142,7 +142,7 @@ const Category = (props) => {
   };
 
 
-  const onDragEnd = (event) => {
+  const onDragEnd = useCallback((event) => {
     const { active, over } = event;
   
     if (!over) return;
@@ -153,7 +153,7 @@ const Category = (props) => {
     if (fromIndex !== -1 && toIndex !== -1) {
       moveItem(fromIndex, toIndex);
     }
-  };
+  }, [itemsOfCategory, moveItem]);
 
 
 
@@ -173,10 +173,10 @@ const saveItemsOrder = async (updatedItems) => {
   const addItem =  async () => {
     const itemObj = { userId: props.session.user.id, tripId: props.categoryData.tripId, bagId: props.categoryData.bagId, categoryId: props.categoryData._id, name: "new item", qty: 1, weight: 0.1, price: 0.00}
     try {
-      props.loading(true)
+      handleLoading(true)
       await axios.post('/items/new', itemObj);
       await refresh();
-      props.loading(false)
+      handleLoading(false)
     }
      catch (error) {
           console.log(error)
@@ -231,6 +231,11 @@ const saveItemsOrder = async (updatedItems) => {
      }
 
 
+     const handleLoading = useCallback((value) => {
+      props.loading(value);
+    }, [props]);
+
+
   return (
     <Stack width={theme.category.width}  display={theme.flexBox} mb={2}  backgroundColor={ theme.palette.mode === "dark" ? theme.main.darkColor : "#FAFAFA" } ref={setNodeRef} style={style} boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px">
       <Stack display={theme.flexBox} direction="row" pt={0.8} pb={0.3}>
@@ -261,7 +266,7 @@ const saveItemsOrder = async (updatedItems) => {
 
         {itemsOfCategory.map((item, index) => (
 
-                <Item key={item._id} itemData={item} session={props.session}  onUpdateChecked={handleUpdateChecked} loading={(value) => props.loading(value)} />
+                <Item key={item._id} itemData={item} session={props.session}  onUpdateChecked={handleUpdateChecked} loading={(value) => handleLoading(value)} />
             ))}
 
        

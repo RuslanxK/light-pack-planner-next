@@ -49,10 +49,11 @@ const Trip = ({ tripData }) => {
 
         width={0}
         sizes="100vw"
-        height={150}
+        height={0}
         alt="trip"
         style={{
           width: '100%',
+          height: "150px",
           borderTopLeftRadius: theme.trips.borderLeft,
           borderTopRightRadius: theme.trips.borderRight,
           objectFit: theme.cover,
